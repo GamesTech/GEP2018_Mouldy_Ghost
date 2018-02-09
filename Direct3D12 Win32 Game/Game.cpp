@@ -196,6 +196,9 @@ void Game::Initialize(HWND window, int width, int height)
 
 	TestSound* TS = new TestSound(m_audEngine.get(), "Explo1");
 	m_sounds.push_back(TS);
+
+	//create unique pointer for the gamepad
+	m_gamePad = std::make_unique<GamePad>();
 }
 
 //GEP:: Executes the basic game loop.
@@ -361,17 +364,20 @@ void Game::Present()
 void Game::OnActivated()
 {
     // TODO: Game is becoming active window.
+	m_gamePad->Resume();
 }
 
 void Game::OnDeactivated()
 {
     // TODO: Game is becoming background window.
+	m_gamePad->Suspend();
 }
 
 void Game::OnSuspending()
 {
     // TODO: Game is being power-suspended (or minimized).
 	m_audEngine->Suspend();
+	m_gamePad->Suspend();
 }
 
 void Game::OnResuming()
@@ -380,6 +386,7 @@ void Game::OnResuming()
 	m_audEngine->Resume();
 
     // TODO: Game is being power-resumed (or returning from minimize).
+	m_gamePad->Resume();
 }
 
 void Game::OnWindowSizeChanged(int width, int height)
@@ -396,8 +403,8 @@ void Game::OnWindowSizeChanged(int width, int height)
 void Game::GetDefaultSize(int& width, int& height) const
 {
     // TODO: Change to desired default window size (note minimum size is 320x200).
-    width = 800;
-    height = 600;
+    width = 1200;
+    height = 700;
 }
 
 // These are the resources that depend on the device.
@@ -762,15 +769,18 @@ void Game::OnDeviceLost()
 void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
-//https://github.com/Microsoft/DirectXTK/wiki/Mouse-and-keyboard-input
-
-//You'll also found similar stuff for Game Controllers here:
-//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
-
-//Note in both cases they are identical to the DirectXTK for DirectX 11
 
 	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
 	m_GSD->m_keyboardState= m_keyboard->GetState();
+
+		auto state = m_gamePad->GetState(0);
+
+		m_buttons.Update(state);
+
+		m_GSD->m_gamePadState = state;
+		m_GSD->m_buttonState = m_buttons;
+
+		//https://github.com/Microsoft/DirectXTK/wiki/Mouse-and-keyboard-input
 
 	//Quit if press Esc
 	if (m_GSD->m_keyboardState.Escape)

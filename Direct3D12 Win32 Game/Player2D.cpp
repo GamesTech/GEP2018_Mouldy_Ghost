@@ -4,6 +4,7 @@
 
 Player2D::Player2D(RenderData* _RD, string _filename):Physics2D(_RD,_filename)
 {
+	SetLimit(Vector2(1200, 700));
 	CentreOrigin();
 }
 
@@ -34,9 +35,14 @@ void Player2D::Tick(GameStateData * _GSD)
 	}
 
 	Vector2 mousePush = Vector2(_GSD->m_mouseState.x, _GSD->m_mouseState.y);
+
+	Vector2 gamePadPush = Vector2
+	(_GSD->m_gamePadState.thumbSticks.leftX,
+		-_GSD->m_gamePadState.thumbSticks.leftY);
 	
 	AddForce(m_drive*mousePush);
-	
+	AddForce(m_drive*gamePadPush);
+
 //GEP:: Lets go up the inheritence and share our functionality
 
 	Physics2D::Tick(_GSD);

@@ -673,7 +673,16 @@ void Game::ReadInput()
 		m_buttons[i].Update(state);
 
 		m_GSD->m_gamePadState[i] = state;
-		m_GSD->m_buttonState[i] = m_buttons[i];		
+		m_GSD->m_buttonState[i] = m_buttons[i];
+
+		//if (m_buttons->view == DirectX::GamePad::ButtonStateTracker::PRESSED)
+		//{
+		//	SwitchToScene(TEST_SCENE);
+		//}
+		//if (m_buttons->menu == DirectX::GamePad::ButtonStateTracker::PRESSED)
+		//{
+		//	SwitchToScene(GAME_SCENE);
+		//}
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 

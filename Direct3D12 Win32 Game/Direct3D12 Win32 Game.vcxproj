@@ -175,9 +175,11 @@
     <ClInclude Include="EventRotate.h" />
     <ClInclude Include="EventScaleUp.h" />
     <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="Player2D.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SDKMeshGO3D.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="Game.h" />
@@ -192,6 +194,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TestPBGO3D.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
@@ -202,6 +205,7 @@
     <ClCompile Include="EventRotate.cpp" />
     <ClCompile Include="EventScaleUp.cpp" />
     <ClCompile Include="EventSystem.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Player2D.cpp" />
@@ -221,6 +225,7 @@
     </ClCompile>
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="TestPBGO3D.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
   </ItemGroup>

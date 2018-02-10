@@ -166,16 +166,17 @@ void Game::Initialize(HWND window, int width, int height)
 	//test3d2->SetScale(5.0f);
 	//m_3DObjects.push_back(test3d2);	
 
-	//ImageGO2D *test = new ImageGO2D(m_RD, "twist");
-	//test->SetOri(45);
-	//test->SetPos(Vector2(300, 300));
-	//test->CentreOrigin();
-	//m_2DObjects.push_back(test);
-	//test = new ImageGO2D(m_RD,"guides_logo");
-	//test->SetPos(Vector2(100, 100));
-	//test->SetScale(Vector2(1.0f,0.5f));
-	//test->SetColour(Color(1, 0, 0, 1));
-	//m_2DObjects.push_back(test);
+	ImageGO2D *test = new ImageGO2D(m_RD, "twist");
+	test->SetOri(45);
+	test->SetPos(Vector2(300, 300));
+	test->CentreOrigin();
+	m_2DObjects.push_back(test);
+
+	test = new ImageGO2D(m_RD,"guides_logo");
+	test->SetPos(Vector2(100, 100));
+	test->SetScale(Vector2(1.0f,0.5f));
+	test->SetColour(Color(1, 0, 0, 1));
+	m_2DObjects.push_back(test);
 
 	//Text2D * test2 = new Text2D("testing text");
 	//m_2DObjects.push_back(test2);
@@ -198,6 +199,12 @@ void Game::Initialize(HWND window, int width, int height)
 
 		BoundingRect* rect = new BoundingRect
 		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
+	test->SetParent(testPlay);
+
+	SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
+	test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
+	test3->SetScale(5.0f);
+	m_3DObjects.push_back(test3);
 
 		testPlay->SetBoundingRect(rect);
 

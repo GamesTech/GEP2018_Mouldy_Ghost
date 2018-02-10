@@ -26,11 +26,22 @@ public:
 	void SetColour(Color _col) { m_colour = _col; }
 	void SetScale(Vector2 _scale) { m_scale = _scale; }
 
-
 	virtual void CentreOrigin() = 0;
 
-	virtual void Tick(GameStateData* _GSD) {};
+	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD) = 0;
+
+
+	//inprovements Filip made :)
+	std::string GetName();
+	void SetName(std::string string);
+	GameObject2D* GetParent();
+	void SetParent(GameObject2D* newParent);
+	void AddChild(GameObject2D* object);
+	void RemoveChild(GameObject2D* child);
+
+	void updateChildrenPos();
+	
 
 protected:
 	Vector2 m_pos = Vector2::Zero;
@@ -38,5 +49,12 @@ protected:
 	float m_orientation = 0.0f;
 	Color m_colour = Colors::White;
 	Vector2 m_scale = Vector2::One;
+	std::string name = "Ordinary game object 2D";
+	GameObject2D * parent = nullptr;
+	std::vector<GameObject2D*>children;
+
+	Vector2 previous_pos = Vector2::Zero;
+	float previous_ori = 0.0f;
+
 };
 

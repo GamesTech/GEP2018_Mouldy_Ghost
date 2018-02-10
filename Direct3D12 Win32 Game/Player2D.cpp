@@ -40,6 +40,8 @@ void Player2D::Tick(GameStateData * _GSD)
 
 	Physics2D::Tick(_GSD);
 
+	GameObject2D::Tick(_GSD);
+
 //after that as updated my position let's lock it inside my limits
 	if (m_pos.x < 0.0f)
 	{

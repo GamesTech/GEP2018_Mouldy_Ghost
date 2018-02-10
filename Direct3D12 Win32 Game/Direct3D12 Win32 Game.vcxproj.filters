@@ -47,6 +47,15 @@
     <Filter Include="Game Base\Source">
       <UniqueIdentifier>{c6145a56-6b6a-4cdf-aecf-c59fe5db8df0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EventSystem">
+      <UniqueIdentifier>{1a0c6eb3-73bb-4338-a7e4-fc22ba66fdae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EventSystem\Headers">
+      <UniqueIdentifier>{51ea1b83-3d45-44e8-a912-d04afd184f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EventSystem\Source">
+      <UniqueIdentifier>{f3a3a7fb-7fd5-48b9-b0df-eda561ae47cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -115,6 +124,15 @@
     <ClInclude Include="BoundingRect.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="EventRotate.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EventScaleUp.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSystem.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -170,6 +188,15 @@
     </ClCompile>
     <ClCompile Include="BoundingRect.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventRotate.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventScaleUp.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSystem.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

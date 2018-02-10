@@ -170,6 +170,7 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="Physics2D.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="GameStateData.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoundingRect.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Physics2D.cpp" />

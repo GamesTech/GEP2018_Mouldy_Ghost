@@ -15,6 +15,7 @@ Player2D::Player2D(RenderData* _RD, string _filename):Physics2D(_RD,_filename)
 
 Player2D::~Player2D()
 {
+	delete m_bounding_rect;
 }
 
 void Player2D::Tick(GameStateData * _GSD)
@@ -33,7 +34,7 @@ void Player2D::Tick(GameStateData * _GSD)
 	
 	AddForce(m_drive * gamePadPush);
 
-	m_bounding_rect.top_left = m_pos;
+	m_bounding_rect->SetTopLeft(m_pos);
 
 //GEP:: Lets go up the inheritence and share our functionality
 

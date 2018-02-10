@@ -1,15 +1,8 @@
 #pragma once
 #include "ImageGO2D.h"
+#include "BoundingRect.h"
 
 const float m_gravity = 9.8f;
-
-struct BoundingRect
-{
-	int width;
-	int height;
-	Vector2 top_left;
-	float orientation;
-};
 
 enum Axis
 {
@@ -40,21 +33,18 @@ public:
 
 	virtual void Tick(GameStateData* _GSD);
 	
-	void SetBoundingRect(BoundingRect _bounding_rect)
+	void SetBoundingRect(BoundingRect* _bounding_rect)
 	{ m_bounding_rect = _bounding_rect; }
+	BoundingRect* GetRectangle() { return m_bounding_rect; }
 
-	bool IsColliding(Physics2D* _object, Vector2 &_normal);
+	bool isColliding(Physics2D* _object, Vector2 &_normal);
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal);
 	virtual void Collision(Physics2D* _collision);
 	virtual void CollisionExit(Physics2D* _collision);
 
 protected:
-	bool ContainsPoint(int x, int y);
-	const Vector2 GetCollisionNormal
-	(Vector2 top_left, Vector2 bottom_right, Vector2 contact);
-
-	BoundingRect m_bounding_rect;
+	BoundingRect* m_bounding_rect;
 	std::vector<GameObject2D*> currently_colliding;
 
 	Vector2 m_vel;

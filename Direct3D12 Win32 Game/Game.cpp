@@ -196,10 +196,7 @@ void Game::Initialize(HWND window, int width, int height)
 		GetDefaultSize(screen_x, screen_y);
 		testPlay->SetLimit(Vector2(screen_x, screen_y));
 
-		BoundingRect rect;
-		rect.top_left = Vector2(i * 400, 100);
-		rect.width = 100;
-		rect.height = 100;
+		BoundingRect* rect = new BoundingRect(Vector2(i * 400, 100), 100, 100);
 
 		testPlay->SetBoundingRect(rect);
 

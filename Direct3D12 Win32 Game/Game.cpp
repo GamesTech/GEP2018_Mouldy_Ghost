@@ -170,6 +170,7 @@ void Game::Initialize(HWND window, int width, int height)
 	test->SetPos(Vector2(300, 300));
 	test->CentreOrigin();
 	m_2DObjects.push_back(test);
+
 	test = new ImageGO2D(m_RD,"guides_logo");
 	test->SetPos(Vector2(100, 100));
 	test->SetScale(Vector2(1.0f,0.5f));
@@ -183,6 +184,8 @@ void Game::Initialize(HWND window, int width, int height)
 	testPlay->SetDrive(100.0f);
 	testPlay->SetDrag(0.5f);
 	m_2DObjects.push_back(testPlay);
+
+	test->SetParent(testPlay);
 
 	SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
 	test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);

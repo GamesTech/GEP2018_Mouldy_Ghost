@@ -105,7 +105,7 @@ private:
 	std::unique_ptr<DirectX::Mouse> m_mouse;
 
 	std::unique_ptr<DirectX::GamePad> m_gamePad;
-	DirectX::GamePad::ButtonStateTracker m_buttons;
+	DirectX::GamePad::ButtonStateTracker m_buttons[4];
 
 	//audio system
 	std::unique_ptr<DirectX::AudioEngine> m_audEngine;

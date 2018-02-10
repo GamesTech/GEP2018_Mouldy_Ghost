@@ -5,12 +5,15 @@
 
 struct GameStateData
 {
+	std::vector<Physics2D*> objects_in_scene;
+
 	Keyboard::State m_keyboardState;
 	Keyboard::State m_prevKeyboardState;
 	Mouse::State m_mouseState;
 
-	GamePad::State m_gamePadState;
-	GamePad::ButtonStateTracker m_buttonState;
+	GamePad::State m_gamePadState[4];
+	GamePad::ButtonStateTracker m_buttonState[4];
+
 	//length of time since last frame
 	float m_dt;
 };

@@ -15,14 +15,26 @@ public:
 	virtual void Tick(GameStateData* _GSD);
 
 	void SetDrive(float _drive) { m_drive = _drive; }
-	float GetDrive() { return m_drive; }
+	const float GetDrive() { return m_drive; }
 
 	void SetLimit(Vector2 _lim) { m_limit = _lim; }
-	Vector2 GetLimit() { return m_limit; }
+	const Vector2 GetLimit() { return m_limit; }
+
+	void SetMoveSpeed(float _speed) { m_move_speed = _speed; }
+	const float GetMoveSpeed() { return m_move_speed; }
+
+	void SetJumpHeight(float _height) { m_jump_height = _height; }
+	const float GetJumpHeight() { return m_jump_height; }
+
+	void SetControllerID(int _ID) { m_controllerID = _ID; }
+	const int GetControllerID() { return m_controllerID; }
 
 protected:
 	float m_drive = 1.0f;
+	float m_move_speed = 1.0f;
+	float m_jump_height = 1.0f;
 
-	Vector2 m_limit = Vector2(800, 600);
+	int m_controllerID = 0;
+
+	Vector2 m_limit;
 };
-

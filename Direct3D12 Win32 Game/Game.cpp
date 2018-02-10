@@ -81,9 +81,10 @@ void Game::Initialize(HWND window, int width, int height)
 
 	m_GSD = new GameStateData;
 
-//GEP::set up keyboard & mouse input systems
+//GEP::set up keyboard mouse, & gamepad input systems
 	m_keyboard = std::make_unique<Keyboard>();
 	m_mouse = std::make_unique<Mouse>();
+	m_gamePad = std::make_unique<GamePad>();
 	m_mouse->SetWindow(window); // mouse device needs to linked to this program's window
 	m_mouse->SetMode(Mouse::Mode::MODE_RELATIVE); // gives a delta postion as opposed to a MODE_ABSOLUTE position in 2-D space
 
@@ -160,45 +161,62 @@ void Game::Initialize(HWND window, int width, int height)
 	test3d->Init();
 	m_3DObjects.push_back(test3d);
 
-	GPGO3D* test3d2 = new GPGO3D(GP_TEAPOT);
-	test3d2->SetPos(10.0f*Vector3::Forward+5.0f*Vector3::Right+Vector3::Down);
-	test3d2->SetScale(5.0f);
-	m_3DObjects.push_back(test3d2);	
+	//GPGO3D* test3d2 = new GPGO3D(GP_TEAPOT);
+	//test3d2->SetPos(10.0f*Vector3::Forward+5.0f*Vector3::Right+Vector3::Down);
+	//test3d2->SetScale(5.0f);
+	//m_3DObjects.push_back(test3d2);	
 
-	ImageGO2D *test = new ImageGO2D(m_RD, "twist");
-	test->SetOri(45);
-	test->SetPos(Vector2(300, 300));
-	test->CentreOrigin();
-	m_2DObjects.push_back(test);
-	test = new ImageGO2D(m_RD,"guides_logo");
-	test->SetPos(Vector2(100, 100));
-	test->SetScale(Vector2(1.0f,0.5f));
-	test->SetColour(Color(1, 0, 0, 1));
-	m_2DObjects.push_back(test);
+	//ImageGO2D *test = new ImageGO2D(m_RD, "twist");
+	//test->SetOri(45);
+	//test->SetPos(Vector2(300, 300));
+	//test->CentreOrigin();
+	//m_2DObjects.push_back(test);
+	//test = new ImageGO2D(m_RD,"guides_logo");
+	//test->SetPos(Vector2(100, 100));
+	//test->SetScale(Vector2(1.0f,0.5f));
+	//test->SetColour(Color(1, 0, 0, 1));
+	//m_2DObjects.push_back(test);
 
-	Text2D * test2 = new Text2D("testing text");
-	m_2DObjects.push_back(test2);
+	//Text2D * test2 = new Text2D("testing text");
+	//m_2DObjects.push_back(test2);
 
-	Player2D* testPlay = new Player2D(m_RD,"gens");
-	testPlay->SetDrive(100.0f);
-	testPlay->SetDrag(0.5f);
-	m_2DObjects.push_back(testPlay);
+	for (int i = 0; i < 2; i++)
+	{
+		Player2D* testPlay = new Player2D(m_RD, "gens");
+		testPlay->SetPos(Vector2(i * 400, 100));
+		testPlay->SetOrigin(Vector2(100, 100));
+		testPlay->SetControllerID(i);
+		testPlay->SetDrive(100.0f);
+		testPlay->SetDrag(0.5f);
+		testPlay->SetMoveSpeed(4 - (2 * i));
+		testPlay->SetJumpHeight(200 + (200 * i));
+		int screen_x, screen_y;
+		GetDefaultSize(screen_x, screen_y);
+		testPlay->SetLimit(Vector2(screen_x, screen_y));
 
-	SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
-	test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
-	test3->SetScale(5.0f);
-	m_3DObjects.push_back(test3);
+		BoundingRect rect;
+		rect.top_left = Vector2(i * 400, 100);
+		rect.width = 100;
+		rect.height = 100;
 
-	Loop *loop = new Loop(m_audEngine.get(), "NightAmbienceSimple_02");
-	loop->SetVolume(0.1f);
-	loop->Play();
-	m_sounds.push_back(loop);
+		testPlay->SetBoundingRect(rect);
 
-	TestSound* TS = new TestSound(m_audEngine.get(), "Explo1");
-	m_sounds.push_back(TS);
+		m_2DObjects.push_back(testPlay);
+		m_GSD->objects_in_scene.push_back(testPlay);
+	}
 
-	//create unique pointer for the gamepad
-	m_gamePad = std::make_unique<GamePad>();
+	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
+	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
+	//test3->SetScale(5.0f);
+	//m_3DObjects.push_back(test3);
+
+	//Loop *loop = new Loop(m_audEngine.get(), "NightAmbienceSimple_02");
+	//loop->SetVolume(0.1f);
+	//loop->Play();
+	//m_sounds.push_back(loop);
+
+	//TestSound* TS = new TestSound(m_audEngine.get(), "Explo1");
+	//m_sounds.push_back(TS);
 }
 
 //GEP:: Executes the basic game loop.
@@ -403,8 +421,8 @@ void Game::OnWindowSizeChanged(int width, int height)
 void Game::GetDefaultSize(int& width, int& height) const
 {
     // TODO: Change to desired default window size (note minimum size is 320x200).
-    width = 1200;
-    height = 700;
+    width = 900;
+    height = 600;
 }
 
 // These are the resources that depend on the device.
@@ -773,14 +791,17 @@ void Game::ReadInput()
 	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
 	m_GSD->m_keyboardState= m_keyboard->GetState();
 
-		auto state = m_gamePad->GetState(0);
+	for (int i = 0; i < 4; i++)
+	{
+		auto state = m_gamePad->GetState(i);
 
-		m_buttons.Update(state);
+		m_buttons[i].Update(state);
 
-		m_GSD->m_gamePadState = state;
-		m_GSD->m_buttonState = m_buttons;
+		m_GSD->m_gamePadState[i] = state;
+		m_GSD->m_buttonState[i] = m_buttons[i];
 
-		//https://github.com/Microsoft/DirectXTK/wiki/Mouse-and-keyboard-input
+	}
+		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
 	//Quit if press Esc
 	if (m_GSD->m_keyboardState.Escape)

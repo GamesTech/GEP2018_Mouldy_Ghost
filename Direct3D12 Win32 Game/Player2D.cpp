@@ -5,7 +5,11 @@
 Player2D::Player2D(RenderData* _RD, string _filename):Physics2D(_RD,_filename)
 {
 	SetLimit(Vector2(1200, 700));
+
 	CentreOrigin();
+
+	m_bounciness = 0.3f;
+	m_gravity_scale = 1;
 }
 
 
@@ -15,33 +19,21 @@ Player2D::~Player2D()
 
 void Player2D::Tick(GameStateData * _GSD)
 {
-
-//Push the guy around in the directions for the key presses
-	if (_GSD->m_keyboardState.W)
+	float move_x = m_move_speed * 
+		_GSD->m_gamePadState[m_controllerID].thumbSticks.leftX;
+	float move_y = 0;
+	if (_GSD->m_buttonState[m_controllerID].a
+		== DirectX::GamePad::ButtonStateTracker::PRESSED)
 	{
-		AddForce(-m_drive * Vector2::UnitY);
-	}
-	if (_GSD->m_keyboardState.S)
-	{
-		AddForce(m_drive * Vector2::UnitY);
-	}
-	if (_GSD->m_keyboardState.A)
-	{
-		AddForce(-m_drive * Vector2::UnitX);
-	}
-	if (_GSD->m_keyboardState.D)
-	{
-		AddForce(m_drive * Vector2::UnitX);
+		ResetForce(Y);
+		move_y = -m_jump_height;
 	}
 
-	Vector2 mousePush = Vector2(_GSD->m_mouseState.x, _GSD->m_mouseState.y);
-
-	Vector2 gamePadPush = Vector2
-	(_GSD->m_gamePadState.thumbSticks.leftX,
-		-_GSD->m_gamePadState.thumbSticks.leftY);
+	Vector2 gamePadPush = Vector2(move_x, move_y);
 	
-	AddForce(m_drive*mousePush);
-	AddForce(m_drive*gamePadPush);
+	AddForce(m_drive * gamePadPush);
+
+	m_bounding_rect.top_left = m_pos;
 
 //GEP:: Lets go up the inheritence and share our functionality
 
@@ -51,22 +43,22 @@ void Player2D::Tick(GameStateData * _GSD)
 	if (m_pos.x < 0.0f)
 	{
 		m_pos.x *= -1.0f;
-		m_vel.x *= -1.0f; // yea, not a nice bounce for works okay for a first pass
+		m_vel.x *= -m_bounciness;
 	}
 	if (m_pos.y < 0.0f)
 	{
 		m_pos.y *= -1.0f;
-		m_vel.y *= -1.0f;
+		m_vel.y *= -m_bounciness;
 	}
 
 	if (m_pos.x > m_limit.x)
 	{
 		m_pos.x = 2.0f * m_limit.x - m_pos.x;
-		m_vel.x *= -1.0f;
+		m_vel.x *= -m_bounciness;
 	}
 	if (m_pos.y > m_limit.y)
 	{
 		m_pos.y = 2.0f * m_limit.y - m_pos.y;
-		m_vel.y *= -1.0f;
+		m_vel.y *= -m_bounciness;
 	}
 }

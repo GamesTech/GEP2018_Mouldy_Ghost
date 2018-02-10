@@ -43,22 +43,22 @@ void Player2D::Tick(GameStateData * _GSD)
 	if (m_pos.x < 0.0f)
 	{
 		m_pos.x *= -1.0f;
-		m_vel.x *= -m_bounciness;
+		m_vel.x = 0;
 	}
 	if (m_pos.y < 0.0f)
 	{
 		m_pos.y *= -1.0f;
-		m_vel.y *= -m_bounciness;
+		m_vel.y = 0;
 	}
 
 	if (m_pos.x > m_limit.x)
 	{
 		m_pos.x = 2.0f * m_limit.x - m_pos.x;
-		m_vel.x *= -m_bounciness;
+		m_vel.x = 0;
 	}
 	if (m_pos.y > m_limit.y)
 	{
 		m_pos.y = 2.0f * m_limit.y - m_pos.y;
-		m_vel.y *= -m_bounciness;
+		m_vel.y = 0;
 	}
 }

@@ -35,20 +35,25 @@ public:
 	float GetMass() { return m_mass; }
 	void SetDrag(float _drag) { m_drag = _drag; }
 	float GetDrag() { return m_drag; }
+	void SetBounce(float _bounce) { m_bounciness = _bounce; }
+	const float GetBounce() { return m_bounciness; }
 
 	virtual void Tick(GameStateData* _GSD);
 	
 	void SetBoundingRect(BoundingRect _bounding_rect)
 	{ m_bounding_rect = _bounding_rect; }
 
-	bool ContainsPoint(int x, int y);
-	bool IsColliding(Physics2D* _object);
+	bool IsColliding(Physics2D* _object, Vector2 &_normal);
 
-	virtual void CollisionEnter(GameObject2D* _collision);
-	virtual void Collision(GameObject2D* _collision);
-	virtual void CollisionExit(GameObject2D* _collision);
+	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal);
+	virtual void Collision(Physics2D* _collision);
+	virtual void CollisionExit(Physics2D* _collision);
 
 protected:
+	bool ContainsPoint(int x, int y);
+	const Vector2 GetCollisionNormal
+	(Vector2 top_left, Vector2 bottom_right, Vector2 contact);
+
 	BoundingRect m_bounding_rect;
 	std::vector<GameObject2D*> currently_colliding;
 

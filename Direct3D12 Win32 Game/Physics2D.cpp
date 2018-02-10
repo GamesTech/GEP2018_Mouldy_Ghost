@@ -56,7 +56,8 @@ void Physics2D::Tick(GameStateData * _GSD)
 		Physics2D* object = _GSD->objects_in_scene[i];
 		if (object != this)
 		{
-			if (IsColliding(object))
+			Vector2 normal;
+			if (IsColliding(object, normal))
 			{
 				Collision(object);
 
@@ -71,7 +72,7 @@ void Physics2D::Tick(GameStateData * _GSD)
 				if (!on_list)
 				{
 					currently_colliding.push_back(object);
-					CollisionEnter(object);
+					CollisionEnter(object, normal);
 				}
 			}
 			else
@@ -80,7 +81,7 @@ void Physics2D::Tick(GameStateData * _GSD)
 				{
 					if (currently_colliding[j] == object)
 					{
-						CollisionExit(currently_colliding[j]);
+						CollisionExit(object);
 						currently_colliding.erase(currently_colliding.begin() + j);
 					}
 				}
@@ -101,7 +102,7 @@ bool Physics2D::ContainsPoint(int x, int y)
 	return false;
 }
 
-bool Physics2D::IsColliding(Physics2D * _object)
+bool Physics2D::IsColliding(Physics2D * _object, Vector2 &_normal)
 {
 	int left = m_bounding_rect.top_left.x;
 	int right = m_bounding_rect.top_left.x + m_bounding_rect.width;
@@ -114,6 +115,8 @@ bool Physics2D::IsColliding(Physics2D * _object)
 		{
 			if (_object->ContainsPoint(x, y))
 			{
+				_normal = GetCollisionNormal
+				(Vector2(left, top), Vector2(right, bottom), Vector2(x, y));
 				return true;
 			}
 		}
@@ -121,14 +124,52 @@ bool Physics2D::IsColliding(Physics2D * _object)
 	return false;
 }
 
-void Physics2D::CollisionEnter(GameObject2D * _collision)
+const Vector2 Physics2D::GetCollisionNormal
+(Vector2 top_left, Vector2 bottom_right, Vector2 contact)
+{
+	Vector2 return_vector;
+
+	int width = bottom_right.x - top_left.x;
+	int height = bottom_right.y - top_left.y;
+
+	if (contact.x < top_left.x + (width / 10))
+	{
+		return_vector.x = -1;
+	}
+	else if (contact.x > bottom_right.x - (width / 10))
+	{
+		return_vector.x = 1;
+	}
+	else
+	{
+		return_vector.x = 0;
+	}
+
+	if (contact.y < top_left.y + (height / 10))
+	{
+		return_vector.y = -1;
+	}
+	else if (contact.y > bottom_right.y - (height / 10))
+	{
+		return_vector.y = 1;
+	}
+	else
+	{
+		return_vector.y = 0;
+	}
+
+	return return_vector;
+}
+
+void Physics2D::CollisionEnter(Physics2D * _collision, Vector2 _normal)
+{
+	AddForce(_collision->GetVel() * _collision->GetMass() * 100);
+}
+
+void Physics2D::Collision(Physics2D * _collision)
 {
 }
 
-void Physics2D::Collision(GameObject2D * _collision)
-{
-}
-
-void Physics2D::CollisionExit(GameObject2D * _collision)
+void Physics2D::CollisionExit(Physics2D * _collision)
 {
 }

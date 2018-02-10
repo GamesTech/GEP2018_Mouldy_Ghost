@@ -188,8 +188,10 @@ void Game::Initialize(HWND window, int width, int height)
 		testPlay->SetControllerID(i);
 		testPlay->SetDrive(100.0f);
 		testPlay->SetDrag(0.5f);
-		testPlay->SetMoveSpeed(4 - (2 * i));
+		testPlay->SetMass(1 + i);
+		testPlay->SetMoveSpeed(3 - (1 * i));
 		testPlay->SetJumpHeight(200 + (200 * i));
+		testPlay->SetBounce(0.4f);
 		int screen_x, screen_y;
 		GetDefaultSize(screen_x, screen_y);
 		testPlay->SetLimit(Vector2(screen_x, screen_y));

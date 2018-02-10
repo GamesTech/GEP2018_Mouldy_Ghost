@@ -104,7 +104,6 @@ bool Physics2D::isColliding(Physics2D* _object, Vector2 &_normal)
 
 void Physics2D::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-	AddForce(_collision->GetVel() * _collision->GetMass() * 100);
 }
 
 void Physics2D::Collision(Physics2D * _collision)

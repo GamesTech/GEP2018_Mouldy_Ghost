@@ -63,3 +63,16 @@ void Player2D::Tick(GameStateData * _GSD)
 		m_vel.y = 0;
 	}
 }
+
+void Player2D::Collision(Physics2D * _collision)
+{
+	//if(_collision.tag == "player")
+	if (_collision->GetPos().x > m_pos.x)
+	{
+		m_pos.x--;
+	}
+	else
+	{
+		m_pos.x++;
+	}
+}

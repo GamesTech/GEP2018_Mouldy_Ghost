@@ -196,7 +196,8 @@ void Game::Initialize(HWND window, int width, int height)
 		GetDefaultSize(screen_x, screen_y);
 		testPlay->SetLimit(Vector2(screen_x, screen_y));
 
-		BoundingRect* rect = new BoundingRect(Vector2(i * 400, 100), 100, 100);
+		BoundingRect* rect = new BoundingRect
+		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
 
 		testPlay->SetBoundingRect(rect);
 
@@ -798,7 +799,7 @@ void Game::ReadInput()
 
 		m_GSD->m_gamePadState[i] = state;
 		m_GSD->m_buttonState[i] = m_buttons[i];
-
+		
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 

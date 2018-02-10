@@ -54,13 +54,16 @@ void Physics2D::Tick(GameStateData * _GSD)
 	for (int i = 0; i < _GSD->objects_in_scene.size(); i++)
 	{
 		Physics2D* object = _GSD->objects_in_scene[i];
+		//if the object in the list isn't this gameobject
 		if (object != this)
 		{
+			//check for a collision and get its normal
 			Vector2 normal;
 			if (m_bounding_rect->IsColliding(object->GetRectangle(), normal))
 			{
 				Collision(object);
 
+				//check whether this object was being collided with on the last tick
 				bool on_list = false;
 				for (int j = 0; j < currently_colliding.size(); j++)
 				{
@@ -69,6 +72,7 @@ void Physics2D::Tick(GameStateData * _GSD)
 						on_list = true;
 					}
 				}
+				//if not, call collision enter and add it to the list
 				if (!on_list)
 				{
 					currently_colliding.push_back(object);
@@ -77,10 +81,13 @@ void Physics2D::Tick(GameStateData * _GSD)
 			}
 			else
 			{
+				//if the object isn't being collided with
 				for (int j = 0; j < currently_colliding.size(); j++)
 				{
+					//check whether it was being collided with last tick
 					if (currently_colliding[j] == object)
 					{
+						//collision exit and remove it from the list
 						CollisionExit(object);
 						currently_colliding.erase(currently_colliding.begin() + j);
 					}

@@ -640,6 +640,85 @@ void Game::OnDeviceLost()
     CreateResources();
 }
 
+GameObject2D * Game::Find2DGameObjectWithName(std::string name)
+{
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		if (m_2DObjects[i]->GetName() == name)
+		{
+			return m_2DObjects[i];
+		}
+	}
+	return nullptr;
+}
+
+GameObject2D* Game::FindAll2DGameobjectsWithName(std::string name)
+{
+	GameObject2D* objects = nullptr;
+	std::vector<int> object_indexes
+	int num = 0;
+
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		if (m_2DObjects[i]->GetName() == name)
+		{
+			num++;
+			object_indexes.push_back(i);
+		}
+	}
+
+	objects = new GameObject2D[num];
+
+	for (int i = 0; i < object_indexes.size(); i++)
+	{
+		objects[i] = m_2DObjects[object_indexes[i]];
+	}
+
+	object_indexes.erase();
+	return objects ;
+}
+
+GameObject2D * Game::Find2DGameObjectWithTag(GameObjectTag tag)
+{
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		if (m_2DObjects[i]->GetTag() == tag)
+		{
+			return m_2DObjects[i];
+		}
+	}
+	
+	return nullptr;
+}
+
+GameObject2D* Game::FindAll2DGameObjectsWithTag(GameObjectTag tag)
+{
+	GameObject2D* objects = nullptr;
+	std::vector<int> object_indexes
+		int num = 0;
+
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		if (m_2DObjects[i]->GetTag() == tag)
+		{
+			num++;
+			object_indexes.push_back(i);
+		}
+	}
+
+	objects = new GameObject2D[num];
+
+	for (int i = 0; i < object_indexes.size(); i++)
+	{
+		objects[i] = m_2DObjects[object_indexes[i]];
+	}
+
+	object_indexes.erase();
+
+	return objects;
+}
+
+
 bool Game::SwitchToScene(SceneEnum _scene)
 {
 	switch (_scene)

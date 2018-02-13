@@ -151,6 +151,7 @@
     <ClInclude Include="TestScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectTags.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">

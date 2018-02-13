@@ -17,12 +17,4 @@ public:
 	virtual void Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 
 private:
-	vector<GameObject3D*> m_3DObjects;
-	vector<GameObject2D*> m_2DObjects;
-	vector<Sound*> m_sounds;
-
-	Camera* m_cam;
-
-	RenderData* m_RD;
-	GameStateData* m_GSD;
 };

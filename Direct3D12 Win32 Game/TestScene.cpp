@@ -9,24 +9,6 @@ TestScene::TestScene()
 
 TestScene::~TestScene()
 {
-	//delete the GO2Ds
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		delete (*it);
-	}
-	m_2DObjects.clear();
-	//delete the GO3Ds
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		delete (*it);
-	}
-	m_3DObjects.clear();
-	//delete the sounds
-	for (vector<Sound *>::iterator it = m_sounds.begin(); it != m_sounds.end(); it++)
-	{
-		delete (*it);
-	}
-	m_sounds.clear();
 }
 
 void TestScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWidth, int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine)

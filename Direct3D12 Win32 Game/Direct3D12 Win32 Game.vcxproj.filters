@@ -223,6 +223,9 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

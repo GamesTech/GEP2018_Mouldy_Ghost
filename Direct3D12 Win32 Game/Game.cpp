@@ -134,8 +134,12 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
 
-	m_activeScene = new GameScene();
-	m_activeScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_gameScene = new GameScene();
+	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_testScene = new TestScene();
+	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+
+	m_activeScene = m_gameScene;
 }
 
 //GEP:: Executes the basic game loop.
@@ -640,98 +644,15 @@ void Game::OnDeviceLost()
     CreateResources();
 }
 
-GameObject2D * Game::Find2DGameObjectWithName(std::string name)
-{
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		if (m_2DObjects[i]->GetName() == name)
-		{
-			return m_2DObjects[i];
-		}
-	}
-	return nullptr;
-}
-
-GameObject2D* Game::FindAll2DGameobjectsWithName(std::string name)
-{
-	GameObject2D* objects = nullptr;
-	std::vector<int> object_indexes
-	int num = 0;
-
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		if (m_2DObjects[i]->GetName() == name)
-		{
-			num++;
-			object_indexes.push_back(i);
-		}
-	}
-
-	objects = new GameObject2D[num];
-
-	for (int i = 0; i < object_indexes.size(); i++)
-	{
-		objects[i] = m_2DObjects[object_indexes[i]];
-	}
-
-	object_indexes.erase();
-	return objects ;
-}
-
-GameObject2D * Game::Find2DGameObjectWithTag(GameObjectTag tag)
-{
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		if (m_2DObjects[i]->GetTag() == tag)
-		{
-			return m_2DObjects[i];
-		}
-	}
-	
-	return nullptr;
-}
-
-GameObject2D* Game::FindAll2DGameObjectsWithTag(GameObjectTag tag)
-{
-	GameObject2D* objects = nullptr;
-	std::vector<int> object_indexes
-		int num = 0;
-
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		if (m_2DObjects[i]->GetTag() == tag)
-		{
-			num++;
-			object_indexes.push_back(i);
-		}
-	}
-
-	objects = new GameObject2D[num];
-
-	for (int i = 0; i < object_indexes.size(); i++)
-	{
-		objects[i] = m_2DObjects[object_indexes[i]];
-	}
-
-	object_indexes.erase();
-
-	return objects;
-}
-
-
 bool Game::SwitchToScene(SceneEnum _scene)
 {
 	switch (_scene)
 	{
 	case GAME_SCENE:
-		delete m_activeScene;
-		m_activeScene = new GameScene();
-		m_activeScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+		m_activeScene = m_gameScene;
 		return true;
 	case TEST_SCENE:
-		delete m_activeScene;
-		m_activeScene = new TestScene();
-		m_activeScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+		m_activeScene = m_testScene;
 		return true;
 	default:
 		return false;
@@ -754,14 +675,14 @@ void Game::ReadInput()
 		m_GSD->m_gamePadState[i] = state;
 		m_GSD->m_buttonState[i] = m_buttons[i];
 
-		//if (m_buttons->view == DirectX::GamePad::ButtonStateTracker::PRESSED)
-		//{
-		//	SwitchToScene(TEST_SCENE);
-		//}
-		//if (m_buttons->menu == DirectX::GamePad::ButtonStateTracker::PRESSED)
-		//{
-		//	SwitchToScene(GAME_SCENE);
-		//}
+		if (m_buttons->view == DirectX::GamePad::ButtonStateTracker::PRESSED)
+		{
+			SwitchToScene(TEST_SCENE);
+		}
+		if (m_buttons->menu == DirectX::GamePad::ButtonStateTracker::PRESSED)
+		{
+			SwitchToScene(GAME_SCENE);
+		}
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 

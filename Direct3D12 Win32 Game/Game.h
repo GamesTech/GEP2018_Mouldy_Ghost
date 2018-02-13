@@ -99,6 +99,13 @@ private:
 
 	GameStateData* m_GSD;
 
+	//Find game objects
+	GameObject2D* Find2DGameObjectWithName(std::string name);
+	GameObject2D* FindAll2DGameobjectsWithName(std::string name); //returns a dynamic array of pointers to GameObject2D, you will need to delete it yourself
+
+	GameObject2D* Find2DGameObjectWithTag(GameObjectTag tag);
+	GameObject2D* FindAll2DGameObjectsWithTag(GameObjectTag tag); //returns a dynamic array of pointers to GameObject2D, you will need to delete it yourself
+
 	//GEP:: Keyboard and Mouse Abstractions for basic input system
 	void ReadInput();
 	std::unique_ptr<DirectX::Keyboard> m_keyboard;

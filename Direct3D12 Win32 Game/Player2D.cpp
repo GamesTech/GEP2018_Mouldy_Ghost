@@ -16,6 +16,8 @@ Player2D::~Player2D()
 void Player2D::Tick(GameStateData * _GSD)
 {
 
+	SetOri(GetOri() + 0.01);
+
 //Push the guy around in the directions for the key presses
 	if (_GSD->m_keyboardState.W)
 	{

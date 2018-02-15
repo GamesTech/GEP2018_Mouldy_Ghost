@@ -30,6 +30,11 @@ public:
 	virtual void Render(RenderData* _RD) = 0;
 
 	void SetPos(Vector3 _pos) { m_pos = _pos; }
+	void SetSpawn(Vector3 _pos) { m_spawn = _pos; ResetPos(); }
+	void ResetPos()
+	{
+		m_pos = m_spawn;
+	}
 	void SetScale(float _scale) { m_scale = _scale * Vector3::One; }
 	void SetScale( Vector3 _scale ){m_scale = _scale; }
 	void SetOri(float _pitch, float _yaw, float _roll) { m_pitch = _pitch; m_yaw = _yaw, m_roll = _roll; }
@@ -45,6 +50,7 @@ public:
 
 protected:
 	Vector3 m_pos	= Vector3::Zero;
+	Vector3 m_spawn = Vector3::Zero;
 	Vector3 m_scale = Vector3::One;
 	float m_pitch	= 0.0f;
 	float m_yaw		= 0.0f;

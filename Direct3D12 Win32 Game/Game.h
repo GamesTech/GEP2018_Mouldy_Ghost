@@ -67,7 +67,7 @@ private:
 
     void OnDeviceLost();
 
-	bool SwitchToScene(SceneEnum _scene);
+	bool SwitchToScene(SceneEnum _scene, bool _reset);
 
     // Application state
     HWND                                                m_window;

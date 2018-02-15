@@ -22,7 +22,9 @@ public:
 	Color GetColour() { return m_colour; }
 	Vector2 GetScale() { return m_scale; }
 
+	void SetSpawn(Vector2 _pos);
 	void SetPos(Vector2 _pos);
+	void ResetPos();
 	void SetOrigin(Vector2 _origin) { m_origin = _origin; }
 	void SetOri(float _ori);
 	void SetColour(Color _col) { m_colour = _col; }
@@ -33,8 +35,6 @@ public:
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD) = 0;
 
-
-	
 	std::string GetName();
 	void SetName(std::string string);
 
@@ -46,10 +46,8 @@ public:
 	void AddChild(GameObject2D* object);
 	void RemoveChild(GameObject2D* child);
 
-	
-	
-
 protected:
+	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;
 	Vector2 m_origin = Vector2::Zero;
 	float m_orientation = 0.0f;

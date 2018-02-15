@@ -644,8 +644,15 @@ void Game::OnDeviceLost()
     CreateResources();
 }
 
-bool Game::SwitchToScene(SceneEnum _scene)
+bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 {
+	m_GSD->objects_in_scene.clear();
+
+	if (_reset)
+	{
+		m_activeScene->Reset();
+	}
+
 	switch (_scene)
 	{
 	case GAME_SCENE:
@@ -664,7 +671,7 @@ void Game::ReadInput()
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
 
 	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
-	m_GSD->m_keyboardState= m_keyboard->GetState();
+	m_GSD->m_keyboardState = m_keyboard->GetState();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -677,14 +684,31 @@ void Game::ReadInput()
 
 		if (m_buttons->view == DirectX::GamePad::ButtonStateTracker::PRESSED)
 		{
-			SwitchToScene(TEST_SCENE);
+			SwitchToScene(TEST_SCENE, true);
 		}
 		if (m_buttons->menu == DirectX::GamePad::ButtonStateTracker::PRESSED)
 		{
-			SwitchToScene(GAME_SCENE);
+			SwitchToScene(GAME_SCENE, true);
 		}
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
+
+	if (m_GSD->m_keyboardState.A && !m_GSD->m_prevKeyboardState.A)
+	{
+		SwitchToScene(GAME_SCENE, true);
+	}
+	if (m_GSD->m_keyboardState.S && !m_GSD->m_prevKeyboardState.S)
+	{
+		SwitchToScene(GAME_SCENE, false);
+	}
+	if (m_GSD->m_keyboardState.D && !m_GSD->m_prevKeyboardState.D)
+	{
+		SwitchToScene(TEST_SCENE, true);
+	}
+	if (m_GSD->m_keyboardState.F && !m_GSD->m_prevKeyboardState.F)
+	{
+		SwitchToScene(TEST_SCENE, false);
+	}
 
 	//Quit if press Esc
 	if (m_GSD->m_keyboardState.Escape)

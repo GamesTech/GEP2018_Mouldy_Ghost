@@ -11,13 +11,17 @@ TestScene::~TestScene()
 {
 }
 
-void TestScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWidth, int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+void TestScene::Initialise(RenderData * _RD,
+	GameStateData * _GSD, int _outputWidth,
+	int _outputHeight,
+	std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	m_RD = _RD;
 	m_GSD = _GSD;
 
 	//GEP::This is where I am creating the test objects
-	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
+	m_cam = new Camera(static_cast<float>(_outputWidth),
+		static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
 
@@ -26,42 +30,32 @@ void TestScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWi
 	test3d->Init();
 	m_3DObjects.push_back(test3d);
 
-	GPGO3D* test3d2 = new GPGO3D(GP_TEAPOT);
-	test3d2->SetPos(10.0f*Vector3::Forward+5.0f*Vector3::Right+Vector3::Down);
-	test3d2->SetScale(5.0f);
-	m_3DObjects.push_back(test3d2);	
-
-	ImageGO2D *test = new ImageGO2D(m_RD, "twist");
-	test->SetOri(45);
-	test->SetPos(Vector2(300, 300));
-	test->CentreOrigin();
-	m_2DObjects.push_back(test);
-
-	test = new ImageGO2D(m_RD, "guides_logo");
-	test->SetPos(Vector2(100, 100));
-	test->SetScale(Vector2(1.0f, 0.5f));
-	test->SetColour(Color(1, 0, 0, 1));
-	m_2DObjects.push_back(test);
-
-	Text2D * test2 = new Text2D("testing text");
+	Text2D * test2 = new Text2D("I am a test scene");
 	m_2DObjects.push_back(test2);
-
-
-	SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
-	test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
-	test3->SetScale(5.0f);
-	m_3DObjects.push_back(test3);
-
-	Loop *loop = new Loop(_audEngine.get(), "NightAmbienceSimple_02");
-	loop->SetVolume(0.1f);
-	loop->Play();
-	m_sounds.push_back(loop);
 
 	TestSound* TS = new TestSound(_audEngine.get(), "Explo1");
 	m_sounds.push_back(TS);
 }
 
-void TestScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+void TestScene::Reset()
+{
+		for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
+		{
+			m_GSD->objects_in_scene[i]->ResetForce(BOTH);
+		}
+		for (int i = 0; i < m_2DObjects.size(); i++)
+		{
+			m_2DObjects[i]->ResetPos();
+		}
+
+		for (int i = 0; i < m_3DObjects.size(); i++)
+		{
+			m_3DObjects[i]->ResetPos();
+		}
+	}
+
+void TestScene::Update(DX::StepTimer const & timer,
+	std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	//this will update the audio engine but give us chance to do somehting else if that isn't working
 	if (!_audEngine->Update())

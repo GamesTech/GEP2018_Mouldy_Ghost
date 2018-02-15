@@ -11,16 +11,28 @@ GameObject2D::~GameObject2D()
 {
 }
 
+void GameObject2D::SetSpawn(Vector2 _pos)
+{
+	m_spawn_pos = _pos;
+	ResetPos();
+}
+
 void GameObject2D::SetPos(Vector2 _pos)
 {
 	m_pos = _pos;
 }
 
+void GameObject2D::ResetPos()
+{
+	if (parent == nullptr)
+	{
+		m_pos = m_spawn_pos;
+	}
+}
+
 void GameObject2D::SetOri(float _ori)
 {
-	m_orientation = _ori;
-
-	
+	m_orientation = _ori;	
 }
 
 void GameObject2D::Tick(GameStateData * _GSD)
@@ -32,22 +44,8 @@ void GameObject2D::Tick(GameStateData * _GSD)
 		{
 			children[i]->SetPos(children[i]->GetPos() + dif);
 		}
-	previous_pos = m_pos;
+		previous_pos = m_pos;
 	}
-
-	//if (m_orientation != previous_ori)
-	//{
-	//	for (int i = 0; i < children.size(); i++)
-	//	{
-	//		children[i]->SetOri(m_orientation);
-
-	//		children[i]->SetPos(children[i]->GetPos() + Vector2::Lerp(previous_pos, m_pos, m_orientation));
-
-	//	}
-	//	previous_ori = m_orientation;
-	//}
-	//
-
 }
 
 std::string GameObject2D::GetName()
@@ -84,7 +82,10 @@ void GameObject2D::SetParent(GameObject2D * newParent)
 
 	parent = newParent;
 	
-	parent->AddChild(this);
+	if (parent != nullptr)
+	{
+		parent->AddChild(this);
+	}
 }
 
 void GameObject2D::AddChild(GameObject2D * object)

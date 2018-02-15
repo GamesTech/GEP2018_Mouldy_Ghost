@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="EventRotate.h" />
     <ClInclude Include="EventScaleUp.h" />
     <ClInclude Include="EventSystem.h" />
@@ -203,6 +204,7 @@
   <ItemGroup>
     <ClCompile Include="BoundingRect.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="EventRotate.cpp" />
     <ClCompile Include="EventScaleUp.cpp" />
     <ClCompile Include="EventSystem.cpp" />

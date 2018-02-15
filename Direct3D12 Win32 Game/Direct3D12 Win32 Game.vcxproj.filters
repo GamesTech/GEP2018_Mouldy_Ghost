@@ -65,6 +65,15 @@
     <Filter Include="Scenes\Source">
       <UniqueIdentifier>{88b49f53-087f-400f-b91b-12ca9623bc4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Characters">
+      <UniqueIdentifier>{3fc6e26a-7a91-4b69-be0b-8831610a77d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Headers">
+      <UniqueIdentifier>{cfc73207-eefc-4bc2-8537-843eb003fd4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Source">
+      <UniqueIdentifier>{bf3dd5a2-9e22-47c9-a969-065b80c42432}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -152,6 +161,9 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="Character.h">
+      <Filter>Characters\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -225,6 +237,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Characters\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

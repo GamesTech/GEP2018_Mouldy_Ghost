@@ -152,6 +152,9 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="EventHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -215,6 +218,9 @@
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
     <ClCompile Include="EventSystem.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">

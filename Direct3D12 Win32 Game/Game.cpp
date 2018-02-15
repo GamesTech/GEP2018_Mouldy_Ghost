@@ -682,14 +682,15 @@ void Game::ReadInput()
 		m_GSD->m_gamePadState[i] = state;
 		m_GSD->m_buttonState[i] = m_buttons[i];
 
-		if (m_buttons->view == DirectX::GamePad::ButtonStateTracker::PRESSED)
+		if (m_event.playerConfirm(m_GSD, i))
 		{
-			SwitchToScene(TEST_SCENE, true);
+			OutputDebugString(L"Jump pressed\n");
 		}
-		if (m_buttons->menu == DirectX::GamePad::ButtonStateTracker::PRESSED)
+		if (m_event.playerBack(m_GSD, i))
 		{
-			SwitchToScene(GAME_SCENE, true);
+			OutputDebugString(L"Back pressed\n");
 		}
+
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 

@@ -11,6 +11,7 @@
 #include "TestScene.h"
 #include "StepTimer.h"
 #include "Audio.h"
+#include "EventHandler.h"
 #include <vector>
 using std::vector;
 
@@ -28,6 +29,7 @@ enum SceneEnum
 class Game
 {
 public:
+	EventHandler m_event;
 
     Game();
     ~Game();

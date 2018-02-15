@@ -1,0 +1,33 @@
+#include "pch.h"
+#include "EventHandler.h"
+#include "GameStateData.h"
+
+EventHandler::EventHandler()
+{
+}
+
+
+EventHandler::~EventHandler()
+{
+}
+
+bool EventHandler::playerConfirm(GameStateData * _GSD, int PlayerIndex)
+{
+	
+	if (_GSD->m_buttonState[PlayerIndex].a == DirectX::GamePad::ButtonStateTracker::PRESSED)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool EventHandler::playerBack(GameStateData * _GSD, int Playerindex)
+{
+	if (_GSD->m_buttonState[Playerindex].b == GamePad::ButtonStateTracker::PRESSED)
+	{
+		return true;
+	}
+	return false;
+}
+
+

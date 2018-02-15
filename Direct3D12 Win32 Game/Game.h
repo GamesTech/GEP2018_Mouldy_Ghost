@@ -9,6 +9,7 @@
 
 #include "StepTimer.h"
 #include "Audio.h"
+#include "EventHandler.h"
 #include <vector>
 using std::vector;
 
@@ -20,6 +21,7 @@ struct GameStateData;
 class Game
 {
 public:
+	EventHandler m_event;
 
     Game();
     ~Game();

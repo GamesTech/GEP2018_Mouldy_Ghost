@@ -8,10 +8,11 @@ public:
 	~EventHandler();
 	bool playerConfirm(GameStateData * _GSD, int playerIndex);
 	bool playerBack(GameStateData * _GSD, int playerIndex);
-	//Input A (player number)
-	//Input B (player number)
+	void sendVibration(GamePad * m_gamePad, int playerIndex, float intensity);
 	//Input X (player number)
 	//Input Y (player number)
+	//Input Start (player number)
+	//Input Select (player number)
 	//Input Left (player number)
 	//Input Right (player number)
 	//Input Up (player number)

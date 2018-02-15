@@ -30,4 +30,9 @@ bool EventHandler::playerBack(GameStateData * _GSD, int Playerindex)
 	return false;
 }
 
+void EventHandler::sendVibration(GamePad * m_gamePad, int playerIndex, float intensity)
+{
+	m_gamePad->SetVibration(playerIndex, intensity, intensity);
+}
+
 

@@ -6,6 +6,8 @@ class EventHandler
 public:
 	EventHandler();
 	~EventHandler();
+	static EventHandler* getInstance();
+
 	bool playerConfirm(GameStateData * _GSD, int playerIndex);
 	bool playerBack(GameStateData * _GSD, int playerIndex);
 	void sendVibration(GamePad * m_gamePad, int playerIndex, float intensity);
@@ -26,5 +28,7 @@ public:
 	//Destroy object?
 	//messaging to the HUD
 
+private:
+	static EventHandler* m_event;
 };
 

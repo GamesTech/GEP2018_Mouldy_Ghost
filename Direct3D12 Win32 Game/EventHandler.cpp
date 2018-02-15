@@ -2,6 +2,8 @@
 #include "EventHandler.h"
 #include "GameStateData.h"
 
+EventHandler* EventHandler::m_event = NULL;
+
 EventHandler::EventHandler()
 {
 }
@@ -9,6 +11,11 @@ EventHandler::EventHandler()
 
 EventHandler::~EventHandler()
 {
+}
+
+EventHandler * EventHandler::getInstance()
+{
+	return m_event;
 }
 
 bool EventHandler::playerConfirm(GameStateData * _GSD, int PlayerIndex)

@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "RenderData.h"
 #include "GameStateData.h"
+#include "EventHandler.h"
 
 extern void ExitGame();
 
@@ -799,14 +800,14 @@ void Game::ReadInput()
 		m_GSD->m_gamePadState[i] = state;
 		m_GSD->m_buttonState[i] = m_buttons[i];
 
-		if (m_event.playerConfirm(m_GSD, i))
+		if (m_event->playerConfirm(m_GSD, i))
 		{
 			OutputDebugString(L"Jump pressed\n");
-			m_event.sendVibration(m_gamePad.get(), i, 1.0f);
+			m_event->sendVibration(m_gamePad.get(), i, 1.0f);
 		}
-		if (m_event.playerBack(m_GSD, i))
+		if (m_event->playerBack(m_GSD, i))
 		{
-			m_event.sendVibration(m_gamePad.get(), i, 0.0f);
+			m_event->sendVibration(m_gamePad.get(), i, 0.0f);
 			OutputDebugString(L"Back pressed\n");
 		}
 

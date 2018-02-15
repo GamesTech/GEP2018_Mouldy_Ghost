@@ -21,7 +21,7 @@ struct GameStateData;
 class Game
 {
 public:
-	EventHandler m_event;
+	EventHandler * m_event = EventHandler::getInstance();
 
     Game();
     ~Game();

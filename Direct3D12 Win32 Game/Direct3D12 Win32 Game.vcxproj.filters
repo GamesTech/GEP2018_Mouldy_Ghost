@@ -152,6 +152,9 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="Platform.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -225,6 +228,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

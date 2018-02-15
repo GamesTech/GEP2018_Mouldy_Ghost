@@ -686,6 +686,10 @@ void Game::ReadInput()
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
+	if (m_GSD->m_keyboardState.M)
+	{
+		int r = 6;
+	}
 	//Quit if press Esc
 	if (m_GSD->m_keyboardState.Escape)
 		PostQuitMessage(0);

@@ -179,6 +179,7 @@
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="Physics2D.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Player2D.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SDKMeshGO3D.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Physics2D.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player2D.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SDKMeshGO3D.cpp" />

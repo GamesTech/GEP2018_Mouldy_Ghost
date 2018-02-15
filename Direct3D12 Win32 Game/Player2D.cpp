@@ -4,7 +4,7 @@
 
 Player2D::Player2D(RenderData* _RD, string _filename):Physics2D(_RD,_filename)
 {
-	SetLimit(Vector2(1200, 700));
+	SetLimit(Vector2(1200, 500));
 
 	CentreOrigin();
 
@@ -68,6 +68,12 @@ void Player2D::Tick(GameStateData * _GSD)
 
 void Player2D::Collision(Physics2D * _collision)
 {
+	if (_collision->GetTag() == GameObjectTag::PLATFORM)
+	{
+		
+		m_vel.y = m_bounciness;
+	}
+
 	//if(_collision.tag == "player")
 	if (_collision->GetPos().x > m_pos.x)
 	{
@@ -77,4 +83,5 @@ void Player2D::Collision(Physics2D * _collision)
 	{
 		m_pos.x++;
 	}
+
 }

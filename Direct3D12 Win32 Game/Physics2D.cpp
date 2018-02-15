@@ -108,6 +108,8 @@ void Physics2D::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 
 void Physics2D::Collision(Physics2D * _collision)
 {
+	_collision->Collision(this);
+	
 }
 
 void Physics2D::CollisionExit(Physics2D * _collision)

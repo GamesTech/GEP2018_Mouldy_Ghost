@@ -47,6 +47,24 @@
     <Filter Include="Game Base\Source">
       <UniqueIdentifier>{c6145a56-6b6a-4cdf-aecf-c59fe5db8df0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EventSystem">
+      <UniqueIdentifier>{1a0c6eb3-73bb-4338-a7e4-fc22ba66fdae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EventSystem\Headers">
+      <UniqueIdentifier>{51ea1b83-3d45-44e8-a912-d04afd184f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EventSystem\Source">
+      <UniqueIdentifier>{f3a3a7fb-7fd5-48b9-b0df-eda561ae47cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{9bce7c62-08ba-4968-9a78-279dfa0296d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Headers">
+      <UniqueIdentifier>{a66e5bc7-6282-412a-9228-227fd48d4245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Source">
+      <UniqueIdentifier>{88b49f53-087f-400f-b91b-12ca9623bc4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -112,6 +130,28 @@
     <ClInclude Include="Physics2D.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="BoundingRect.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EventRotate.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EventScaleUp.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSystem.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTags.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -164,6 +204,27 @@
     </ClCompile>
     <ClCompile Include="Physics2D.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundingRect.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventRotate.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventScaleUp.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSystem.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scenes\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

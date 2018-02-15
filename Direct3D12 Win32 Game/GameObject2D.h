@@ -1,5 +1,7 @@
 #pragma once
 #include "pch.h"
+#include "GameObjectTags.h"
+
 
 //GEP:: Base class for all 2-D objects
 
@@ -20,17 +22,32 @@ public:
 	Color GetColour() { return m_colour; }
 	Vector2 GetScale() { return m_scale; }
 
-	void SetPos(Vector2 _pos) { m_pos = _pos; }
+	void SetPos(Vector2 _pos);
 	void SetOrigin(Vector2 _origin) { m_origin = _origin; }
-	void SetOri(float _ori) { m_orientation = _ori; }
+	void SetOri(float _ori);
 	void SetColour(Color _col) { m_colour = _col; }
 	void SetScale(Vector2 _scale) { m_scale = _scale; }
 
-
 	virtual void CentreOrigin() = 0;
 
-	virtual void Tick(GameStateData* _GSD) {};
+	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD) = 0;
+
+
+	
+	std::string GetName();
+	void SetName(std::string string);
+
+	GameObjectTag GetTag();
+	void SetTag(GameObjectTag tag_);
+
+	GameObject2D* GetParent();
+	void SetParent(GameObject2D* newParent);
+	void AddChild(GameObject2D* object);
+	void RemoveChild(GameObject2D* child);
+
+	
+	
 
 protected:
 	Vector2 m_pos = Vector2::Zero;
@@ -38,6 +55,13 @@ protected:
 	float m_orientation = 0.0f;
 	Color m_colour = Colors::White;
 	Vector2 m_scale = Vector2::One;
+	std::string name = "Ordinary game object 2D";
+	GameObject2D * parent = nullptr;
+	std::vector<GameObject2D*>children;
+	GameObjectTag tag = GameObjectTag::UNTAGGED;
+
+	Vector2 previous_pos = Vector2::Zero;
+	float previous_ori = 0.0f;
 
 };
 

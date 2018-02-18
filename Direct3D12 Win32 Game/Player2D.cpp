@@ -39,7 +39,7 @@ void Player2D::Tick(GameStateData * _GSD)
 
 //GEP:: Lets go up the inheritence and share our functionality
 
-	m_physics->Tick(_GSD, m_pos);
+	m_physics->Tick(_GSD, m_pos, this);
 
 	GameObject2D::Tick(_GSD);
 
@@ -67,10 +67,10 @@ void Player2D::Tick(GameStateData * _GSD)
 	}
 }
 
-void Player2D::Collision(GameObject2D * _collision)
+void Player2D::Collision(Physics2D * _collision)
 {
 	//if(_collision.tag == "player")
-	if (_collision->GetPos().x > m_pos.x)
+	if (_collision->GetRectangle()->GetOriginPoint().x > m_pos.x)
 	{
 		m_pos.x--;
 	}

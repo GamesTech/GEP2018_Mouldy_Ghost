@@ -30,7 +30,7 @@ public:
 	void SetControllerID(int _ID) { m_controllerID = _ID; }
 	const int GetControllerID() { return m_controllerID; }
 
-	virtual void Collision(GameObject2D* _collision);
+	virtual void Collision(Physics2D* _collision) override;
 
 protected:
 	float m_drive = 1.0f;

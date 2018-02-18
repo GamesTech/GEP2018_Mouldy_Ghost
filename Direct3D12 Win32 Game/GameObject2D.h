@@ -51,6 +51,11 @@ public:
 	void AddChild(GameObject2D* object);
 	void RemoveChild(GameObject2D* child);
 
+
+	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal);
+	virtual void Collision(Physics2D* _collision);
+	virtual void CollisionExit(Physics2D* _collision);
+
 protected:
 	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;

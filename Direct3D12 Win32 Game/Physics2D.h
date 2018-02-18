@@ -31,18 +31,14 @@ public:
 	void SetGrav(float _grav) { m_gravity_scale = _grav; }
 	const float GetGrav() { return m_gravity_scale; }
 
-	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
+	virtual void Tick(GameStateData* _GSD, Vector2& _pos, GameObject2D* _owner);
 	
 	void SetBoundingRect(BoundingRect* _bounding_rect)
 	{ m_bounding_rect = _bounding_rect; }
 	BoundingRect* GetRectangle() { return m_bounding_rect; }
-	void MoveBoundingRect(Vector2 _pos) { m_bounding_rect->SetTopLeft(_pos); }
+	void MoveBoundingRect(Vector2 _pos) { m_bounding_rect->SetOriginPoint(_pos); }
 
 	bool isColliding(Physics2D* _object, Vector2 &_normal);
-
-	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal);
-	virtual void Collision(Physics2D* _collision);
-	virtual void CollisionExit(Physics2D* _collision);
 
 protected:
 	BoundingRect* m_bounding_rect;

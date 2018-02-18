@@ -155,6 +155,12 @@
     <ClInclude Include="EventHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingCircle.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
@@ -234,6 +240,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundingCircle.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

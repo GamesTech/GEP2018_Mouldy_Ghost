@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GameObject2D.h"
+#include "Physics2D.h"
 
 
 GameObject2D::GameObject2D()
@@ -105,4 +106,16 @@ void GameObject2D::RemoveChild(GameObject2D * child)
 			children.erase(children.begin() + i);
 		}
 	}
+}
+
+void GameObject2D::CollisionEnter(Physics2D * _collision, Vector2 _normal)
+{
+}
+
+void GameObject2D::Collision(Physics2D * _collision)
+{
+}
+
+void GameObject2D::CollisionExit(Physics2D * _collision)
+{
 }

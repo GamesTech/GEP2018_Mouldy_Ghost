@@ -29,7 +29,6 @@ enum SceneEnum
 class Game
 {
 public:
-	EventHandler m_event;
 
     Game();
     ~Game();

@@ -1,5 +1,4 @@
 #pragma once
-#include "ImageGO2D.h"
 #include "BoundingRect.h"
 
 const float m_gravity = 9.8f;
@@ -12,8 +11,7 @@ enum Axis
 };
 
 //GEP:: Euler Integration Solve for VERY Basic 2D physics
-class Physics2D :
-	public ImageGO2D
+class Physics2D
 {
 public:
 	Physics2D(RenderData* _RD, string _filename);
@@ -30,12 +28,15 @@ public:
 	float GetDrag() { return m_drag; }
 	void SetBounce(float _bounce) { m_bounciness = _bounce; }
 	const float GetBounce() { return m_bounciness; }
+	void SetGrav(float _grav) { m_gravity_scale = _grav; }
+	const float GetGrav() { return m_gravity_scale; }
 
-	virtual void Tick(GameStateData* _GSD);
+	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
 	void SetBoundingRect(BoundingRect* _bounding_rect)
 	{ m_bounding_rect = _bounding_rect; }
 	BoundingRect* GetRectangle() { return m_bounding_rect; }
+	void MoveBoundingRect(Vector2 _pos) { m_bounding_rect->SetTopLeft(_pos); }
 
 	bool isColliding(Physics2D* _object, Vector2 &_normal);
 
@@ -45,7 +46,7 @@ public:
 
 protected:
 	BoundingRect* m_bounding_rect;
-	std::vector<GameObject2D*> currently_colliding;
+	std::vector<Physics2D*> currently_colliding;
 
 	Vector2 m_vel;
 	Vector2 m_acc;
@@ -56,4 +57,3 @@ protected:
 	float m_gravity_scale;
 	float m_bounciness;
 };
-

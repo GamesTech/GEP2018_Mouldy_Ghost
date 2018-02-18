@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "Physics2D.h"
 
 //GEP:: Basic data of current GameState to communicate to all Game Objects
 

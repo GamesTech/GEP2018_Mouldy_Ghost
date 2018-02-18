@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pch.h"
+
 class BoundingRect
 {
 public:
@@ -11,9 +13,6 @@ public:
 	void SetTopLeft(Vector2 _top_left) { top_left = _top_left; }
 
 protected:
-	const Vector2 GetCollisionNormal
-	(Vector2 top_left, Vector2 bottom_right, Vector2 contact);
-
 	int width;
 	int height;
 	Vector2 top_left;

@@ -1,10 +1,11 @@
 #pragma once
-#include "Physics2D.h"
+
+#include "pch.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
-class Player2D :
-	public Physics2D
+class Player2D
+	: public ImageGO2D
 {
 public:
 
@@ -29,7 +30,7 @@ public:
 	void SetControllerID(int _ID) { m_controllerID = _ID; }
 	const int GetControllerID() { return m_controllerID; }
 
-	virtual void Collision(Physics2D* _collision);
+	virtual void Collision(GameObject2D* _collision);
 
 protected:
 	float m_drive = 1.0f;

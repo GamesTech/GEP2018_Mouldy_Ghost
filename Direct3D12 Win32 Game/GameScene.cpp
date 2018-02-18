@@ -35,19 +35,21 @@ void GameScene::Initialise(RenderData * _RD,
 		testPlay->SetOrigin(Vector2(100, 100));
 		testPlay->SetControllerID(i);
 		testPlay->SetDrive(100.0f);
-		testPlay->SetDrag(0.5f);
-		testPlay->SetMass(1 + i);
 		testPlay->SetMoveSpeed(3 - (1 * i));
 		testPlay->SetJumpHeight(200 + (200 * i));
-		testPlay->SetBounce(0.4f);
+		
+		testPlay->GetPhysics()->SetDrag(0.5f);
+		testPlay->GetPhysics()->SetMass(1 + i);
+		testPlay->GetPhysics()->SetBounce(0.4f);
 
-		BoundingRect* rect = new BoundingRect
-		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
+		float x_size = testPlay->TextureSize().x;
+		float y_size = testPlay->TextureSize().y;
+		BoundingRect* rect = new BoundingRect(testPlay->GetPos(), x_size, y_size);
 
-		testPlay->SetBoundingRect(rect);
+		testPlay->GetPhysics()->SetBoundingRect(rect);
 
 		m_2DObjects.push_back(testPlay);
-		m_GSD->objects_in_scene.push_back(testPlay);
+		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
 	}
 
 	ImageGO2D *test = new ImageGO2D(m_RD, "twist");

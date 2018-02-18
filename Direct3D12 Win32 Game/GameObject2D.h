@@ -10,6 +10,9 @@ using namespace DirectX::SimpleMath;
 struct RenderData;
 struct GameStateData;
 
+class ImageGO2D;
+class Physics2D;
+
 class GameObject2D
 {
 public:
@@ -31,6 +34,8 @@ public:
 	void SetScale(Vector2 _scale) { m_scale = _scale; }
 
 	virtual void CentreOrigin() = 0;
+	
+	Physics2D* GetPhysics() { return m_physics; }
 
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD) = 0;
@@ -61,5 +66,6 @@ protected:
 	Vector2 previous_pos = Vector2::Zero;
 	float previous_ori = 0.0f;
 
+	Physics2D* m_physics;
 };
 

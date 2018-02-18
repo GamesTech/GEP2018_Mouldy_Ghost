@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "RenderData.h"
 #include "GameStateData.h"
+#include "TestScene.h"
 #include "EventHandler.h"
 
 extern void ExitGame();
@@ -35,27 +36,9 @@ Game::~Game()
     // Ensure that the GPU is no longer referencing resources that are about to be destroyed.
     WaitForGpu();
 
-	//delete the GO2Ds
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		delete (*it);
-	}
-	m_2DObjects.clear();
-	//delete the GO3Ds
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		delete (*it);
-	}
-	m_3DObjects.clear();
-	//delete the sounds
-	for (vector<Sound *>::iterator it = m_sounds.begin(); it != m_sounds.end(); it++)
-	{
-		delete (*it);
-	}
-	m_sounds.clear();
-
 	delete m_RD;
 	delete m_GSD;
+	delete m_activeScene;
 
 	m_keyboard.reset();
 	m_mouse.reset();
@@ -152,71 +135,12 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
 
-//GEP::This is where I am creating the test objects
-	m_cam = new Camera(static_cast<float>(m_outputWidth), static_cast<float>(m_outputHeight), 1.0f, 1000.0f);
-	m_RD->m_cam = m_cam;
-	m_3DObjects.push_back(m_cam);
+	m_gameScene = new GameScene();
+	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_testScene = new TestScene();
+	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
-	TestPBGO3D* test3d = new TestPBGO3D();
-	test3d->SetScale(5.0f);
-	test3d->Init();
-	m_3DObjects.push_back(test3d);
-
-	//GPGO3D* test3d2 = new GPGO3D(GP_TEAPOT);
-	//test3d2->SetPos(10.0f*Vector3::Forward+5.0f*Vector3::Right+Vector3::Down);
-	//test3d2->SetScale(5.0f);
-	//m_3DObjects.push_back(test3d2);	
-
-	//ImageGO2D *test = new ImageGO2D(m_RD, "twist");
-	//test->SetOri(45);
-	//test->SetPos(Vector2(300, 300));
-	//test->CentreOrigin();
-	//m_2DObjects.push_back(test);
-	//test = new ImageGO2D(m_RD,"guides_logo");
-	//test->SetPos(Vector2(100, 100));
-	//test->SetScale(Vector2(1.0f,0.5f));
-	//test->SetColour(Color(1, 0, 0, 1));
-	//m_2DObjects.push_back(test);
-
-	//Text2D * test2 = new Text2D("testing text");
-	//m_2DObjects.push_back(test2);
-
-	for (int i = 0; i < 2; i++)
-	{
-		Player2D* testPlay = new Player2D(m_RD, "gens");
-		testPlay->SetPos(Vector2(i * 400, 100));
-		testPlay->SetOrigin(Vector2(100, 100));
-		testPlay->SetControllerID(i);
-		testPlay->SetDrive(100.0f);
-		testPlay->SetDrag(0.5f);
-		testPlay->SetMass(1 + i);
-		testPlay->SetMoveSpeed(3 - (1 * i));
-		testPlay->SetJumpHeight(200 + (200 * i));
-		testPlay->SetBounce(0.4f);
-		int screen_x, screen_y;
-		GetDefaultSize(screen_x, screen_y);
-		testPlay->SetLimit(Vector2(screen_x, screen_y));
-
-		BoundingRect* rect = new BoundingRect(Vector2(i * 400, 100), 100, 100);
-
-		testPlay->SetBoundingRect(rect);
-
-		m_2DObjects.push_back(testPlay);
-		m_GSD->objects_in_scene.push_back(testPlay);
-	}
-
-	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
-	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
-	//test3->SetScale(5.0f);
-	//m_3DObjects.push_back(test3);
-
-	//Loop *loop = new Loop(m_audEngine.get(), "NightAmbienceSimple_02");
-	//loop->SetVolume(0.1f);
-	//loop->Play();
-	//m_sounds.push_back(loop);
-
-	//TestSound* TS = new TestSound(m_audEngine.get(), "Explo1");
-	//m_sounds.push_back(TS);
+	m_activeScene = m_gameScene;
 }
 
 //GEP:: Executes the basic game loop.
@@ -236,33 +160,7 @@ void Game::Update(DX::StepTimer const& timer)
 	ReadInput();
     m_GSD->m_dt = float(timer.GetElapsedSeconds());
 
-	//this will update the audio engine but give us chance to do somehting else if that isn't working
-	if (!m_audEngine->Update())
-	{
-		if (m_audEngine->IsCriticalError())
-		{
-			// We lost the audio device!
-		}
-	}
-	else
-	{
-		//update sounds playing
-		for (vector<Sound *>::iterator it = m_sounds.begin(); it != m_sounds.end(); it++)
-		{
-			(*it)->Tick(m_GSD);
-		}
-	}
-
-    //Add your game logic here.
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		(*it)->Tick(m_GSD);
-	}
-
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		(*it)->Tick(m_GSD);
-	}
+	m_activeScene->Update(timer, m_audEngine);
 }
 
 //GEP:: Draws the scene.
@@ -280,44 +178,7 @@ void Game::Render()
 
 //draw each type of 3D objects
 
-	//primative batch
-	m_RD->m_effect->SetProjection(m_cam->GetProj());
-	m_RD->m_effect->SetView(m_cam->GetView());
-	m_RD->m_effect->Apply(m_commandList.Get());
-	m_RD->m_effect->EnableDefaultLighting();
-	m_RD->m_batch->Begin(m_commandList.Get());
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if( (*it)->GetType()== GO3D_RT_PRIM )(*it)->Render(m_RD);
-	}
-	m_RD->m_batch->End();
-
-	//Render Geometric Primitives
-	m_RD->m_GPeffect->SetProjection(m_cam->GetProj());
-	m_RD->m_GPeffect->SetView(m_cam->GetView());
-	m_RD->m_GPeffect->Apply(m_commandList.Get());
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_GEOP)(*it)->Render(m_RD);
-	}
-
-	//Render VBO Models	
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_SDK)(*it)->Render(m_RD);
-	}
-
-	//finally draw all 2D objects
-	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
-	m_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
-	m_RD->m_spriteBatch->Begin(m_commandList.Get());
-
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		(*it)->Render(m_RD);
-	}
-
-	m_RD->m_spriteBatch->End();
+	m_activeScene->Render(m_commandList);	
 
     // Show the new frame.
     Present();
@@ -784,12 +645,34 @@ void Game::OnDeviceLost()
     CreateResources();
 }
 
+bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
+{
+	m_GSD->objects_in_scene.clear();
+
+	if (_reset)
+	{
+		m_activeScene->Reset();
+	}
+
+	switch (_scene)
+	{
+	case GAME_SCENE:
+		m_activeScene = m_gameScene;
+		return true;
+	case TEST_SCENE:
+		m_activeScene = m_testScene;
+		return true;
+	default:
+		return false;
+	}
+}
+
 void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
 
 	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
-	m_GSD->m_keyboardState= m_keyboard->GetState();
+	m_GSD->m_keyboardState = m_keyboard->GetState();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -813,6 +696,23 @@ void Game::ReadInput()
 
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
+
+	if (m_GSD->m_keyboardState.A && !m_GSD->m_prevKeyboardState.A)
+	{
+		SwitchToScene(GAME_SCENE, true);
+	}
+	if (m_GSD->m_keyboardState.S && !m_GSD->m_prevKeyboardState.S)
+	{
+		SwitchToScene(GAME_SCENE, false);
+	}
+	if (m_GSD->m_keyboardState.D && !m_GSD->m_prevKeyboardState.D)
+	{
+		SwitchToScene(TEST_SCENE, true);
+	}
+	if (m_GSD->m_keyboardState.F && !m_GSD->m_prevKeyboardState.F)
+	{
+		SwitchToScene(TEST_SCENE, false);
+	}
 
 	//Quit if press Esc
 	if (m_GSD->m_keyboardState.Escape)

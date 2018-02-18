@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "GameScene.h"
+#include "TestScene.h"
 #include "StepTimer.h"
 #include "Audio.h"
 #include "EventHandler.h"
@@ -15,6 +17,12 @@ using std::vector;
 
 struct RenderData;
 struct GameStateData;
+
+enum SceneEnum
+{
+	GAME_SCENE,
+	TEST_SCENE
+};
 
 // A basic game implementation that creates a D3D12 device and
 // provides a game loop.
@@ -61,6 +69,8 @@ private:
 
     void OnDeviceLost();
 
+	bool SwitchToScene(SceneEnum _scene, bool _reset);
+
     // Application state
     HWND                                                m_window;
     int                                                 m_outputWidth;
@@ -92,14 +102,13 @@ private:
 
 	std::unique_ptr<DirectX::GraphicsMemory> m_graphicsMemory;
 
-	vector<GameObject3D*> m_3DObjects;
-	vector<GameObject2D*> m_2DObjects;
-	vector<Sound*> m_sounds;
-
 	RenderData* m_RD;
-	Camera* m_cam;
 
 	GameStateData* m_GSD;
+
+	Scene* m_activeScene;
+	GameScene* m_gameScene;
+	TestScene* m_testScene;
 
 	//GEP:: Keyboard and Mouse Abstractions for basic input system
 	void ReadInput();

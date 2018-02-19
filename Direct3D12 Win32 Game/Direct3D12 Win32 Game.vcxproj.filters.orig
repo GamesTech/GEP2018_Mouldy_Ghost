@@ -152,20 +152,19 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectTags.h" />
-    <ClInclude Include="Platform.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="EventHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Events.h">
+      <Filter>EventSystem</Filter>
+=======
     <ClInclude Include="Collider.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="BoundingCircle.h">
       <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Events.h">
-      <Filter>EventSystem</Filter>
+>>>>>>> 5c0f6ae761991b49eed9644d320c0cb70d816b13
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -243,9 +242,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="BoundingCircle.cpp">
       <Filter>GameObjects\2D\Source</Filter>

@@ -51,29 +51,28 @@ void GameScene::Initialise(RenderData * _RD,
 	for (int i = 0; i < 1; i++)
 	{
 		Player2D* testPlay = new Player2D(m_RD, "gens");
-		testPlay->SetPos(Vector2( 200, 100));
+		testPlay->SetSpawn(Vector2(i * 400, 100));
 		testPlay->SetOrigin(Vector2(100, 100));
 		testPlay->SetControllerID(i);
 		testPlay->SetDrive(100.0f);
-		testPlay->SetDrag(0.5f);
-		testPlay->SetMass(1 + i);
 		testPlay->SetMoveSpeed(3 - (1 * i));
 		testPlay->SetJumpHeight(200 + (200 * i));
-		testPlay->SetBounce(0.4f);
+		
+		testPlay->GetPhysics()->SetDrag(0.5f);
+		testPlay->GetPhysics()->SetMass(1 + i);
+		testPlay->GetPhysics()->SetBounce(0.4f);
 
 		BoundingRect* rect = new BoundingRect
+		float x_size = testPlay->TextureSize().x;
 		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
 		/*test->SetParent(testPlay);*/
+		float y_size = testPlay->TextureSize().y;
+		BoundingRect* rect = new BoundingRect(testPlay->GetPos(), x_size, y_size);
 
-		/*SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
-		test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
-		test3->SetScale(5.0f);
-		m_3DObjects.push_back(test3);*/
-
-		testPlay->SetBoundingRect(rect);
+		testPlay->GetPhysics()->SetBoundingRect(rect);
 
 		m_2DObjects.push_back(testPlay);
-		m_GSD->objects_in_scene.push_back(testPlay);
+		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
 
 
 	}
@@ -94,13 +93,31 @@ void GameScene::Initialise(RenderData * _RD,
 	//test3->SetScale(5.0f);
 	//m_3DObjects.push_back(test3);
 
-	//Loop *loop = new Loop(m_audEngine.get(), "NightAmbienceSimple_02");
-	//loop->SetVolume(0.1f);
-	//loop->Play();
-	//m_sounds.push_back(loop);
+	test = new ImageGO2D(m_RD, "guides_logo");
+	test->SetSpawn(Vector2(100, 100));
+	test->SetScale(Vector2(1.0f, 0.5f));
+	test->SetColour(Color(1, 0, 0, 1));
 
-	//TestSound* TS = new TestSound(m_audEngine.get(), "Explo1");
-	//m_sounds.push_back(TS);
+	m_2DObjects.push_back(test);
+
+	test->SetParent(m_2DObjects[0]);
+}
+
+void GameScene::Reset()
+{
+	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
+	{
+		m_GSD->objects_in_scene[i]->ResetForce(BOTH);
+	}
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		m_2DObjects[i]->ResetPos();
+	}
+
+	for (int i = 0; i < m_3DObjects.size(); i++)
+	{
+		m_3DObjects[i]->ResetPos();
+	}
 }
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)

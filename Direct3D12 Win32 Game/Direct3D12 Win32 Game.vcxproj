@@ -170,9 +170,13 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BoundingCircle.h" />
     <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventRotate.h" />
+    <ClInclude Include="Events.h" />
     <ClInclude Include="EventScaleUp.h" />
     <ClInclude Include="EventSystem.h" />
     <ClInclude Include="GameScene.h" />
@@ -202,8 +206,10 @@
     <ClInclude Include="GameStateData.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoundingCircle.cpp" />
     <ClCompile Include="BoundingRect.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventRotate.cpp" />
     <ClCompile Include="EventScaleUp.cpp" />
     <ClCompile Include="EventSystem.cpp" />

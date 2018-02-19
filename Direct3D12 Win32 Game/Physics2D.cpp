@@ -3,13 +3,14 @@
 #include "GameStateData.h"
 
 
-Physics2D::Physics2D(RenderData* _RD, string _filename):ImageGO2D(_RD,_filename)
+Physics2D::Physics2D(RenderData* _RD, string _filename)
 {
 }
 
 
 Physics2D::~Physics2D()
 {
+	delete m_bounding_rect;
 }
 
 void Physics2D::ResetForce(Axis _axis)
@@ -36,17 +37,17 @@ void Physics2D::ResetForce(Axis _axis)
 }
 
 //GEP:: Basic Euler Solver for point mass 
-void Physics2D::Tick(GameStateData * _GSD)
+void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos, GameObject2D* _owner)
 {
 	//VERY Basic idea of drag i.e. the faster I go the more I get pulled back
 	m_acc -= m_drag * m_vel;
 
-	Vector2 newPos = m_pos + _GSD->m_dt * m_vel;
+	Vector2 newPos = _pos + _GSD->m_dt * m_vel;
 	Vector2 newVel = m_vel + _GSD->m_dt * m_acc;
 
 	newVel.y += m_gravity_scale * m_gravity;
 
-	m_pos = newPos;
+	_pos = newPos;
 	m_vel = newVel;
 	m_acc = Vector2::Zero;
 
@@ -61,7 +62,7 @@ void Physics2D::Tick(GameStateData * _GSD)
 			Vector2 normal;
 			if (m_bounding_rect->IsColliding(object->GetRectangle(), normal))
 			{
-				Collision(object);
+				_owner->Collision(object);
 
 				//check whether this object was being collided with on the last tick
 				bool on_list = false;
@@ -76,7 +77,7 @@ void Physics2D::Tick(GameStateData * _GSD)
 				if (!on_list)
 				{
 					currently_colliding.push_back(object);
-					CollisionEnter(object, normal);
+					_owner->CollisionEnter(object, normal);
 				}
 			}
 			else
@@ -88,7 +89,7 @@ void Physics2D::Tick(GameStateData * _GSD)
 					if (currently_colliding[j] == object)
 					{
 						//collision exit and remove it from the list
-						CollisionExit(object);
+						_owner->CollisionExit(object);
 						currently_colliding.erase(currently_colliding.begin() + j);
 					}
 				}
@@ -100,18 +101,4 @@ void Physics2D::Tick(GameStateData * _GSD)
 bool Physics2D::isColliding(Physics2D* _object, Vector2 &_normal)
 {
 	return m_bounding_rect->IsColliding(_object->GetRectangle(), _normal);
-}
-
-void Physics2D::CollisionEnter(Physics2D * _collision, Vector2 _normal)
-{
-}
-
-void Physics2D::Collision(Physics2D * _collision)
-{
-	_collision->Collision(this);
-	
-}
-
-void Physics2D::CollisionExit(Physics2D * _collision)
-{
 }

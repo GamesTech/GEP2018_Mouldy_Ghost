@@ -11,6 +11,7 @@
 #include "TestScene.h"
 #include "StepTimer.h"
 #include "Audio.h"
+#include "EventHandler.h"
 #include <vector>
 using std::vector;
 
@@ -67,7 +68,7 @@ private:
 
     void OnDeviceLost();
 
-	bool SwitchToScene(SceneEnum _scene);
+	bool SwitchToScene(SceneEnum _scene, bool _reset);
 
     // Application state
     HWND                                                m_window;

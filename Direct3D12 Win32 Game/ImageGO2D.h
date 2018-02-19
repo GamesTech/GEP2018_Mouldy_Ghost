@@ -10,8 +10,8 @@ struct RenderData;
 // Based on this part of the DirectXTK12 wiki documentation
 //https://github.com/Microsoft/DirectXTK12/wiki/Sprites-and-textures 
 
-class ImageGO2D :
-	public GameObject2D
+class ImageGO2D
+	: public GameObject2D
 {
 public:
 	ImageGO2D(RenderData* _RD, string _filename);

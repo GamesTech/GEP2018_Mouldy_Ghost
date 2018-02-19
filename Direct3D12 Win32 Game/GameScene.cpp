@@ -51,7 +51,7 @@ void GameScene::Initialise(RenderData * _RD,
 	for (int i = 0; i < 2; i++)
 	{
 		Player2D* testPlay = new Player2D(m_RD, "gens");
-		testPlay->SetSpawn(Vector2(i * 400, 100));
+		testPlay->SetSpawn(Vector2(i * 400+400, 100));
 		testPlay->SetOrigin(Vector2(100, 100));
 		testPlay->SetControllerID(i);
 		testPlay->SetDrive(100.0f);
@@ -78,14 +78,21 @@ void GameScene::Initialise(RenderData * _RD,
 	}
 
 	Platform* testplatform = new Platform(m_RD, "twist");
-	testplatform->SetPos(Vector2(200, 400));
-	testplatform->CentreOrigin();
+	
+	testplatform->SetPos(Vector2(400, 400));
+	//testplatform->SetScale(Vector2(2, 0.2));
+	//testplatform->CentreOrigin();
 
 	BoundingRect* rect = new BoundingRect
-	(testplatform->GetPos(), testplatform->TextureSize().x, testplatform->TextureSize().y);
+	(testplatform->GetPos(), 
+		testplatform->TextureSize().x ,
+		testplatform->TextureSize().y );
+	/*testplatform->CentreOrigin();*/
 	
-	testplatform->GetPhysics()->GetDrag();
+	testplatform->GetPhysics()->SetBoundingRect(rect);
+	
 	m_2DObjects.push_back(testplatform);
+	m_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
 	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
 	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);

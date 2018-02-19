@@ -84,6 +84,15 @@ void TestScene::Update(DX::StepTimer const & timer,
 	{
 		(*it)->Tick(m_GSD);
 	}
+
+	/*for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		Vector2 temp = m_2DObjects[i]->GetOrigin();
+		m_2DObjects[i]->SetOrigin(Vector2(0, 0));
+		m_2DObjects[i]->SetScale(m_2DObjects[i]->GetScale() + Vector2(0.01, 0.01));
+		m_2DObjects[i]->SetOrigin(temp);
+	}*/
+	//no idea if this works, will check later
 }
 
 void TestScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)

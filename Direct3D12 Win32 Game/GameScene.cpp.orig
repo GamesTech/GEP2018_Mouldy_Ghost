@@ -28,6 +28,7 @@ void GameScene::Initialise(RenderData * _RD,
 	test3d->Init();
 	m_3DObjects.push_back(test3d);
 
+<<<<<<< HEAD
 	//GPGO3D* test3d2 = new GPGO3D(GP_TEAPOT);
 	//test3d2->SetPos(10.0f*Vector3::Forward+5.0f*Vector3::Right+Vector3::Down);
 	//test3d2->SetScale(5.0f);
@@ -48,10 +49,16 @@ void GameScene::Initialise(RenderData * _RD,
 	//Text2D * test2 = new Text2D("testing text");
 	//m_2DObjects.push_back(test2);
 
+	for (int i = 0; i < 1; i++)
+	{
+		Player2D* testPlay = new Player2D(m_RD, "gens");
+		testPlay->SetPos(Vector2( 200, 100));
+=======
 	for (int i = 0; i < 2; i++)
 	{
 		Player2D* testPlay = new Player2D(m_RD, "gens");
 		testPlay->SetSpawn(Vector2(i * 400, 100));
+>>>>>>> d6200e1573e341cd4d6c38e3fdd6385143d18842
 		testPlay->SetOrigin(Vector2(100, 100));
 		testPlay->SetControllerID(i);
 		testPlay->SetDrive(100.0f);
@@ -62,17 +69,20 @@ void GameScene::Initialise(RenderData * _RD,
 		testPlay->GetPhysics()->SetMass(1 + i);
 		testPlay->GetPhysics()->SetBounce(0.4f);
 
-		
-		float x_size = testPlay->TextureSize().x;
+<<<<<<< HEAD
+		BoundingRect* rect = new BoundingRect
 		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
 		/*test->SetParent(testPlay);*/
-		float y_size = testPlay->TextureSize().y;
-		BoundingRect* rect = new BoundingRect(testPlay->GetPos(), x_size, y_size);
 
-		testPlay->GetPhysics()->SetBoundingRect(rect);
+		/*SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
+		test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
+		test3->SetScale(5.0f);
+		m_3DObjects.push_back(test3);*/
+
+		testPlay->SetBoundingRect(rect);
 
 		m_2DObjects.push_back(testPlay);
-		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
+		m_GSD->objects_in_scene.push_back(testPlay);
 
 
 	}
@@ -84,23 +94,41 @@ void GameScene::Initialise(RenderData * _RD,
 	BoundingRect* rect = new BoundingRect
 	(testplatform->GetPos(), testplatform->TextureSize().x, testplatform->TextureSize().y);
 	
-	testplatform->GetPhysics()->GetDrag();
+
+	testplatform->SetBoundingRect(rect);
 	m_2DObjects.push_back(testplatform);
 
 	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
 	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
 	//test3->SetScale(5.0f);
 	//m_3DObjects.push_back(test3);
+=======
+		float x_size = testPlay->TextureSize().x;
+		float y_size = testPlay->TextureSize().y;
+		BoundingRect* rect = new BoundingRect(testPlay->GetPos(), x_size, y_size);
 
-	//test = new ImageGO2D(m_RD, "guides_logo");
-	//test->SetSpawn(Vector2(100, 100));
-	//test->SetScale(Vector2(1.0f, 0.5f));
-	//test->SetColour(Color(1, 0, 0, 1));
+		testPlay->GetPhysics()->SetBoundingRect(rect);
 
-	//m_2DObjects.push_back(test);
+		m_2DObjects.push_back(testPlay);
+		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
+	}
 
-	/*test->SetParent(m_2DObjects[0]);*/
+	ImageGO2D *test = new ImageGO2D(m_RD, "twist");
+	test->SetOri(45);
+	test->SetSpawn(Vector2(300, 300));
+	test->CentreOrigin();
+	m_2DObjects.push_back(test);
+
+	test = new ImageGO2D(m_RD, "guides_logo");
+	test->SetSpawn(Vector2(100, 100));
+	test->SetScale(Vector2(1.0f, 0.5f));
+	test->SetColour(Color(1, 0, 0, 1));
+
+	m_2DObjects.push_back(test);
+
+	test->SetParent(m_2DObjects[0]);
 }
+>>>>>>> d6200e1573e341cd4d6c38e3fdd6385143d18842
 
 void GameScene::Reset()
 {

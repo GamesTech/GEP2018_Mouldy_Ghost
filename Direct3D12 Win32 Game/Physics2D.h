@@ -30,8 +30,10 @@ public:
 	const float GetBounce() { return m_bounciness; }
 	void SetGrav(float _grav) { m_gravity_scale = _grav; }
 	const float GetGrav() { return m_gravity_scale; }
+	void SetOwner(GameObject2D* _owner) { owner = _owner; }
+	GameObject2D* GetOwner() { return owner; }
 
-	virtual void Tick(GameStateData* _GSD, Vector2& _pos, GameObject2D* _owner);
+	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
 	void SetBoundingRect(BoundingRect* _bounding_rect)
 	{ m_bounding_rect = _bounding_rect; }
@@ -41,7 +43,9 @@ public:
 	bool isColliding(Physics2D* _object, Vector2 &_normal);
 
 protected:
-	BoundingRect* m_bounding_rect;
+	GameObject2D* owner = nullptr;
+
+	BoundingRect* m_bounding_rect = nullptr;
 	std::vector<Physics2D*> currently_colliding;
 
 	Vector2 m_vel;

@@ -1,7 +1,7 @@
 #pragma once
 #include "Physics2D.h"
 
-class Platform : public Physics2D
+class Platform : public ImageGO2D
 {
 public:
 	//using Physics2D::Physics2D;
@@ -9,6 +9,5 @@ public:
 	~Platform();
 
 private:
-
 };
 

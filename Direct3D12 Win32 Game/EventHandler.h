@@ -1,12 +1,17 @@
 #include "GamePad.h"
 #include "GameStateData.h"
+#include "Events.h"
 #pragma once
+
+class GameObject2D;
+
 class EventHandler
 {
 public:
 	EventHandler();
 	~EventHandler();
 
+	virtual void onNotify(GameObject2D* entity_, Event event_) = 0;
 	//this is a base class for other eventhandlers/listeners
 	//the reason I have made this empty base class is so that 
 	//so that listeners can be placed into a vector for every gameobject that need it
@@ -18,6 +23,8 @@ public:
 	//collision handler
 	//HUD handler
 	//achievement handler
+	//music handler
+	//sound effect handler
 	
 
 	//every gameobject has it's relevent listeners/observer

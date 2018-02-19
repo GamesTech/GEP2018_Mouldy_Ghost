@@ -180,6 +180,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="Loop.h" />
+    <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="Player2D.h" />
     <ClInclude Include="Scene.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Loop.cpp" />
+    <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Player2D.cpp" />
     <ClCompile Include="Scene.cpp" />

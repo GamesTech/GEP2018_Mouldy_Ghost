@@ -6,7 +6,7 @@ class BoundingRect
 	: public Collider
 {
 public:
-	BoundingRect(Vector2 _top_left, int _width, int _height);
+	BoundingRect(Vector2 _center, int _width, int _height);
 	~BoundingRect();
 
 	virtual bool IsColliding(Collider* _object, Vector2 &_center);

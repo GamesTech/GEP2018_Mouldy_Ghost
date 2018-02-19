@@ -51,7 +51,7 @@ void GameScene::Initialise(RenderData * _RD,
 	for (int i = 0; i < 2; i++)
 	{
 		Player2D* testPlay = new Player2D(m_RD, "gens");
-		testPlay->SetSpawn(Vector2(i * 400, 100));
+		testPlay->SetSpawn(Vector2(400, 100 + (i * 300)));
 		testPlay->SetOrigin(Vector2(100, 100));
 		testPlay->SetControllerID(i);
 		testPlay->SetDrive(100.0f);
@@ -69,7 +69,7 @@ void GameScene::Initialise(RenderData * _RD,
 		float y_size = testPlay->TextureSize().y;
 		BoundingRect* rect = new BoundingRect(testPlay->GetPos(), x_size, y_size);
 
-		testPlay->GetPhysics()->SetBoundingRect(rect);
+		testPlay->GetPhysics()->SetCollider(rect);
 
 		m_2DObjects.push_back(testPlay);
 		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());

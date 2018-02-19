@@ -13,10 +13,10 @@ bool BoundingCircle::IsColliding(Collider * _object, Vector2 & _center)
 {
 	std::vector <Vector2> contact_points;
 
-	int left = origin_point.x - radius;
-	int right = origin_point.x + radius;
-	int top = origin_point.y - radius;
-	int bottom = origin_point.y + radius;
+	int left = center.x - radius;
+	int right = center.x + radius;
+	int top = center.y - radius;
+	int bottom = center.y + radius;
 
 	for (int x = left; x < right; x++)
 	{
@@ -41,8 +41,8 @@ bool BoundingCircle::IsColliding(Collider * _object, Vector2 & _center)
 bool BoundingCircle::ContainsPoint(int x, int y)
 {
 	float distance =
-		sqrt(pow(x - origin_point.x, 2)
-			+ pow(y - origin_point.y, 2));
+		sqrt(pow(x - center.x, 2)
+			+ pow(y - center.y, 2));
 
 	return distance < radius;
 }

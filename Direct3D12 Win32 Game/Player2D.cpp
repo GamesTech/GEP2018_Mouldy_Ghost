@@ -36,7 +36,7 @@ void Player2D::Tick(GameStateData * _GSD)
 	
 	m_physics->AddForce(m_drive * gamePadPush);
 
-	m_physics->MoveBoundingRect(m_pos);
+	m_physics->MoveCollider(m_pos);
 
 //GEP:: Lets go up the inheritence and share our functionality
 
@@ -76,7 +76,7 @@ void Player2D::Collision(Physics2D * _collision)
 	}
 
 	//if(_collision.tag == "player")
-	if (_collision->GetRectangle()->GetOriginPoint().x > m_pos.x)
+	if (_collision->GetCollider()->GetCenter().x > m_pos.x)
 	{
 		m_pos.x--;
 	}

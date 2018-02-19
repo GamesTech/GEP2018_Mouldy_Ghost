@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "BoundingRect.h"
 
-BoundingRect::BoundingRect(Vector2 _top_left, int _width, int _height)
+BoundingRect::BoundingRect(Vector2 _center, int _width, int _height)
 {
-	origin_point = _top_left;
+	center = _center;
 	width = _width;
 	height = _height;
 }
@@ -16,10 +16,10 @@ bool BoundingRect::IsColliding(Collider * _object, Vector2 &_center)
 {
 	std::vector <Vector2> contact_points;
 
-	int left = origin_point.x;
-	int right = origin_point.x + width;
-	int top = origin_point.y;
-	int bottom = origin_point.y + height;
+	int left = center.x - (width / 2);
+	int right = center.x + (width / 2);
+	int top = center.y - (height / 2);;
+	int bottom = center.y + (height / 2);
 
 	for (int x = left; x < right; x++)
 	{
@@ -43,8 +43,8 @@ bool BoundingRect::IsColliding(Collider * _object, Vector2 &_center)
 
 bool BoundingRect::ContainsPoint(int x, int y)
 {
-	if (x > origin_point.x && x < origin_point.x + width
-		&& y > origin_point.y && y < origin_point.y + height)
+	if (x > center.x - (width/2) && x < center.x + (width /2)
+		&& y > center.y - (height/2) && y < center.y + (height/2))
 	{
 		return true;
 	}

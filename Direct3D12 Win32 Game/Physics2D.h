@@ -35,17 +35,17 @@ public:
 
 	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
-	void SetBoundingRect(BoundingRect* _bounding_rect)
-	{ m_bounding_rect = _bounding_rect; }
-	BoundingRect* GetRectangle() { return m_bounding_rect; }
-	void MoveBoundingRect(Vector2 _pos) { m_bounding_rect->SetOriginPoint(_pos); }
+	void SetCollider(Collider* _collider)
+	{ m_collider = _collider; }
+	Collider* GetCollider() { return m_collider; }
+	void MoveCollider(Vector2 _pos) { m_collider->SetCenter(_pos); }
 
 	bool isColliding(Physics2D* _object, Vector2 &_normal);
 
 protected:
 	GameObject2D* owner = nullptr;
 
-	BoundingRect* m_bounding_rect = nullptr;
+	Collider* m_collider = nullptr;
 	std::vector<Physics2D*> currently_colliding;
 
 	Vector2 m_vel;

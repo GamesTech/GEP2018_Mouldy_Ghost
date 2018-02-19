@@ -11,7 +11,7 @@ Physics2D::Physics2D(RenderData* _RD, string _filename)
 
 Physics2D::~Physics2D()
 {
-	delete m_bounding_rect;
+	delete m_collider;
 }
 
 void Physics2D::ResetForce(Axis _axis)
@@ -60,9 +60,14 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 		if (object != this)
 		{
 			//check for a collision and get its normal
-			Vector2 normal;
-			if (m_bounding_rect->IsColliding(object->GetRectangle(), normal))
+			Vector2 contact_center;
+			if (m_collider->IsColliding(object->GetCollider(), contact_center))
 			{
+				Vector2 normal = 
+					Vector2(contact_center.x - m_collider->GetCenter().x,
+						contact_center.y - m_collider->GetCenter().y);
+				normal.Normalize();
+
 				owner->Collision(object);
 
 				//check whether this object was being collided with on the last tick
@@ -101,5 +106,5 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 
 bool Physics2D::isColliding(Physics2D* _object, Vector2 &_normal)
 {
-	return m_bounding_rect->IsColliding(_object->GetRectangle(), _normal);
+	return m_collider->IsColliding(_object->GetCollider(), _normal);
 }

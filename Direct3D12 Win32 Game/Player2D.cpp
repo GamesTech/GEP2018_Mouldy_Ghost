@@ -13,6 +13,8 @@ Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename
 	m_physics->SetBounce(0.3f);
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
+
+	tag = GameObjectTag::PLAYER;
 }
 
 Player2D::~Player2D()
@@ -72,7 +74,8 @@ void Player2D::Collision(Physics2D * _collision)
 {
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
 	{
-		_collision->AddForce(Vector2(0, -_collision->GetBounce()));
+		//_collision->AddForce(Vector2(0, -_collision->GetBounce()));
+		
 	}
 
 	//if(_collision.tag == "player")

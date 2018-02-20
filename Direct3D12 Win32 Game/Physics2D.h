@@ -5,9 +5,9 @@ const float m_gravity = 9.8f;
 
 enum Axis
 {
-	X,
-	Y,
-	BOTH
+	X_AXIS,
+	Y_AXIS,
+	BOTH_AXES
 };
 
 //GEP:: Euler Integration Solve for VERY Basic 2D physics

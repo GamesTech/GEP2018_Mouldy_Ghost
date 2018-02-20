@@ -4,6 +4,8 @@
     <ImageContentTask Include="guides_logo.png" />
     <ImageContentTask Include="twist.png" />
     <ImageContentTask Include="gens.png" />
+    <ImageContentTask Include="circle.png" />
+    <ImageContentTask Include="rectangle.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

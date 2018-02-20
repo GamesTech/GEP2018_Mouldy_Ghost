@@ -9,7 +9,7 @@ public:
 	BoundingRect(Vector2 _center, int _width, int _height);
 	~BoundingRect();
 
-	virtual bool IsColliding(Collider* _object, Vector2 &_center);
+	virtual bool IsColliding(Collider* _object, Vector2 &_direction);
 	virtual bool ContainsPoint(int x, int y);
 
 protected:

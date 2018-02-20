@@ -8,7 +8,7 @@ public:
 	Collider() = default;
 	virtual ~Collider() = default;
 
-	virtual bool IsColliding(Collider* _object, Vector2 &_center) = 0;
+	virtual bool IsColliding(Collider* _object, Vector2 &_direction) = 0;
 	virtual bool ContainsPoint(int x, int y) = 0;
 
 	void SetCenter(Vector2 _origin) { center = _origin; }

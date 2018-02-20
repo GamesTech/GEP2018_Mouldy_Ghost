@@ -4,17 +4,16 @@
 
 using std::vector;
 
-class GameScene : public Scene
+class PhysicsScene : public Scene
 {
 public:
-	GameScene();
-	~ GameScene();
+	PhysicsScene();
+	~PhysicsScene();
 
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 
 	virtual void Reset();
-
 private:
 };

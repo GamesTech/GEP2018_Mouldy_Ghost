@@ -30,7 +30,7 @@ void Player2D::Tick(GameStateData * _GSD)
 	if (_GSD->m_buttonState[m_controllerID].a
 		== DirectX::GamePad::ButtonStateTracker::PRESSED)
 	{
-		m_physics->ResetForce(Y);
+		m_physics->ResetForce(Y_AXIS);
 		move_y = -m_jump_height;
 	}
 
@@ -50,23 +50,23 @@ void Player2D::Tick(GameStateData * _GSD)
 	if (m_pos.x < 0.0f)
 	{
 		m_pos.x *= -1.0f;
-		m_physics->ResetForce(X);
+		m_physics->ResetForce(X_AXIS);
 	}
 	if (m_pos.y < 0.0f)
 	{
 		m_pos.y *= -1.0f;
-		m_physics->ResetForce(Y);
+		m_physics->ResetForce(Y_AXIS);
 	}
 
 	if (m_pos.x > m_limit.x)
 	{
 		m_pos.x = 2.0f * m_limit.x - m_pos.x;
-		m_physics->ResetForce(X);
+		m_physics->ResetForce(X_AXIS);
 	}
 	if (m_pos.y > m_limit.y)
 	{
 		m_pos.y = 2.0f * m_limit.y - m_pos.y;
-		m_physics->ResetForce(Y);
+		m_physics->ResetForce(Y_AXIS);
 	}
 }
 

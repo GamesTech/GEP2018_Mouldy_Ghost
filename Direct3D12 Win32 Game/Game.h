@@ -7,8 +7,7 @@
 
 #pragma once
 
-#include "GameScene.h"
-#include "TestScene.h"
+#include "AllScenes.h"
 #include "StepTimer.h"
 #include "Audio.h"
 #include "EventHandler.h"
@@ -21,7 +20,8 @@ struct GameStateData;
 enum SceneEnum
 {
 	GAME_SCENE,
-	TEST_SCENE
+	TEST_SCENE,
+	PHYSICS_SCENE
 };
 
 // A basic game implementation that creates a D3D12 device and
@@ -108,6 +108,9 @@ private:
 	Scene* m_activeScene;
 	GameScene* m_gameScene;
 	TestScene* m_testScene;
+	PhysicsScene* m_physScene;
+
+	std::vector<Scene*> m_all_scenes;
 
 	//GEP:: Keyboard and Mouse Abstractions for basic input system
 	void ReadInput();

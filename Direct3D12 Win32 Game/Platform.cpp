@@ -36,7 +36,7 @@ void Platform::Collision(Physics2D * _collision)
 {
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLAYER)
 	{
-		_collision->ResetForce(Y);
+		_collision->ResetForce(Y_AXIS);
 	}
 	/*_collision->SetBounce(m_physics->GetBounce());*/
 }

@@ -17,12 +17,12 @@ using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
 Game::Game() :
-    m_window(nullptr),
-    m_outputWidth(800),
-    m_outputHeight(600),
-    m_featureLevel(D3D_FEATURE_LEVEL_11_0),
-    m_backBufferIndex(0),
-    m_fenceValues{}
+	m_window(nullptr),
+	m_outputWidth(800),
+	m_outputHeight(600),
+	m_featureLevel(D3D_FEATURE_LEVEL_11_0),
+	m_backBufferIndex(0),
+	m_fenceValues{}
 {
 }
 
@@ -33,12 +33,16 @@ Game::~Game()
 		m_audEngine->Suspend();
 	}
 
-    // Ensure that the GPU is no longer referencing resources that are about to be destroyed.
-    WaitForGpu();
+	// Ensure that the GPU is no longer referencing resources that are about to be destroyed.
+	WaitForGpu();
 
 	delete m_RD;
 	delete m_GSD;
-	delete m_activeScene;
+
+	for (int i = 0; i < m_all_scenes.size(); i++)
+	{
+		delete m_all_scenes[i];
+	}
 
 	m_keyboard.reset();
 	m_mouse.reset();
@@ -139,8 +143,10 @@ void Game::Initialize(HWND window, int width, int height)
 	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 	m_testScene = new TestScene();
 	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_physScene = new PhysicsScene();
+	m_physScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
-	m_activeScene = m_gameScene;
+	m_activeScene = m_physScene;
 }
 
 //GEP:: Executes the basic game loop.

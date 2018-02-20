@@ -170,6 +170,7 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllScenes.h" />
     <ClInclude Include="BoundingCircle.h" />
     <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Camera.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Loop.h" />
     <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="Physics2D.h" />
+    <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player2D.h" />
     <ClInclude Include="Scene.h" />
@@ -201,6 +203,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TestPBGO3D.h" />
+    <ClInclude Include="TestPhys.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
@@ -218,6 +221,7 @@
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
+    <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player2D.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -237,6 +241,7 @@
     </ClCompile>
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="TestPBGO3D.cpp" />
+    <ClCompile Include="TestPhys.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />

@@ -18,15 +18,15 @@ void Physics2D::ResetForce(Axis _axis)
 {
 	switch(_axis)
 	{
-	case X:
+	case X_AXIS:
 		m_vel.x = 0;
 		m_acc.x = 0;
 		break;
-	case Y:
+	case Y_AXIS:
 		m_vel.y = 0;
 		m_acc.y = 0;
 		break;
-	case BOTH:
+	case BOTH_AXES:
 		m_vel.x = 0;
 		m_vel.y = 0;
 		m_acc.x = 0;
@@ -40,6 +40,11 @@ void Physics2D::ResetForce(Axis _axis)
 //GEP:: Basic Euler Solver for point mass 
 void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 {
+	if (m_collider->GetCenter() != _pos)
+	{
+		MoveCollider(_pos);
+	}
+
 	//VERY Basic idea of drag i.e. the faster I go the more I get pulled back
 	m_acc -= m_drag * m_vel;
 
@@ -60,14 +65,9 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 		if (object != this)
 		{
 			//check for a collision and get its normal
-			Vector2 contact_center;
-			if (m_collider->IsColliding(object->GetCollider(), contact_center))
+			Vector2 normal;
+			if (m_collider->IsColliding(object->GetCollider(), normal))
 			{
-				Vector2 normal = 
-					Vector2(contact_center.x - m_collider->GetCenter().x,
-						contact_center.y - m_collider->GetCenter().y);
-				normal.Normalize();
-
 				owner->Collision(object);
 
 				//check whether this object was being collided with on the last tick

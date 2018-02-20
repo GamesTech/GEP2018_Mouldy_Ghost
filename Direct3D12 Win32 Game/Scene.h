@@ -18,10 +18,10 @@ public:
 	virtual void Reset() = 0;
 
 	virtual void Update(DX::StepTimer const & timer,
-		std::unique_ptr<DirectX::AudioEngine>& _audEngine) = 0;
+		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) = 0;
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 
 	//Find game objects
 	GameObject2D* Find2DGameObjectWithName(std::string name);

@@ -12,7 +12,7 @@ BoundingRect::~BoundingRect()
 {
 }
 
-bool BoundingRect::IsColliding(Collider * _object, Vector2 &_center)
+bool BoundingRect::IsColliding(Collider * _object, Vector2 &_direction)
 {
 	std::vector <Vector2> contact_points;
 
@@ -37,7 +37,23 @@ bool BoundingRect::IsColliding(Collider * _object, Vector2 &_center)
 		return false;
 	}
 
-	_center = contact_points[contact_points.size() / 2];
+	Vector2 collision_center = contact_points[contact_points.size() / 2];
+
+	Vector2 dir = center - collision_center;
+
+	if (abs(dir.x) > abs(dir.y))
+	{
+		_direction.y = 0;
+		_direction.x = dir.x;
+	}
+	else
+	{
+		_direction.x = 0;
+		_direction.y = dir.y;
+	}
+
+	_direction.Normalize();
+
 	return true;
 }
 

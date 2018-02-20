@@ -1,15 +1,16 @@
 #include "pch.h"
 #include "BoundingCircle.h"
 
-BoundingCircle::BoundingCircle(Vector2 _center, int _width, int _height)
+BoundingCircle::BoundingCircle(Vector2 _center, int _radius)
 {
+	radius = _radius;
 }
 
 BoundingCircle::~BoundingCircle()
 {
 }
 
-bool BoundingCircle::IsColliding(Collider * _object, Vector2 & _center)
+bool BoundingCircle::IsColliding(Collider * _object, Vector2 & _direction)
 {
 	std::vector <Vector2> contact_points;
 
@@ -34,7 +35,11 @@ bool BoundingCircle::IsColliding(Collider * _object, Vector2 & _center)
 		return false;
 	}
 
-	_center = contact_points[contact_points.size() / 2];
+	_direction = contact_points[contact_points.size() / 2];
+
+	_direction = center - _direction;
+	_direction.Normalize();
+
 	return true;
 }
 

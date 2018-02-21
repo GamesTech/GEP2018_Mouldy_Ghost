@@ -79,7 +79,7 @@ void Player2D::Collision(Physics2D * _collision)
 	}
 
 	//if(_collision.tag == "player")
-	if (_collision->GetCollider()->GetCenter().x > m_pos.x)
+	if (_collision->GetCollider().Center().x > m_pos.x)
 	{
 		m_pos.x--;
 	}

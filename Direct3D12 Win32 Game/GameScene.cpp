@@ -47,8 +47,8 @@ void GameScene::Initialise(RenderData * _RD,
 		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
 		/*test->SetParent(testPlay);*/
 		float y_size = testPlay->TextureSize().y;
-		BoundingRect* rect = new BoundingRect(testPlay->GetPos(), x_size, y_size);
-
+		Rectangle rect = Rectangle
+		(testPlay->GetPos().x, testPlay->GetPos().y, x_size, y_size);
 		testPlay->GetPhysics()->SetCollider(rect);
 
 		m_2DObjects.push_back(testPlay);
@@ -61,8 +61,8 @@ void GameScene::Initialise(RenderData * _RD,
 	//testplatform->SetScale(Vector2(2, 0.2));
 	//testplatform->CentreOrigin();
 
-	BoundingRect* rect = new BoundingRect
-	(testplatform->GetPos(), 
+	Rectangle rect = Rectangle
+	(testplatform->GetPos().x, testplatform->GetPos().y, 
 		testplatform->TextureSize().x ,
 		testplatform->TextureSize().y );
 	/*testplatform->CentreOrigin();*/

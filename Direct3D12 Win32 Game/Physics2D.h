@@ -1,5 +1,4 @@
 #pragma once
-#include "BoundingRect.h"
 
 const float m_gravity = 9.8f;
 
@@ -35,17 +34,15 @@ public:
 
 	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
-	void SetCollider(Collider* _collider)
+	void SetCollider(Rectangle _collider)
 	{ m_collider = _collider; }
-	Collider* GetCollider() { return m_collider; }
-	void MoveCollider(Vector2 _pos) { m_collider->SetCenter(_pos); }
-
-	bool isColliding(Physics2D* _object, Vector2 &_normal);
+	Rectangle GetCollider() { return m_collider; }
+	void MoveCollider(Vector2 _pos) { m_collider.Offset(_pos.x, _pos.y); }
 
 protected:
 	GameObject2D* owner = nullptr;
 
-	Collider* m_collider = nullptr;
+	Rectangle m_collider;
 	std::vector<Physics2D*> currently_colliding;
 
 	Vector2 m_vel;

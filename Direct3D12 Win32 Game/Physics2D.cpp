@@ -2,7 +2,6 @@
 #include "Physics2D.h"
 #include "GameStateData.h"
 
-
 Physics2D::Physics2D(RenderData* _RD, string _filename)
 {
 
@@ -11,7 +10,6 @@ Physics2D::Physics2D(RenderData* _RD, string _filename)
 
 Physics2D::~Physics2D()
 {
-	delete m_collider;
 }
 
 void Physics2D::ResetForce(Axis _axis)
@@ -40,9 +38,9 @@ void Physics2D::ResetForce(Axis _axis)
 //GEP:: Basic Euler Solver for point mass 
 void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 {
-	if (m_collider->GetCenter() != _pos)
+	if (m_collider.Center() != _pos)
 	{
-		MoveCollider(_pos);
+		MoveCollider(_pos - m_collider.Center());
 	}
 
 	//VERY Basic idea of drag i.e. the faster I go the more I get pulled back
@@ -64,10 +62,14 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 		//if the object in the list isn't this gameobject
 		if (object != this)
 		{
-			//check for a collision and get its normal
-			Vector2 normal;
-			if (m_collider->IsColliding(object->GetCollider(), normal))
+			if (m_collider.Intersects(object->GetCollider()))
 			{
+				Rectangle overlap;
+				overlap.Intersect(m_collider, object->GetCollider());
+
+				Vector2 normal = overlap.Center() - m_collider.Center();
+				normal.Normalize();
+
 				owner->Collision(object);
 
 				//check whether this object was being collided with on the last tick
@@ -102,9 +104,4 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 			}
 		}
 	}
-}
-
-bool Physics2D::isColliding(Physics2D* _object, Vector2 &_normal)
-{
-	return m_collider->IsColliding(_object->GetCollider(), _normal);
 }

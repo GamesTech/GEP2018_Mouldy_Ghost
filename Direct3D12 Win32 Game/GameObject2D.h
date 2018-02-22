@@ -12,6 +12,7 @@ struct GameStateData;
 
 class ImageGO2D;
 class Physics2D;
+class EventHandler;
 
 class GameObject2D
 {
@@ -56,6 +57,8 @@ public:
 	virtual void Collision(Physics2D* _collision);
 	virtual void CollisionExit(Physics2D* _collision);
 
+	void addListener(EventHandler* _event);
+
 protected:
 	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;
@@ -72,5 +75,7 @@ protected:
 	float previous_ori = 0.0f;
 
 	Physics2D* m_physics;
+
+	std::vector<EventHandler*> listeners;
 };
 

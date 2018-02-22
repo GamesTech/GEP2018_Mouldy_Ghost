@@ -87,6 +87,14 @@ void GameScene::Initialise(RenderData * _RD,
 	testplatform->GetPhysics()->GetDrag();
 	m_2DObjects.push_back(testplatform);
 
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_2DObjects[i]->addListener(listeners[j]);
+		}
+	}
+
 	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
 	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
 	//test3->SetScale(5.0f);

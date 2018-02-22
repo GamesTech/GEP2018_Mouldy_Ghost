@@ -26,7 +26,7 @@ void PhysicsScene::Initialise
 	m_3DObjects.push_back(m_cam);
 
 	TestPhys* phys = new TestPhys(m_RD, "rectangle");
-	phys->SetSpawn(Vector2(350, 0));
+	phys->SetSpawn(Vector2(600, 0));
 	phys->SetOrigin(Vector2(100, 100));
 	phys->GetPhysics()->SetDrag(0.5f);
 	phys->GetPhysics()->SetBounce(40);

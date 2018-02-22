@@ -146,7 +146,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_physScene = new PhysicsScene();
 	m_physScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
-	m_activeScene = m_physScene;
+	m_activeScene = m_gameScene;
 }
 
 //GEP:: Executes the basic game loop.

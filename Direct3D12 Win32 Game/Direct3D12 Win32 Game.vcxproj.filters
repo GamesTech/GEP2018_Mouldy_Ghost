@@ -180,6 +180,9 @@
     <ClInclude Include="Stage.h">
       <Filter>GameObjects\Stages\Header</Filter>
     </ClInclude>
+    <ClInclude Include="FinalDestination.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -265,6 +268,9 @@
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalDestination.cpp">
       <Filter>GameObjects\Stages\Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -177,6 +177,7 @@
     <ClInclude Include="Events.h" />
     <ClInclude Include="EventScaleUp.h" />
     <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="Loop.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="EventRotate.cpp" />
     <ClCompile Include="EventScaleUp.cpp" />
     <ClCompile Include="EventSystem.cpp" />
+    <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="MusicHandler.cpp" />

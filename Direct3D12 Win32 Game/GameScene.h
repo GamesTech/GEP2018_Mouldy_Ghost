@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Scene.h"
+#include "Stage.h"
 
 using std::vector;
 
@@ -16,7 +17,10 @@ public:
 
 	virtual void Reset();
 
-private:
+	void Render
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
 
+private:
+	std::unique_ptr<Stage> game_stage = nullptr;
 	
 };

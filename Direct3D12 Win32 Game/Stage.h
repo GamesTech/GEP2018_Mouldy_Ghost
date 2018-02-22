@@ -9,14 +9,17 @@ public:
 	Stage();
 	~Stage();
 
-	virtual void update(float dt) = 0;
-	virtual void init() = 0;
+	virtual void update(float dt);
+	virtual void init(RenderData* _RD,GameStateData* _GSD) = 0;
 	void render(RenderData* _RD);
 
-private:
+protected:
 
 	std::vector<GameObject2D*> other_objects;
 	std::vector<Platform*> platforms; 
+	std::vector<Vector2> spawn_points;
+
+	float elapsed_time;
 
 };
 

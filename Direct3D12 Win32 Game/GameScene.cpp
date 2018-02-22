@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "RenderData.h"
 #include "GameStateData.h"
+#include "FinalDestination.h"
 
 GameScene::GameScene()
 {
@@ -22,6 +23,13 @@ void GameScene::Initialise(RenderData * _RD,
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
+
+	//creating a stage
+	//could pass the name of the stage as a function paratemter
+	game_stage = std::make_unique<FinalDestination>();
+	game_stage->init(m_RD,m_GSD);
+	
+
 
 	TestPBGO3D* test3d = new TestPBGO3D();
 	test3d->SetScale(5.0f);
@@ -55,36 +63,8 @@ void GameScene::Initialise(RenderData * _RD,
 		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
 	}
 
-	Platform* testplatform = new Platform(m_RD, "twist");
 	
-	testplatform->SetPos(Vector2(400, 400));
-	//testplatform->SetScale(Vector2(2, 0.2));
-	//testplatform->CentreOrigin();
-
-	Rectangle rect = Rectangle
-	(testplatform->GetPos().x, testplatform->GetPos().y, 
-		testplatform->TextureSize().x ,
-		testplatform->TextureSize().y );
-	/*testplatform->CentreOrigin();*/
 	
-	testplatform->GetPhysics()->SetCollider(rect);
-	
-	m_2DObjects.push_back(testplatform);
-	m_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
-
-	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
-	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
-	//test3->SetScale(5.0f);
-	//m_3DObjects.push_back(test3);
-
-	//test = new ImageGO2D(m_RD, "guides_logo");
-	//test->SetSpawn(Vector2(100, 100));
-	//test->SetScale(Vector2(1.0f, 0.5f));
-	//test->SetColour(Color(1, 0, 0, 1));
-
-	//m_2DObjects.push_back(test);
-
-	/*test->SetParent(m_2DObjects[0]);*/
 }
 
 void GameScene::Reset()
@@ -102,4 +82,11 @@ void GameScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
+}
+
+void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
+{
+	Scene::Render(_commandList);
+
+	//game_stage->render(m_RD);
 }

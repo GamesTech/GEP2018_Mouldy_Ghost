@@ -161,6 +161,10 @@
     <ClInclude Include="MusicHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="BoundingCircle.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="SceneHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -241,6 +245,9 @@
     <ClCompile Include="MusicHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
+    <ClCompile Include="BoundingCircle.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="SceneHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

@@ -7,7 +7,7 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "TestScene.h"
-#include "EventHandler.h"
+#include "MusicHandler.h"
 
 extern void ExitGame();
 
@@ -141,6 +141,9 @@ void Game::Initialize(HWND window, int width, int height)
 	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
 	m_activeScene = m_gameScene;
+
+	//populate the listener vector with all listeners
+	listeners.push_back(std::make_unique<MusicHandler>());
 }
 
 //GEP:: Executes the basic game loop.

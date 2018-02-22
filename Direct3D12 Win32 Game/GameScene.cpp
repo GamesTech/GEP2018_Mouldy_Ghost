@@ -157,13 +157,13 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		(*it)->Tick(m_GSD);
 	}
 
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		Vector2 temp = m_2DObjects[i]->GetOrigin();
-		m_2DObjects[i]->SetOrigin(Vector2(0, 1000));
-		m_2DObjects[i]->SetScale(m_2DObjects[i]->GetScale() + Vector2(0.01, 0.01));
-		m_2DObjects[i]->SetOrigin(temp);
-	}
+	//for (int i = 0; i < m_2DObjects.size(); i++)
+	//{
+	//	Vector2 temp = m_2DObjects[i]->GetOrigin();
+	//	m_2DObjects[i]->SetOrigin(Vector2(0, 1000));
+	//	m_2DObjects[i]->SetScale(m_2DObjects[i]->GetScale() + Vector2(0.01, 0.01));
+	//	m_2DObjects[i]->SetOrigin(temp);
+	//}
 	//no idea if this works for zooming, will check later
 	//Follow up comment: it doesn't work
 }

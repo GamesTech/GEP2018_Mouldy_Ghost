@@ -84,6 +84,8 @@ void TestScene::Update(DX::StepTimer const & timer,
 	{
 		(*it)->Tick(m_GSD);
 	}
+
+
 }
 
 void TestScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)

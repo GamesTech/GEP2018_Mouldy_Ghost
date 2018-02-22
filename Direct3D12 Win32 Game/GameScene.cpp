@@ -94,6 +94,14 @@ void GameScene::Initialise(RenderData * _RD,
 	m_2DObjects.push_back(testplatform);
 	m_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_2DObjects[i]->addListener(listeners[j]);
+		}
+	}
+
 	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
 	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
 	//test3->SetScale(5.0f);
@@ -155,6 +163,16 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	{
 		(*it)->Tick(m_GSD);
 	}
+
+	//for (int i = 0; i < m_2DObjects.size(); i++)
+	//{
+	//	Vector2 temp = m_2DObjects[i]->GetOrigin();
+	//	m_2DObjects[i]->SetOrigin(Vector2(0, 1000));
+	//	m_2DObjects[i]->SetScale(m_2DObjects[i]->GetScale() + Vector2(0.01, 0.01));
+	//	m_2DObjects[i]->SetOrigin(temp);
+	//}
+	//no idea if this works for zooming, will check later
+	//Follow up comment: it doesn't work
 }
 
 void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)

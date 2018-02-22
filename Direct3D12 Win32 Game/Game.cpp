@@ -7,7 +7,7 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "TestScene.h"
-#include "EventHandler.h"
+#include "MusicHandler.h"
 
 extern void ExitGame();
 
@@ -135,12 +135,21 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
 
+	//populate the listener vector with all listeners
+	//at the moment this needs to be done before a scene is initialised
+	listeners.push_back(std::make_unique<MusicHandler>());
+
+	//m_activeScene->addListener(listeners[0].get());
+
 	m_gameScene = new GameScene();
+	m_gameScene->addListener(listeners[0].get());
 	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 	m_testScene = new TestScene();
+	m_testScene->addListener(listeners[0].get());
 	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
 	m_activeScene = m_gameScene;
+
 }
 
 //GEP:: Executes the basic game loop.

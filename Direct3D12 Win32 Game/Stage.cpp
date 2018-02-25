@@ -26,5 +26,10 @@ void Stage::render(RenderData * _RD)
 		platform->Render(_RD);
 	}
 
+	/*for (int i = 0; i < platforms.size(); i++)
+	{
+		platforms[i]->Render(_RD);
+	}*/
+
 }
 

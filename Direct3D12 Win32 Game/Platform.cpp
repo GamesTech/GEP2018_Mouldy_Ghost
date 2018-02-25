@@ -24,6 +24,8 @@ Platform::~Platform()
 
 void Platform::Tick(GameStateData * _GSD)
 {
+	GameObject2D::Tick(_GSD);
+
 	m_physics->Tick(_GSD, m_pos);
 }
 

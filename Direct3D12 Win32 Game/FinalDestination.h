@@ -7,7 +7,7 @@ public:
 	FinalDestination();
 	~FinalDestination();
 
-	void update(float dt) override;
+	void update(GameStateData* _GSD) override;
 	void init(RenderData* _RD, GameStateData* _GSD) override;
 private:
 

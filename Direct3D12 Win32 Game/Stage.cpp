@@ -10,8 +10,9 @@ Stage::~Stage()
 {
 }
 
-void Stage::update(float dt)
+void Stage::update(GameStateData* _GSD)
 {
+	
 }
 
 void Stage::render(RenderData * _RD)

@@ -9,7 +9,7 @@ public:
 	Stage();
 	~Stage();
 
-	virtual void update(float dt);
+	virtual void update(GameStateData* _GSD);
 	virtual void init(RenderData* _RD,GameStateData* _GSD) = 0;
 	void render(RenderData* _RD);
 

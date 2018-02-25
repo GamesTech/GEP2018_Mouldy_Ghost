@@ -13,6 +13,10 @@ Platform::Platform(RenderData* _RD, string _filename) :ImageGO2D(_RD, _filename)
 	tag = GameObjectTag::PLATFORM;
 }
 
+Platform::Platform()
+{
+}
+
 Platform::~Platform()
 {
 	if (m_physics)

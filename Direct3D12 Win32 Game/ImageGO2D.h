@@ -15,6 +15,7 @@ class ImageGO2D
 {
 public:
 	ImageGO2D(RenderData* _RD, string _filename);
+	ImageGO2D() = default;
 	virtual ~ImageGO2D();
 
 	void Render(RenderData* _RD);

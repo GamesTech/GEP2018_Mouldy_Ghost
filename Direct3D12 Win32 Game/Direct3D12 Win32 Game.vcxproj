@@ -181,6 +181,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="Loop.h" />
+    <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="PhysicsScene.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Loop.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />

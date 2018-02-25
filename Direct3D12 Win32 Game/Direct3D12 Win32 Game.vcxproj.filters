@@ -183,6 +183,9 @@
     <ClInclude Include="FinalDestination.h">
       <Filter>GameObjects\Stages\Header</Filter>
     </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -272,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="FinalDestination.cpp">
       <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

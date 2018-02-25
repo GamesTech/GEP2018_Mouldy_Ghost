@@ -143,6 +143,7 @@ void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _comma
 
 	//Render stage
 	game_stage->render(m_RD);
+	game_stage->update(m_GSD);
 
 	m_RD->m_spriteBatch->End();
 

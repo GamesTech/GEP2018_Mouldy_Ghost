@@ -11,8 +11,13 @@ FinalDestination::~FinalDestination()
 {
 }
 
-void FinalDestination::update(float dt)
+void FinalDestination::update(GameStateData* _GSD)
 {
+	for (auto& platform : platforms)
+	{
+		platform->Tick(_GSD);
+	}
+
 }
 
 void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
@@ -35,4 +40,11 @@ void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 	platforms.push_back(testplatform);
 	_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
+
+	MovingPlatform* test_moving = new MovingPlatform(_RD, Vector2(50, 50), Vector2(400, 50), 4.0f, 2.0f, "platform");
+	test_moving->SetPos(Vector2(50, 50));
+
+	platforms.push_back(test_moving);
+	
+	
 }

@@ -157,7 +157,6 @@
     <ClInclude Include="TestScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="EventHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
@@ -189,10 +188,15 @@
     <ClInclude Include="MusicHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="BoundingCircle.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="Platform.h" />
-    <ClInclude Include="SceneHandler.h" />
+    <ClInclude Include="Platform.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTags.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -270,9 +274,6 @@
     <ClCompile Include="MusicHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
-    <ClCompile Include="BoundingCircle.cpp" />
-    <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="SceneHandler.cpp" />
     <ClCompile Include="PhysicsScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
@@ -287,6 +288,12 @@
     </ClCompile>
     <ClCompile Include="MovingPlatform.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -97,31 +97,6 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 {
 	Scene::Update(timer, _audEngine);
 	game_stage->update(m_GSD);
-}
-
-void GameScene::Reset()
-{
-	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
-	{
-		m_GSD->objects_in_scene[i]->ResetForce(BOTH_AXES);
-	}
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		m_2DObjects[i]->ResetPos();
-	}
-
-	for (int i = 0; i < m_3DObjects.size(); i++)
-	{
-		m_3DObjects[i]->ResetPos();
-	}
-}
-
-
-
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		(*it)->Tick(m_GSD);
-	}
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
@@ -141,6 +116,24 @@ void GameScene::Reset()
 	//no idea if this works for zooming, will check later
 	//Follow up comment: it doesn't work
 }
+
+void GameScene::Reset()
+{
+	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
+	{
+		m_GSD->objects_in_scene[i]->ResetForce(BOTH_AXES);
+	}
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		m_2DObjects[i]->ResetPos();
+	}
+
+	for (int i = 0; i < m_3DObjects.size(); i++)
+	{
+		m_3DObjects[i]->ResetPos();
+	}
+}
+
 
 void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
 {

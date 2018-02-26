@@ -173,3 +173,8 @@ GameObject2D** Scene::FindAll2DGameObjectsWithTag(GameObjectTag tag)
 
 	return objects;
 }
+
+void Scene::addListener(EventHandler* _event)
+{
+	listeners.push_back(_event);
+}

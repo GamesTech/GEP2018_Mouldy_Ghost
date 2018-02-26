@@ -69,10 +69,18 @@ void GameScene::Initialise(RenderData * _RD,
 	////testplatform->SetScale(Vector2(2, 0.2));
 	////testplatform->CentreOrigin();
 
-	//Rectangle rect = Rectangle
-	//(testplatform->GetPos().x, testplatform->GetPos().y,
-	//	testplatform->TextureSize().x,
-	//	testplatform->TextureSize().y);
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_2DObjects[i]->addListener(listeners[j]);
+		}
+	}
+
+	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
+	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
+	//test3->SetScale(5.0f);
+	//m_3DObjects.push_back(test3);
 
 	///*testplatform->CentreOrigin();*/
 
@@ -106,6 +114,47 @@ void GameScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
+}
+
+void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+{
+	//this will update the audio engine but give us chance to do somehting else if that isn't working
+	if (!_audEngine->Update())
+	{
+		if (_audEngine->IsCriticalError())
+		{
+			// We lost the audio device!
+		}
+	}
+	else
+	{
+		//update sounds playing
+		for (vector<Sound *>::iterator it = m_sounds.begin(); it != m_sounds.end(); it++)
+		{
+			(*it)->Tick(m_GSD);
+		}
+	}
+
+	//Add your game logic here.
+	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
+	{
+		(*it)->Tick(m_GSD);
+	}
+
+	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
+	{
+		(*it)->Tick(m_GSD);
+	}
+
+	//for (int i = 0; i < m_2DObjects.size(); i++)
+	//{
+	//	Vector2 temp = m_2DObjects[i]->GetOrigin();
+	//	m_2DObjects[i]->SetOrigin(Vector2(0, 1000));
+	//	m_2DObjects[i]->SetScale(m_2DObjects[i]->GetScale() + Vector2(0.01, 0.01));
+	//	m_2DObjects[i]->SetOrigin(temp);
+	//}
+	//no idea if this works for zooming, will check later
+	//Follow up comment: it doesn't work
 }
 
 void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)

@@ -122,4 +122,7 @@ private:
 
 	//audio system
 	std::unique_ptr<DirectX::AudioEngine> m_audEngine;
+
+	//Vector of managers
+	std::vector<std::unique_ptr<EventHandler>> listeners;
 };

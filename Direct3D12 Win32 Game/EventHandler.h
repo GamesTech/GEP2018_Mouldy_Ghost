@@ -1,4 +1,3 @@
-#include "GamePad.h"
 #include "GameStateData.h"
 #include "Events.h"
 #pragma once
@@ -28,7 +27,6 @@ public:
 	
 
 	//every gameobject has it's relevent listeners/observer
-	//every listener should have a list of the gameobjects is it managing??
 
 	//Example behaviour:
 	//player has its collision observer. If it collides with something, it tells the observer.
@@ -38,7 +36,5 @@ public:
 	//it is down to the gameobject that is being listend to, to tell any other observers.
 
 private:
-	//no vectors of gameobjects in this base class as there are too many different types of game objects that 
-	//don't inherit from any shared base so I can't make use of polymorphism.
 };
 

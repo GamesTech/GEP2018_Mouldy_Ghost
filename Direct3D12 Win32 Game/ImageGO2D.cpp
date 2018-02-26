@@ -46,13 +46,12 @@ void ImageGO2D::Render(RenderData* _RD)
 void ImageGO2D::CentreOrigin()
 {
 	XMUINT2 size = GetTextureSize(m_texture.Get());
-
+	
 	m_origin = Vector2(float(size.x / 2), float(size.y / 2));
 }
 
 Vector2 ImageGO2D::TextureSize()
 {
 	XMUINT2 size = GetTextureSize(m_texture.Get());
-
 	return Vector2(size.x, size.y);
 }

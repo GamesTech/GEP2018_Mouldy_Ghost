@@ -155,6 +155,14 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		m_2DObjects[i]->SetOrigin(Vector2(0, 1000));
 		m_2DObjects[i]->SetScale(m_2DObjects[i]->GetScale() + Vector2(0.01, 0.01));
 		m_2DObjects[i]->SetOrigin(temp);
+		//convert to imageGO2D
+		//get the size of the texture
+		//get the current scale of the texture
+		//this gives us the real size of the texture (width and height)
+		//obtain the real size of the texture after scaling
+		//somehow use all this information to find the point we need to transform the shape to...
+
+		//if point was bottom left we would do: current_pos.x + difference in width, current_pos.y + difference in height
 	}
 	//no idea if this works for zooming, will check later
 	//Follow up comment: it doesn't work

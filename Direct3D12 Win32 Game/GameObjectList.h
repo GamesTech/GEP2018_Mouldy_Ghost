@@ -5,6 +5,7 @@
 #include "Text2D.h"
 #include "Player2D.h"
 #include "Platform.h"
+#include "MovingPlatform.h"
 
 #include "TestPBGO3D.h"
 #include "Camera.h"

@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "RenderData.h"
 #include "GameStateData.h"
+#include "FinalDestination.h"
 
 GameScene::GameScene()
 {
@@ -22,6 +23,13 @@ void GameScene::Initialise(RenderData * _RD,
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
+
+	//creating a stage
+	//could pass the name of the stage as a function paratemter
+	game_stage = std::make_unique<FinalDestination>();
+	game_stage->init(m_RD,m_GSD);
+	
+
 
 	TestPBGO3D* test3d = new TestPBGO3D();
 	test3d->SetScale(5.0f);
@@ -55,36 +63,40 @@ void GameScene::Initialise(RenderData * _RD,
 		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
 	}
 
-	Platform* testplatform = new Platform(m_RD, "twist");
-	
-	testplatform->SetPos(Vector2(400, 400));
-	//testplatform->SetScale(Vector2(2, 0.2));
-	//testplatform->CentreOrigin();
+	//Platform* testplatform = new Platform(_RD, "platform");
 
-	Rectangle rect = Rectangle
-	(testplatform->GetPos().x, testplatform->GetPos().y, 
-		testplatform->TextureSize().x ,
-		testplatform->TextureSize().y );
-	/*testplatform->CentreOrigin();*/
-	
-	testplatform->GetPhysics()->SetCollider(rect);
-	
-	m_2DObjects.push_back(testplatform);
-	m_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
+	//testplatform->SetPos(Vector2(200, 400));
+	////testplatform->SetScale(Vector2(2, 0.2));
+	////testplatform->CentreOrigin();
+
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_2DObjects[i]->addListener(listeners[j]);
+		}
+	}
 
 	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
 	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
 	//test3->SetScale(5.0f);
 	//m_3DObjects.push_back(test3);
 
-	//test = new ImageGO2D(m_RD, "guides_logo");
-	//test->SetSpawn(Vector2(100, 100));
-	//test->SetScale(Vector2(1.0f, 0.5f));
-	//test->SetColour(Color(1, 0, 0, 1));
+	///*testplatform->CentreOrigin();*/
 
-	//m_2DObjects.push_back(test);
+	//testplatform->GetPhysics()->SetCollider(rect);
+	//m_2DObjects.push_back(testplatform);
+	////platforms.push_back(testplatform);
+	//_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
-	/*test->SetParent(m_2DObjects[0]);*/
+	
+	
+}
+
+void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+{
+	Scene::Update(timer, _audEngine);
+	game_stage->update(m_GSD);
 }
 
 void GameScene::Reset()
@@ -102,4 +114,54 @@ void GameScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
+}
+
+
+
+void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
+{
+	//primative batch
+	m_RD->m_effect->SetProjection(m_cam->GetProj());
+	m_RD->m_effect->SetView(m_cam->GetView());
+	m_RD->m_effect->Apply(_commandList.Get());
+	m_RD->m_effect->EnableDefaultLighting();
+	m_RD->m_batch->Begin(_commandList.Get());
+	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
+	{
+		if ((*it)->GetType() == GO3D_RT_PRIM)(*it)->Render(m_RD);
+	}
+	m_RD->m_batch->End();
+
+	//Render Geometric Primitives
+	m_RD->m_GPeffect->SetProjection(m_cam->GetProj());
+	m_RD->m_GPeffect->SetView(m_cam->GetView());
+	m_RD->m_GPeffect->Apply(_commandList.Get());
+	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
+	{
+		if ((*it)->GetType() == GO3D_RT_GEOP)(*it)->Render(m_RD);
+	}
+
+	//Render VBO Models	
+	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
+	{
+		if ((*it)->GetType() == GO3D_RT_SDK)(*it)->Render(m_RD);
+	}
+
+	//finally draw all 2D objects
+	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
+	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+	m_RD->m_spriteBatch->Begin(_commandList.Get());
+
+	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
+	{
+		(*it)->Render(m_RD);
+	}
+
+	//Render stage
+	game_stage->render(m_RD);
+	
+
+	m_RD->m_spriteBatch->End();
+
+	
 }

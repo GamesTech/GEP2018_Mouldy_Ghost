@@ -141,6 +141,9 @@
   <ItemGroup>
     <ImageContentTask Include="colliderdebug.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="platform.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

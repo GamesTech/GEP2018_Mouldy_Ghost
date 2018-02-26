@@ -12,7 +12,7 @@ public:
 	~TestScene();
 
 	virtual void Initialise(RenderData * _RD, GameStateData* _GSD, int _outputWidth, int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
-
+	void Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 	virtual void Reset();
 
 private:

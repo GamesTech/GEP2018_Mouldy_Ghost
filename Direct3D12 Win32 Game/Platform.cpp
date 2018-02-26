@@ -8,9 +8,11 @@ Platform::Platform(RenderData* _RD, string _filename) :ImageGO2D(_RD, _filename)
 	m_physics->SetOwner(this);
 	m_physics->SetGrav(0);
 
-	
-
 	tag = GameObjectTag::PLATFORM;
+}
+
+Platform::Platform()
+{
 }
 
 Platform::~Platform()
@@ -24,6 +26,8 @@ Platform::~Platform()
 
 void Platform::Tick(GameStateData * _GSD)
 {
+	GameObject2D::Tick(_GSD);
+
 	m_physics->Tick(_GSD, m_pos);
 }
 

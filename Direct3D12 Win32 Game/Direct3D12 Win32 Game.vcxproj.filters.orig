@@ -65,6 +65,15 @@
     <Filter Include="Scenes\Source">
       <UniqueIdentifier>{88b49f53-087f-400f-b91b-12ca9623bc4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Stages">
+      <UniqueIdentifier>{cced7f72-2676-454c-a6ab-633a22899f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Stages\Header">
+      <UniqueIdentifier>{34da4d48-e90b-4493-b151-a8948b13719a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Stages\Source">
+      <UniqueIdentifier>{901b3222-49c9-4a70-aab2-7c8d0e2778b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -130,9 +139,6 @@
     <ClInclude Include="Physics2D.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="BoundingRect.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="EventRotate.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
@@ -152,24 +158,41 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectTags.h" />
-<<<<<<< HEAD
-    <ClInclude Include="Platform.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
-=======
     <ClInclude Include="EventHandler.h">
       <Filter>EventSystem\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="BoundingCircle.h">
-      <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
->>>>>>> d6200e1573e341cd4d6c38e3fdd6385143d18842
+<<<<<<< HEAD
+    <ClInclude Include="MusicHandler.h" />
+    <ClInclude Include="PhysicsScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AllScenes.h">
+      <Filter>Game Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TestPhys.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalDestination.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+=======
+    <ClInclude Include="MusicHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingCircle.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="SceneHandler.h" />
+>>>>>>> 085b36e1c2970b1c01dabb02653a8dba6e5668c5
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -223,9 +246,6 @@
     <ClCompile Include="Physics2D.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
-    <ClCompile Include="BoundingRect.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
-    </ClCompile>
     <ClCompile Include="EventRotate.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
@@ -248,12 +268,32 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
 <<<<<<< HEAD
+    <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Platform.cpp">
-=======
-    <ClCompile Include="BoundingCircle.cpp">
->>>>>>> d6200e1573e341cd4d6c38e3fdd6385143d18842
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPhys.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalDestination.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+=======
+    <ClCompile Include="MusicHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+>>>>>>> 085b36e1c2970b1c01dabb02653a8dba6e5668c5
+    </ClCompile>
+    <ClCompile Include="BoundingCircle.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="SceneHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

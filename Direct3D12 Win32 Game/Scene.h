@@ -2,6 +2,7 @@
 
 #include "pch.h"
 #include "StepTimer.h"
+#include "EventHandler.h"
 
 using std::vector;
 
@@ -34,10 +35,14 @@ public:
 	GameObject2D** FindAll2DGameObjectsWithTag(GameObjectTag tag);
 	//returns a dynamic array of pointers to GameObject2D, you will need to delete it yourself
 
+	void addListener(EventHandler* _event);
+
 protected:
 	vector<GameObject3D*> m_3DObjects;
 	vector<GameObject2D*> m_2DObjects;
 	vector<Sound*> m_sounds;
+
+	vector<EventHandler*> listeners;
 
 	Camera* m_cam;
 

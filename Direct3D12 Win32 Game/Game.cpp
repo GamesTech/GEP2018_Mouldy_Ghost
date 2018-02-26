@@ -17,12 +17,12 @@ using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
 Game::Game() :
-    m_window(nullptr),
-    m_outputWidth(800),
-    m_outputHeight(600),
-    m_featureLevel(D3D_FEATURE_LEVEL_11_0),
-    m_backBufferIndex(0),
-    m_fenceValues{}
+	m_window(nullptr),
+	m_outputWidth(800),
+	m_outputHeight(600),
+	m_featureLevel(D3D_FEATURE_LEVEL_11_0),
+	m_backBufferIndex(0),
+	m_fenceValues{}
 {
 }
 
@@ -33,12 +33,16 @@ Game::~Game()
 		m_audEngine->Suspend();
 	}
 
-    // Ensure that the GPU is no longer referencing resources that are about to be destroyed.
-    WaitForGpu();
+	// Ensure that the GPU is no longer referencing resources that are about to be destroyed.
+	WaitForGpu();
 
 	delete m_RD;
 	delete m_GSD;
-	delete m_activeScene;
+
+	for (int i = 0; i < m_all_scenes.size(); i++)
+	{
+		delete m_all_scenes[i];
+	}
 
 	m_keyboard.reset();
 	m_mouse.reset();
@@ -135,15 +139,22 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
 
+	//populate the listener vector with all listeners
+	//at the moment this needs to be done before a scene is initialised
+	listeners.push_back(std::make_unique<MusicHandler>());
+
+	//m_activeScene->addListener(listeners[0].get());
+
 	m_gameScene = new GameScene();
+	m_gameScene->addListener(listeners[0].get());
 	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 	m_testScene = new TestScene();
+	m_testScene->addListener(listeners[0].get());
 	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_physScene = new PhysicsScene();
+	m_physScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
-	m_activeScene = m_gameScene;
-
-	//populate the listener vector with all listeners
-	listeners.push_back(std::make_unique<MusicHandler>());
+	SwitchToScene(PHYSICS_SCENE, false);
 }
 
 //GEP:: Executes the basic game loop.
@@ -661,13 +672,19 @@ bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 	{
 	case GAME_SCENE:
 		m_activeScene = m_gameScene;
-		return true;
+		break;
 	case TEST_SCENE:
 		m_activeScene = m_testScene;
-		return true;
+		break;
+	case PHYSICS_SCENE:
+		m_activeScene = m_physScene;
+		break;
 	default:
 		return false;
 	}
+
+	m_activeScene->PhysicsInScene(m_GSD);
+	return true;
 }
 
 void Game::ReadInput()

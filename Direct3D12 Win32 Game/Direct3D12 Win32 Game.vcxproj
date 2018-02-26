@@ -170,20 +170,21 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BoundingCircle.h" />
-    <ClInclude Include="BoundingRect.h" />
+    <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventRotate.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="EventScaleUp.h" />
     <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="Loop.h" />
+    <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="Physics2D.h" />
+    <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player2D.h" />
     <ClInclude Include="Scene.h" />
@@ -200,25 +201,28 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TestPBGO3D.h" />
+    <ClInclude Include="TestPhys.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoundingCircle.cpp" />
-    <ClCompile Include="BoundingRect.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventRotate.cpp" />
     <ClCompile Include="EventScaleUp.cpp" />
     <ClCompile Include="EventSystem.cpp" />
+    <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Loop.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
+    <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player2D.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -238,7 +242,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TestPBGO3D.cpp" />
+    <ClCompile Include="TestPhys.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />

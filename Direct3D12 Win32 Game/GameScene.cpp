@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "RenderData.h"
 #include "GameStateData.h"
+#include "FinalDestination.h"
 
 GameScene::GameScene()
 {
@@ -23,35 +24,22 @@ void GameScene::Initialise(RenderData * _RD,
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
 
+	//creating a stage
+	//could pass the name of the stage as a function paratemter
+	game_stage = std::make_unique<FinalDestination>();
+	game_stage->init(m_RD,m_GSD);
+	
+
+
 	TestPBGO3D* test3d = new TestPBGO3D();
 	test3d->SetScale(5.0f);
 	test3d->Init();
 	m_3DObjects.push_back(test3d);
 
-	//GPGO3D* test3d2 = new GPGO3D(GP_TEAPOT);
-	//test3d2->SetPos(10.0f*Vector3::Forward+5.0f*Vector3::Right+Vector3::Down);
-	//test3d2->SetScale(5.0f);
-	//m_3DObjects.push_back(test3d2);	
-
-	/*ImageGO2D *test = new ImageGO2D(m_RD, "twist");
-	test->SetOri(45);
-	test->SetPos(Vector2(300, 300));
-	test->CentreOrigin();
-	m_2DObjects.push_back(test);
-
-	test = new ImageGO2D(m_RD, "guides_logo");
-	test->SetPos(Vector2(100, 100));
-	test->SetScale(Vector2(1.0f, 0.5f));
-	test->SetColour(Color(1, 0, 0, 1));
-	m_2DObjects.push_back(test);
-*/
-	//Text2D * test2 = new Text2D("testing text");
-	//m_2DObjects.push_back(test2);
-
 	for (int i = 0; i < 2; i++)
 	{
 		Player2D* testPlay = new Player2D(m_RD, "gens");
-		testPlay->SetSpawn(Vector2(i * 400, 100));
+		testPlay->SetSpawn(Vector2(i * 400+400, 100));
 		testPlay->SetOrigin(Vector2(100, 100));
 		testPlay->SetControllerID(i);
 		testPlay->SetDrive(100.0f);
@@ -67,46 +55,55 @@ void GameScene::Initialise(RenderData * _RD,
 		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
 		/*test->SetParent(testPlay);*/
 		float y_size = testPlay->TextureSize().y;
-		BoundingRect* rect = new BoundingRect(testPlay->GetPos(), x_size, y_size);
-
-		testPlay->GetPhysics()->SetBoundingRect(rect);
+		Rectangle rect = Rectangle
+		(testPlay->GetPos().x, testPlay->GetPos().y, x_size, y_size);
+		testPlay->GetPhysics()->SetCollider(rect);
 
 		m_2DObjects.push_back(testPlay);
 		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
-
-
 	}
 
-	Platform* testplatform = new Platform(m_RD, "twist");
-	testplatform->SetPos(Vector2(200, 400));
-	testplatform->CentreOrigin();
+	//Platform* testplatform = new Platform(_RD, "platform");
 
-	BoundingRect* rect = new BoundingRect
-	(testplatform->GetPos(), testplatform->TextureSize().x, testplatform->TextureSize().y);
-	
-	testplatform->GetPhysics()->GetDrag();
-	m_2DObjects.push_back(testplatform);
+	//testplatform->SetPos(Vector2(200, 400));
+	////testplatform->SetScale(Vector2(2, 0.2));
+	////testplatform->CentreOrigin();
+
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_2DObjects[i]->addListener(listeners[j]);
+		}
+	}
 
 	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
 	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
 	//test3->SetScale(5.0f);
 	//m_3DObjects.push_back(test3);
 
-	//test = new ImageGO2D(m_RD, "guides_logo");
-	//test->SetSpawn(Vector2(100, 100));
-	//test->SetScale(Vector2(1.0f, 0.5f));
-	//test->SetColour(Color(1, 0, 0, 1));
+	///*testplatform->CentreOrigin();*/
 
-	//m_2DObjects.push_back(test);
+	//testplatform->GetPhysics()->SetCollider(rect);
+	//m_2DObjects.push_back(testplatform);
+	////platforms.push_back(testplatform);
+	//_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
-	/*test->SetParent(m_2DObjects[0]);*/
+	
+	
+}
+
+void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+{
+	Scene::Update(timer, _audEngine);
+	game_stage->update(m_GSD);
 }
 
 void GameScene::Reset()
 {
 	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
 	{
-		m_GSD->objects_in_scene[i]->ResetForce(BOTH);
+		m_GSD->objects_in_scene[i]->ResetForce(BOTH_AXES);
 	}
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
@@ -119,30 +116,7 @@ void GameScene::Reset()
 	}
 }
 
-void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
-{
-	//this will update the audio engine but give us chance to do somehting else if that isn't working
-	if (!_audEngine->Update())
-	{
-		if (_audEngine->IsCriticalError())
-		{
-			// We lost the audio device!
-		}
-	}
-	else
-	{
-		//update sounds playing
-		for (vector<Sound *>::iterator it = m_sounds.begin(); it != m_sounds.end(); it++)
-		{
-			(*it)->Tick(m_GSD);
-		}
-	}
 
-	//Add your game logic here.
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		(*it)->Tick(m_GSD);
-	}
 
 	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
 	{
@@ -207,5 +181,11 @@ void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _comma
 		(*it)->Render(m_RD);
 	}
 
+	//Render stage
+	game_stage->render(m_RD);
+	
+
 	m_RD->m_spriteBatch->End();
+
+	
 }

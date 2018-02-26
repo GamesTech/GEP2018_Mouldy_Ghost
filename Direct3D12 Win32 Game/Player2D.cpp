@@ -4,7 +4,7 @@
 
 Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
-	m_physics = new Physics2D(_RD, _filename);
+	m_physics = new Physics2D();
 
 	SetLimit(Vector2(900, 500));
 
@@ -13,6 +13,8 @@ Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename
 	m_physics->SetBounce(0.3f);
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
+
+	tag = GameObjectTag::PLAYER;
 }
 
 Player2D::~Player2D()
@@ -28,7 +30,7 @@ void Player2D::Tick(GameStateData * _GSD)
 	if (_GSD->m_buttonState[m_controllerID].a
 		== DirectX::GamePad::ButtonStateTracker::PRESSED)
 	{
-		m_physics->ResetForce(Y);
+		m_physics->ResetForce(Y_AXIS);
 		move_y = -m_jump_height;
 	}
 
@@ -36,7 +38,7 @@ void Player2D::Tick(GameStateData * _GSD)
 	
 	m_physics->AddForce(m_drive * gamePadPush);
 
-	m_physics->MoveBoundingRect(m_pos);
+	m_physics->MoveCollider(m_pos);
 
 //GEP:: Lets go up the inheritence and share our functionality
 
@@ -48,23 +50,23 @@ void Player2D::Tick(GameStateData * _GSD)
 	if (m_pos.x < 0.0f)
 	{
 		m_pos.x *= -1.0f;
-		m_physics->ResetForce(X);
+		m_physics->ResetForce(X_AXIS);
 	}
 	if (m_pos.y < 0.0f)
 	{
 		m_pos.y *= -1.0f;
-		m_physics->ResetForce(Y);
+		m_physics->ResetForce(Y_AXIS);
 	}
 
 	if (m_pos.x > m_limit.x)
 	{
 		m_pos.x = 2.0f * m_limit.x - m_pos.x;
-		m_physics->ResetForce(X);
+		m_physics->ResetForce(X_AXIS);
 	}
 	if (m_pos.y > m_limit.y)
 	{
 		m_pos.y = 2.0f * m_limit.y - m_pos.y;
-		m_physics->ResetForce(Y);
+		m_physics->ResetForce(Y_AXIS);
 	}
 }
 
@@ -72,11 +74,12 @@ void Player2D::Collision(Physics2D * _collision)
 {
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
 	{
-		_collision->AddForce(Vector2(0, -_collision->GetBounce()));
+		//_collision->AddForce(Vector2(0, -_collision->GetBounce()));
+		
 	}
 
 	//if(_collision.tag == "player")
-	if (_collision->GetRectangle()->GetOriginPoint().x > m_pos.x)
+	if (_collision->GetCollider().Center().x > m_pos.x)
 	{
 		m_pos.x--;
 	}

@@ -132,6 +132,18 @@
   <ItemGroup>
     <Text Include="READ_ME.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="rectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="colliderdebug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="platform.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

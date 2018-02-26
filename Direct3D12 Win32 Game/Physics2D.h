@@ -1,20 +1,19 @@
 #pragma once
-#include "BoundingRect.h"
 
 const float m_gravity = 9.8f;
 
 enum Axis
 {
-	X,
-	Y,
-	BOTH
+	X_AXIS,
+	Y_AXIS,
+	BOTH_AXES
 };
 
 //GEP:: Euler Integration Solve for VERY Basic 2D physics
 class Physics2D
 {
 public:
-	Physics2D(RenderData* _RD, string _filename);
+	Physics2D();
 	~Physics2D();
 
 	void AddForce(Vector2 _push) { m_acc += _push / m_mass; }
@@ -35,17 +34,15 @@ public:
 
 	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
-	void SetBoundingRect(BoundingRect* _bounding_rect)
-	{ m_bounding_rect = _bounding_rect; }
-	BoundingRect* GetRectangle() { return m_bounding_rect; }
-	void MoveBoundingRect(Vector2 _pos) { m_bounding_rect->SetOriginPoint(_pos); }
-
-	bool isColliding(Physics2D* _object, Vector2 &_normal);
+	void SetCollider(Rectangle _collider)
+	{ m_collider = _collider; }
+	Rectangle GetCollider() { return m_collider; }
+	void MoveCollider(Vector2 _pos) { m_collider.Offset(_pos.x, _pos.y); }
 
 protected:
 	GameObject2D* owner = nullptr;
 
-	BoundingRect* m_bounding_rect = nullptr;
+	Rectangle m_collider;
 	std::vector<Physics2D*> currently_colliding;
 
 	Vector2 m_vel;

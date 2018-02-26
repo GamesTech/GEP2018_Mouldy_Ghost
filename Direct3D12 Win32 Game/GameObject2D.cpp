@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameObject2D.h"
 #include "Physics2D.h"
+#include "EventHandler.h"
 
 
 GameObject2D::GameObject2D()
@@ -118,4 +119,9 @@ void GameObject2D::Collision(Physics2D * _collision)
 
 void GameObject2D::CollisionExit(Physics2D * _collision)
 {
+}
+
+void GameObject2D::addListener(EventHandler* _event)
+{
+	listeners.push_back(_event);
 }

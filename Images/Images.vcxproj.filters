@@ -4,6 +4,10 @@
     <ImageContentTask Include="guides_logo.png" />
     <ImageContentTask Include="twist.png" />
     <ImageContentTask Include="gens.png" />
+    <ImageContentTask Include="circle.png" />
+    <ImageContentTask Include="rectangle.png" />
+    <ImageContentTask Include="colliderdebug.png" />
+    <ImageContentTask Include="platform.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

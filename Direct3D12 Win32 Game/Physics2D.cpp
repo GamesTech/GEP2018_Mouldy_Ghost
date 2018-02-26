@@ -2,7 +2,7 @@
 #include "Physics2D.h"
 #include "GameStateData.h"
 
-Physics2D::Physics2D(RenderData* _RD, string _filename)
+Physics2D::Physics2D()
 {
 
 }
@@ -64,10 +64,9 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 		{
 			if (m_collider.Intersects(object->GetCollider()))
 			{
-				Rectangle overlap;
-				overlap.Intersect(m_collider, object->GetCollider());
+				Rectangle overlap =	Rectangle::Intersect(m_collider, object->GetCollider());
 
-				Vector2 normal = overlap.Center() - m_collider.Center();
+				Vector2 normal = m_collider.Center() - overlap.Center();
 				normal.Normalize();
 
 				owner->Collision(object);

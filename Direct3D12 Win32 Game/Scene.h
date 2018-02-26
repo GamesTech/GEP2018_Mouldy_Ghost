@@ -23,6 +23,8 @@ public:
 	virtual void Render
 	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 
+	void PhysicsInScene(GameStateData* _GSD);
+
 	//Find game objects
 	GameObject2D* Find2DGameObjectWithName(std::string name);
 	GameObject2D** FindAll2DGameobjectsWithName(std::string name);

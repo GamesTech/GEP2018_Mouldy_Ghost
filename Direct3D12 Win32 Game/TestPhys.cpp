@@ -3,7 +3,7 @@
 
 TestPhys::TestPhys(RenderData * _RD, string _filename) :ImageGO2D(_RD, _filename)
 {
-	m_physics = new Physics2D(_RD, _filename);
+	m_physics = new Physics2D();
 	m_physics->SetOwner(this);
 	m_physics->SetGrav(1);
 
@@ -42,7 +42,7 @@ void TestPhys::Tick(GameStateData * _GSD)
 
 void TestPhys::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-	Vector2 force_to_add = m_physics->GetBounce() * _normal * 1000;
+	Vector2 force_to_add = (m_physics->GetBounce() * _normal) * 1000;
 	m_physics->ResetForce(BOTH_AXES);
 	m_physics->AddForce(force_to_add);
 }

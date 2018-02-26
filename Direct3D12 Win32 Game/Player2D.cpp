@@ -4,7 +4,7 @@
 
 Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
-	m_physics = new Physics2D(_RD, _filename);
+	m_physics = new Physics2D();
 
 	SetLimit(Vector2(900, 500));
 

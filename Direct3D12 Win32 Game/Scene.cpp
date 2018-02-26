@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "RenderData.h"
+#include "GameStateData.h"
 #include "Scene.h"
 
 Scene::~Scene()
@@ -95,6 +96,14 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 	}
 
 	m_RD->m_spriteBatch->End();
+}
+
+void Scene::PhysicsInScene(GameStateData* _GSD)
+{
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		_GSD->objects_in_scene.push_back(m_2DObjects[i]->GetPhysics());
+	}
 }
 
 GameObject2D * Scene::Find2DGameObjectWithName(std::string name)

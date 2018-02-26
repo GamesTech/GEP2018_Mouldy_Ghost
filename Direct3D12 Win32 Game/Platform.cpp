@@ -4,7 +4,7 @@
 
 Platform::Platform(RenderData* _RD, string _filename) :ImageGO2D(_RD, _filename)
 {
-	m_physics = new Physics2D(_RD, _filename);
+	m_physics = new Physics2D();
 	m_physics->SetOwner(this);
 	m_physics->SetGrav(0);
 

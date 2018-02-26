@@ -146,7 +146,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_physScene = new PhysicsScene();
 	m_physScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
-	m_activeScene = m_physScene;
+	SwitchToScene(PHYSICS_SCENE, false);
 }
 
 //GEP:: Executes the basic game loop.
@@ -664,13 +664,19 @@ bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 	{
 	case GAME_SCENE:
 		m_activeScene = m_gameScene;
-		return true;
+		break;
 	case TEST_SCENE:
 		m_activeScene = m_testScene;
-		return true;
+		break;
+	case PHYSICS_SCENE:
+		m_activeScene = m_physScene;
+		break;
 	default:
 		return false;
 	}
+
+	m_activeScene->PhysicsInScene(m_GSD);
+	return true;
 }
 
 void Game::ReadInput()

@@ -6,6 +6,7 @@
     <ImageContentTask Include="gens.png" />
     <ImageContentTask Include="circle.png" />
     <ImageContentTask Include="rectangle.png" />
+    <ImageContentTask Include="colliderdebug.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

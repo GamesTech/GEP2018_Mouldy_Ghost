@@ -15,6 +15,9 @@ public:
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 
+	void Update(DX::StepTimer const & timer,
+		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
+
 	virtual void Reset();
 
 	void Render

@@ -41,7 +41,7 @@ void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 	_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
 
-	MovingPlatform* test_moving = new MovingPlatform(_RD, Vector2(50, 50), Vector2(400, 50), 4.0f, 2.0f, "platform");
+	MovingPlatform* test_moving = new MovingPlatform(_RD, Vector2(50, 50), Vector2(50, 400), 4.0f, 2.0f, "platform");
 	test_moving->SetPos(Vector2(50, 50));
 
 	platforms.push_back(test_moving);

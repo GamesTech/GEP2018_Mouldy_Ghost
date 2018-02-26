@@ -8,40 +8,13 @@
 platform will be constantly moving between start and end positions
 "stay" param indicates how long will the platform stay idling after the goal was reached
 */
-MovingPlatform::MovingPlatform(RenderData * _RD, Vector2 _start, Vector2 _end, float _travel_time, float _stay, string _filename) 
+MovingPlatform::MovingPlatform(RenderData * _RD, Vector2 _start, Vector2 _end, float _travel_time, float _stay, string _filename) :Platform(_RD, _filename)
 {
-	m_physics = new Physics2D(_RD, _filename);
-	m_physics->SetOwner(this);
-	m_physics->SetGrav(0);
-
 	start_pos = _start;
 	end_pos = _end;
 
 	travel_time = _travel_time;
 	stay_time = _stay;
-
-	tag = GameObjectTag::PLATFORM;
-
-
-	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-	string fullpath = "../DDS/" + _filename + ".dds";
-	std::wstring wFilename = converter.from_bytes(fullpath.c_str());
-
-	ResourceUploadBatch resourceUpload(_RD->m_d3dDevice.Get());
-
-	resourceUpload.Begin();
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(_RD->m_d3dDevice.Get(), resourceUpload, wFilename.c_str(),
-			m_texture.ReleaseAndGetAddressOf()));
-
-
-	CreateShaderResourceView(_RD->m_d3dDevice.Get(), m_texture.Get(),
-		_RD->m_resourceDescriptors->GetCpuHandle(m_resourceNum = _RD->m_resourceCount++));
-
-	auto uploadResourcesFinished = resourceUpload.End(_RD->m_commandQueue.Get());
-
-	uploadResourcesFinished.wait();
 }
 
 MovingPlatform::MovingPlatform()
@@ -78,10 +51,9 @@ void MovingPlatform::Tick(GameStateData * _GSD)
 		{
 			elapsed_time = 0;
 			stay = true;
+			newpos = direction ? end_pos : start_pos;
 			direction = !direction;
 		}
-
-		
 		m_pos = newpos;
 	}
 	else

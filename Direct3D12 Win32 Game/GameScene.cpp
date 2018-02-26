@@ -85,6 +85,12 @@ void GameScene::Initialise(RenderData * _RD,
 	
 }
 
+void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+{
+	Scene::Update(timer, _audEngine);
+	game_stage->update(m_GSD);
+}
+
 void GameScene::Reset()
 {
 	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
@@ -143,7 +149,7 @@ void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _comma
 
 	//Render stage
 	game_stage->render(m_RD);
-	game_stage->update(m_GSD);
+	
 
 	m_RD->m_spriteBatch->End();
 

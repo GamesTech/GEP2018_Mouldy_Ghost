@@ -8,8 +8,6 @@ Platform::Platform(RenderData* _RD, string _filename) :ImageGO2D(_RD, _filename)
 	m_physics->SetOwner(this);
 	m_physics->SetGrav(0);
 
-	
-
 	tag = GameObjectTag::PLATFORM;
 }
 

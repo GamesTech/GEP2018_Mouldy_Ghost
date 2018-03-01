@@ -26,8 +26,7 @@ void PhysicsScene::Initialise
 	m_3DObjects.push_back(m_cam);
 
 	TestPhys* phys = new TestPhys(m_RD, "grant", Vector2(165, 320), 12);
-	phys->SetSpawn(Vector2(375, 0));
-	phys->SetOrigin(Vector2(0, 0));
+	phys->SetSpawn(Vector2(365, 0));
 	phys->GetPhysics()->SetDrag(0.5f);
 	phys->GetPhysics()->SetBounce(40);
 	int x_size = phys->TextureSize().x;
@@ -39,8 +38,7 @@ void PhysicsScene::Initialise
 	m_GSD->objects_in_scene.push_back(phys->GetPhysics());
 
 	phys = new TestPhys(m_RD, "rectangle");
-	phys->SetSpawn(Vector2(350, 400));
-	phys->SetOrigin(Vector2(0, 0));
+	phys->SetSpawn(Vector2(350, 500));
 	phys->GetPhysics()->SetGrav(0);
 	phys->GetPhysics()->SetBounce(0);
 	x_size = phys->TextureSize().x;

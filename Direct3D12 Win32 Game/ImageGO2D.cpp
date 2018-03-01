@@ -34,6 +34,8 @@ ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, Vector2 _spritesize, in
 	{
 		m_spriteSize = _spritesize;
 	}
+
+	SetOrigin(m_spriteSize / 2);
 }
 
 

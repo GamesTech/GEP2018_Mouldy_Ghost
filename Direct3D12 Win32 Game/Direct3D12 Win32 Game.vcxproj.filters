@@ -74,6 +74,15 @@
     <Filter Include="GameObjects\Stages\Source">
       <UniqueIdentifier>{901b3222-49c9-4a70-aab2-7c8d0e2778b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Characters">
+      <UniqueIdentifier>{3fc6e26a-7a91-4b69-be0b-8831610a77d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Headers">
+      <UniqueIdentifier>{cfc73207-eefc-4bc2-8537-843eb003fd4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Source">
+      <UniqueIdentifier>{bf3dd5a2-9e22-47c9-a969-065b80c42432}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -196,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="GameObjectTags.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Characters\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

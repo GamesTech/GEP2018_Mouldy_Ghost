@@ -43,6 +43,41 @@ void ImageGO2D::Render(RenderData* _RD)
 	//TODO::example stuff for sprite sheet
 }
 
+void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)
+{
+	//make sure origin is in the middle
+	CentreOrigin();
+
+	//get the size of the texture
+	XMUINT2 size = GetTextureSize(m_texture.Get());
+	
+	//get the current scale of the texture
+	//this gives us the real size of the texture (width and height) as a vector2
+	Vector2 realSize((size.x * m_scale.x), (size.y * m_scale.y));
+	//obtain the real size of the texture after scaling
+	Vector2 realSizeAfterScale((size.x * scale.x), (size.y * scale.y));
+	//get the difference in size between these two
+	Vector2 diff = realSizeAfterScale - realSize;
+	//make the difference positive
+	if (diff.x < 0)
+	{
+		diff.x *= -1;
+	}
+	if (diff.y < 0)
+	{
+		diff.y *= -1;
+	}
+	//get the distance of the scale point to the origin of the image as a percentage (1.0f = 100%)
+	Vector2 distanceFactor((point.x - GetPos().x) / ((realSize.x / 2) - GetPos().x), ((point.y - GetPos().y) / ((realSize.y / 2) - GetPos().y)));
+	//multiply the difference in size by this percentage
+	diff = diff * distanceFactor;
+	//now we have the values, we scale the image
+	SetScale(scale);
+	//this is how much we should move the image by
+	SetPos(Vector2(GetPos().x + diff.x, GetPos().y + diff.y));
+	//if point was bottom left we would do: current_pos.x + difference in width, current_pos.y + difference in height
+}
+
 void ImageGO2D::CentreOrigin()
 {
 	XMUINT2 size = GetTextureSize(m_texture.Get());

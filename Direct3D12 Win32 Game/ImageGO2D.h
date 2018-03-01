@@ -19,6 +19,7 @@ public:
 	virtual ~ImageGO2D();
 
 	void Render(RenderData* _RD);
+	void scaleFromPoint(Vector2 point, Vector2 scale);
 
 	void CentreOrigin();
 	Vector2 TextureSize();

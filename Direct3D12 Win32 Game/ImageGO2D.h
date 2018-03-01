@@ -14,11 +14,12 @@ class ImageGO2D
 	: public GameObject2D
 {
 public:
-	ImageGO2D(RenderData* _RD, string _filename);
+	ImageGO2D(RenderData* _RD, string _filename, Vector2 _spritesize = Vector2(0,0), int _in_row = 0);
 	ImageGO2D() = default;
 	virtual ~ImageGO2D();
 
-	void Render(RenderData* _RD);
+	void Render(RenderData* _RD, int _sprite);
+
 	void scaleFromPoint(Vector2 point, Vector2 scale);
 
 	void CentreOrigin();
@@ -27,6 +28,7 @@ public:
 protected:
 	Microsoft::WRL::ComPtr<ID3D12Resource> m_texture;
 	int m_resourceNum = -1;
-
+	Vector2 m_spriteSize;
+	int m_sprites_row;
 };
 

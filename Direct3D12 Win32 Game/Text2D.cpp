@@ -25,7 +25,7 @@ void Text2D::CentreOrigin()
 	m_dirtyOrigin = true;
 }
 
-void Text2D::Render(RenderData * _RD)
+void Text2D::Render(RenderData * _RD, int _sprite)
 {
 	if (m_dirtyOrigin)
 	{

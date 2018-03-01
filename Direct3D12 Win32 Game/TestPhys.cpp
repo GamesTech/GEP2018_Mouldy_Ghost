@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "TestPhys.h"
+#include "RenderData.h"
 
-TestPhys::TestPhys(RenderData * _RD, string _filename) :ImageGO2D(_RD, _filename)
+TestPhys::TestPhys(RenderData * _RD, string _filename, Vector2 _spritesize, int _in_row)
+	: ImageGO2D(_RD, _filename, _spritesize, _in_row)
 {
 	m_physics = new Physics2D();
 	m_physics->SetOwner(this);

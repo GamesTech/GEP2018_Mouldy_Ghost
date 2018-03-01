@@ -18,7 +18,7 @@ public:
 	//place the origin at the middle of the string
 	void CentreOrigin();
 
-	void Render(RenderData* _RD);
+	void Render(RenderData* _RD, int _sprite = 0);
 protected:
 	string m_text;
 	std::wstring m_wText;

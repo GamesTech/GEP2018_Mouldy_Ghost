@@ -3,10 +3,8 @@
 #include <codecvt>
 #include "RenderData.h"
 
-
-ImageGO2D::ImageGO2D(RenderData* _RD, string _filename)
+ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, Vector2 _spritesize, int _in_row)
 {
-
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 	string fullpath = "../DDS/" + _filename + ".dds";
 	std::wstring wFilename = converter.from_bytes(fullpath.c_str());
@@ -21,11 +19,21 @@ ImageGO2D::ImageGO2D(RenderData* _RD, string _filename)
 
 
 	CreateShaderResourceView(_RD->m_d3dDevice.Get(), m_texture.Get(),
-		_RD->m_resourceDescriptors->GetCpuHandle(m_resourceNum=_RD->m_resourceCount++));
+		_RD->m_resourceDescriptors->GetCpuHandle(m_resourceNum = _RD->m_resourceCount++));
 
 	auto uploadResourcesFinished = resourceUpload.End(_RD->m_commandQueue.Get());
 
 	uploadResourcesFinished.wait();
+
+	if (_spritesize.x == 0)
+	{
+		m_spriteSize = Vector2(GetTextureSize
+		(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
+	}
+	else
+	{
+		m_spriteSize = _spritesize;
+	}
 }
 
 
@@ -34,13 +42,26 @@ ImageGO2D::~ImageGO2D()
 	m_texture.Reset();
 }
 
-void ImageGO2D::Render(RenderData* _RD)
+void ImageGO2D::Render(RenderData * _RD, int _sprite)
 {
-	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-		GetTextureSize(m_texture.Get()),
-		m_pos, nullptr, m_colour, m_orientation, m_origin, m_scale);
-	//TODO::add sprite effects & layer Depth
-	//TODO::example stuff for sprite sheet
+	if (m_spriteSize.x != 0)
+	{
+		int x = m_spriteSize.x * (_sprite % m_sprites_row);
+		int y = m_spriteSize.y * (_sprite / m_sprites_row);
+
+		Rectangle rect = Rectangle(x, y, m_spriteSize.x, m_spriteSize.y);
+		const RECT* r = &RECT(rect);
+
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+			GetTextureSize(m_texture.Get()),
+			m_pos, r, m_colour, m_orientation, m_origin, m_scale);
+	}
+	else
+	{
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+			GetTextureSize(m_texture.Get()),
+			m_pos, nullptr, m_colour, m_orientation, m_origin, m_scale);
+	}
 }
 
 void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)
@@ -87,6 +108,13 @@ void ImageGO2D::CentreOrigin()
 
 Vector2 ImageGO2D::TextureSize()
 {
-	XMUINT2 size = GetTextureSize(m_texture.Get());
-	return Vector2(size.x, size.y);
+	if (m_spriteSize.x == 0)
+	{
+		XMUINT2 size = GetTextureSize(m_texture.Get());
+		return Vector2(size.x, size.y);
+	}
+	else
+	{
+		return m_spriteSize;
+	}
 }

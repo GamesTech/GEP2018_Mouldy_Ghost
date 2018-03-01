@@ -24,7 +24,7 @@ void Stage::render(RenderData * _RD)
 
 	for (auto& platform : platforms)
 	{
-		platform->Render(_RD);
+		platform->Render(_RD, 0);
 	}
 
 	/*for (int i = 0; i < platforms.size(); i++)

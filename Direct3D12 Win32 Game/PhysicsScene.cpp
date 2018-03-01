@@ -25,9 +25,9 @@ void PhysicsScene::Initialise
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
 
-	TestPhys* phys = new TestPhys(m_RD, "rectangle");
-	phys->SetSpawn(Vector2(320, 0));
-	phys->SetOrigin(Vector2(100, 100));
+	TestPhys* phys = new TestPhys(m_RD, "grant", Vector2(165, 320), 12);
+	phys->SetSpawn(Vector2(375, 0));
+	phys->SetOrigin(Vector2(0, 0));
 	phys->GetPhysics()->SetDrag(0.5f);
 	phys->GetPhysics()->SetBounce(40);
 	int x_size = phys->TextureSize().x;
@@ -40,7 +40,7 @@ void PhysicsScene::Initialise
 
 	phys = new TestPhys(m_RD, "rectangle");
 	phys->SetSpawn(Vector2(350, 400));
-	phys->SetOrigin(Vector2(100, 100));
+	phys->SetOrigin(Vector2(0, 0));
 	phys->GetPhysics()->SetGrav(0);
 	phys->GetPhysics()->SetBounce(0);
 	x_size = phys->TextureSize().x;
@@ -50,10 +50,12 @@ void PhysicsScene::Initialise
 	phys->GetPhysics()->SetCollider(rect);
 	m_2DObjects.push_back(phys);
 	m_GSD->objects_in_scene.push_back(phys->GetPhysics());
-
-
 }
 
 void PhysicsScene::Reset()
 {
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		m_2DObjects[i]->ResetPos();
+	}
 }

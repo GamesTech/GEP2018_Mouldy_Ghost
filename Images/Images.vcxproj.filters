@@ -8,6 +8,7 @@
     <ImageContentTask Include="rectangle.png" />
     <ImageContentTask Include="colliderdebug.png" />
     <ImageContentTask Include="platform.png" />
+    <ImageContentTask Include="SpriteSheets\grant.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

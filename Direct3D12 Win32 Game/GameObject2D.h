@@ -39,7 +39,7 @@ public:
 	Physics2D* GetPhysics() { return m_physics; }
 
 	virtual void Tick(GameStateData* _GSD);
-	virtual void Render(RenderData* _RD) = 0;
+	virtual void Render(RenderData* _RD, int _sprite = 0) = 0;
 
 	std::string GetName();
 	void SetName(std::string string);

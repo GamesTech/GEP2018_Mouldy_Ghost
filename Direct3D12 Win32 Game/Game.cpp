@@ -722,6 +722,14 @@ void Game::ReadInput()
 	{
 		SwitchToScene(TEST_SCENE, false);
 	}
+	if (m_GSD->m_keyboardState.G && !m_GSD->m_prevKeyboardState.G)
+	{
+		SwitchToScene(PHYSICS_SCENE, true);
+	}
+	if (m_GSD->m_keyboardState.H && !m_GSD->m_prevKeyboardState.H)
+	{
+		SwitchToScene(PHYSICS_SCENE, false);
+	}
 
 	//Quit if press Esc
 	if (m_GSD->m_keyboardState.Escape)

@@ -21,7 +21,8 @@ enum SceneEnum
 {
 	GAME_SCENE,
 	TEST_SCENE,
-	PHYSICS_SCENE
+	PHYSICS_SCENE,
+	MENU_SCENE
 };
 
 // A basic game implementation that creates a D3D12 device and
@@ -109,6 +110,8 @@ private:
 	GameScene* m_gameScene;
 	TestScene* m_testScene;
 	PhysicsScene* m_physScene;
+	MenuScene* m_menuScene;
+
 
 	std::vector<Scene*> m_all_scenes;
 

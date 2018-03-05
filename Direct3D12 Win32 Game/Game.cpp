@@ -153,6 +153,9 @@ void Game::Initialize(HWND window, int width, int height)
 	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 	m_physScene = new PhysicsScene();
 	m_physScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_menuScene = new MenuScene();
+	m_menuScene->addListener(listeners[0].get());
+	m_menuScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
 	SwitchToScene(PHYSICS_SCENE, false);
 }
@@ -679,6 +682,9 @@ bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 	case PHYSICS_SCENE:
 		m_activeScene = m_physScene;
 		break;
+	case MENU_SCENE:
+		m_activeScene = m_menuScene;
+		break;
 	default:
 		return false;
 	}
@@ -729,6 +735,10 @@ void Game::ReadInput()
 	if (m_GSD->m_keyboardState.H && !m_GSD->m_prevKeyboardState.H)
 	{
 		SwitchToScene(PHYSICS_SCENE, false);
+	}
+	if (m_GSD->m_keyboardState.L && !m_GSD->m_prevKeyboardState.L)
+	{
+		SwitchToScene(MENU_SCENE, false);
 	}
 
 	//Quit if press Esc

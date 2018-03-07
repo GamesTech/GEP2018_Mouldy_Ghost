@@ -691,49 +691,53 @@ void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
 
-	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
-	m_GSD->m_keyboardState = m_keyboard->GetState();
+	m_GSD->game_actions.clear();
 
+	m_GSD->menu_action = m_input.getAction
+	(m_keyboard->GetState(), m_prev_keyboard, static_cast<TestScene*>(m_activeScene));
+	m_GSD->game_actions = m_input.getAction
+	(m_keyboard->GetState(), m_prev_keyboard, static_cast<GameScene*>(m_activeScene));
+	m_prev_keyboard = m_keyboard->GetState();
+	
 	for (int i = 0; i < 4; i++)
 	{
 		auto state = m_gamePad->GetState(i);
 
 		m_buttons[i].Update(state);
 
-		m_GSD->m_gamePadState[i] = state;
-		m_GSD->m_buttonState[i] = m_buttons[i];
+		if (m_GSD->menu_action == NONE)
+		{
+			m_GSD->menu_action = m_input.getAction
+			(state, m_buttons[i], static_cast<TestScene*>(m_activeScene));
+		}
+		m_GSD->game_actions = m_input.getAction
+		(state, m_buttons[i], static_cast<GameScene*>(m_activeScene));
 
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
-	if (m_GSD->m_keyboardState.A && !m_GSD->m_prevKeyboardState.A)
+	switch (m_GSD->menu_action)
 	{
+	case NAV_UP:
 		SwitchToScene(GAME_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.S && !m_GSD->m_prevKeyboardState.S)
-	{
+		break;
+	case NAV_DOWN:
 		SwitchToScene(GAME_SCENE, false);
-	}
-	if (m_GSD->m_keyboardState.D && !m_GSD->m_prevKeyboardState.D)
-	{
+		break;
+	case NAV_LEFT:
 		SwitchToScene(TEST_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.F && !m_GSD->m_prevKeyboardState.F)
-	{
+		break;
+	case NAV_RIGHT:
 		SwitchToScene(TEST_SCENE, false);
-	}
-	if (m_GSD->m_keyboardState.G && !m_GSD->m_prevKeyboardState.G)
-	{
+		break;
+	case ADVANCE_MENU:
 		SwitchToScene(PHYSICS_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.H && !m_GSD->m_prevKeyboardState.H)
-	{
-		SwitchToScene(PHYSICS_SCENE, false);
+		break;
+	default:
+		break;
 	}
 
 	//Quit if press Esc
-	if (m_GSD->m_keyboardState.Escape)
+	if (m_GSD->menu_action == PREVIOUS_MENU)
 		PostQuitMessage(0);
-
-	m_GSD->m_mouseState = m_mouse->GetState();
 }

@@ -2,6 +2,8 @@
 #include "Player2D.h"
 #include "GameStateData.h"
 
+#include <algorithm>
+
 Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
 	m_physics = new Physics2D();
@@ -24,17 +26,18 @@ Player2D::~Player2D()
 
 void Player2D::Tick(GameStateData * _GSD)
 {
-	float move_x = m_move_speed * 
-		_GSD->m_gamePadState[m_controllerID].thumbSticks.leftX;
-	float move_y = 0;
-	if (_GSD->m_buttonState[m_controllerID].a
-		== DirectX::GamePad::ButtonStateTracker::PRESSED)
+	Vector2 gamePadPush = Vector2(0, 0);
+	if (std::find(_GSD->game_actions.begin(),
+		_GSD->game_actions.end(), P_MOVE_LEFT) != _GSD->game_actions.end())
+	{
+		gamePadPush.x = m_move_speed;
+	}
+	if (std::find(_GSD->game_actions.begin(),
+		_GSD->game_actions.end(), P_JUMP) != _GSD->game_actions.end())
 	{
 		m_physics->ResetForce(Y_AXIS);
-		move_y = -m_jump_height;
+		gamePadPush.y = -m_jump_height;
 	}
-
-	Vector2 gamePadPush = Vector2(move_x, move_y);
 	
 	m_physics->AddForce(m_drive * gamePadPush);
 

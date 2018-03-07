@@ -181,6 +181,7 @@
     <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />

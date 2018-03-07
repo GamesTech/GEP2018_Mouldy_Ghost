@@ -218,6 +218,9 @@
     <ClInclude Include="VisiblePhysics.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -322,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="VisiblePhysics.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

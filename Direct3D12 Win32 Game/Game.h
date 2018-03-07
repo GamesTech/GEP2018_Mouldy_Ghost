@@ -11,6 +11,7 @@
 #include "StepTimer.h"
 #include "Audio.h"
 #include "EventHandler.h"
+#include "InputSystem.h"
 #include <vector>
 using std::vector;
 
@@ -114,7 +115,11 @@ private:
 
 	//GEP:: Keyboard and Mouse Abstractions for basic input system
 	void ReadInput();
+
+	InputSystem m_input;
 	std::unique_ptr<DirectX::Keyboard> m_keyboard;
+	DirectX::Keyboard::State m_prev_keyboard;
+
 	std::unique_ptr<DirectX::Mouse> m_mouse;
 
 	std::unique_ptr<DirectX::GamePad> m_gamePad;

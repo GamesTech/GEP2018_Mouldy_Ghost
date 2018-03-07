@@ -93,6 +93,9 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
 	{
 		(*it)->Render(m_RD, rand() % 12);
+#if _DEBUG
+		(*it)->GetPhysics()->RenderCorners();
+#endif
 	}
 
 	m_RD->m_spriteBatch->End();

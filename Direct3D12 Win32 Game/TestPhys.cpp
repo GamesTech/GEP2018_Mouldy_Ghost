@@ -1,11 +1,18 @@
 #include "pch.h"
 #include "TestPhys.h"
+#include "VisiblePhysics.h"
 #include "RenderData.h"
 
 TestPhys::TestPhys(RenderData * _RD, string _filename, Vector2 _spritesize, int _in_row)
 	: ImageGO2D(_RD, _filename, _spritesize, _in_row)
 {
+
+#if _DEBUG
+	m_physics = new VisiblePhysics(_RD);
+#else
 	m_physics = new Physics2D();
+#endif
+
 	m_physics->SetOwner(this);
 	m_physics->SetGrav(1);
 

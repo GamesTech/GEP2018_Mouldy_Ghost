@@ -212,6 +212,7 @@
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
+    <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -253,6 +254,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
+    <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

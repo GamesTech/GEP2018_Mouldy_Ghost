@@ -39,6 +39,10 @@ public:
 	Rectangle GetCollider() { return m_collider; }
 	void MoveCollider(Vector2 _pos) { m_collider.Offset(_pos.x, _pos.y); }
 
+#if _DEBUG
+	void RenderCorners();
+#endif;
+
 protected:
 	GameObject2D* owner = nullptr;
 

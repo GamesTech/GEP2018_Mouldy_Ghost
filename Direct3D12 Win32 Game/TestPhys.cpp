@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "TestPhys.h"
-#include "VisiblePhysics.h"
 #include "RenderData.h"
+
+#if _DEBUG
+#include "VisiblePhysics.h"
+#endif
 
 TestPhys::TestPhys(RenderData * _RD, string _filename, Vector2 _spritesize, int _in_row)
 	: ImageGO2D(_RD, _filename, _spritesize, _in_row)

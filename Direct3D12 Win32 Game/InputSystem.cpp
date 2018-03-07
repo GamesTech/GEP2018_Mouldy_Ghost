@@ -7,107 +7,112 @@
 //TODO: All instances of "testscene" should be replaced with menuscene when it exists
 
 //Keyboard in game controls
-GameActions InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state, GameScene * _scene)
+void InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state
+	, GameActions& _actions)
 {
-	GameActions ret_actions;
 	if (_state.W && !_prev_state.W)
 	{
-		ret_actions.push_back(P_JUMP);
+		_actions.push_back(P_JUMP);
 	}
 	if (_state.A)
 	{
-		ret_actions.push_back(P_MOVE_LEFT);
+		_actions.push_back(P_MOVE_LEFT);
 	}
 	if (_state.S)
 	{
-		ret_actions.push_back(P_CROUCH);
+		_actions.push_back(P_CROUCH);
 	}
 	if (_state.D)
 	{
-		ret_actions.push_back(P_MOVE_RIGHT);
+		_actions.push_back(P_MOVE_RIGHT);
 	}
 
 	if (_state.Y)
 	{
-		ret_actions.push_back(P_HOLD_BASIC);
+		_actions.push_back(P_HOLD_BASIC);
 	}
 	else if (_prev_state.Y)
 	{
-		ret_actions.push_back(P_RELEASE_BASIC);
+		_actions.push_back(P_RELEASE_BASIC);
 	}
 	if (_state.U)
 	{
-		ret_actions.push_back(P_HOLD_SPECIAL);
+		_actions.push_back(P_HOLD_SPECIAL);
 	}
 	else if (_prev_state.U)
 	{
-		ret_actions.push_back(P_RELEASE_SPECIAL);
+		_actions.push_back(P_RELEASE_SPECIAL);
 	}
 
 	if (_state.H && !_prev_state.H)
 	{
-		ret_actions.push_back(P_GRAB);
+		_actions.push_back(P_GRAB);
 	}
 	if (_state.J && !_prev_state.J)
 	{
-		ret_actions.push_back(P_GUARD);
+		_actions.push_back(P_GUARD);
 	}
-
-	return ret_actions;
+	if (_state.Escape)
+	{
+		_actions.push_back(P_QUIT);
+	}
 }
 
-GameActions InputSystem::getAction(GamePad::State _state, GamePad::ButtonStateTracker _buttons, GameScene * _scene)
+//controller in game controls
+void InputSystem::getAction(GamePad::State _state,
+	GamePad::ButtonStateTracker _buttons, GameActions& _actions)
 {
-	GameActions ret_actions;
-
 	if (_state.IsAPressed())
 	{
-		ret_actions.push_back(P_HOLD_BASIC);
+		_actions.push_back(P_HOLD_BASIC);
 	}
 	else if (_buttons.GetLastState().IsAPressed())
 	{
-		ret_actions.push_back(P_RELEASE_BASIC);
+		_actions.push_back(P_RELEASE_BASIC);
 	}
 	if (_state.IsXPressed())
 	{
-		ret_actions.push_back(P_HOLD_SPECIAL);
+		_actions.push_back(P_HOLD_SPECIAL);
 	}
 	else if (_buttons.GetLastState().IsXPressed())
 	{
-		ret_actions.push_back(P_RELEASE_SPECIAL);
+		_actions.push_back(P_RELEASE_SPECIAL);
 	}
 
 	if (_state.IsBPressed() && !_buttons.GetLastState().IsBPressed())
 	{
-		ret_actions.push_back(P_JUMP);
+		_actions.push_back(P_JUMP);
 	}
 
 	if (_state.IsRightTriggerPressed())
 	{
-		ret_actions.push_back(P_GUARD);
+		_actions.push_back(P_GUARD);
 	}
 	if (_state.IsRightShoulderPressed() && !_buttons.GetLastState().IsRightShoulderPressed())
 	{
-		ret_actions.push_back(P_GRAB);
+		_actions.push_back(P_GRAB);
 	}
 
 	if (_state.IsLeftThumbStickLeft())
 	{
-		ret_actions.push_back(P_MOVE_LEFT);
+		_actions.push_back(P_MOVE_LEFT);
 	}
 	if (_state.IsLeftThumbStickRight())
 	{
-		ret_actions.push_back(P_MOVE_RIGHT);
+		_actions.push_back(P_MOVE_RIGHT);
 	}
 	if (_state.IsLeftThumbStickDown())
 	{
-		ret_actions.push_back(P_CROUCH);
+		_actions.push_back(P_CROUCH);
 	}
-
-	return ret_actions;
+	if (_state.IsViewPressed())
+	{
+		_actions.push_back(P_QUIT);
+	}
 }
 
-MenuAction InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state, TestScene * _scene)
+//keyboard menu controls
+MenuAction InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state)
 {
 	if (_state.W && !_prev_state.W)
 	{
@@ -123,7 +128,7 @@ MenuAction InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_
 	}
 	if (_state.D && !_prev_state.D)
 	{
-		return (NAV_LEFT);
+		return (NAV_RIGHT);
 	}
 
 	if (_state.Enter && !_prev_state.Enter)
@@ -138,14 +143,15 @@ MenuAction InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_
 	return NONE;
 }
 
-MenuAction InputSystem::getAction(GamePad::State _state, GamePad::ButtonStateTracker _buttons, TestScene * _scene)
+//controller menu controls
+MenuAction InputSystem::getAction(GamePad::State _state, GamePad::ButtonStateTracker _buttons)
 {
-	if (_state.IsAPressed() && !_buttons.GetLastState().IsAPressed())
+	if (_state.IsStartPressed() && !_buttons.GetLastState().IsStartPressed())
 	{
 		return ADVANCE_MENU;
 	}
 
-	if (_state.IsBPressed() && !_buttons.GetLastState().IsBPressed())
+	if (_state.IsBackPressed() && !_buttons.GetLastState().IsBackPressed())
 	{
 		return PREVIOUS_MENU;
 	}

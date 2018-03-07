@@ -107,6 +107,8 @@ private:
 	GameStateData* m_GSD;
 
 	Scene* m_activeScene;
+	SceneEnum m_current_scene;
+
 	GameScene* m_gameScene;
 	TestScene* m_testScene;
 	PhysicsScene* m_physScene;

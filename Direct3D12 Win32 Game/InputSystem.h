@@ -26,7 +26,10 @@ enum GameAction
 	P_RELEASE_BASIC,
 	P_HOLD_BASIC,
 	P_RELEASE_SPECIAL,
-	P_HOLD_SPECIAL
+	P_HOLD_SPECIAL,
+
+	P_PAUSE,
+	P_QUIT
 };
 
 using GameActions = std::vector<GameAction>;
@@ -40,13 +43,13 @@ public:
 	InputSystem() = default;
 	~InputSystem() = default;
 
-	GameActions getAction(Keyboard::State _state,
-		Keyboard::State _prev_state, GameScene* _scene);
-	GameActions getAction(GamePad::State _state,
-		GamePad::ButtonStateTracker _buttons, GameScene* _scene);
+	void getAction(Keyboard::State _state,
+		Keyboard::State _prev_state, GameActions& _actions);
+	void getAction(GamePad::State _state,
+		GamePad::ButtonStateTracker _buttons, GameActions& _actions);
 
 	MenuAction getAction(Keyboard::State _state,
-		Keyboard::State _prev_state, TestScene* _scene);
+		Keyboard::State _prev_state);
 	MenuAction getAction(GamePad::State _state,
-		GamePad::ButtonStateTracker _buttons, TestScene* _scene);
+		GamePad::ButtonStateTracker _buttons);
 };

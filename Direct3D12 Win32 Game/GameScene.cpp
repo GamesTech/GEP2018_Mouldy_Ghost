@@ -28,7 +28,6 @@ void GameScene::Initialise(RenderData * _RD,
 	//could pass the name of the stage as a function paratemter
 	game_stage = std::make_unique<FinalDestination>();
 	game_stage->init(m_RD,m_GSD);
-	
 
 
 	TestPBGO3D* test3d = new TestPBGO3D();

@@ -694,7 +694,8 @@ void Game::ReadInput()
 
 	for (int i = 0; i < 4; i++)
 	{
-	m_GSD->game_actions[i].clear();
+		m_GSD->menu_action[i] = NONE;
+		m_GSD->game_actions[i].clear();
 
 		auto state = m_gamePad->GetState(i);
 

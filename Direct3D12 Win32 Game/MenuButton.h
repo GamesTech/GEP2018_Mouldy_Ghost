@@ -6,7 +6,7 @@ class MenuButton :
 {
 public:
 	MenuButton();
-	MenuButton(Event _eventToSend);
+	MenuButton(Event _eventToSend, RenderData * _RD, string _filename);
 	~MenuButton();
 	virtual void Tick(GameStateData* _GSD) override;
 private:

@@ -738,6 +738,8 @@ void Game::ReadInput()
 	case NAV_RIGHT:
 		SwitchToScene(TEST_SCENE, true);
 		break;
+	case NAV_DOWN:
+		SwitchToScene(MENU_SCENE, false);
 	default:
 		break;
 	}
@@ -748,10 +750,6 @@ void Game::ReadInput()
 		{
 			SwitchToScene(TEST_SCENE, true);
 		}
-	}
-	if (m_GSD->m_keyboardState.L && !m_GSD->m_prevKeyboardState.L)
-	{
-		SwitchToScene(MENU_SCENE, false);
 	}
 
 	//Quit if press Esc

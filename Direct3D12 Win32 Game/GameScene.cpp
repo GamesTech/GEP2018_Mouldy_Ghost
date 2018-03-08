@@ -79,7 +79,25 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	Scene::Update(timer, _audEngine);
 	game_stage->update(m_GSD);
 
-
+	if (m_GSD->game_actions[0].size() > 0)
+	{
+		if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_SPECIAL)
+		{
+			for (int i = 0; i < m_2DObjects.size(); i++)
+			{
+				ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
+				temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x + 0.1f, temp->GetScale().y + 0.1f));
+			}
+		}
+		if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_BASIC)
+		{
+			for (int i = 0; i < m_2DObjects.size(); i++)
+			{
+				ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
+				temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x - 0.1f, temp->GetScale().y - 0.1f));
+			}
+		}
+	}
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{

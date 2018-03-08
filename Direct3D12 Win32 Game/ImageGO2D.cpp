@@ -82,14 +82,9 @@ void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)
 	//get the difference in size between these two
 	Vector2 diff = realSizeAfterScale - realSize;
 	//make the difference positive
-	if (diff.x < 0)
-	{
-		diff.x *= -1;
-	}
-	if (diff.y < 0)
-	{
-		diff.y *= -1;
-	}
+
+	diff.x = abs(diff.x);
+	diff.y = abs(diff.y);
 	//get the distance of the scale point to the origin of the image as a percentage (1.0f = 100%)
 	Vector2 distanceFactor((point.x - GetPos().x) / ((realSize.x / 2) - GetPos().x), ((point.y - GetPos().y) / ((realSize.y / 2) - GetPos().y)));
 	//multiply the difference in size by this percentage

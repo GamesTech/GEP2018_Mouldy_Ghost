@@ -16,7 +16,6 @@ public:
 
 private:
 	RenderData* m_RD;
-
 	ImageGO2D* m_corners[4] = { nullptr, nullptr, nullptr, nullptr };
 
 };

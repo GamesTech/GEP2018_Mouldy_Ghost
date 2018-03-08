@@ -88,7 +88,7 @@ void GameScene::Initialise(RenderData * _RD,
 	////platforms.push_back(testplatform);
 	//_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
-	
+	game_stage->addObjectsToScene(m_2DObjects);
 	
 }
 
@@ -121,53 +121,4 @@ void GameScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
-}
-
-
-void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
-{
-	//primative batch
-	m_RD->m_effect->SetProjection(m_cam->GetProj());
-	m_RD->m_effect->SetView(m_cam->GetView());
-	m_RD->m_effect->Apply(_commandList.Get());
-	m_RD->m_effect->EnableDefaultLighting();
-	m_RD->m_batch->Begin(_commandList.Get());
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_PRIM)(*it)->Render(m_RD);
-	}
-	m_RD->m_batch->End();
-
-	//Render Geometric Primitives
-	m_RD->m_GPeffect->SetProjection(m_cam->GetProj());
-	m_RD->m_GPeffect->SetView(m_cam->GetView());
-	m_RD->m_GPeffect->Apply(_commandList.Get());
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_GEOP)(*it)->Render(m_RD);
-	}
-
-	//Render VBO Models	
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_SDK)(*it)->Render(m_RD);
-	}
-
-	//finally draw all 2D objects
-	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
-	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
-	m_RD->m_spriteBatch->Begin(_commandList.Get());
-
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		(*it)->Render(m_RD);
-	}
-
-	//Render stage
-	game_stage->render(m_RD);
-	
-
-	m_RD->m_spriteBatch->End();
-
-	
 }

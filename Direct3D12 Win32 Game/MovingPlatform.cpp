@@ -58,6 +58,7 @@ void MovingPlatform::Tick(GameStateData * _GSD)
 	}
 	else
 	{
+		m_pos = direction ? start_pos : end_pos;
 		if (elapsed_time > stay_time)
 		{
 			elapsed_time = 0;

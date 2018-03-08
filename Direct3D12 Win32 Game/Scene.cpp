@@ -92,7 +92,7 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 
 	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
 	{
-		(*it)->Render(m_RD, rand() % 12);
+		(*it)->Render(m_RD, 0);
 #if _DEBUG
 		//COMMENT OUT THIS LINE IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
 		(*it)->GetPhysics()->RenderCorners();

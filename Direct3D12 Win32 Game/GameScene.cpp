@@ -62,12 +62,6 @@ void GameScene::Initialise(RenderData * _RD,
 		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
 	}
 
-	//Platform* testplatform = new Platform(_RD, "platform");
-
-	//testplatform->SetPos(Vector2(200, 400));
-	////testplatform->SetScale(Vector2(2, 0.2));
-	////testplatform->CentreOrigin();
-
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
 		for (int j = 0; j < listeners.size(); j++)
@@ -75,18 +69,6 @@ void GameScene::Initialise(RenderData * _RD,
 			m_2DObjects[i]->addListener(listeners[j]);
 		}
 	}
-
-	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
-	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
-	//test3->SetScale(5.0f);
-	//m_3DObjects.push_back(test3);
-
-	///*testplatform->CentreOrigin();*/
-
-	//testplatform->GetPhysics()->SetCollider(rect);
-	//m_2DObjects.push_back(testplatform);
-	////platforms.push_back(testplatform);
-	//_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
 
 	game_stage->addObjectsToScene(m_2DObjects);
 	

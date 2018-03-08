@@ -14,7 +14,7 @@ TestSound::~TestSound()
 
 void TestSound::Tick(GameStateData * _GSD)
 {
-	if (_GSD->m_keyboardState.Space && !_GSD->m_prevKeyboardState.Space)
+	if (_GSD->menu_action[0] == ADVANCE_MENU)
 	{
 		Play();
 	}

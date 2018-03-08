@@ -1,16 +1,24 @@
 #pragma once
-#include "Physics2D.h"
+#include "ImageGO2D.h"
+#include "ItemState.h"
 
-class TestPhys :
-	public ImageGO2D
+class Item :public ImageGO2D
 {
 public:
-	TestPhys(RenderData* _RD, string _filename, Vector2 _spritesize = Vector2(0, 0), int _in_row = 1);
-	~TestPhys();
+	Item();
+	Item(RenderData* _RD, string _filename);
+	~Item();
 
 	virtual void Tick(GameStateData* _GSD);
+
+	virtual void onPickup();
 
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	void Collision(Physics2D* _collision) override;
 	void CollisionExit(Physics2D* _collision)override;
+
+
+private:
+	ItemState state = ItemState::WAIT;
 };
+

@@ -181,6 +181,9 @@
     <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuScene.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
+    <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -222,6 +226,8 @@
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuScene.cpp" />
@@ -254,6 +260,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
+    <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

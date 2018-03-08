@@ -1,10 +1,19 @@
 #include "pch.h"
 #include "Player2D.h"
 #include "GameStateData.h"
+#include <algorithm>
+
+#if _DEBUG
+#include "VisiblePhysics.h"
+#endif
 
 Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
+#if _DEBUG
+	m_physics = new VisiblePhysics(_RD);
+#else
 	m_physics = new Physics2D();
+#endif
 
 	SetLimit(Vector2(900, 500));
 
@@ -24,17 +33,20 @@ Player2D::~Player2D()
 
 void Player2D::Tick(GameStateData * _GSD)
 {
-	float move_x = m_move_speed * 
-		_GSD->m_gamePadState[m_controllerID].thumbSticks.leftX;
-	float move_y = 0;
-	if (_GSD->m_buttonState[m_controllerID].a
-		== DirectX::GamePad::ButtonStateTracker::PRESSED)
+	Vector2 gamePadPush = Vector2(0, 0);
+	if (FindInput(P_MOVE_RIGHT, _GSD))
+	{
+		gamePadPush.x = m_move_speed;
+	}
+	if (FindInput(P_MOVE_LEFT, _GSD))
+	{
+		gamePadPush.x = -m_move_speed;
+	}
+	if (FindInput(P_JUMP, _GSD))
 	{
 		m_physics->ResetForce(Y_AXIS);
-		move_y = -m_jump_height;
+		gamePadPush.y = -m_jump_height;
 	}
-
-	Vector2 gamePadPush = Vector2(move_x, move_y);
 	
 	m_physics->AddForce(m_drive * gamePadPush);
 
@@ -88,4 +100,18 @@ void Player2D::Collision(Physics2D * _collision)
 		m_pos.x++;
 	}
 
+}
+
+bool Player2D::FindInput(GameAction _action, GameStateData* _GSD)
+{
+	if (_GSD->game_actions[m_controllerID].size() > 0)
+	{
+		return std::find(_GSD->game_actions[m_controllerID].begin(),
+			_GSD->game_actions[m_controllerID].end(), _action)
+			!= _GSD->game_actions[m_controllerID].end();
+	}
+	else
+	{
+		return false;
+	}
 }

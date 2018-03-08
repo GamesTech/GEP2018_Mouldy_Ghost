@@ -2,6 +2,16 @@
 #include "Physics2D.h"
 #include "GameStateData.h"
 
+#if _DEBUG
+#include "VisiblePhysics.h"
+
+void Physics2D::RenderCorners()
+{
+	static_cast <VisiblePhysics*> (this)->Render();
+}
+#endif
+
+
 Physics2D::Physics2D()
 {
 

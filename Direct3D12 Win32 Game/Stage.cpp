@@ -15,22 +15,14 @@ void Stage::update(GameStateData* _GSD)
 	
 }
 
-void Stage::render(RenderData * _RD)
+void Stage::addObjectsToScene(std::vector<GameObject2D*>& _g_objects)
 {
-	for (auto& object : other_objects)
+	for (int i = 0; i < platforms.size(); i++)
 	{
-		object->Render(_RD);
+		_g_objects.push_back(platforms[i]);
 	}
-
-	for (auto& platform : platforms)
+	for(int i = 0; i < other_objects.size(); i++)
 	{
-		platform->Render(_RD, 0);
+		_g_objects.push_back(other_objects[i]);
 	}
-
-	/*for (int i = 0; i < platforms.size(); i++)
-	{
-		platforms[i]->Render(_RD);
-	}*/
-
 }
-

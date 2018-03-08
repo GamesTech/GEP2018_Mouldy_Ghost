@@ -209,6 +209,18 @@
     <ClInclude Include="Character.h">
       <Filter>Characters\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemState.h">
+      <Filter>GameObjects\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="VisiblePhysics.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="MenuScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
@@ -311,6 +323,16 @@
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="SceneHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Item.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="VisiblePhysics.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp" />

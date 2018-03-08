@@ -20,10 +20,6 @@ public:
 
 	virtual void Reset();
 
-	void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
-
 private:
 	std::unique_ptr<Stage> game_stage = nullptr;
-	
 };

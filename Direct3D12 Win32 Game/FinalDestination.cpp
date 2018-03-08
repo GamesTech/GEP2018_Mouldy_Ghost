@@ -24,7 +24,7 @@ void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 {
 	Platform* testplatform = new Platform(_RD, "platform");
 
-	testplatform->SetPos(Vector2(200, 400));
+	testplatform->SetSpawn(Vector2(200, 400));
 	//testplatform->SetScale(Vector2(2, 0.2));
 	//testplatform->CentreOrigin();
 

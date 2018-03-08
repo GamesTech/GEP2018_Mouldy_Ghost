@@ -157,7 +157,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_menuScene->addListener(listeners[0].get());
 	m_menuScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
-	SwitchToScene(PHYSICS_SCENE, false);
+	SwitchToScene(TEST_SCENE, false);
 }
 
 //GEP:: Executes the basic game loop.
@@ -664,6 +664,7 @@ void Game::OnDeviceLost()
 
 bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 {
+	m_current_scene = _scene;
 	m_GSD->objects_in_scene.clear();
 
 	if (_reset)
@@ -697,44 +698,56 @@ void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
 
-	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
-	m_GSD->m_keyboardState = m_keyboard->GetState();
-
 	for (int i = 0; i < 4; i++)
 	{
+		m_GSD->menu_action[i] = NONE;
+		m_GSD->game_actions[i].clear();
+
 		auto state = m_gamePad->GetState(i);
 
-		m_buttons[i].Update(state);
+		//if this is the game scene take inputs for the game
+		if (m_current_scene == GAME_SCENE)
+		{
+			m_input.getAction(m_keyboard->GetState(), m_prev_keyboard, m_GSD->game_actions[i]);
+			m_input.getAction(state, m_buttons[i], m_GSD->game_actions[i]);
+		}
+		//otherwise take menu inputs
+		else
+		{
+			m_GSD->menu_action[i] = m_input.getAction(m_keyboard->GetState(), m_prev_keyboard);
+			if (m_GSD->menu_action[i] == NONE)
+			{
+				m_GSD->menu_action[i] = m_input.getAction(state, m_buttons[i]);
+			}
+		}
 
-		m_GSD->m_gamePadState[i] = state;
-		m_GSD->m_buttonState[i] = m_buttons[i];
+		m_prev_keyboard = m_keyboard->GetState();
+		m_buttons[i].Update(state);
 
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
-	if (m_GSD->m_keyboardState.A && !m_GSD->m_prevKeyboardState.A)
+	switch (m_GSD->menu_action[0])
 	{
+	case NAV_UP:
 		SwitchToScene(GAME_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.S && !m_GSD->m_prevKeyboardState.S)
-	{
-		SwitchToScene(GAME_SCENE, false);
-	}
-	if (m_GSD->m_keyboardState.D && !m_GSD->m_prevKeyboardState.D)
-	{
-		SwitchToScene(TEST_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.F && !m_GSD->m_prevKeyboardState.F)
-	{
-		SwitchToScene(TEST_SCENE, false);
-	}
-	if (m_GSD->m_keyboardState.G && !m_GSD->m_prevKeyboardState.G)
-	{
+		break;
+	case NAV_LEFT:
 		SwitchToScene(PHYSICS_SCENE, true);
+		break;
+	case NAV_RIGHT:
+		SwitchToScene(TEST_SCENE, true);
+		break;
+	default:
+		break;
 	}
-	if (m_GSD->m_keyboardState.H && !m_GSD->m_prevKeyboardState.H)
+
+	if (m_GSD->game_actions[0].size() > 0)
 	{
-		SwitchToScene(PHYSICS_SCENE, false);
+		if (m_GSD->game_actions[0][0] == P_QUIT)
+		{
+			SwitchToScene(TEST_SCENE, true);
+		}
 	}
 	if (m_GSD->m_keyboardState.L && !m_GSD->m_prevKeyboardState.L)
 	{
@@ -742,8 +755,6 @@ void Game::ReadInput()
 	}
 
 	//Quit if press Esc
-	if (m_GSD->m_keyboardState.Escape)
+	if (m_GSD->menu_action[0] == PREVIOUS_MENU)
 		PostQuitMessage(0);
-
-	m_GSD->m_mouseState = m_mouse->GetState();
 }

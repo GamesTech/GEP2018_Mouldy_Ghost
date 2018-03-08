@@ -1,6 +1,7 @@
 #pragma once
 #include "ImageGO2D.h"
 #include "ItemState.h"
+#include "Physics2D.h"
 
 class Item :public ImageGO2D
 {
@@ -10,15 +11,20 @@ public:
 	~Item();
 
 	virtual void Tick(GameStateData* _GSD);
+	virtual void loadItemData();
 
-	virtual void onPickup();
+	virtual void onPickup(Player2D* player);
 
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	void Collision(Physics2D* _collision) override;
 	void CollisionExit(Physics2D* _collision)override;
 
 
-private:
+protected:
+	Physics2D* m_item_physics = nullptr;
 	ItemState state = ItemState::WAIT;
+	ItemType type = ItemType::SINGLE_USE;
+	std::string m_item_name = " ";
+
 };
 

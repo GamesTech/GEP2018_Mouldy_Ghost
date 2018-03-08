@@ -34,8 +34,6 @@ public:
 	virtual void Collision(Physics2D* _collision) override;
 
 protected:
-	bool FindInput(GameAction _action, GameStateData* _GSD);
-
 	float m_drive = 1.0f;
 	float m_move_speed = 1.0f;
 	float m_jump_height = 1.0f;

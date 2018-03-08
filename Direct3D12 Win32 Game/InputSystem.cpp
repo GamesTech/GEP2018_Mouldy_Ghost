@@ -180,3 +180,15 @@ MenuAction InputSystem::getAction(GamePad::State _state, GamePad::ButtonStateTra
 
 	return NONE;
 }
+
+bool InputSystem::searchForAction(GameAction _action, GameActions _actions)
+{
+	for (int i = 0; i < _actions.size(); i++)
+	{
+		if (_actions[i] == _action)
+		{
+			return true;
+		}
+	}
+	return false;
+}

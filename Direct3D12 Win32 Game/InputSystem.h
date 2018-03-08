@@ -52,4 +52,6 @@ public:
 		Keyboard::State _prev_state);
 	MenuAction getAction(GamePad::State _state,
 		GamePad::ButtonStateTracker _buttons);
+
+	static bool searchForAction(GameAction _action, GameActions _actions);
 };

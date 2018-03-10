@@ -1,0 +1,7 @@
+type:		>single_use
+Name:		>apple
+pickup:		>use
+use:		>heal
+power:		>5
+--
+

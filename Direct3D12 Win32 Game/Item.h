@@ -13,7 +13,8 @@ public:
 	virtual void Tick(GameStateData* _GSD);
 	virtual void loadItemData();
 
-	virtual void onPickup(Player2D* player);
+	virtual void pickUp(Player2D* _player);
+	virtual void use(Player2D* _player);
 
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	void Collision(Physics2D* _collision) override;
@@ -21,10 +22,15 @@ public:
 
 
 protected:
+	
 	Physics2D* m_item_physics = nullptr;
-	ItemState state = ItemState::WAIT;
-	ItemType type = ItemType::SINGLE_USE;
+	ItemState m_state = ItemState::WAIT;
+	ItemType m_type = ItemType::SINGLE_USE;
 	std::string m_item_name = " ";
+	bool m_active = true;
+
+	std::string m_onPickUp;
+	std::string m_onUse;
 
 };
 

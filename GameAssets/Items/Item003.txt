@@ -1,0 +1,9 @@
+type:		>throwable
+Name:		>mine
+pickup:		>none
+use:		>throw
+power:		>5
+--
+on throw	>activate
+player hit 	>explode
+ground hit 	>stick

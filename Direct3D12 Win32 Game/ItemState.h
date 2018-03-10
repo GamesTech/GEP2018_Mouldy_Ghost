@@ -8,3 +8,11 @@ enum class ItemState
 
 
 };
+
+enum class ItemType
+{
+	SINGLE_USE,
+	THROWABLE,
+	MELEE_WEAPON,
+	RANGED_WEAPON
+};

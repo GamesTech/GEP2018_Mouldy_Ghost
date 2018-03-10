@@ -34,15 +34,15 @@ Player2D::~Player2D()
 void Player2D::Tick(GameStateData * _GSD)
 {
 	Vector2 gamePadPush = Vector2(0, 0);
-	if (FindInput(P_MOVE_RIGHT, _GSD))
+	if (InputSystem::searchForAction(P_MOVE_RIGHT, _GSD->game_actions[m_controllerID]))
 	{
 		gamePadPush.x = m_move_speed;
 	}
-	if (FindInput(P_MOVE_LEFT, _GSD))
+	if (InputSystem::searchForAction(P_MOVE_LEFT, _GSD->game_actions[m_controllerID]))
 	{
 		gamePadPush.x = -m_move_speed;
 	}
-	if (FindInput(P_JUMP, _GSD))
+	if (InputSystem::searchForAction(P_JUMP, _GSD->game_actions[m_controllerID]))
 	{
 		m_physics->ResetForce(Y_AXIS);
 		gamePadPush.y = -m_jump_height;
@@ -98,20 +98,5 @@ void Player2D::Collision(Physics2D * _collision)
 	else
 	{
 		m_pos.x++;
-	}
-
-}
-
-bool Player2D::FindInput(GameAction _action, GameStateData* _GSD)
-{
-	if (_GSD->game_actions[m_controllerID].size() > 0)
-	{
-		return std::find(_GSD->game_actions[m_controllerID].begin(),
-			_GSD->game_actions[m_controllerID].end(), _action)
-			!= _GSD->game_actions[m_controllerID].end();
-	}
-	else
-	{
-		return false;
 	}
 }

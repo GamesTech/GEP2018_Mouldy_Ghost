@@ -3,4 +3,7 @@ Name:		>bomb
 pickup:		>activate
 use:		>throw
 power:		>5
+--
+on throw	>activate
 player hit 	>explode
+ground hit 	>bounce

@@ -185,6 +185,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
+    <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="Physics2D.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
+    <ClInclude Include="Throwable.h" />
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +229,7 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Loop.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
@@ -256,6 +259,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
+    <ClCompile Include="Throwable.cpp" />
     <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>

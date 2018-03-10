@@ -1,4 +1,6 @@
-type:		>single_use
+type:		>throwable
 Name:		>bomb
-use:		>heal
+pickup:		>activate
+use:		>throw
 power:		>5
+player hit 	>explode

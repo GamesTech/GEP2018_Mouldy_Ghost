@@ -29,9 +29,14 @@ void Item::loadItemData()
 	//type will indicate how many iteration of for loop here is going to be
 }
 
-void Item::onPickup(Player2D* player)
+void Item::pickUp(Player2D * _player)
 {
-	state = ItemState::HELD;
+	
+}
+
+void Item::use(Player2D * _player)
+{
+	
 }
 
 void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)

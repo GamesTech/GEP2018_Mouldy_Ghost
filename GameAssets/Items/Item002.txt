@@ -1,0 +1,4 @@
+type:		>single_use
+Name:		>bomb
+use:		>heal
+power:		>5

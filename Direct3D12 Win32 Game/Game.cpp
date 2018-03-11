@@ -157,7 +157,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_menuScene->addListener(listeners[0].get());
 	m_menuScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 
-	SwitchToScene(TEST_SCENE, false);
+	SwitchToScene(MENU_SCENE, false);
 }
 
 //GEP:: Executes the basic game loop.
@@ -727,22 +727,24 @@ void Game::ReadInput()
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
-	switch (m_GSD->menu_action[0])
-	{
-	case NAV_UP:
-		SwitchToScene(GAME_SCENE, true);
-		break;
-	case NAV_LEFT:
-		SwitchToScene(PHYSICS_SCENE, true);
-		break;
-	case NAV_RIGHT:
-		SwitchToScene(TEST_SCENE, true);
-		break;
-	case NAV_DOWN:
-		SwitchToScene(MENU_SCENE, false);
-	default:
-		break;
-	}
+
+	//Commented this out so i can test the menu stuff. I don't think this should be managed in game.cpp but by the scene manager
+	//switch (m_GSD->menu_action[0])
+	//{
+	//case NAV_UP:
+	//	SwitchToScene(GAME_SCENE, true);
+	//	break;
+	//case NAV_LEFT:
+	//	SwitchToScene(PHYSICS_SCENE, true);
+	//	break;
+	//case NAV_RIGHT:
+	//	SwitchToScene(TEST_SCENE, true);
+	//	break;
+	//case NAV_DOWN:
+	//	SwitchToScene(MENU_SCENE, false);
+	//default:
+	//	break;
+	//}
 
 	if (m_GSD->game_actions[0].size() > 0)
 	{

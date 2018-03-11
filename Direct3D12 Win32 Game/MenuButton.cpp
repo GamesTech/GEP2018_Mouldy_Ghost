@@ -15,7 +15,8 @@ MenuButton::MenuButton(Event _eventToSend, RenderData * _RD, string _filename) :
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
 	m_eventToSend = _eventToSend;
-	m_highlighted = true;
+	m_highlighted = false;
+	m_text.SetText("I am test button text");
 }
 
 
@@ -25,14 +26,38 @@ MenuButton::~MenuButton()
 
 void MenuButton::Tick(GameStateData * _GSD)
 {
-	if (_GSD->game_actions[0].size() > 0)
+	if (m_highlighted)
 	{
-		if (m_highlighted && 	_GSD->game_actions[0][0] == GameAction::P_HOLD_BASIC)
-		{
+		scaleFromPoint(GetPos(), Vector2(1.1f, 1.1f));
+		SetColour(Color(Colors::AliceBlue));
+	}
+	else
+	{
+		scaleFromPoint(GetPos(), Vector2(1.0f, 1.0f));
+	}
+
+	if (_GSD->menu_action[0] == MenuAction::CONFIRM && m_highlighted)
+	{
 			for (int i = 0; i < listeners.size(); i++)
 			{
 				listeners[i]->onNotify(this, m_eventToSend);
 			}
-		}
 	}
+	m_text.SetPos(this->GetPos() + m_textOffset);
+}
+
+void MenuButton::Render(RenderData * _RD, int _sprite)
+{
+	ImageGO2D::Render(_RD, _sprite);
+	m_text.Render(_RD, _sprite);
+}
+
+void MenuButton::setText(std::string _text)
+{
+	m_text.SetText(_text);
+}
+
+void MenuButton::setHighlighted(bool _highlighted)
+{
+	m_highlighted = _highlighted;
 }

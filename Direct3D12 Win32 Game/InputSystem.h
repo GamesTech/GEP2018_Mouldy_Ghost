@@ -10,6 +10,7 @@ enum MenuAction
 	NAV_RIGHT,
 	ADVANCE_MENU,
 	PREVIOUS_MENU,
+	CONFIRM,
 
 	NONE
 };

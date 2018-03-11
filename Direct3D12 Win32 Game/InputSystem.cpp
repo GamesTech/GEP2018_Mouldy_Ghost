@@ -156,6 +156,10 @@ MenuAction InputSystem::getAction(GamePad::State _state, GamePad::ButtonStateTra
 		return PREVIOUS_MENU;
 	}
 
+	if (_state.IsAPressed() && !_buttons.GetLastState().IsAPressed())
+	{
+		return CONFIRM;
+	}
 
 	if (_state.IsLeftThumbStickLeft() &&
 		!_buttons.GetLastState().IsLeftThumbStickLeft())

@@ -1,13 +1,14 @@
 #include "pch.h"
-#include "Player2D.h"
+#include "Characters.h"
 #include "GameStateData.h"
+#include "CharacterController.h"
 #include <algorithm>
 
 #if _DEBUG
 #include "VisiblePhysics.h"
 #endif
 
-Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
+Character::Character(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
 #if _DEBUG
 	m_physics = new VisiblePhysics(_RD);
@@ -26,29 +27,32 @@ Player2D::Player2D(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename
 	tag = GameObjectTag::PLAYER;
 }
 
-Player2D::~Player2D()
+Character::~Character()
 {
 	delete m_physics;
+	delete m_controller;
 }
 
-void Player2D::Tick(GameStateData * _GSD)
+void Character::Tick(GameStateData * _GSD)
 {
+	int controller = m_controller->GetControllerID();
+	GameActions actions_to_check = m_controller->GetInput(_GSD);
 	Vector2 gamePadPush = Vector2(0, 0);
-	if (InputSystem::searchForAction(P_MOVE_RIGHT, _GSD->game_actions[m_controllerID]))
+	if (InputSystem::searchForAction(P_MOVE_RIGHT, actions_to_check))
 	{
 		gamePadPush.x = m_move_speed;
 	}
-	if (InputSystem::searchForAction(P_MOVE_LEFT, _GSD->game_actions[m_controllerID]))
+	if (InputSystem::searchForAction(P_MOVE_LEFT, actions_to_check))
 	{
 		gamePadPush.x = -m_move_speed;
 	}
-	if (InputSystem::searchForAction(P_JUMP, _GSD->game_actions[m_controllerID]))
+	if (InputSystem::searchForAction(P_JUMP, actions_to_check))
 	{
 		m_physics->ResetForce(Y_AXIS);
 		gamePadPush.y = -m_jump_height;
 	}
 	
-	m_physics->AddForce(m_drive * gamePadPush);
+	m_physics->AddForce(gamePadPush * 100);
 
 	m_physics->MoveCollider(m_pos);
 
@@ -82,21 +86,22 @@ void Player2D::Tick(GameStateData * _GSD)
 	}
 }
 
-void Player2D::Collision(Physics2D * _collision)
+void Character::Collision(Physics2D * _collision)
 {
-	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
+	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
+	if (o_tag == GameObjectTag::PLATFORM)
 	{
-		//_collision->AddForce(Vector2(0, -_collision->GetBounce()));
-		
 	}
 
-	//if(_collision.tag == "player")
-	if (_collision->GetCollider().Center().x > m_pos.x)
+	if (o_tag == GameObjectTag::PLAYER)
 	{
-		m_pos.x--;
-	}
-	else
-	{
-		m_pos.x++;
+		if (_collision->GetCollider().Center().x > m_pos.x)
+		{
+			m_pos.x--;
+		}
+		else
+		{
+			m_pos.x++;
+		}
 	}
 }

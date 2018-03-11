@@ -49,6 +49,9 @@ protected:
 	Rectangle m_collider;
 	std::vector<Physics2D*> currently_colliding;
 
+	void CheckForCollisions(GameStateData * _GSD, Vector2& _pos);
+	Vector2 GetNormal(Vector2 _point);
+
 	Vector2 m_vel;
 	Vector2 m_acc;
 

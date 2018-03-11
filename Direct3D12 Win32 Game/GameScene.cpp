@@ -3,6 +3,8 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "FinalDestination.h"
+#include "CharacterController.h"
+#include "Player.h"
 
 GameScene::GameScene()
 {
@@ -10,6 +12,14 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		if (entities[i])
+		{
+			delete entities[i];
+			entities[i] = nullptr;
+		}
+	}
 }
 
 void GameScene::Initialise(RenderData * _RD,
@@ -37,11 +47,10 @@ void GameScene::Initialise(RenderData * _RD,
 
 	for (int i = 0; i < 2; i++)
 	{
-		Player2D* testPlay = new Player2D(m_RD, "gens");
+		entities[i] = new Player(i);
+		Character* testPlay = new Character(m_RD, "gens");
 		testPlay->SetSpawn(Vector2(i * 400+400, 100));
 		testPlay->SetOrigin(Vector2(100, 100));
-		testPlay->SetControllerID(i);
-		testPlay->SetDrive(100.0f);
 		testPlay->SetMoveSpeed(3 - (1 * i));
 		testPlay->SetJumpHeight(200 + (200 * i));
 		
@@ -60,6 +69,7 @@ void GameScene::Initialise(RenderData * _RD,
 
 		m_2DObjects.push_back(testPlay);
 		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
+		entities[i]->SetCharacter(testPlay);
 	}
 
 	for (int i = 0; i < m_2DObjects.size(); i++)

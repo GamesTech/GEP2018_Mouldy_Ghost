@@ -3,6 +3,8 @@
 #include "Scene.h"
 #include "Stage.h"
 
+#include "CharacterController.h"
+
 using std::vector;
 
 class GameScene : public Scene
@@ -22,4 +24,5 @@ public:
 
 private:
 	std::unique_ptr<Stage> game_stage = nullptr;
+	CharacterController* entities[4] = { nullptr, nullptr,nullptr,nullptr };
 };

@@ -65,6 +65,12 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 	m_vel = newVel;
 	m_acc = Vector2::Zero;
 
+	CheckForCollisions(_GSD, _pos);
+}
+
+
+void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
+{
 	//check for collisions
 	for (int i = 0; i < _GSD->objects_in_scene.size(); i++)
 	{
@@ -74,11 +80,10 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 		{
 			if (m_collider.Intersects(object->GetCollider()))
 			{
-				Rectangle overlap =	Rectangle::Intersect(m_collider, object->GetCollider());
+				Rectangle overlap = Rectangle::Intersect(m_collider, object->GetCollider());
 
-				Vector2 normal = m_collider.Center() - overlap.Center();
-				normal.Normalize();
-
+				Vector2 normal = GetNormal(overlap.Center());
+				
 				owner->Collision(object);
 
 				//check whether this object was being collided with on the last tick
@@ -112,5 +117,37 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 				}
 			}
 		}
+	}
+}
+
+Vector2 Physics2D::GetNormal(Vector2 _point)
+{
+	int distances[4];
+	distances[0] = abs(_point.y - m_collider.Center().y - m_collider.height / 2);
+	distances[1] = abs(_point.x - m_collider.Center().x + m_collider.width / 2);
+	distances[2] = abs(_point.y - m_collider.Center().y + m_collider.height / 2);
+	distances[3] = abs(_point.x - m_collider.Center().x - m_collider.width / 2);
+	
+	int closest = 0;
+	for (int i = 1; i < 4; i++)
+	{
+		if (distances[i] < distances[closest])
+		{
+			closest = i;
+		}
+	}
+
+	switch (closest)
+	{
+	case 0:
+		return Vector2(0, -1);
+	case 1:
+		return Vector2(1, 0);
+	case 2:
+		return Vector2(0, 1);
+	case 3:
+		return Vector2(-1, 0);
+	default:
+		return (Vector2(0, 0));
 	}
 }

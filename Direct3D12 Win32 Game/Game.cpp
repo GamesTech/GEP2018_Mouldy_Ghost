@@ -702,8 +702,10 @@ void Game::ReadInput()
 		//if this is the game scene take inputs for the game
 		if (m_current_scene == GAME_SCENE)
 		{
-			m_input.getAction(m_keyboard->GetState(), m_prev_keyboard, m_GSD->game_actions[i]);
-			m_input.getAction(state, m_buttons[i], m_GSD->game_actions[i]);
+			m_input.getAction(m_keyboard->GetState(),
+				m_prev_keyboard, m_GSD->game_actions[i]);
+			m_input.getAction(state,
+				m_buttons[i], m_GSD->game_actions[i]);
 		}
 		//otherwise take menu inputs
 		else

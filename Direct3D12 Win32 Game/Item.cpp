@@ -29,12 +29,12 @@ void Item::loadItemData()
 	//type will indicate how many iteration of for loop here is going to be
 }
 
-void Item::pickUp(Player2D * _player)
+void Item::pickUp(Character * _player)
 {
 	
 }
 
-void Item::use(Player2D * _player)
+void Item::use(Character * _player)
 {
 	
 }
@@ -45,7 +45,7 @@ void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 
 void Item::Collision(Physics2D * _collision)
 {
-	if (state == ItemState::WAIT)
+	if (m_state == ItemState::WAIT)
 	{
 		//ignore coll with players
 	}

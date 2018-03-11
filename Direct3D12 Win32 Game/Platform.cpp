@@ -41,16 +41,25 @@ void Platform::Tick(GameStateData * _GSD)
 
 void Platform::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-	int i = 0;
+	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLAYER)
+	{
+		if (abs(_normal.y > _normal.x))
+		{
+			_collision->ResetForce(Y_AXIS);
+		}
+		else
+		{
+			_collision->ResetForce(X_AXIS);
+		}
+	}
 }
 
 void Platform::Collision(Physics2D * _collision)
 {
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLAYER)
 	{
-		_collision->ResetForce(Y_AXIS);
+		_collision->AddForce(Vector2(0, -300));
 	}
-	/*_collision->SetBounce(m_physics->GetBounce());*/
 }
 
 void Platform::CollisionExit(Physics2D * _collision)

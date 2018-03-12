@@ -184,6 +184,7 @@
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemSpawner.h" />
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="MeleeWeapon.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemSpawner.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />

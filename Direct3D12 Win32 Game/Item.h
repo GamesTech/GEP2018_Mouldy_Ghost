@@ -11,7 +11,7 @@ public:
 	~Item();
 
 	virtual void Tick(GameStateData* _GSD);
-	virtual void loadItemData();
+
 
 	virtual void pickUp(Player2D* _player);
 	virtual void use(Player2D* _player);

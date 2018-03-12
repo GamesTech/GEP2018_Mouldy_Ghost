@@ -23,11 +23,7 @@ void Item::Tick(GameStateData * _GSD)
 {
 }
 
-void Item::loadItemData()
-{
-	//there are going o be different properties for different item types
-	//type will indicate how many iteration of for loop here is going to be
-}
+
 
 void Item::pickUp(Player2D * _player)
 {
@@ -35,15 +31,17 @@ void Item::pickUp(Player2D * _player)
 	{
 		use(_player);
 	}
-	if (m_type != ItemType::SINGLE_USE)
+	else if (m_type != ItemType::SINGLE_USE)
 	{
 		_player->AddChild(this);
 		//_player->setHeldItem(this);
+
+		if (m_onPickUp == "activate")
+		{
+			m_active = true;
+		}
 	}
-	if (m_onPickUp == "activate")
-	{
-		m_active = true;
-	}
+	
 }
 
 void Item::use(Player2D * _player)

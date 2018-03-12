@@ -69,6 +69,10 @@ void Menu::Tick(GameStateData * _GSD)
 
 void Menu::addButton(MenuButton _buttonToAdd, std::string _buttonText)
 {
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		_buttonToAdd.addListener(listeners[i]);
+	}
 	_buttonToAdd.setText(_buttonText);
 	_buttonToAdd.SetPos(m_nextButtonPos);
 	m_nextButtonPos.y += m_distanceBetweenButtons;

@@ -8,6 +8,7 @@
 #include "GameStateData.h"
 #include "TestScene.h"
 #include "MusicHandler.h"
+#include "SceneHandler.h"
 
 extern void ExitGame();
 
@@ -141,21 +142,37 @@ void Game::Initialize(HWND window, int width, int height)
 
 	//populate the listener vector with all listeners
 	//at the moment this needs to be done before a scene is initialised
-	listeners.push_back(std::make_unique<MusicHandler>());
+	m_musicListener = std::make_unique<MusicHandler>();
+	m_sceneListener = std::make_unique<SceneHandler>();
+	listeners.push_back(m_musicListener.get());
+	listeners.push_back(m_sceneListener.get());
 
 	//m_activeScene->addListener(listeners[0].get());
 
 	m_gameScene = new GameScene();
-	m_gameScene->addListener(listeners[0].get());
-	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_all_scenes.push_back(m_gameScene);
+
 	m_testScene = new TestScene();
-	m_testScene->addListener(listeners[0].get());
-	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_all_scenes.push_back(m_testScene);
+
 	m_physScene = new PhysicsScene();
-	m_physScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_all_scenes.push_back(m_physScene);
+
 	m_menuScene = new MenuScene();
-	m_menuScene->addListener(listeners[0].get());
-	m_menuScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	m_all_scenes.push_back(m_menuScene);
+
+	//add all listeners to all scenes
+	for (int i = 0; i < m_all_scenes.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_all_scenes[i]->addListener(listeners[j]);
+		}
+		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	}
+
+	m_sceneListener->populateScenesList(m_all_scenes);
+
 
 	SwitchToScene(MENU_SCENE, false);
 }

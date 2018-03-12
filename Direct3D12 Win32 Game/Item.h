@@ -27,7 +27,10 @@ protected:
 	ItemState m_state = ItemState::WAIT;
 	ItemType m_type = ItemType::SINGLE_USE;
 	std::string m_item_name = " ";
+
+	float m_elapsed_time = 0;
 	bool m_active = true;
+	float m_power = 0;
 
 	std::string m_onPickUp;
 	std::string m_onUse;

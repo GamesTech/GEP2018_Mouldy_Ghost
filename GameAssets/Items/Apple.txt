@@ -1,4 +1,5 @@
 type:		>single_use
+-- all items
 Name:		>apple
 pickup:		>use
 use:		>heal

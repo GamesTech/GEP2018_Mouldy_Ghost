@@ -12,8 +12,10 @@ public:
 	void loadItemData() override;
 
 	void Throw(Player2D* _player);
+	virtual void pickUp(Player2D* _player);
 	virtual void use(Player2D* _player) override;
 
+	void CollisionEnter(Physics2D* _collision, Vector2 _normal);
 	void Collision(Physics2D* _collision);
 
 protected:

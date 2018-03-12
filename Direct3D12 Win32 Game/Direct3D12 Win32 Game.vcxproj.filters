@@ -236,6 +236,9 @@
     <ClInclude Include="MeleeWeapon.h">
       <Filter>Items\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Explosive.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -348,6 +351,9 @@
       <Filter>Items\Source</Filter>
     </ClCompile>
     <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosive.cpp">
       <Filter>Items\Source</Filter>
     </ClCompile>
   </ItemGroup>

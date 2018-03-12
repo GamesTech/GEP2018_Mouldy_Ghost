@@ -20,10 +20,7 @@ enum OnHold
 class Attack
 {
 public:
-	Attack(std::string _attack_file);
+	Attack() = default;
 	~Attack() = default;
-
-	virtual void SetUpAttack(std::string _attack_file);
-
 private:
 };

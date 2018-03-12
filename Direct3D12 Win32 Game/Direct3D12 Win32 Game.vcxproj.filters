@@ -83,6 +83,9 @@
     <Filter Include="Items\Source">
       <UniqueIdentifier>{8db5002c-5dc3-41f3-87df-76ee9f1c409b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Attacks">
+      <UniqueIdentifier>{1dc3f502-6646-4c28-88b7-ec38f84796a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -226,7 +229,15 @@
     </ClInclude>
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Attack.h" />
+    <ClInclude Include="Attack.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeAttack.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollider.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -342,7 +353,8 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="CharacterController.cpp" />
-    <ClCompile Include="Attack.cpp" />
+    <ClCompile Include="MeleeAttack.cpp" />
+    <ClCompile Include="AttackCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

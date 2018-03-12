@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="Characters.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
+    <ClInclude Include="MeleeAttack.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MusicHandler.h" />
@@ -220,7 +222,7 @@
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Attack.cpp" />
+    <ClCompile Include="AttackCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="Characters.cpp" />
@@ -233,6 +235,7 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Loop.cpp" />
+    <ClCompile Include="MeleeAttack.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MusicHandler.cpp" />

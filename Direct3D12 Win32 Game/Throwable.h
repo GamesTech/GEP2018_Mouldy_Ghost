@@ -9,7 +9,7 @@ public:
 	Throwable();
 	~Throwable();
 
-	void loadItemData() override;
+
 
 	void Throw(Player2D* _player);
 	virtual void pickUp(Player2D* _player);

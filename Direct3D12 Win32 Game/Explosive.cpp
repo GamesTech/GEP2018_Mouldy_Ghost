@@ -11,6 +11,10 @@ Explosive::~Explosive()
 
 void Explosive::Tick(GameStateData * _GSD)
 {
+	if (m_active)
+	{
+	//	m_fuse -= _GSD.m_dt;
+	}
 
 	if (m_explode == true)
 	{

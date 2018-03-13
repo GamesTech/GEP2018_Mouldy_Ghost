@@ -12,7 +12,9 @@ public:
 	~ItemSpawner();
 
 	void loadAllData();
+	void loadItem(std::string item_file);
 	void advanceFile(std::ifstream& _opened_file);
+	Item* createNewItemWithName(std::string name);
 
 private:
 	std::vector<Item*> allItems;

@@ -29,8 +29,8 @@ public:
 	const float GetBounce() { return m_bounciness; }
 	void SetGrav(float _grav) { m_gravity_scale = _grav; }
 	const float GetGrav() { return m_gravity_scale; }
-	void SetOwner(GameObject2D* _owner) { owner = _owner; }
-	GameObject2D* GetOwner() { return owner; }
+	void SetOwner(GameObject2D* _owner) { m_owner = _owner; }
+	GameObject2D* GetOwner() { return m_owner; }
 
 	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
@@ -43,7 +43,7 @@ public:
 #endif;
 
 protected:
-	GameObject2D* owner = nullptr;
+	GameObject2D* m_owner = nullptr;
 
 	Rectangle m_collider;
 	std::vector<Physics2D*> currently_colliding;

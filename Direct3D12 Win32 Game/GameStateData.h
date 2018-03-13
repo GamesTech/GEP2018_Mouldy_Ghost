@@ -7,6 +7,7 @@
 
 struct GameStateData
 {
+	std::vector<GameObject2D*> m_2DObjects;
 	std::vector<Physics2D*> objects_in_scene;
 	std::vector<GameAction> game_actions[4];
 	MenuAction menu_action[4];

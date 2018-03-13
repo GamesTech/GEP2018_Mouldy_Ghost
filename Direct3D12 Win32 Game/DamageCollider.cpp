@@ -5,6 +5,11 @@
 DamageCollider::DamageCollider(DamageColData _data)
 {
 	m_physics = new Physics2D();
+
+	Rectangle rect = Rectangle(m_pos.x, m_pos.y, 10, 10);
+	m_physics->SetCollider(rect);
+
+	m_physics->SetOwner(this);
 	tag = GameObjectTag::ATTACK;
 	m_data = _data;
 	if (_data.child_to_player)
@@ -40,4 +45,11 @@ void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 			//destroy it using above event
 		}
 	}
+}
+
+void DamageCollider::Tick(GameStateData * _GSD)
+{
+	//count down for life
+	m_physics->AddForce(m_data.direction * m_data.speed * 10);
+	m_physics->Tick(_GSD, m_pos);
 }

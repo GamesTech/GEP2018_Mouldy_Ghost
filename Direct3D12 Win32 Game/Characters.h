@@ -1,5 +1,5 @@
 #pragma once
-#include "Attack.h"
+#include "MeleeAttack.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
@@ -35,7 +35,8 @@ public:
 	void GetHit(Vector2 _dir, float _force);
 
 	virtual void Collision(Physics2D* _collision) override;
-	void AddAttack(Attack* _attack);
+
+	void AddAttack(MeleeAttack _attack);
 
 protected:
 	int m_damage = 0;

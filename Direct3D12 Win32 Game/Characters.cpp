@@ -27,13 +27,6 @@ Character::~Character()
 		delete m_controller;
 		m_controller = nullptr;
 	}
-	for (int i = 0; i < m_attacks.size(); i++)
-	{
-		if (m_attacks[i])
-		{
-			delete m_attacks[i];
-		}
-	}
 	m_attacks.clear();
 }
 
@@ -44,12 +37,15 @@ void Character::Tick(GameStateData * _GSD)
 	Vector2 gamePadPush = Vector2(0, 0);
 	if (InputSystem::searchForAction(P_MOVE_RIGHT, actions_to_check))
 	{
-		assert(controller != 1);
 		gamePadPush.x = m_move_speed;
 	}
 	if (InputSystem::searchForAction(P_MOVE_LEFT, actions_to_check))
 	{
 		gamePadPush.x = -m_move_speed;
+	}
+	if (InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
+	{
+		m_attacks[0]->PerformAttack(m_pos, 1, this, _GSD);
 	}
 	if (InputSystem::searchForAction(P_JUMP, actions_to_check))
 	{
@@ -128,7 +124,8 @@ void Character::Collision(Physics2D * _collision)
 	}
 }
 
-void Character::AddAttack(Attack* _attack)
+void Character::AddAttack(MeleeAttack _attack)
 {
-	m_attacks.push_back(_attack);
+	MeleeAttack* a = new MeleeAttack(_attack);
+	m_attacks.push_back(a);
 }

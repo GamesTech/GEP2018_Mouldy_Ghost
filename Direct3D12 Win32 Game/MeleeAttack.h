@@ -8,8 +8,8 @@ class MeleeAttack
 public:
 	MeleeAttack(std::string _attack_file);
 	~MeleeAttack() = default;
-	virtual void PerformAttack(int _facing, GameStateData* _GSD);
-
+	virtual void PerformAttack(Vector2 _position, int _facing,
+		Character* _user, GameStateData* _GSD);
 private:
 	DamageCollider* m_collider;
 	DamageColData m_data;

@@ -660,6 +660,7 @@ void Game::OnDeviceLost()
 bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 {
 	m_current_scene = _scene;
+	m_GSD->m_2DObjects.clear();
 	m_GSD->objects_in_scene.clear();
 
 	if (_reset)

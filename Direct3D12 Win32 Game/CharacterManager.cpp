@@ -45,16 +45,14 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 		for (int i = 0; i < g_number_of_attacks; i++)
 		{
 			std::string attack_file = getFileData(character_file);
-			Attack* a;
 			switch (attack_file[0])
 			{
 			case 'M':
-				a = new MeleeAttack(attack_file);
+				character.AddAttack(MeleeAttack(attack_file));
 				break;
 			default:
-				a = nullptr;
+				break;
 			}
-			character.AddAttack(a);
 		}
 		character_file.close();
 

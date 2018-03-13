@@ -84,7 +84,7 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 
 				Vector2 normal = GetNormal(overlap.Center());
 				
-				owner->Collision(object);
+				m_owner->Collision(object);
 
 				//check whether this object was being collided with on the last tick
 				bool on_list = false;
@@ -99,7 +99,7 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 				if (!on_list)
 				{
 					currently_colliding.push_back(object);
-					owner->CollisionEnter(object, normal);
+					m_owner->CollisionEnter(object, normal);
 				}
 			}
 			else
@@ -111,7 +111,7 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 					if (currently_colliding[j] == object)
 					{
 						//collision exit and remove it from the list
-						owner->CollisionExit(object);
+						m_owner->CollisionExit(object);
 						currently_colliding.erase(currently_colliding.begin() + j);
 					}
 				}

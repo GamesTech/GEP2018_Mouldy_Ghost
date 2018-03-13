@@ -17,13 +17,19 @@ MeleeAttack::MeleeAttack(std::string _attack_file)
 	attack_file.close();
 }
 
-void MeleeAttack::PerformAttack(int _facing, GameStateData* _GSD)
+void MeleeAttack::PerformAttack(Vector2 _position, int _facing,
+	Character* _user, GameStateData* _GSD)
 {
 	DamageColData attack = m_data;
 	attack.direction.y = 0;
 	attack.direction.x = _facing;
 	attack.child_to_player = true;
 	attack.contact = Destroy::ON_ANYTHING_HIT;
+	attack.user = _user;
+
 	m_collider = new DamageCollider(attack);
+	m_collider->SetPos(_position);
+	
+	_GSD->m_2DObjects.push_back(m_collider);
 	_GSD->objects_in_scene.push_back(m_collider->GetPhysics());
 }

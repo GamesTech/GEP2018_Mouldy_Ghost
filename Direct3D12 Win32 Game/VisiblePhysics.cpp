@@ -5,12 +5,8 @@
 #include "RenderData.h"
 
 VisiblePhysics::VisiblePhysics(RenderData * _RD)
-
 {
-
 	m_RD = _RD;
-
-
 
 	for (int i = 0; i < 4; i++)
 	{

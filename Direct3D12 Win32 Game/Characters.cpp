@@ -29,8 +29,24 @@ Character::Character(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filena
 
 Character::~Character()
 {
-	delete m_physics;
-	delete m_controller;
+	if (m_physics)
+	{
+		delete m_physics;
+		m_physics = nullptr;
+	}
+	if (m_controller)
+	{
+		delete m_controller;
+		m_controller = nullptr;
+	}
+	for (int i = 0; i < m_attacks.size(); i++)
+	{
+		if (m_attacks[i])
+		{
+			delete m_attacks[i];
+		}
+	}
+	m_attacks.clear();
 }
 
 void Character::Tick(GameStateData * _GSD)
@@ -53,9 +69,7 @@ void Character::Tick(GameStateData * _GSD)
 	}
 	
 	m_physics->AddForce(gamePadPush * 100);
-
-	m_physics->MoveCollider(m_pos);
-
+	
 //GEP:: Lets go up the inheritence and share our functionality
 
 	m_physics->Tick(_GSD, m_pos);
@@ -110,4 +124,9 @@ void Character::Collision(Physics2D * _collision)
 			m_pos.x++;
 		}
 	}
+}
+
+void Character::AddAttack(Attack* _attack)
+{
+	m_attacks.push_back(_attack);
 }

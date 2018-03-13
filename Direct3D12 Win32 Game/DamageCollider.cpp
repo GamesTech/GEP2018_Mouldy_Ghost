@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "DamageCollider.h"
+#include "Physics2D.h"
 
 DamageCollider::DamageCollider(DamageColData _data)
 {
+	m_physics = new Physics2D();
 	tag = GameObjectTag::ATTACK;
 	m_data = _data;
 	if (_data.child_to_player)
@@ -13,6 +15,8 @@ DamageCollider::DamageCollider(DamageColData _data)
 
 DamageCollider::~DamageCollider()
 {
+	delete m_physics;
+	m_physics = nullptr;
 }
 
 void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)

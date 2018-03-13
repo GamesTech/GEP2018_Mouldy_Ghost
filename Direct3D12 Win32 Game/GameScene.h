@@ -4,6 +4,7 @@
 #include "Stage.h"
 
 #include "CharacterController.h"
+#include "CharacterManager.h"
 
 using std::vector;
 
@@ -25,4 +26,5 @@ public:
 private:
 	std::unique_ptr<Stage> game_stage = nullptr;
 	CharacterController* entities[4] = { nullptr, nullptr,nullptr,nullptr };
+	CharacterManager c_manager;
 };

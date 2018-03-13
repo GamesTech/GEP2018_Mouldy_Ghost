@@ -1,1 +1,4 @@
-Name	>Goliath
+Image	>gens
+Speed	>2
+Jump	>220
+Attack1	>Melee\hit.txt

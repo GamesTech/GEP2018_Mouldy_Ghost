@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="DamageCollider.h" />
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="Camera.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ReadFile.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneHandler.h" />
     <ClInclude Include="SDKMeshGO3D.h" />
@@ -223,6 +225,7 @@
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />

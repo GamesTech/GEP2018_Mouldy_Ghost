@@ -241,6 +241,8 @@
     <ClInclude Include="AttackData.h">
       <Filter>Attacks</Filter>
     </ClInclude>
+    <ClInclude Include="CharacterManager.h" />
+    <ClInclude Include="ReadFile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -362,6 +364,7 @@
     <ClCompile Include="MeleeAttack.cpp">
       <Filter>Attacks</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

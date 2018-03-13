@@ -143,8 +143,6 @@ void Game::Initialize(HWND window, int width, int height)
 	//at the moment this needs to be done before a scene is initialised
 	listeners.push_back(std::make_unique<MusicHandler>());
 
-	//m_activeScene->addListener(listeners[0].get());
-
 	m_gameScene = new GameScene();
 	m_gameScene->addListener(listeners[0].get());
 	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);

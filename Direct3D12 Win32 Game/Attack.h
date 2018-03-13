@@ -8,7 +8,7 @@ public:
 	Attack() = default;
 	~Attack() = default;
 
-	virtual void PerformAttack(int _facing) = 0;
+	virtual void PerformAttack(int _facing, GameStateData* _GSD) = 0;
 private:
 	OnHold _hold;
 };

@@ -29,6 +29,8 @@ void GameScene::Initialise(RenderData * _RD,
 	m_RD = _RD;
 	m_GSD = _GSD;
 
+	c_manager.PopulateCharacterList(_RD);
+
 	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
@@ -45,26 +47,21 @@ void GameScene::Initialise(RenderData * _RD,
 	test3d->Init();
 	m_3DObjects.push_back(test3d);
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		entities[i] = new Player(i);
-		Character* testPlay = new Character(m_RD, "gens");
-		testPlay->SetSpawn(Vector2(i * 400+400, 100));
+		Character* testPlay = new Character
+			(*c_manager.GetCharacterByName("Character001"));
+		testPlay->SetSpawn(Vector2(i * 200+400, 100));
 		testPlay->SetOrigin(Vector2(100, 100));
-		testPlay->SetMoveSpeed(3 - (1 * i));
-		testPlay->SetJumpHeight(200 + (200 * i));
-		
+
 		testPlay->GetPhysics()->SetDrag(0.5f);
-		testPlay->GetPhysics()->SetMass(1 + i);
 		testPlay->GetPhysics()->SetBounce(0.4f);
 
-		
-		float x_size = testPlay->TextureSize().x;
-		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
-		/*test->SetParent(testPlay);*/
-		float y_size = testPlay->TextureSize().y;
+		float width = testPlay->TextureSize().x;
+		float height = testPlay->TextureSize().y;
 		Rectangle rect = Rectangle
-		(testPlay->GetPos().x, testPlay->GetPos().y, x_size, y_size);
+		(testPlay->GetPos().x, testPlay->GetPos().y, width, height);
 		testPlay->GetPhysics()->SetCollider(rect);
 
 		m_2DObjects.push_back(testPlay);

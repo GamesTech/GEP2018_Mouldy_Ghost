@@ -1,6 +1,5 @@
 #pragma once
-
-
+#include "Attack.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
@@ -34,6 +33,7 @@ public:
 	void GetHit(Vector2 _dir, float _force);
 
 	virtual void Collision(Physics2D* _collision) override;
+	void AddAttack(Attack* _attack);
 
 protected:
 	int m_damage = 0;
@@ -44,4 +44,5 @@ protected:
 	Vector2 m_limit;
 
 	CharacterController* m_controller;
+	std::vector<Attack*> m_attacks;
 };

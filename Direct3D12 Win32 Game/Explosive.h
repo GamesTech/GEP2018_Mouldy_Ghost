@@ -12,6 +12,8 @@ public:
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	//void Collision(Physics2D* _collision);
 	
+	void setFuse(float _fuse) { m_fuse = _fuse; }
+	void setExpRange(float _range) { m_explosion_range = _range; }
 
 private:
 	

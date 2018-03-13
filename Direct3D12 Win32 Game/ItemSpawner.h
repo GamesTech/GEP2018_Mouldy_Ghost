@@ -11,9 +11,19 @@ public:
 	ItemSpawner();
 	~ItemSpawner();
 
+	//loading stuff
 	void loadAllData();
 	void loadItem(std::string item_file);
 	void advanceFile(std::ifstream& _opened_file);
+	void loadAllItemProperies(Item* item, std::ifstream& _opened_file);
+	void loadThrowableProperies(Throwable* item, std::ifstream& _opened_file);
+	void loadExplosiveProperies(Explosive* item, std::ifstream& _opened_file);
+
+
+
+
+
+
 	Item* createNewItemWithName(std::string name);
 
 private:

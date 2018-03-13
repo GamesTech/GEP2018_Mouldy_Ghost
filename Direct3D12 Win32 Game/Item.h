@@ -23,6 +23,7 @@ public:
 	void setOnPickupString(std::string _pickup) { m_onPickUp = _pickup; }
 	void setOnUseString(std::string _use) { m_onUse = _use; }
 	void setPower(float _power) { m_power = _power; }
+	void setitemType(ItemType type) { m_type = type; }
 
 protected:
 	

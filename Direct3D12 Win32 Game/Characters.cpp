@@ -10,20 +10,8 @@
 
 Character::Character(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
-#if _DEBUG
-	m_physics = new VisiblePhysics(_RD);
-#else
-	m_physics = new Physics2D();
-#endif
-
 	SetLimit(Vector2(900, 500));
-
 	CentreOrigin();
-
-	m_physics->SetBounce(0.3f);
-	m_physics->SetGrav(1);
-	m_physics->SetOwner(this);
-
 	tag = GameObjectTag::PLAYER;
 }
 
@@ -56,6 +44,7 @@ void Character::Tick(GameStateData * _GSD)
 	Vector2 gamePadPush = Vector2(0, 0);
 	if (InputSystem::searchForAction(P_MOVE_RIGHT, actions_to_check))
 	{
+		assert(controller != 1);
 		gamePadPush.x = m_move_speed;
 	}
 	if (InputSystem::searchForAction(P_MOVE_LEFT, actions_to_check))
@@ -98,6 +87,19 @@ void Character::Tick(GameStateData * _GSD)
 		m_pos.y = 2.0f * m_limit.y - m_pos.y;
 		m_physics->ResetForce(Y_AXIS);
 	}
+}
+
+void Character::CreatePhysics(RenderData* _RD)
+{
+#if _DEBUG
+	m_physics = new VisiblePhysics(_RD);
+#else
+	m_physics = new Physics2D();
+#endif
+
+	m_physics->SetBounce(0.3f);
+	m_physics->SetGrav(1);
+	m_physics->SetOwner(this);
 }
 
 void Character::GetHit(Vector2 _dir, float _force)

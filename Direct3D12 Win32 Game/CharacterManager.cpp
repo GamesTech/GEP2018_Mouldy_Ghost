@@ -7,13 +7,14 @@ int g_number_of_attacks = 1;
 
 CharacterManager::CharacterManager()
 {
+	m_character_list.reserve(20);
 }
 
-Character* CharacterManager::GetCharacterByName(std::string _name)
+Character CharacterManager::GetCharacterByName(std::string _name)
 {
 	for (int i = 0; i < m_character_list.size(); i++)
 	{
-		if (m_character_list[i]->GetName() == _name)
+		if (m_character_list[i].GetName() == _name)
 		{
 			return m_character_list[i];
 		}
@@ -33,13 +34,13 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 		character_file.open("..\\GameAssets\\Characters\\" + char_name + ".txt");
 
 		std::string imageFile = getFileData(character_file);
-		Character* character = new Character(_RD, imageFile);
-		character->SetName(char_name);
+		Character character = Character(_RD, imageFile);
+		character.SetName(char_name);
 
 		int speed = std::stoi(getFileData(character_file));
-		character->SetMoveSpeed(speed);
+		character.SetMoveSpeed(speed);
 		int jump = std::stoi(getFileData(character_file));
-		character->SetJumpHeight(jump);
+		character.SetJumpHeight(jump);
 
 		for (int i = 0; i < g_number_of_attacks; i++)
 		{
@@ -53,7 +54,7 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 			default:
 				a = nullptr;
 			}
-			character->AddAttack(a);
+			character.AddAttack(a);
 		}
 		character_file.close();
 

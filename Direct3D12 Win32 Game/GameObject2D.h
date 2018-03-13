@@ -73,7 +73,7 @@ protected:
 	Vector2 previous_pos = Vector2::Zero;
 	float previous_ori = 0.0f;
 
-	Physics2D* m_physics;
+	Physics2D* m_physics = nullptr;
 
 	std::vector<EventHandler*> listeners;
 };

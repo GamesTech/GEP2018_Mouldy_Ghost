@@ -34,10 +34,9 @@ public:
 
 	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
-	void SetCollider(Rectangle _collider)
-	{ m_collider = _collider; }
+	void SetCollider(Rectangle _collider){ m_collider = _collider; }
 	Rectangle GetCollider() { return m_collider; }
-	void MoveCollider(Vector2 _pos) { m_collider.Offset(_pos.x, _pos.y); }
+	void MoveCollider(Vector2 _pos) {m_collider.Offset(_pos.x, _pos.y);}
 
 #if _DEBUG
 	void RenderCorners();

@@ -15,6 +15,8 @@ public:
 
 	virtual void Tick(GameStateData* _GSD);
 
+	void CreatePhysics(RenderData* _RD = nullptr);
+
 	void SetController(CharacterController* _controller)
 	{ m_controller = _controller; }
 
@@ -43,6 +45,6 @@ protected:
 
 	Vector2 m_limit;
 
-	CharacterController* m_controller;
+	CharacterController* m_controller = nullptr;
 	std::vector<Attack*> m_attacks;
 };

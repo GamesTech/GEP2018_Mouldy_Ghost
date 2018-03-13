@@ -47,26 +47,25 @@ void GameScene::Initialise(RenderData * _RD,
 	test3d->Init();
 	m_3DObjects.push_back(test3d);
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		entities[i] = new Player(i);
-		Character* testPlay = new Character
-			(*c_manager.GetCharacterByName("Character001"));
-		testPlay->SetSpawn(Vector2(i * 200+400, 100));
-		testPlay->SetOrigin(Vector2(100, 100));
+		players[i] = new Character(c_manager.GetCharacterByName("Character001"));
+		players[i]->SetSpawn(Vector2(i * 200 + 400, 100));
 
-		testPlay->GetPhysics()->SetDrag(0.5f);
-		testPlay->GetPhysics()->SetBounce(0.4f);
+		players[i]->CreatePhysics(_RD);
+		players[i]->GetPhysics()->SetDrag(0.5f);
+		players[i]->GetPhysics()->SetBounce(0.4f);
 
-		float width = testPlay->TextureSize().x;
-		float height = testPlay->TextureSize().y;
+		float width = players[i]->TextureSize().x;
+		float height = players[i]->TextureSize().y;
 		Rectangle rect = Rectangle
-		(testPlay->GetPos().x, testPlay->GetPos().y, width, height);
-		testPlay->GetPhysics()->SetCollider(rect);
+		(players[i]->GetPos().x, players[i]->GetPos().y, width, height);
+		players[i]->GetPhysics()->SetCollider(rect);
 
-		m_2DObjects.push_back(testPlay);
-		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
-		entities[i]->SetCharacter(testPlay);
+		m_2DObjects.push_back(players[i]);
+		m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
+		entities[i]->SetCharacter(players[i]);
 	}
 
 	for (int i = 0; i < m_2DObjects.size(); i++)

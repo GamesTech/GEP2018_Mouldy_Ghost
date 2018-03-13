@@ -25,6 +25,8 @@ public:
 
 private:
 	std::unique_ptr<Stage> game_stage = nullptr;
-	CharacterController* entities[4] = { nullptr, nullptr,nullptr,nullptr };
+	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
+	Character* players[4] = { nullptr, nullptr, nullptr, nullptr };
+
 	CharacterManager c_manager;
 };

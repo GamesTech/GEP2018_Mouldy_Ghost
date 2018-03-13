@@ -172,7 +172,8 @@
   <ItemGroup>
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
-    <ClInclude Include="AttackCollider.h" />
+    <ClInclude Include="DamageCollider.h" />
+    <ClInclude Include="AttackData.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="Characters.h" />
@@ -222,7 +223,7 @@
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AttackCollider.cpp" />
+    <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="Characters.cpp" />

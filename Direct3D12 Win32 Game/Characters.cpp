@@ -86,6 +86,12 @@ void Character::Tick(GameStateData * _GSD)
 	}
 }
 
+void Character::GetHit(Vector2 _dir, float _force)
+{
+	float knockback = _force * (m_damage + 1) / 100;
+	m_physics->AddForce(_dir * knockback);
+}
+
 void Character::Collision(Physics2D * _collision)
 {
 	GameObjectTag o_tag = _collision->GetOwner()->GetTag();

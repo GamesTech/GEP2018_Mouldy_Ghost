@@ -235,7 +235,10 @@
     <ClInclude Include="MeleeAttack.h">
       <Filter>Attacks</Filter>
     </ClInclude>
-    <ClInclude Include="AttackCollider.h">
+    <ClInclude Include="DamageCollider.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackData.h">
       <Filter>Attacks</Filter>
     </ClInclude>
   </ItemGroup>
@@ -353,8 +356,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="CharacterController.cpp" />
-    <ClCompile Include="MeleeAttack.cpp" />
-    <ClCompile Include="AttackCollider.cpp" />
+    <ClCompile Include="DamageCollider.cpp">
+      <Filter>Attacks</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeAttack.cpp">
+      <Filter>Attacks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

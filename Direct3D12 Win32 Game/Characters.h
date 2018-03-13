@@ -28,9 +28,16 @@ public:
 	void SetLimit(Vector2 _lim) { m_limit = _lim; }
 	const Vector2 GetLimit() { return m_limit; }
 
+	void TakeDamage(int _dam) { m_damage += _dam; }
+	void ResetDamage() { m_damage = 0; }
+
+	void GetHit(Vector2 _dir, float _force);
+
 	virtual void Collision(Physics2D* _collision) override;
 
 protected:
+	int m_damage = 0;
+
 	float m_move_speed = 1.0f;
 	float m_jump_height = 1.0f;
 

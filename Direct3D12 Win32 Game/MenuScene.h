@@ -10,6 +10,9 @@ class MenuScene :
 public:
 	MenuScene();
 	~MenuScene();
+
+	virtual std::string getType() override { return "MenuScene"; };
+
 	virtual void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine) override;
 	virtual void Reset() override;

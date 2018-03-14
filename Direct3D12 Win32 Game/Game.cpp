@@ -171,12 +171,12 @@ void Game::Initialize(HWND window, int width, int height)
 		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 	}
 
+	SwitchToScene(MENU_SCENE, false);
 	m_sceneListener->initGSD(m_GSD);
 	m_sceneListener->initActiveScene(m_activeScene);
 	m_sceneListener->populateScenesList(m_all_scenes);
 
 
-	SwitchToScene(MENU_SCENE, false);
 }
 
 //GEP:: Executes the basic game loop.
@@ -195,6 +195,11 @@ void Game::Update(DX::StepTimer const& timer)
 {
 	ReadInput();
     m_GSD->m_dt = float(timer.GetElapsedSeconds());
+
+	if (m_activeScene->getType() == "TestScene")
+	{
+		throw ("Hello");
+	}
 
 	m_activeScene->Update(timer, m_audEngine);
 }

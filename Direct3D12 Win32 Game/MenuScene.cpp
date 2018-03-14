@@ -38,13 +38,13 @@ void MenuScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWi
 	//m_testbutton->SetPos(Vector2(100, 100));
 	//m_testbutton->addListener(listeners[0]);
 
-	m_testMenu = std::make_unique<Menu>(Vector2(50, 100), MenuButton(Event::APPLICATION_LOADED, _RD, "gens"), "I am the first button");
+	m_testMenu = std::make_unique<Menu>(Vector2(50, 100), MenuButton(Event::CHANGE_SCENE_TEST, _RD, "gens"), "Go to test scene");
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		m_testMenu->addListener(listeners[i]);
 	}
 	m_testMenu->init();
 	m_2DObjects.push_back(m_testMenu.get());
-	m_testMenu->addButton(MenuButton(Event::GAME_PAUSED, _RD, "gens"), "I am an added button");
+	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_PHYSICS, _RD, "gens"), "Go to physics scene");
 	m_testMenu->addButton(MenuButton(Event::GAME_PAUSED,Event::CHANGE_SCENE_TEST, _RD, "gens"), "I should be a two event button");
 }

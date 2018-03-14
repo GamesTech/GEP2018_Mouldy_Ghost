@@ -36,7 +36,7 @@ public:
 	//I think all relevent observers only need to care about themselves, 
 	//it is down to the gameobject that is being listend to, to tell any other observers.
 
-private:
+protected:
 	GameStateData* m_GSD = nullptr;
 };
 

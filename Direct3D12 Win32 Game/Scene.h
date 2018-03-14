@@ -12,6 +12,8 @@ public:
 	Scene() = default;
 	~Scene();
 
+	virtual std::string getType() = 0;
+
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine) = 0;

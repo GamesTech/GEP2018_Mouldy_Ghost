@@ -243,6 +243,9 @@
     </ClInclude>
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="ReadFile.h" />
+    <ClInclude Include="SpawnHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -365,6 +368,7 @@
       <Filter>Attacks</Filter>
     </ClCompile>
     <ClCompile Include="CharacterManager.cpp" />
+    <ClCompile Include="SpawnHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

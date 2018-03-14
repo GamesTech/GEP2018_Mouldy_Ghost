@@ -46,5 +46,5 @@ void MenuScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWi
 	m_testMenu->init();
 	m_2DObjects.push_back(m_testMenu.get());
 	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_PHYSICS, _RD, "gens"), "Go to physics scene");
-	m_testMenu->addButton(MenuButton(Event::GAME_PAUSED,Event::CHANGE_SCENE_TEST, _RD, "gens"), "I should be a two event button");
+	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_GAME, _RD, "gens"), "Go to game scene");
 }

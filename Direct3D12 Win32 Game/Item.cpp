@@ -23,44 +23,24 @@ void Item::Tick(GameStateData * _GSD)
 {
 }
 
-
-
-void Item::pickUp(Player2D * _player)
+void Item::loadItemData()
 {
-	if (m_onPickUp == "use")
-	{
-		use(_player);
-	}
-	else if (m_type != ItemType::SINGLE_USE)
-	{
-		_player->AddChild(this);
-		//_player->setHeldItem(this);
+	//there are going o be different properties for different item types
+	//type will indicate how many iteration of for loop here is going to be
+}
 
-		if (m_onPickUp == "activate")
-		{
-			m_active = true;
-		}
-	}
+void Item::pickUp(Character * _player)
+{
 	
 }
 
-void Item::use(Player2D * _player)
+void Item::use(Character * _player)
 {
-	//powerups
-
-	if (m_onUse == "heal")
-	{
-		//_player->heal(m_power);
-	}
-	else if (m_onUse == "hammer_yo")
-	{
-
-	}
+	
 }
 
 void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-	
 }
 
 void Item::Collision(Physics2D * _collision)

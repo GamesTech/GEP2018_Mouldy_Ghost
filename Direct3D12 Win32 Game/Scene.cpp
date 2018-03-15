@@ -50,10 +50,14 @@ void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEn
 		(*it)->Tick(m_GSD);
 	}
 
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
+	for (int i = 0; i < m_GSD->m_2DObjects.size(); i++)
 	{
-		(*it)->Tick(m_GSD);
+		m_GSD->m_2DObjects[i]->Tick(m_GSD);
 	}
+	//for (vector<GameObject2D *>::iterator it = m_GSD->m_2DObjects.begin(); it != m_GSD->m_2DObjects.end(); it++)
+	//{
+	//	(*it)->Tick(m_GSD);
+	//}
 }
 
 void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
@@ -106,6 +110,7 @@ void Scene::PhysicsInScene(GameStateData* _GSD)
 {
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
+		_GSD->m_2DObjects.push_back(m_2DObjects[i]);
 		_GSD->objects_in_scene.push_back(m_2DObjects[i]->GetPhysics());
 	}
 }

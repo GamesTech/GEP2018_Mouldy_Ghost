@@ -143,8 +143,6 @@ void Game::Initialize(HWND window, int width, int height)
 	//at the moment this needs to be done before a scene is initialised
 	listeners.push_back(std::make_unique<MusicHandler>());
 
-	//m_activeScene->addListener(listeners[0].get());
-
 	m_gameScene = new GameScene();
 	m_gameScene->addListener(listeners[0].get());
 	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
@@ -662,6 +660,7 @@ void Game::OnDeviceLost()
 bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 {
 	m_current_scene = _scene;
+	m_GSD->m_2DObjects.clear();
 	m_GSD->objects_in_scene.clear();
 
 	if (_reset)
@@ -702,8 +701,10 @@ void Game::ReadInput()
 		//if this is the game scene take inputs for the game
 		if (m_current_scene == GAME_SCENE)
 		{
-			m_input.getAction(m_keyboard->GetState(), m_prev_keyboard, m_GSD->game_actions[i]);
-			m_input.getAction(state, m_buttons[i], m_GSD->game_actions[i]);
+			m_input.getAction(m_keyboard->GetState(),
+				m_prev_keyboard, m_GSD->game_actions[i]);
+			m_input.getAction(state,
+				m_buttons[i], m_GSD->game_actions[i]);
 		}
 		//otherwise take menu inputs
 		else

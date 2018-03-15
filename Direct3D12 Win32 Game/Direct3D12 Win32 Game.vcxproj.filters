@@ -74,15 +74,6 @@
     <Filter Include="GameObjects\Stages\Source">
       <UniqueIdentifier>{901b3222-49c9-4a70-aab2-7c8d0e2778b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Characters">
-      <UniqueIdentifier>{3fc6e26a-7a91-4b69-be0b-8831610a77d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Characters\Headers">
-      <UniqueIdentifier>{cfc73207-eefc-4bc2-8537-843eb003fd4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Characters\Source">
-      <UniqueIdentifier>{bf3dd5a2-9e22-47c9-a969-065b80c42432}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Items">
       <UniqueIdentifier>{75a67776-97ae-4f58-b325-a572cc2488b3}</UniqueIdentifier>
     </Filter>
@@ -91,6 +82,9 @@
     </Filter>
     <Filter Include="Items\Source">
       <UniqueIdentifier>{8db5002c-5dc3-41f3-87df-76ee9f1c409b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Attacks">
+      <UniqueIdentifier>{1dc3f502-6646-4c28-88b7-ec38f84796a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +123,6 @@
     </ClInclude>
     <ClInclude Include="SDKMeshGO3D.h">
       <Filter>GameObjects\3D\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Player2D.h">
-      <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>GameObjects\Sounds\Headers</Filter>
@@ -215,9 +206,6 @@
     <ClInclude Include="GameObjectTags.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Characters\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="ItemState.h">
       <Filter>GameObjects\2D</Filter>
     </ClInclude>
@@ -235,6 +223,28 @@
     </ClInclude>
     <ClInclude Include="MeleeWeapon.h">
       <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Characters.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Attack.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeAttack.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageCollider.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackData.h">
+      <Filter>Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterManager.h" />
+    <ClInclude Include="ReadFile.h" />
+    <ClInclude Include="SpawnHandler.h">
+      <Filter>EventSystem\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Explosive.h">
       <Filter>Items\Headers</Filter>
@@ -270,9 +280,6 @@
     </ClCompile>
     <ClCompile Include="SDKMeshGO3D.cpp">
       <Filter>GameObjects\3D\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Player2D.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>GameObjects\Sounds\Source</Filter>
@@ -340,7 +347,6 @@
     <ClCompile Include="SceneHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp" />
     <ClCompile Include="VisiblePhysics.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
@@ -356,6 +362,19 @@
     <ClCompile Include="MeleeWeapon.cpp">
       <Filter>Items\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Characters.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="CharacterController.cpp" />
+    <ClCompile Include="DamageCollider.cpp">
+      <Filter>Attacks</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeAttack.cpp">
+      <Filter>Attacks</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterManager.cpp" />
+    <ClCompile Include="SpawnHandler.cpp" />
     <ClCompile Include="Explosive.cpp">
       <Filter>Items\Source</Filter>
     </ClCompile>

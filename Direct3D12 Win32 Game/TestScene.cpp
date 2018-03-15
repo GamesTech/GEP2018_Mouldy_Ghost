@@ -52,13 +52,6 @@ void TestScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
-
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		(*it)->Tick(m_GSD);
-	}
-
-
 }
 
 void TestScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)

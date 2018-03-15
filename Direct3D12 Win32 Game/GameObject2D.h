@@ -58,7 +58,6 @@ public:
 	virtual void CollisionExit(Physics2D* _collision);
 
 	void addListener(EventHandler* _event);
-
 protected:
 	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;
@@ -74,7 +73,7 @@ protected:
 	Vector2 previous_pos = Vector2::Zero;
 	float previous_ori = 0.0f;
 
-	Physics2D* m_physics;
+	Physics2D* m_physics = nullptr;
 
 	std::vector<EventHandler*> listeners;
 };

@@ -13,7 +13,7 @@ void Throwable::loadItemData()
 {
 }
 
-void Throwable::Throw(Player2D* _player)
+void Throwable::Throw(Character* _player)
 {
 	player_ignore = _player;
 	m_state = ItemState::THROWN;
@@ -34,7 +34,7 @@ void Throwable::pickUp(Player2D * _player)
 
 }
 
-void Throwable::use(Player2D * _player)
+void Throwable::use(Character * _player)
 {
 }
 

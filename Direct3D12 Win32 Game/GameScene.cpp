@@ -3,6 +3,8 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "FinalDestination.h"
+#include "CharacterController.h"
+#include "Player.h"
 
 GameScene::GameScene()
 {
@@ -10,6 +12,14 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		if (entities[i])
+		{
+			delete entities[i];
+			entities[i] = nullptr;
+		}
+	}
 }
 
 void GameScene::Initialise(RenderData * _RD,
@@ -18,6 +28,8 @@ void GameScene::Initialise(RenderData * _RD,
 {
 	m_RD = _RD;
 	m_GSD = _GSD;
+
+	c_manager.PopulateCharacterList(_RD);
 
 	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
@@ -37,29 +49,23 @@ void GameScene::Initialise(RenderData * _RD,
 
 	for (int i = 0; i < 2; i++)
 	{
-		Player2D* testPlay = new Player2D(m_RD, "gens");
-		testPlay->SetSpawn(Vector2(i * 400+400, 100));
-		testPlay->SetOrigin(Vector2(100, 100));
-		testPlay->SetControllerID(i);
-		testPlay->SetDrive(100.0f);
-		testPlay->SetMoveSpeed(3 - (1 * i));
-		testPlay->SetJumpHeight(200 + (200 * i));
-		
-		testPlay->GetPhysics()->SetDrag(0.5f);
-		testPlay->GetPhysics()->SetMass(1 + i);
-		testPlay->GetPhysics()->SetBounce(0.4f);
+		entities[i] = new Player(i);
+		players[i] = new Character(c_manager.GetCharacterByName("Character001"));
+		players[i]->SetSpawn(Vector2(i * 200 + 400, 100));
 
-		
-		float x_size = testPlay->TextureSize().x;
-		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
-		/*test->SetParent(testPlay);*/
-		float y_size = testPlay->TextureSize().y;
+		players[i]->CreatePhysics(_RD);
+		players[i]->GetPhysics()->SetDrag(0.5f);
+		players[i]->GetPhysics()->SetBounce(0.4f);
+
+		float width = players[i]->TextureSize().x;
+		float height = players[i]->TextureSize().y;
 		Rectangle rect = Rectangle
-		(testPlay->GetPos().x, testPlay->GetPos().y, x_size, y_size);
-		testPlay->GetPhysics()->SetCollider(rect);
+		(players[i]->GetPos().x, players[i]->GetPos().y, width, height);
+		players[i]->GetPhysics()->SetCollider(rect);
 
-		m_2DObjects.push_back(testPlay);
-		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
+		m_2DObjects.push_back(players[i]);
+		m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
+		entities[i]->SetCharacter(players[i]);
 	}
 
 	for (int i = 0; i < m_2DObjects.size(); i++)

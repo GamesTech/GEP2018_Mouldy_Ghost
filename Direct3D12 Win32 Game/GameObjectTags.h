@@ -7,5 +7,6 @@ enum class GameObjectTag
 	ITEM,
 	PLATFORM,
 	UNTAGGED,
+	ATTACK,
 	YO
 };

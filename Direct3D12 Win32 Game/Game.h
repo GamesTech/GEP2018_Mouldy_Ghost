@@ -12,6 +12,7 @@
 #include "Audio.h"
 #include "EventHandler.h"
 #include "InputSystem.h"
+#include "CharacterManager.h"
 #include <vector>
 using std::vector;
 

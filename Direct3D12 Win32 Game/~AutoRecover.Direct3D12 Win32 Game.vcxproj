@@ -171,29 +171,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllScenes.h" />
-    <ClInclude Include="Attack.h" />
-    <ClInclude Include="CharacterManager.h" />
-    <ClInclude Include="DamageCollider.h" />
-    <ClInclude Include="AttackData.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CharacterController.h" />
-    <ClInclude Include="Characters.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="EventRotate.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="EventScaleUp.h" />
     <ClInclude Include="EventSystem.h" />
-    <ClInclude Include="Explosive.h" />
     <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="ItemSpawner.h" />
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
-    <ClInclude Include="MeleeAttack.h" />
-    <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuScene.h" />
@@ -202,8 +193,7 @@
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="Platform.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="ReadFile.h" />
+    <ClInclude Include="Player2D.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneHandler.h" />
     <ClInclude Include="SDKMeshGO3D.h" />
@@ -218,7 +208,6 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="SpawnHandler.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TestPBGO3D.h" />
@@ -227,36 +216,29 @@
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
-    <ClInclude Include="Throwable.h" />
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CharacterManager.cpp" />
-    <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CharacterController.cpp" />
-    <ClCompile Include="Characters.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="EventRotate.cpp" />
     <ClCompile Include="EventScaleUp.cpp" />
     <ClCompile Include="EventSystem.cpp" />
-    <ClCompile Include="Explosive.cpp" />
     <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="ItemSpawner.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuScene.cpp" />
-    <ClCompile Include="MeleeAttack.cpp" />
-    <ClCompile Include="MeleeWeapon.cpp" />    <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Player2D.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneHandler.cpp" />
     <ClCompile Include="SDKMeshGO3D.cpp" />
@@ -274,14 +256,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="SpawnHandler.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TestPBGO3D.cpp" />
     <ClCompile Include="TestPhys.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
-    <ClCompile Include="Throwable.cpp" />
     <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>

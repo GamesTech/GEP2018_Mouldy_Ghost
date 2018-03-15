@@ -2,6 +2,8 @@
 #include "ItemSpawner.h"
 #include <fstream>
 
+std::string getFileData(std::ifstream & _file);
+
 ItemSpawner::ItemSpawner()
 {
 }
@@ -10,35 +12,35 @@ ItemSpawner::~ItemSpawner()
 {
 }
 
-void ItemSpawner::loadAllData()
+void ItemSpawner::loadAllData(RenderData* _RD)
 {
 	std::ifstream all_items_file;
-	all_items_file.open("GameAssets//ItemFiles//All_Items");
+	all_items_file.open("..\\GameAssets\\Items\\All_Items.txt");
 
+	assert(all_items_file);
 	while (!all_items_file.eof())
 	{
-		advanceFile(all_items_file);
-		std::string item;
-		all_items_file >> item;
+		std::string item = getFileData(all_items_file);
+		loadItem(_RD,item);
 
-		loadItem(item);
 	}
+
+	all_items_file.close();
 }
 
-void ItemSpawner::loadItem(std::string _item_file)
+void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 {
-	std::string file_string = "GameAssets//ItemFiles//" + _item_file;
+	std::string file_string = "..\\GameAssets\\Items\\" + _item_file + ".txt";
 	std::ifstream item_file;
 	item_file.open(file_string);
 
-	std::string type;
-	advanceFile(item_file);
-	item_file >> type;
+	std::string type = getFileData(item_file);
+	std::string image = getFileData(item_file);
 
 	Item* loaded_item = nullptr;
 	if (type == "single_use")
 	{
-		Item* tmp = new Item();
+		Item* tmp = new Item(_RD,image);
 		tmp->setitemType(ItemType::SINGLE_USE);
 		loadAllItemProperies(tmp, item_file);
 
@@ -46,7 +48,7 @@ void ItemSpawner::loadItem(std::string _item_file)
 	}
 	else if (type == "throwable")
 	{
-		Throwable* tmp = new Throwable();
+		Throwable* tmp = new Throwable(_RD, image);
 		tmp->setitemType(ItemType::THROWABLE);
 		loadAllItemProperies(tmp, item_file);
 		loadThrowableProperies(tmp, item_file);
@@ -55,7 +57,7 @@ void ItemSpawner::loadItem(std::string _item_file)
 	}
 	else if (type == "explosive")
 	{
-		Explosive* tmp = new Explosive();
+		Explosive* tmp = new Explosive(_RD, image);
 		tmp->setitemType(ItemType::EXPLOSIVE);
 		loadAllItemProperies(tmp, item_file);
 		loadThrowableProperies(tmp, item_file);
@@ -65,81 +67,46 @@ void ItemSpawner::loadItem(std::string _item_file)
 	}
 
 	allItems.push_back(loaded_item);
+
+	item_file.close();
 }
 
-void ItemSpawner::advanceFile(std::ifstream& _opened_file)
-{
-	while (!_opened_file.eof())
-	{
-		char tmp = '\0';
-		_opened_file >> tmp;
-
-		if (tmp == '>')
-		{
-			return;
-		}
-	}
-}
 
 void ItemSpawner::loadAllItemProperies(Item * item, std::ifstream & _opened_file)
 {
-	std::string tmp_string;
 
 	//name
-	advanceFile(_opened_file);
-	_opened_file >> tmp_string;
-	item->SetName(tmp_string);
+	item->SetName(getFileData(_opened_file));
 
 	//pickup
-	advanceFile(_opened_file);
-	_opened_file >> tmp_string;
-	item->setOnPickupString(tmp_string);
+	item->setOnPickupString(getFileData(_opened_file));
 
 	//use
-	advanceFile(_opened_file);
-	_opened_file >> tmp_string;
-	item->setOnUseString(tmp_string);
+	item->setOnUseString(getFileData(_opened_file));
 
 	//power
-	advanceFile(_opened_file);
-	float tmp_power;
-	_opened_file >> tmp_power;
-	item->setPower(tmp_power);
+	item->setPower(std::stof(getFileData(_opened_file)));
 }
 
 void ItemSpawner::loadThrowableProperies(Throwable * item, std::ifstream & _opened_file)
 {
-	std::string tmp_string;
-
 	//throw
-	advanceFile(_opened_file);
-	_opened_file >> tmp_string;
-	item->setOnThrowString(tmp_string);
+	item->setOnThrowString(getFileData(_opened_file));
 
 	//hit player
-	advanceFile(_opened_file);
-	_opened_file >> tmp_string;
-	item->setOnHitPlayerString(tmp_string);
+	item->setOnHitPlayerString(getFileData(_opened_file));
 	
 	//hit ground
-	advanceFile(_opened_file);
-	_opened_file >> tmp_string;
-	item->setOnHitGroundString(tmp_string);
+	item->setOnHitGroundString(getFileData(_opened_file));
 }
 
 void ItemSpawner::loadExplosiveProperies(Explosive * item, std::ifstream & _opened_file)
 {
-	float tmp_float;
+	//fuse
+	item->setFuse(std::stof(getFileData(_opened_file)));
 
 	//fuse
-	advanceFile(_opened_file);
-	_opened_file >> tmp_float;
-	item->setFuse(tmp_float);
-
-	//fuse
-	advanceFile(_opened_file);
-	_opened_file >> tmp_float;
-	item->setExpRange(tmp_float);
+	item->setExpRange(std::stof(getFileData(_opened_file)));
 
 }
 
@@ -153,5 +120,9 @@ Item* ItemSpawner::createNewItemWithName(std::string name)
 			return newitem;
 		}
 	}
+
+	assert(false);
+	//if assert you entered name that does not exist
+
 }
 

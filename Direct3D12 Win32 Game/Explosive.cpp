@@ -1,7 +1,12 @@
 #include "pch.h"
 #include "Explosive.h"
+#include "GameStateData.h"
 
 Explosive::Explosive()
+{
+}
+
+Explosive::Explosive(RenderData * _RD, std::string _filename) : Throwable(_RD, _filename)
 {
 }
 
@@ -13,7 +18,7 @@ void Explosive::Tick(GameStateData * _GSD)
 {
 	if (m_active)
 	{
-	//	m_fuse -= _GSD.m_dt;
+		m_fuse -= _GSD->m_dt;
 	}
 
 	if (m_explode == true)
@@ -49,7 +54,9 @@ void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 
 		if (m_hit_ground == "bounce")
 		{
-			//m_item_physics->GetVel();
+			float tmp = m_item_physics->GetVel().y;
+			m_item_physics->ResetForce(Axis::Y_AXIS);
+			m_item_physics->AddForce(Vector2(0,-tmp));
 		}
 		else if (m_hit_ground == "stick")
 		{

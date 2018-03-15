@@ -7,6 +7,7 @@ class Throwable: public Item
 {
 public:
 	Throwable();
+	Throwable(RenderData* _RD, std::string _filename);
 	~Throwable();
 
 

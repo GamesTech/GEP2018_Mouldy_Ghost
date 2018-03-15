@@ -9,6 +9,7 @@
     <ImageContentTask Include="colliderdebug.png" />
     <ImageContentTask Include="platform.png" />
     <ImageContentTask Include="SpriteSheets\grant.png" />
+    <ImageContentTask Include="default_item_texture.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

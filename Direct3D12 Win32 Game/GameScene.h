@@ -5,6 +5,7 @@
 
 #include "CharacterController.h"
 #include "CharacterManager.h"
+#include "ItemSpawner.h"
 
 using std::vector;
 
@@ -29,4 +30,5 @@ private:
 	Character* players[4] = { nullptr, nullptr, nullptr, nullptr };
 
 	CharacterManager c_manager;
+	ItemSpawner item_spawner;
 };

@@ -1,4 +1,5 @@
 type:		>throwable
+image:		>default_item_texture
 -- all items
 Name:		>ball
 pickup:		>none

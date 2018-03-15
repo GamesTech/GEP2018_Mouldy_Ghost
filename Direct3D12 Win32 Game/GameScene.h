@@ -5,6 +5,7 @@
 
 #include "CharacterController.h"
 #include "CharacterManager.h"
+#include "ItemSpawner.h"
 
 using std::vector;
 
@@ -32,4 +33,5 @@ private:
 
 	CharacterManager c_manager;
 	std::unique_ptr<SpawnHandler> m_spawner;
+	ItemSpawner item_spawner;
 };

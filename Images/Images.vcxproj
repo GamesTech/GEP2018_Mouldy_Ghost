@@ -147,6 +147,9 @@
   <ItemGroup>
     <ImageContentTask Include="SpriteSheets\grant.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="default_item_texture.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

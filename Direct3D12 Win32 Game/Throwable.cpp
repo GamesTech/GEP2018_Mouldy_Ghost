@@ -9,9 +9,6 @@ Throwable::~Throwable()
 {
 }
 
-void Throwable::loadItemData()
-{
-}
 
 void Throwable::Throw(Character* _player)
 {
@@ -27,7 +24,7 @@ void Throwable::Throw(Character* _player)
 	}
 }
 
-void Throwable::pickUp(Player2D * _player)
+void Throwable::pickUp(Character * _player)
 {
 	Item::pickUp(_player);
 	player_ignore = _player;
@@ -36,6 +33,7 @@ void Throwable::pickUp(Player2D * _player)
 
 void Throwable::use(Character * _player)
 {
+
 }
 
 void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)

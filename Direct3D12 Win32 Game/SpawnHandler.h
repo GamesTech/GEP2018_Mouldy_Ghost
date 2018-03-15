@@ -2,15 +2,17 @@
 #include "EventHandler.h"
 #include <vector>
 
-class SpawnHander
+class SpawnHandler
 	: public EventHandler
 {
-	SpawnHander() = default;
-	~SpawnHander() = default;
+public:
+	SpawnHandler() = default;
+	~SpawnHandler() = default;
 
 	virtual void onNotify(GameObject2D* object, Event _event);
 
+	void setData(std::vector<GameObject2D*>* _2DObjects, std::vector<Physics2D*>* _physics);
 private:
-	std::vector<GameObject2D*>* _2DObjects;
-	std::vector<Physics2D*>* _physics;
+	std::vector<GameObject2D*>* m_2DObjects;
+	std::vector<Physics2D*>* m_physics;
 };

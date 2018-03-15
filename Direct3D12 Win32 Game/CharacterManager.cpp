@@ -22,7 +22,7 @@ Character CharacterManager::GetCharacterByName(std::string _name)
 	assert(false);
 }
 
-void CharacterManager::PopulateCharacterList(RenderData* _RD)
+void CharacterManager::PopulateCharacterList(RenderData* _RD, SpawnHandler* _spawner)
 {
 	std::ifstream all_characters_file;
 	all_characters_file.open("..\\GameAssets\\Characters\\AllCharacters.txt");
@@ -34,7 +34,7 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 		character_file.open("..\\GameAssets\\Characters\\" + char_name + ".txt");
 
 		std::string imageFile = getFileData(character_file);
-		Character character = Character(_RD, imageFile);
+		Character character = Character(_RD, imageFile, _spawner);
 		character.SetName(char_name);
 
 		int speed = std::stoi(getFileData(character_file));

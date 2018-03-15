@@ -5,6 +5,7 @@
 #include "FinalDestination.h"
 #include "CharacterController.h"
 #include "Player.h"
+#include "SpawnHandler.h"
 
 GameScene::GameScene()
 {
@@ -29,7 +30,9 @@ void GameScene::Initialise(RenderData * _RD,
 	m_RD = _RD;
 	m_GSD = _GSD;
 
-	c_manager.PopulateCharacterList(_RD);
+	m_spawner = std::make_unique<SpawnHandler>();
+	m_spawner->setData(&m_GSD->m_2DObjects, &m_GSD->objects_in_scene);
+	c_manager.PopulateCharacterList(_RD, m_spawner.get());
 
 	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);

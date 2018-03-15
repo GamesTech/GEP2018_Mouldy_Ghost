@@ -4,13 +4,14 @@
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
 class CharacterController;
+class SpawnHandler;
 
 class Character
 	: public ImageGO2D
 {
 public:
 	//TODO: add a 3d player and modes to switch between different views and basic physics
-	Character(RenderData* _RD, string _filename);
+	Character(RenderData* _RD, string _filename, SpawnHandler* _spawner);
 	virtual ~Character();
 
 	virtual void Tick(GameStateData* _GSD);
@@ -48,4 +49,5 @@ protected:
 
 	CharacterController* m_controller = nullptr;
 	std::vector<Attack*> m_attacks;
+	SpawnHandler* m_spawner;
 };

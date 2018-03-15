@@ -5,15 +5,13 @@
 
 #include <vector>
 
+class SpawnHandler;
+
 class DamageCollider
 	: public ImageGO2D
 {
 public:
-#if _DEBUG
-	DamageCollider(DamageColData _data);
-#else
-	DamageCollider(DamageColData _data);
-#endif
+	DamageCollider(DamageColData _data, SpawnHandler* _spawner);
 	~DamageCollider();
 
 	virtual void CollisionEnter
@@ -22,4 +20,5 @@ public:
 	virtual void Tick(GameStateData* _GSD) override;
 private:
 	DamageColData m_data;
+	SpawnHandler* m_spawner;
 };

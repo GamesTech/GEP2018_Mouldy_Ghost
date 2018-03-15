@@ -9,7 +9,7 @@ public:
 	~CharacterManager() = default;
 
 	Character GetCharacterByName(std::string _name);
-	void PopulateCharacterList(RenderData* _RD);
+	void PopulateCharacterList(RenderData* _RD, SpawnHandler* _spawner);
 private:
 	std::vector<Character> m_character_list;
 };

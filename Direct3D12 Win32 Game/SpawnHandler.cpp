@@ -2,37 +2,45 @@
 #include "SpawnHandler.h"
 #include "Events.h"
 
-void SpawnHander::onNotify(GameObject2D * object, Event _event)
+void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 {
 	switch (_event)
 	{
 	case Event::OBJECT_INSTANTIATED:
 	{
-		_2DObjects->push_back(object);
-		_physics->push_back(object->GetPhysics());
+		m_2DObjects->push_back(object);
+		m_physics->push_back(object->GetPhysics());
 		break;
 	}
 	case Event::OBJECT_DESTROYED:
 	{
 		int i = 0;
-		for (std::vector<GameObject2D*>::iterator it = _2DObjects->begin();
-			it != _2DObjects->end(); it++, i++)
+		for (std::vector<GameObject2D*>::iterator it = m_2DObjects->begin();
+			it != m_2DObjects->end(); it++, i++)
 		{
 			if (*it == object)
 			{
-				_2DObjects->erase(_2DObjects->begin() + i);
+				m_2DObjects->erase(m_2DObjects->begin() + i);
+				break;
 			}
 		}
 		i = 0;
-		for (std::vector<Physics2D*>::iterator it = _physics->begin();
-			it != _physics->end(); it++, i++)
+		for (std::vector<Physics2D*>::iterator it = m_physics->begin();
+			it != m_physics->end(); it++, i++)
 		{
 			if (*it == object->GetPhysics())
 			{
-				_physics->erase(_physics->begin() + i);
+				m_physics->erase(m_physics->begin() + i);
+				break;
 			}
 		}
 		break;
 	}
 	}
+}
+
+void SpawnHandler::setData(std::vector<GameObject2D*>* _2DObjects, std::vector<Physics2D*>* _physics)
+{
+	m_2DObjects = _2DObjects;
+	m_physics = _physics;
 }

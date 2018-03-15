@@ -374,12 +374,14 @@
       <Filter>Attacks</Filter>
     </ClCompile>
     <ClCompile Include="CharacterManager.cpp" />
-    <ClCompile Include="SpawnHandler.cpp" />
     <ClCompile Include="Explosive.cpp">
       <Filter>Items\Source</Filter>
     </ClCompile>
     <ClCompile Include="ItemSpawner.cpp">
       <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,11 +8,13 @@
 #include "VisiblePhysics.h"
 #endif
 
-Character::Character(RenderData* _RD, string _filename) : ImageGO2D(_RD, _filename)
+Character::Character(RenderData* _RD, string _filename, SpawnHandler* _spawner)
+	: ImageGO2D(_RD, _filename)
 {
 	SetLimit(Vector2(900, 500));
 	CentreOrigin();
 	tag = GameObjectTag::PLAYER;
+	m_spawner = _spawner;
 }
 
 Character::~Character()
@@ -45,7 +47,7 @@ void Character::Tick(GameStateData * _GSD)
 	}
 	if (InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
 	{
-		m_attacks[0]->PerformAttack(m_pos, 1, this, _GSD);
+		m_attacks[0]->PerformAttack(m_pos, 1, this, _GSD, m_spawner);
 	}
 	if (InputSystem::searchForAction(P_JUMP, actions_to_check))
 	{

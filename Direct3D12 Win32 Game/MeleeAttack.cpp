@@ -18,7 +18,8 @@ MeleeAttack::MeleeAttack(std::string _attack_file)
 }
 
 void MeleeAttack::PerformAttack(Vector2 _position, int _facing,
-	Character* _user, GameStateData* _GSD)
+	Character* _user, GameStateData* _GSD, 
+	SpawnHandler* _spawner)
 {
 	DamageColData attack = m_data;
 	attack.direction.y = 0;
@@ -27,9 +28,6 @@ void MeleeAttack::PerformAttack(Vector2 _position, int _facing,
 	attack.contact = Destroy::ON_ANYTHING_HIT;
 	attack.user = _user;
 
-	m_collider = new DamageCollider(attack);
+	m_collider = new DamageCollider(attack, _spawner);
 	m_collider->SetPos(_position);
-	
-	_GSD->m_2DObjects.push_back(m_collider);
-	_GSD->objects_in_scene.push_back(m_collider->GetPhysics());
 }

@@ -3,6 +3,9 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "FinalDestination.h"
+#include "CharacterController.h"
+#include "Player.h"
+#include "SpawnHandler.h"
 
 GameScene::GameScene()
 {
@@ -10,6 +13,14 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		if (entities[i])
+		{
+			delete entities[i];
+			entities[i] = nullptr;
+		}
+	}
 }
 
 void GameScene::Initialise(RenderData * _RD,
@@ -18,6 +29,15 @@ void GameScene::Initialise(RenderData * _RD,
 {
 	m_RD = _RD;
 	m_GSD = _GSD;
+
+<<<<<<< HEAD
+	m_spawner = std::make_unique<SpawnHandler>();
+	m_spawner->setData(&m_GSD->m_2DObjects, &m_GSD->objects_in_scene);
+	c_manager.PopulateCharacterList(_RD, m_spawner.get());
+=======
+	c_manager.PopulateCharacterList(_RD);
+	item_spawner.loadAllData(_RD);
+>>>>>>> origin/develop
 
 	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
@@ -28,7 +48,6 @@ void GameScene::Initialise(RenderData * _RD,
 	//could pass the name of the stage as a function paratemter
 	game_stage = std::make_unique<FinalDestination>();
 	game_stage->init(m_RD,m_GSD);
-	
 
 
 	TestPBGO3D* test3d = new TestPBGO3D();
@@ -38,36 +57,24 @@ void GameScene::Initialise(RenderData * _RD,
 
 	for (int i = 0; i < 2; i++)
 	{
-		Player2D* testPlay = new Player2D(m_RD, "gens");
-		testPlay->SetSpawn(Vector2(i * 400+400, 100));
-		testPlay->SetOrigin(Vector2(100, 100));
-		testPlay->SetControllerID(i);
-		testPlay->SetDrive(100.0f);
-		testPlay->SetMoveSpeed(3 - (1 * i));
-		testPlay->SetJumpHeight(200 + (200 * i));
-		
-		testPlay->GetPhysics()->SetDrag(0.5f);
-		testPlay->GetPhysics()->SetMass(1 + i);
-		testPlay->GetPhysics()->SetBounce(0.4f);
+		entities[i] = new Player(i);
+		players[i] = new Character(c_manager.GetCharacterByName("Character001"));
+		players[i]->SetSpawn(Vector2(i * 200 + 400, 100));
 
-		
-		float x_size = testPlay->TextureSize().x;
-		(testPlay->GetPos(), testPlay->TextureSize().x, testPlay->TextureSize().y);
-		/*test->SetParent(testPlay);*/
-		float y_size = testPlay->TextureSize().y;
+		players[i]->CreatePhysics(_RD);
+		players[i]->GetPhysics()->SetDrag(0.5f);
+		players[i]->GetPhysics()->SetBounce(0.4f);
+
+		float width = players[i]->TextureSize().x;
+		float height = players[i]->TextureSize().y;
 		Rectangle rect = Rectangle
-		(testPlay->GetPos().x, testPlay->GetPos().y, x_size, y_size);
-		testPlay->GetPhysics()->SetCollider(rect);
+		(players[i]->GetPos().x, players[i]->GetPos().y, width, height);
+		players[i]->GetPhysics()->SetCollider(rect);
 
-		m_2DObjects.push_back(testPlay);
-		m_GSD->objects_in_scene.push_back(testPlay->GetPhysics());
+		m_2DObjects.push_back(players[i]);
+		m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
+		entities[i]->SetCharacter(players[i]);
 	}
-
-	//Platform* testplatform = new Platform(_RD, "platform");
-
-	//testplatform->SetPos(Vector2(200, 400));
-	////testplatform->SetScale(Vector2(2, 0.2));
-	////testplatform->CentreOrigin();
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
@@ -77,19 +84,7 @@ void GameScene::Initialise(RenderData * _RD,
 		}
 	}
 
-	//SDKMeshGO3D *test3 = new SDKMeshGO3D(m_RD, "cup");
-	//test3->SetPos(12.0f*Vector3::Forward + 5.0f*Vector3::Left + Vector3::Down);
-	//test3->SetScale(5.0f);
-	//m_3DObjects.push_back(test3);
-
-	///*testplatform->CentreOrigin();*/
-
-	//testplatform->GetPhysics()->SetCollider(rect);
-	//m_2DObjects.push_back(testplatform);
-	////platforms.push_back(testplatform);
-	//_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
-
-	
+	game_stage->addObjectsToScene(m_2DObjects);
 	
 }
 
@@ -97,6 +92,33 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 {
 	Scene::Update(timer, _audEngine);
 	game_stage->update(m_GSD);
+
+	if (m_GSD->game_actions[0].size() > 0)
+	{
+		//code for testing zoom
+		//if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_SPECIAL)
+		//{
+		//	for (int i = 0; i < m_2DObjects.size(); i++)
+		//	{
+		//		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
+		//		temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x + 0.1f, temp->GetScale().y + 0.1f));
+		//	}
+		//}
+		//if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_BASIC)
+		//{
+		//	for (int i = 0; i < m_2DObjects.size(); i++)
+		//	{
+		//		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
+		//		temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x - 0.1f, temp->GetScale().y - 0.1f));
+		//	}
+		//}
+	}
+
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
+		//temp->scaleFromPoint(Vector2(800, 600), Vector2(temp->GetScale().x + 0.1, temp->GetScale().y + 0.1));
+	}
 }
 
 void GameScene::Reset()
@@ -114,80 +136,4 @@ void GameScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
-}
-
-
-<<<<<<< HEAD
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		(*it)->Tick(m_GSD);
-	}
-
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		Vector2 temp = m_2DObjects[i]->GetOrigin();
-		m_2DObjects[i]->SetOrigin(Vector2(0, 1000));
-		m_2DObjects[i]->SetScale(m_2DObjects[i]->GetScale() + Vector2(0.01, 0.01));
-		m_2DObjects[i]->SetOrigin(temp);
-		//convert to imageGO2D
-		//get the size of the texture
-		//get the current scale of the texture
-		//this gives us the real size of the texture (width and height)
-		//obtain the real size of the texture after scaling
-		//somehow use all this information to find the point we need to transform the shape to...
-
-		//if point was bottom left we would do: current_pos.x + difference in width, current_pos.y + difference in height
-	}
-	//no idea if this works for zooming, will check later
-	//Follow up comment: it doesn't work
-}
-=======
->>>>>>> 431f75b36aaf01e6b239ab245717d3e7ca60441e
-
-void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
-{
-	//primative batch
-	m_RD->m_effect->SetProjection(m_cam->GetProj());
-	m_RD->m_effect->SetView(m_cam->GetView());
-	m_RD->m_effect->Apply(_commandList.Get());
-	m_RD->m_effect->EnableDefaultLighting();
-	m_RD->m_batch->Begin(_commandList.Get());
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_PRIM)(*it)->Render(m_RD);
-	}
-	m_RD->m_batch->End();
-
-	//Render Geometric Primitives
-	m_RD->m_GPeffect->SetProjection(m_cam->GetProj());
-	m_RD->m_GPeffect->SetView(m_cam->GetView());
-	m_RD->m_GPeffect->Apply(_commandList.Get());
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_GEOP)(*it)->Render(m_RD);
-	}
-
-	//Render VBO Models	
-	for (vector<GameObject3D *>::iterator it = m_3DObjects.begin(); it != m_3DObjects.end(); it++)
-	{
-		if ((*it)->GetType() == GO3D_RT_SDK)(*it)->Render(m_RD);
-	}
-
-	//finally draw all 2D objects
-	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
-	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
-	m_RD->m_spriteBatch->Begin(_commandList.Get());
-
-	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
-	{
-		(*it)->Render(m_RD);
-	}
-
-	//Render stage
-	game_stage->render(m_RD);
-	
-
-	m_RD->m_spriteBatch->End();
-
-	
 }

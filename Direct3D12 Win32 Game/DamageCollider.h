@@ -21,4 +21,5 @@ public:
 private:
 	DamageColData m_data;
 	SpawnHandler* m_spawner;
+	float m_lifetime;
 };

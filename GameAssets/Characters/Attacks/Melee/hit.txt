@@ -1,4 +1,4 @@
-time		>2151
+time		>2
 speed		>20
 damage		>5
-knockback	>50000
+knockback	>5

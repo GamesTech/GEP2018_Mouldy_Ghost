@@ -10,9 +10,15 @@ public:
 	~Throwable();
 
 
+
+<<<<<<< HEAD
+	void Throw(Player2D* _player);
+	virtual void pickUp(Player2D* _player);
+	virtual void use(Player2D* _player) override;
+=======
 	void Throw(Character* _player);
-	virtual void pickUp(Character* _player);
 	virtual void use(Character* _player) override;
+>>>>>>> 8d41e1ac9384794f77c64439c56f48af699e06c0
 
 	void setOnThrowString(std::string _throw) { m_on_throw = _throw; }
 	void setOnHitPlayerString(std::string _hitplayer) { m_hit_player = _hitplayer; }

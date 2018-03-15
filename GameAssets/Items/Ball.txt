@@ -1,0 +1,10 @@
+type:		>throwable
+-- all items
+Name:		>ball
+pickup:		>none
+use:		>throw
+power:		>2
+-- throwable 
+on throw	>activate
+player hit 	>bounce
+ground hit 	>bounce

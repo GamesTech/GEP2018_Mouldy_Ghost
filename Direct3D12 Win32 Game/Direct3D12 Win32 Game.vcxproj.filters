@@ -246,6 +246,12 @@
     <ClInclude Include="SpawnHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Explosive.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemSpawner.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -369,6 +375,12 @@
     </ClCompile>
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="SpawnHandler.cpp" />
+    <ClCompile Include="Explosive.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemSpawner.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

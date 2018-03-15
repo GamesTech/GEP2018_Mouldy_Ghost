@@ -23,24 +23,57 @@ void Item::Tick(GameStateData * _GSD)
 {
 }
 
+
+
 void Item::pickUp(Character * _player)
 {
+	if (m_onPickUp == "use")
+	{
+		use(_player);
+	}
+	else if (m_type != ItemType::SINGLE_USE)
+	{
+		_player->AddChild(this);
+		//_player->setHeldItem(this);
+
+		if (m_onPickUp == "activate")
+		{
+			m_active = true;
+		}
+	}
 	
 }
 
 void Item::use(Character * _player)
 {
-	
+	//powerups
+
+	if (m_onUse == "heal")
+	{
+		//_player->heal(m_power);
+	}
+	else if (m_onUse == "hammer_yo")
+	{
+
+	}
 }
 
 void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+	
 }
 
 void Item::Collision(Physics2D * _collision)
 {
+<<<<<<< HEAD
 	
 	//ignore coll with players
+=======
+	if (m_state == ItemState::WAIT)
+	{
+		//ignore coll with players
+	}
+>>>>>>> 8d41e1ac9384794f77c64439c56f48af699e06c0
 
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
 	{

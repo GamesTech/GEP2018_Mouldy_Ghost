@@ -11,7 +11,7 @@ public:
 	~Item();
 
 	virtual void Tick(GameStateData* _GSD);
-	virtual void loadItemData();
+
 
 	virtual void pickUp(Character* _player);
 	virtual void use(Character* _player);
@@ -20,14 +20,20 @@ public:
 	void Collision(Physics2D* _collision) override;
 	void CollisionExit(Physics2D* _collision)override;
 
+	void setOnPickupString(std::string _pickup) { m_onPickUp = _pickup; }
+	void setOnUseString(std::string _use) { m_onUse = _use; }
+	void setPower(float _power) { m_power = _power; }
+	void setitemType(ItemType type) { m_type = type; }
 
 protected:
 	
 	Physics2D* m_item_physics = nullptr;
 	ItemState m_state = ItemState::WAIT;
 	ItemType m_type = ItemType::SINGLE_USE;
-	std::string m_item_name = " ";
+
+	float m_elapsed_time = 0;
 	bool m_active = true;
+	float m_power = 0;
 
 	std::string m_onPickUp;
 	std::string m_onUse;

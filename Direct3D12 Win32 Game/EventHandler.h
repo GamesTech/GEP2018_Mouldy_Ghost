@@ -10,7 +10,7 @@ public:
 	EventHandler();
 	~EventHandler();
 
-	void initGSD(GameStateData* _GSD) { m_GSD = _GSD; };
+	virtual void init(GameStateData* _GSD) { m_GSD = _GSD; };
 	virtual void onNotify(GameObject2D* entity_, Event event_) = 0;
 	//this is a base class for other eventhandlers/listeners
 	//the reason I have made this empty base class is so that 

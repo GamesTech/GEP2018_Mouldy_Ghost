@@ -13,12 +13,29 @@ SceneHandler::~SceneHandler()
 {
 }
 
+void SceneHandler::init(GameStateData * _GSD)
+{
+	m_GSD = _GSD;
+	for (int i = 0; i < m_allScenes.size(); i++)
+	{
+		if (m_allScenes[i]->getType() == "MenuScene")
+		{
+			m_activeScene = m_allScenes[i];
+		}
+	}
+}
+
 void SceneHandler::populateScenesList(std::vector<Scene*> _allScenes)
 {
 	for (int i = 0; i < _allScenes.size(); i++)
 	{
 		m_allScenes.push_back(_allScenes[i]);
 	}
+}
+
+void SceneHandler::addScene(Scene * _scene)
+{
+	m_allScenes.push_back(_scene);
 }
 
 void SceneHandler::onNotify(GameObject2D * entity_, Event event_)

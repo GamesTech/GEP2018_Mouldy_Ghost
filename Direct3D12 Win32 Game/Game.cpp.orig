@@ -7,7 +7,8 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "TestScene.h"
-#include "EventHandler.h"
+#include "MusicHandler.h"
+#include "SceneHandler.h"
 
 extern void ExitGame();
 
@@ -17,12 +18,12 @@ using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
 Game::Game() :
-    m_window(nullptr),
-    m_outputWidth(800),
-    m_outputHeight(600),
-    m_featureLevel(D3D_FEATURE_LEVEL_11_0),
-    m_backBufferIndex(0),
-    m_fenceValues{}
+	m_window(nullptr),
+	m_outputWidth(800),
+	m_outputHeight(600),
+	m_featureLevel(D3D_FEATURE_LEVEL_11_0),
+	m_backBufferIndex(0),
+	m_fenceValues{}
 {
 }
 
@@ -33,12 +34,16 @@ Game::~Game()
 		m_audEngine->Suspend();
 	}
 
-    // Ensure that the GPU is no longer referencing resources that are about to be destroyed.
-    WaitForGpu();
+	// Ensure that the GPU is no longer referencing resources that are about to be destroyed.
+	WaitForGpu();
 
 	delete m_RD;
 	delete m_GSD;
-	delete m_activeScene;
+
+	for (int i = 0; i < m_all_scenes.size(); i++)
+	{
+		delete m_all_scenes[i];
+	}
 
 	m_keyboard.reset();
 	m_mouse.reset();
@@ -135,12 +140,43 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
 
-	m_gameScene = new GameScene();
-	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
-	m_testScene = new TestScene();
-	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	//populate the listener vector with all listeners
+	//at the moment this needs to be done before a scene is initialised
+	m_musicListener = std::make_unique<MusicHandler>();
+	m_sceneListener = std::make_unique<SceneHandler>();
+	listeners.push_back(m_musicListener.get());
+	listeners.push_back(m_sceneListener.get());
 
-	m_activeScene = m_gameScene;
+	m_gameScene = new GameScene();
+	m_all_scenes.push_back(m_gameScene);
+
+	m_testScene = new TestScene();
+	m_all_scenes.push_back(m_testScene);
+
+	m_physScene = new PhysicsScene();
+	m_all_scenes.push_back(m_physScene);
+
+	m_menuScene = new MenuScene();
+	m_all_scenes.push_back(m_menuScene);
+
+	//add all listeners to all scenes
+	for (int i = 0; i < m_all_scenes.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_all_scenes[i]->addListener(listeners[j]);
+		}
+		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+		//m_sceneListener->addScene(m_all_scenes[i]);
+	}
+	m_sceneListener->populateScenesList(m_all_scenes);
+	m_activeScene = m_menuScene;
+
+	//SwitchToScene(MENU_SCENE, false);
+	m_sceneListener->init(m_GSD);
+	//m_sceneListener->initActiveScene(m_activeScene);
+
+
 }
 
 //GEP:: Executes the basic game loop.
@@ -160,7 +196,18 @@ void Game::Update(DX::StepTimer const& timer)
 	ReadInput();
     m_GSD->m_dt = float(timer.GetElapsedSeconds());
 
-	m_activeScene->Update(timer, m_audEngine);
+	if (m_activeScene->getType() == "TestScene")
+	{
+		throw ("Hello");
+	}
+
+	m_sceneListener->getActiveScene()->Update(timer, m_audEngine);
+
+	//m_activeScene->Update(timer, m_audEngine);
+	if (m_activeScene->getType() == "TestScene")
+	{
+		throw ("Hello");
+	}
 }
 
 //GEP:: Draws the scene.
@@ -178,7 +225,9 @@ void Game::Render()
 
 //draw each type of 3D objects
 
-	m_activeScene->Render(m_commandList);	
+	m_sceneListener->getActiveScene()->Render(m_commandList);
+
+	//m_activeScene->Render(m_commandList);	
 
     // Show the new frame.
     Present();
@@ -647,6 +696,12 @@ void Game::OnDeviceLost()
 
 bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 {
+<<<<<<< HEAD
+	m_current_scene = _scene;
+	m_GSD->m_2DObjects.clear();
+=======
+	//m_current_scene = _scene;
+>>>>>>> menus
 	m_GSD->objects_in_scene.clear();
 
 	if (_reset)
@@ -658,61 +713,87 @@ bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
 	{
 	case GAME_SCENE:
 		m_activeScene = m_gameScene;
-		return true;
+		break;
 	case TEST_SCENE:
 		m_activeScene = m_testScene;
-		return true;
+		break;
+	case PHYSICS_SCENE:
+		m_activeScene = m_physScene;
+		break;
+	case MENU_SCENE:
+		m_activeScene = m_menuScene;
+		break;
 	default:
 		return false;
 	}
+
+	m_activeScene->PhysicsInScene(m_GSD);
+	return true;
 }
 
 void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
 
-	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
-	m_GSD->m_keyboardState = m_keyboard->GetState();
-
 	for (int i = 0; i < 4; i++)
 	{
+		m_GSD->menu_action[i] = NONE;
+		m_GSD->game_actions[i].clear();
+
 		auto state = m_gamePad->GetState(i);
 
-		m_buttons[i].Update(state);
+		//if this is the game scene take inputs for the game
+		if (m_current_scene == GAME_SCENE)
+		{
+			m_input.getAction(m_keyboard->GetState(),
+				m_prev_keyboard, m_GSD->game_actions[i]);
+			m_input.getAction(state,
+				m_buttons[i], m_GSD->game_actions[i]);
+		}
+		//otherwise take menu inputs
+		else
+		{
+			m_GSD->menu_action[i] = m_input.getAction(m_keyboard->GetState(), m_prev_keyboard);
+			if (m_GSD->menu_action[i] == NONE)
+			{
+				m_GSD->menu_action[i] = m_input.getAction(state, m_buttons[i]);
+			}
+		}
 
-		m_GSD->m_gamePadState[i] = state;
-		m_GSD->m_buttonState[i] = m_buttons[i];
+		m_prev_keyboard = m_keyboard->GetState();
+		m_buttons[i].Update(state);
 
 	}
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
-<<<<<<< HEAD
-	if (m_GSD->m_keyboardState.M)
+
+	//Commented this out so i can test the menu stuff. I don't think this should be managed in game.cpp but by the scene manager
+	//switch (m_GSD->menu_action[0])
+	//{
+	//case NAV_UP:
+	//	SwitchToScene(GAME_SCENE, true);
+	//	break;
+	//case NAV_LEFT:
+	//	SwitchToScene(PHYSICS_SCENE, true);
+	//	break;
+	//case NAV_RIGHT:
+	//	SwitchToScene(TEST_SCENE, true);
+	//	break;
+	//case NAV_DOWN:
+	//	SwitchToScene(MENU_SCENE, false);
+	//default:
+	//	break;
+	//}
+
+	if (m_GSD->game_actions[0].size() > 0)
 	{
-		int r = 6;
-	}
-=======
-	if (m_GSD->m_keyboardState.A && !m_GSD->m_prevKeyboardState.A)
-	{
-		SwitchToScene(GAME_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.S && !m_GSD->m_prevKeyboardState.S)
-	{
-		SwitchToScene(GAME_SCENE, false);
-	}
-	if (m_GSD->m_keyboardState.D && !m_GSD->m_prevKeyboardState.D)
-	{
-		SwitchToScene(TEST_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.F && !m_GSD->m_prevKeyboardState.F)
-	{
-		SwitchToScene(TEST_SCENE, false);
+		if (m_GSD->game_actions[0][0] == P_QUIT)
+		{
+			SwitchToScene(TEST_SCENE, true);
+		}
 	}
 
->>>>>>> d6200e1573e341cd4d6c38e3fdd6385143d18842
 	//Quit if press Esc
-	if (m_GSD->m_keyboardState.Escape)
+	if (m_GSD->menu_action[0] == PREVIOUS_MENU)
 		PostQuitMessage(0);
-
-	m_GSD->m_mouseState = m_mouse->GetState();
 }

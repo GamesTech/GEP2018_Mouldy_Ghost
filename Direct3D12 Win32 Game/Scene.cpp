@@ -99,7 +99,7 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 		(*it)->Render(m_RD, 0);
 #if _DEBUG
 		//COMMENT OUT THIS LINE IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
-		(*it)->GetPhysics()->RenderCorners();
+		//(*it)->GetPhysics()->RenderCorners();
 #endif
 	}
 
@@ -110,7 +110,18 @@ void Scene::PhysicsInScene(GameStateData* _GSD)
 {
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
-		_GSD->m_2DObjects.push_back(m_2DObjects[i]);
+		bool in_vector = false;
+		for (int j = 0; j < _GSD->m_2DObjects.size(); j++)
+		{
+			if (_GSD->m_2DObjects[j] == m_2DObjects[i])
+			{
+				in_vector = true;
+			}
+		}
+		if (!in_vector)
+		{
+			_GSD->m_2DObjects.push_back(m_2DObjects[i]);
+		}
 		_GSD->objects_in_scene.push_back(m_2DObjects[i]->GetPhysics());
 	}
 }

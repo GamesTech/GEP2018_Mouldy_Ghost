@@ -24,6 +24,8 @@ public:
 	void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 
+	void giveMeItem(GameStateData* _GSD, std::string _name);
+
 	virtual void Reset();
 
 private:

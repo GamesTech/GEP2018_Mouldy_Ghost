@@ -16,6 +16,7 @@ Throwable::~Throwable()
 
 void Throwable::Throw(Character* _player)
 {
+	m_physics->SetGrav(1);
 	player_ignore = _player;
 	m_state = ItemState::THROWN;
 	//_player->get direction?
@@ -63,7 +64,7 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		}
 		else if (m_hit_ground == "stick")
 		{
-			m_item_physics->ResetForce(Axis::BOTH_AXES);
+			m_physics->ResetForce(Axis::BOTH_AXES);
 			_collision->GetOwner()->AddChild(this);
 		}
 	}

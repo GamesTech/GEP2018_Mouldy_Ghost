@@ -99,10 +99,10 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 		(*it)->Render(m_RD, 0);
 #if _DEBUG
 		//COMMENT OUT THIS BIT IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
-		if (static_cast<VisiblePhysics*> ((*it)->GetPhysics()))
-		{
-			(*it)->GetPhysics()->RenderCorners();
-		}
+		//if (static_cast<VisiblePhysics*> ((*it)->GetPhysics()))
+		//{
+		//	(*it)->GetPhysics()->RenderCorners();
+		//}
 #endif
 	}
 

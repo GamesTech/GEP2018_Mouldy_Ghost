@@ -80,4 +80,6 @@ protected:
 	float m_spam_cooldown = 0;
 	bool m_can_attack = true;
 	SpawnHandler* m_spawner;
+
+	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
 };

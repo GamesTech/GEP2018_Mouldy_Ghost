@@ -11,6 +11,8 @@ struct GameStateData
 	std::vector<GameAction> game_actions[4];
 	MenuAction menu_action[4];
 
+	Vector2 window_size;
+
 	//length of time since last frame
 	float m_dt;
 };

@@ -3,7 +3,7 @@
 #include "Physics2D.h"
 #include "SpawnHandler.h"
 
-DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandler* _spawner) : ImageGO2D(_RD, "colliderdebug")
+DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandler* _spawner) : ImageGO2D(_RD, "hit")
 {
 	m_spawner = _spawner;
 	m_physics = new Physics2D();

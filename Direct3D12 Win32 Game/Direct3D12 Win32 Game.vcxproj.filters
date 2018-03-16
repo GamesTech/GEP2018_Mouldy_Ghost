@@ -86,6 +86,9 @@
     <Filter Include="Attacks">
       <UniqueIdentifier>{1dc3f502-6646-4c28-88b7-ec38f84796a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{1d143d64-633e-49e5-a5a5-06765ab49473}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -144,9 +147,6 @@
     </ClInclude>
     <ClInclude Include="TestSound.h">
       <Filter>GameObjects\Sounds\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics2D.h">
-      <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="EventRotate.h">
       <Filter>EventSystem\Headers</Filter>
@@ -209,9 +209,6 @@
     <ClInclude Include="ItemState.h">
       <Filter>GameObjects\2D</Filter>
     </ClInclude>
-    <ClInclude Include="VisiblePhysics.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="InputSystem.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
@@ -258,6 +255,12 @@
     </ClInclude>
     <ClInclude Include="ItemSpawner.h">
       <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics2D.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="VisiblePhysics.h">
+      <Filter>Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -306,9 +309,6 @@
     <ClCompile Include="TestSound.cpp">
       <Filter>GameObjects\Sounds\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Physics2D.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
-    </ClCompile>
     <ClCompile Include="EventRotate.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
@@ -354,9 +354,6 @@
     <ClCompile Include="SceneHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
-    <ClCompile Include="VisiblePhysics.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
-    </ClCompile>
     <ClCompile Include="InputSystem.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
@@ -396,6 +393,12 @@
     </ClCompile>
     <ClCompile Include="SpawnHandler.cpp">
       <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="VisiblePhysics.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics2D.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

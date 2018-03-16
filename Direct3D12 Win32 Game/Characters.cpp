@@ -32,6 +32,14 @@ Character::~Character()
 
 void Character::Tick(GameStateData * _GSD)
 {
+	//check death zone is accurate
+	if (m_death_zone.width != _GSD->window_size.x + 800
+		|| m_death_zone.height != _GSD->window_size.y + 800)
+	{
+		m_death_zone.width = _GSD->window_size.x + 800;
+		m_death_zone.height = _GSD->window_size.y + 800;
+	}
+
 	//get input
 	if (m_recovery_time <= 0)
 	{
@@ -47,6 +55,12 @@ void Character::Tick(GameStateData * _GSD)
 	else
 	{
 		m_recovery_time -= _GSD->m_dt;
+	}
+
+	if (!m_death_zone.Contains(m_pos))
+	{
+		//DIES
+		ResetPos();
 	}
 
 //GEP:: Lets go up the inheritence and share our functionality

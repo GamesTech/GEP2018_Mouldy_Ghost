@@ -54,10 +54,6 @@ void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEn
 	{
 		m_2DObjects[i]->Tick(m_GSD);
 	}
-	//for (vector<GameObject2D *>::iterator it = m_GSD->m_2DObjects.begin(); it != m_GSD->m_2DObjects.end(); it++)
-	//{
-	//	(*it)->Tick(m_GSD);
-	//}
 }
 
 void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)

@@ -32,6 +32,5 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D12Resource> m_texture;
 	int m_resourceNum = -1;
 	Vector2 m_spriteSize;
-	int m_sprites_row;
 };
 

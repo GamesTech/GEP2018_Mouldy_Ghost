@@ -46,15 +46,7 @@ ImageGO2D::~ImageGO2D()
 
 void ImageGO2D::Render(RenderData * _RD, int _sprite)
 {
-	int x = m_spriteSize.x;
-	int y = m_spriteSize.y;
-	if (m_sprites_row != 0)
-	{
-		x *= _sprite % m_sprites_row;
-		y*= (_sprite / m_sprites_row);
-	}
-
-	Rectangle rect = Rectangle(x, y, m_spriteSize.x, m_spriteSize.y);
+	Rectangle rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
 	const RECT* r = &RECT(rect);
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
@@ -78,7 +70,6 @@ void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)
 	//get the difference in size between these two
 	Vector2 diff = realSizeAfterScale - realSize;
 	//make the difference positive
-
 	diff.x = abs(diff.x);
 	diff.y = abs(diff.y);
 	//get the distance of the scale point to the origin of the image as a percentage (1.0f = 100%)

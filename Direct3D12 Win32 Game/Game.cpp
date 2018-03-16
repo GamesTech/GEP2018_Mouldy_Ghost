@@ -69,6 +69,8 @@ void Game::Initialize(HWND window, int width, int height)
 	m_audEngine = std::make_unique<AudioEngine>(eflags);
 
 	m_GSD = new GameStateData;
+	m_GSD->window_size.x = width;
+	m_GSD->window_size.y = height;
 
 //GEP::set up keyboard mouse, & gamepad input systems
 	m_keyboard = std::make_unique<Keyboard>();
@@ -113,7 +115,6 @@ void Game::Initialize(HWND window, int width, int height)
 	m_RD->m_spriteBatch->SetViewport(viewport);
 
 	m_RD->m_batch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(m_d3dDevice.Get());
-
 	EffectPipelineStateDescription pd2(
 		&VertexPositionColor::InputLayout,
 		CommonStates::Opaque,

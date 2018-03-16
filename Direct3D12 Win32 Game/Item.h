@@ -27,8 +27,6 @@ public:
 	ItemType getitemType() { return m_type; }
 
 protected:
-	
-	Physics2D* m_item_physics = nullptr;
 	ItemState m_state = ItemState::WAIT;
 	ItemType m_type = ItemType::SINGLE_USE;
 

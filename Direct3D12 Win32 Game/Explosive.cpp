@@ -54,13 +54,13 @@ void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 
 		if (m_hit_ground == "bounce")
 		{
-			float tmp = m_item_physics->GetVel().y;
-			m_item_physics->ResetForce(Axis::Y_AXIS);
-			m_item_physics->AddForce(Vector2(0,-tmp));
+			float tmp = m_physics->GetVel().y;
+			m_physics->ResetForce(Axis::Y_AXIS);
+			m_physics->AddForce(Vector2(0,-tmp));
 		}
 		else if (m_hit_ground == "stick")
 		{
-			m_item_physics->ResetForce(Axis::BOTH_AXES);
+			m_physics->ResetForce(Axis::BOTH_AXES);
 			_collision->GetOwner()->AddChild(this);
 		}
 	}

@@ -63,7 +63,7 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		}
 		else if (m_hit_ground == "stick")
 		{
-			m_item_physics->ResetForce(Axis::BOTH_AXES);
+			m_physics->ResetForce(Axis::BOTH_AXES);
 			_collision->GetOwner()->AddChild(this);
 		}
 	}

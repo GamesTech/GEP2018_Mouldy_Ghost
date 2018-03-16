@@ -3,6 +3,10 @@
 #include "GameStateData.h"
 #include "Scene.h"
 
+#if _DEBUG
+#include "VisiblePhysics.h"
+#endif
+
 Scene::~Scene()
 {
 	//delete the GO2Ds
@@ -94,8 +98,11 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 	{
 		(*it)->Render(m_RD, 0);
 #if _DEBUG
-		//COMMENT OUT THIS LINE IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
-		//(*it)->GetPhysics()->RenderCorners();
+		//COMMENT OUT THIS BIT IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
+		if (static_cast<VisiblePhysics*> ((*it)->GetPhysics()))
+		{
+			(*it)->GetPhysics()->RenderCorners();
+		}
 #endif
 	}
 

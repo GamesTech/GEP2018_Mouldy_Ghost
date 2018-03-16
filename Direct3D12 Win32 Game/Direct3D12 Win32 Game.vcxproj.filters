@@ -283,6 +283,12 @@
     <ClInclude Include="DashAttack.h">
       <Filter>Attacks\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="CharacterSelectScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettingsScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -422,6 +428,12 @@
       <Filter>Attacks\Source</Filter>
     </ClCompile>
     <ClCompile Include="DashAttack.cpp" />
+    <ClCompile Include="CharacterSelectScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettingsScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

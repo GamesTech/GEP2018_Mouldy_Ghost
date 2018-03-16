@@ -118,6 +118,8 @@ private:
 	TestScene* m_testScene;
 	PhysicsScene* m_physScene;
 	MenuScene* m_menuScene;
+	CharacterSelectScene* m_characterSelectScene;
+	GameSettingsScene* m_gameSettingsScene;
 
 
 	std::vector<Scene*> m_all_scenes;

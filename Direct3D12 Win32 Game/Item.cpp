@@ -65,17 +65,8 @@ void Item::use(Character * _player)
 void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
 
-	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
-	{
-		
-		if (m_physics->GetVel().y < 100)
-		{
-			m_physics->ResetForce(Axis::Y_AXIS);
-			m_physics->SetGrav(0);
-
-		}
-	}
-
+	m_physics->ResetForce(Axis::Y_AXIS);
+	m_physics->SetGrav(0);
 }
 
 void Item::Collision(Physics2D * _collision)

@@ -1,5 +1,5 @@
 type:		>single_use
-image:		>default_item_texture
+image:		>apple
 -- all items
 Name:		>apple
 pickup:		>use

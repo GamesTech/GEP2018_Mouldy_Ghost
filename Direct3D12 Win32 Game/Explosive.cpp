@@ -33,7 +33,7 @@ void Explosive::Tick(GameStateData * _GSD)
 
 void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-	Item::CollisionEnter(_collision, _normal);
+	Throwable::CollisionEnter(_collision, _normal);
 
 
 	if (m_state == ItemState::THROWN 
@@ -41,33 +41,14 @@ void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		&& _collision->GetOwner()->GetTag() == GameObjectTag::PLAYER
 		&& _collision->GetOwner() != player_ignore)
 	{
-		if (m_hit_player == "bounce")
-		{
-			//hit the player
-			//and bounce
-		}
+	
 		if (m_hit_player == "explode")
 		{
 			m_explode = true;
 		}
 	}
 
-	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
-	{
-		player_ignore = nullptr;
 
-		if (m_hit_ground == "bounce")
-		{
-			float tmp = m_physics->GetVel().y;
-			m_physics->ResetForce(Axis::Y_AXIS);
-			m_physics->AddForce(Vector2(0,-(100*m_physics->GetBounce()*tmp)));
-		}
-		else if (m_hit_ground == "stick")
-		{
-			m_physics->ResetForce(Axis::BOTH_AXES);
-			_collision->GetOwner()->AddChild(this);
-		}
-	}
 
 }
 

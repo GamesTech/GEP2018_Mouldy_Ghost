@@ -18,7 +18,6 @@ public:
 	(Physics2D* _collision, Vector2 _normal) override;
 
 	virtual void Tick(GameStateData* _GSD) override;
-	virtual void Render(RenderData* _RD, int _sprite) override;
 
 private:
 	DamageColData m_data;

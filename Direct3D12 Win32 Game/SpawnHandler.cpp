@@ -4,6 +4,13 @@
 
 void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 {
+	//clear out the old objects
+	for (int i = 0; i < m_objects_to_delete.size(); i++)
+	{
+		delete m_objects_to_delete[i];
+	}
+	m_objects_to_delete.clear();
+
 	switch (_event)
 	{
 	case Event::OBJECT_INSTANTIATED:
@@ -14,6 +21,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	}
 	case Event::OBJECT_DESTROYED:
 	{
+		m_objects_to_delete.push_back(object);
 		int i = 0;
 		for (std::vector<GameObject2D*>::iterator it = m_2DObjects->begin();
 			it != m_2DObjects->end(); it++, i++)

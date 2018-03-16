@@ -2,7 +2,6 @@
 #include "Characters.h"
 #include "GameStateData.h"
 #include "CharacterController.h"
-//#include <algorithm>
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -188,6 +187,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		case OnHold::HOLD_CHARGE:
 			m_charging_attack = m_attacks[attack_to_use];
 			m_charge_time = 0;
+			m_can_attack = false;
 			break;
 		case OnHold::HOLD_REPEAT:
 			m_spamming_attack = m_attacks[attack_to_use];

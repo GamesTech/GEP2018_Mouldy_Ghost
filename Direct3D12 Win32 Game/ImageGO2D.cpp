@@ -46,9 +46,13 @@ ImageGO2D::~ImageGO2D()
 
 void ImageGO2D::Render(RenderData * _RD, int _sprite)
 {
-
-	int x = m_spriteSize.x * (_sprite % m_sprites_row);
-	int y = m_spriteSize.y * (_sprite / m_sprites_row);
+	int x = m_spriteSize.x;
+	int y = m_spriteSize.y;
+	if (m_sprites_row != 0)
+	{
+		x *= _sprite % m_sprites_row;
+		y*= (_sprite / m_sprites_row);
+	}
 
 	Rectangle rect = Rectangle(x, y, m_spriteSize.x, m_spriteSize.y);
 	const RECT* r = &RECT(rect);

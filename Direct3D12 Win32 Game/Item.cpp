@@ -18,6 +18,7 @@ Item::Item(RenderData * _RD, string _filename) : ImageGO2D(_RD,_filename)
 
 Item::~Item()
 {
+	assert(false);
 }
 
 void Item::Tick(GameStateData * _GSD)

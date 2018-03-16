@@ -173,6 +173,7 @@
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="CharacterManager.h" />
+    <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="Camera.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="GrabAttack.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemSpawner.h" />
@@ -197,12 +199,15 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MusicHandler.h" />
+    <ClInclude Include="PassiveAttack.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RangedAttack.h" />
     <ClInclude Include="ReadFile.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneHandler.h" />
@@ -236,6 +241,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="Characters.cpp" />
+    <ClCompile Include="DashAttack.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventRotate.cpp" />
     <ClCompile Include="EventScaleUp.cpp" />

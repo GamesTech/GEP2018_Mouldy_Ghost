@@ -2,10 +2,10 @@ Image		>gens
 Speed		>2
 Jump		>220
 A		>Melee\hit.txt
-Side + A	>Melee\hit.txt
-Up + A		>Melee\hold.txt
+Side + A	>Melee\hold.txt
+Up + A		>Melee\upPunch.txt
 Down + A	>Melee\spam.txt
-X		>
+X		>Dash\hit.txt
 Side + X	>
 Up + X		>
 Down + X	>

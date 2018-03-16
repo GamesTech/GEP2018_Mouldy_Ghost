@@ -90,14 +90,19 @@ void Character::GetHit(Vector2 _dir, float _force)
 	m_recovery_time = (float)m_damage / 15.0f;
 }
 
-void Character::Collision(Physics2D * _collision)
+void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
 	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
 	if (o_tag == GameObjectTag::PLATFORM)
 	{
 		m_jumps = 0;
+		m_can_attack = true;
 	}
+}
 
+void Character::Collision(Physics2D * _collision)
+{
+	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
 	if (o_tag == GameObjectTag::PLAYER)
 	{
 		if (_collision->GetCollider().Center().x > m_pos.x)
@@ -114,6 +119,12 @@ void Character::Collision(Physics2D * _collision)
 void Character::AddAttack(MeleeAttack _attack)
 {
 	MeleeAttack* a = new MeleeAttack(_attack);
+	m_attacks.push_back(a);
+}
+
+void Character::AddAttack(DashAttack _attack)
+{
+	DashAttack* a = new DashAttack(_attack);
 	m_attacks.push_back(a);
 }
 
@@ -230,7 +241,11 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		}
 		m_can_attack = true;
 	}
-
+	if (InputSystem::searchForAction(P_HOLD_SPECIAL, actions_to_check) && m_can_attack)
+	{
+		m_attacks[BASIC_SPECIAL]->PerformAttack(m_pos, m_facing, this, _GSD, m_spawner);
+		m_can_attack = false;
+	}
 	if (m_spamming_attack)
 	{
 		if (m_spam_cooldown >= 0)

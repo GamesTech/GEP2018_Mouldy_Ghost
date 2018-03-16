@@ -1,5 +1,6 @@
 #pragma once
 #include "MeleeAttack.h"
+#include "DashAttack.h"
 #include "InputSystem.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
@@ -52,9 +53,11 @@ public:
 
 	void GetHit(Vector2 _dir, float _force);
 
+	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	virtual void Collision(Physics2D* _collision) override;
 
 	void AddAttack(MeleeAttack _attack);
+	void AddAttack(DashAttack _attack);
 
 protected:
 	int PlayerJump(std::vector<GameAction> _actions);

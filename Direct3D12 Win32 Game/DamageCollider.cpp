@@ -9,7 +9,7 @@ DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandle
 	m_physics = new Physics2D();
 	m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
 
-	Rectangle rect = Rectangle(m_pos.x, m_pos.y, 10, 10);
+	Rectangle rect = Rectangle(m_pos.x, m_pos.y, _data.size.x, _data.size.y);
 	m_physics->SetCollider(rect);
 
 	m_physics->SetOwner(this);
@@ -18,6 +18,7 @@ DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandle
 	m_data = _data;
 	if (_data.child_to_player)
 	{
+		m_data.user->AddChild(this);
 		parent = m_data.user;
 	}
 	m_lifetime = 0;
@@ -25,6 +26,8 @@ DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandle
 
 DamageCollider::~DamageCollider()
 {
+	if(parent)
+	parent->RemoveChild(this);
 	delete m_physics;
 	m_physics = nullptr;
 }

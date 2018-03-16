@@ -2,8 +2,9 @@
 #include "CharacterManager.h"
 #include "ReadFile.h"
 #include "MeleeAttack.h"
+#include "DashAttack.h"
 
-int g_number_of_attacks = 4;
+int g_number_of_attacks = 5;
 
 CharacterManager::CharacterManager()
 {
@@ -49,6 +50,9 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD, SpawnHandler* _spa
 			{
 			case 'M':
 				character.AddAttack(MeleeAttack(attack_file, _RD));
+				break;
+			case 'D':
+				character.AddAttack(DashAttack(attack_file, _RD));
 				break;
 			default:
 				break;

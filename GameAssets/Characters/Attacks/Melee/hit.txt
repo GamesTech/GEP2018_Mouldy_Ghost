@@ -6,3 +6,6 @@ knockback	>20
 direction	
 >1
 >0
+size
+>20
+>20

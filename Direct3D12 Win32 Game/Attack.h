@@ -2,6 +2,7 @@
 #include <string>
 #include "AttackData.h"
 
+class GameStateData;
 class SpawnHandler;
 class Attack
 {

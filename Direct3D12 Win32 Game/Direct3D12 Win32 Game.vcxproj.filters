@@ -89,6 +89,12 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{1d143d64-633e-49e5-a5a5-06765ab49473}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Attacks\Headers">
+      <UniqueIdentifier>{7125c717-77a9-45f0-850d-da99fd1b37fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Attacks\Source">
+      <UniqueIdentifier>{692f295d-8453-4a1d-a5fa-2086be35cfd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -233,18 +239,6 @@
     </ClInclude>
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Attack.h">
-      <Filter>Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="MeleeAttack.h">
-      <Filter>Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="DamageCollider.h">
-      <Filter>Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackData.h">
-      <Filter>Attacks</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="ReadFile.h" />
     <ClInclude Include="SpawnHandler.h">
@@ -261,6 +255,33 @@
     </ClInclude>
     <ClInclude Include="VisiblePhysics.h">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackData.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageCollider.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CounterAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GrabAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PassiveAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DashAttack.h">
+      <Filter>Attacks\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -378,12 +399,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="CharacterController.cpp" />
-    <ClCompile Include="DamageCollider.cpp">
-      <Filter>Attacks</Filter>
-    </ClCompile>
-    <ClCompile Include="MeleeAttack.cpp">
-      <Filter>Attacks</Filter>
-    </ClCompile>
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Explosive.cpp">
       <Filter>Items\Source</Filter>
@@ -400,6 +415,13 @@
     <ClCompile Include="Physics2D.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="DamageCollider.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeAttack.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DashAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

@@ -16,6 +16,7 @@ Explosive::~Explosive()
 
 void Explosive::Tick(GameStateData * _GSD)
 {
+	Item::Tick(_GSD);
 	if (m_active)
 	{
 		m_fuse -= _GSD->m_dt;
@@ -32,6 +33,9 @@ void Explosive::Tick(GameStateData * _GSD)
 
 void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+	Item::CollisionEnter(_collision, _normal);
+
+
 	if (m_state == ItemState::THROWN 
 		|| m_active == true 
 		&& _collision->GetOwner()->GetTag() == GameObjectTag::PLAYER
@@ -56,7 +60,7 @@ void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		{
 			float tmp = m_physics->GetVel().y;
 			m_physics->ResetForce(Axis::Y_AXIS);
-			m_physics->AddForce(Vector2(0,-tmp));
+			m_physics->AddForce(Vector2(0,-(100*m_physics->GetBounce()*tmp)));
 		}
 		else if (m_hit_ground == "stick")
 		{

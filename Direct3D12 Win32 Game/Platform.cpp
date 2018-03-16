@@ -50,6 +50,7 @@ void Platform::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 			_collision->GetOwner()->SetParent(this);
 		}
 	}
+
 }
 
 void Platform::Collision(Physics2D * _collision)

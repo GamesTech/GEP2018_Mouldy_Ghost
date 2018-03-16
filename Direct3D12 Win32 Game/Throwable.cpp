@@ -16,6 +16,7 @@ Throwable::~Throwable()
 
 void Throwable::Throw(Character* _player)
 {
+	m_physics->SetGrav(1);
 	player_ignore = _player;
 	m_state = ItemState::THROWN;
 	//_player->get direction?

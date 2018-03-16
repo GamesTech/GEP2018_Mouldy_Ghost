@@ -116,7 +116,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 void GameScene::giveMeItem(GameStateData* _GSD, std::string _name)
 {
 	Item* itm = item_spawner.createNewItemWithName(_name);
-	itm->SetPos(Vector2(800, 300));
+	itm->SetSpawn(Vector2(500,100));
 	_GSD->objects_in_scene.push_back(itm->GetPhysics());
 	m_2DObjects.push_back(itm);
 }

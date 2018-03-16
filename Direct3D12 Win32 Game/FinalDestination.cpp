@@ -24,7 +24,7 @@ void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 {
 	Platform* testplatform = new Platform(_RD, "platform");
 
-	testplatform->SetSpawn(Vector2(200, 400));
+	testplatform->SetSpawn(Vector2(600, 400));
 
 	Rectangle rect = Rectangle
 	(testplatform->GetPos().x, testplatform->GetPos().y,

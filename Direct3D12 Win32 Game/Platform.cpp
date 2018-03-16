@@ -53,8 +53,7 @@ void Platform::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 }
 
 void Platform::Collision(Physics2D * _collision)
-{
-}
+{}
 
 void Platform::CollisionExit(Physics2D * _collision)
 {

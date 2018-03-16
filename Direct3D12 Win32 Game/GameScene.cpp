@@ -45,12 +45,6 @@ void GameScene::Initialise(RenderData * _RD,
 	game_stage = std::make_unique<FinalDestination>();
 	game_stage->init(m_RD,m_GSD);
 
-
-	TestPBGO3D* test3d = new TestPBGO3D();
-	test3d->SetScale(5.0f);
-	test3d->Init();
-	m_3DObjects.push_back(test3d);
-
 	for (int i = 0; i < 2; i++)
 	{
 		entities[i] = new Player(i);

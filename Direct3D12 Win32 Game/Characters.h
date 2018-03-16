@@ -1,5 +1,6 @@
 #pragma once
 #include "MeleeAttack.h"
+#include "InputSystem.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
@@ -27,9 +28,6 @@ public:
 	void SetJumpHeight(float _height) { m_jump_height = _height; }
 	const float GetJumpHeight() { return m_jump_height; }
 
-	void SetLimit(Vector2 _lim) { m_limit = _lim; }
-	const Vector2 GetLimit() { return m_limit; }
-
 	void TakeDamage(int _dam) { m_damage += _dam; }
 	void ResetDamage() { m_damage = 0; }
 
@@ -40,12 +38,18 @@ public:
 	void AddAttack(MeleeAttack _attack);
 
 protected:
+	int PlayerJump(std::vector<GameAction> _actions);
+	int PlayerMove(std::vector<GameAction> _actions);
+	void PlayerAttack(GameStateData * _GSD);
+
+	int m_jumps;
+
 	int m_damage = 0;
 
 	float m_move_speed = 1.0f;
 	float m_jump_height = 1.0f;
 
-	Vector2 m_limit;
+	int m_facing = 1;
 
 	CharacterController* m_controller = nullptr;
 	std::vector<Attack*> m_attacks;

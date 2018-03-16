@@ -2,7 +2,7 @@
 #include "Characters.h"
 #include "GameStateData.h"
 #include "CharacterController.h"
-#include <algorithm>
+//#include <algorithm>
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -11,10 +11,10 @@
 Character::Character(RenderData* _RD, string _filename, SpawnHandler* _spawner)
 	: ImageGO2D(_RD, _filename)
 {
-	SetLimit(Vector2(900, 500));
 	CentreOrigin();
 	tag = GameObjectTag::PLAYER;
 	m_spawner = _spawner;
+	m_jumps = 1;
 }
 
 Character::~Character()
@@ -34,57 +34,21 @@ Character::~Character()
 
 void Character::Tick(GameStateData * _GSD)
 {
+	//get input
 	int controller = m_controller->GetControllerID();
 	GameActions actions_to_check = m_controller->GetInput(_GSD);
 	Vector2 gamePadPush = Vector2(0, 0);
-	if (InputSystem::searchForAction(P_MOVE_RIGHT, actions_to_check))
-	{
-		gamePadPush.x = m_move_speed;
-	}
-	if (InputSystem::searchForAction(P_MOVE_LEFT, actions_to_check))
-	{
-		gamePadPush.x = -m_move_speed;
-	}
-	if (InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
-	{
-		m_attacks[0]->PerformAttack(m_pos, 1, this, _GSD, m_spawner);
-	}
-	if (InputSystem::searchForAction(P_JUMP, actions_to_check))
-	{
-		m_physics->ResetForce(Y_AXIS);
-		gamePadPush.y = -m_jump_height;
-	}
-	
+	gamePadPush.x = PlayerMove(actions_to_check);
+	gamePadPush.y = PlayerJump(actions_to_check);
 	m_physics->AddForce(gamePadPush * 100);
+
+	PlayerAttack(_GSD);
 	
 //GEP:: Lets go up the inheritence and share our functionality
 
 	m_physics->Tick(_GSD, m_pos);
 
 	GameObject2D::Tick(_GSD);
-
-//after that as updated my position let's lock it inside my limits
-	if (m_pos.x < 0.0f)
-	{
-		m_pos.x *= -1.0f;
-		m_physics->ResetForce(X_AXIS);
-	}
-	if (m_pos.y < 0.0f)
-	{
-		m_pos.y *= -1.0f;
-		m_physics->ResetForce(Y_AXIS);
-	}
-
-	if (m_pos.x > m_limit.x)
-	{
-		m_pos.x = 2.0f * m_limit.x - m_pos.x;
-		m_physics->ResetForce(X_AXIS);
-	}
-	if (m_pos.y > m_limit.y)
-	{
-		m_pos.y = 2.0f * m_limit.y - m_pos.y;
-		m_physics->ResetForce(Y_AXIS);
-	}
 }
 
 void Character::CreatePhysics(RenderData* _RD)
@@ -111,6 +75,7 @@ void Character::Collision(Physics2D * _collision)
 	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
 	if (o_tag == GameObjectTag::PLATFORM)
 	{
+		m_jumps = 0;
 	}
 
 	if (o_tag == GameObjectTag::PLAYER)
@@ -130,4 +95,59 @@ void Character::AddAttack(MeleeAttack _attack)
 {
 	MeleeAttack* a = new MeleeAttack(_attack);
 	m_attacks.push_back(a);
+}
+
+int Character::PlayerJump(std::vector<GameAction> _actions)
+{
+	if (InputSystem::searchForAction(P_JUMP, _actions))
+	{
+		if (m_jumps < 1)
+		{
+			m_physics->ResetForce(Y_AXIS);
+			m_jumps++;
+			return -m_jump_height;
+		}
+	}
+
+	return 0;
+}
+
+int Character::PlayerMove(std::vector<GameAction> _actions)
+{
+	if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions))
+	{
+		if (m_facing == -1)
+		{
+			m_facing = 1;
+			if (parent)
+			{
+				m_physics->ResetForce(X_AXIS);
+			}
+		}
+		return m_move_speed;
+	}
+	if (InputSystem::searchForAction(P_MOVE_LEFT, _actions))
+	{
+		if (m_facing == 1)
+		{
+			m_facing = -1;
+			if (parent)
+			{
+				m_physics->ResetForce(X_AXIS);
+			}
+		}
+		return -m_move_speed;
+	}
+	return 0;
+}
+
+void Character::PlayerAttack(GameStateData* _GSD)
+{
+	int controller = m_controller->GetControllerID();
+	GameActions actions_to_check = m_controller->GetInput(_GSD);
+
+	if (InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
+	{
+		m_attacks[0]->PerformAttack(m_pos, m_facing, this, _GSD, m_spawner);
+	}
 }

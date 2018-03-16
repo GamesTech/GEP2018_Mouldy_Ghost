@@ -65,4 +65,24 @@ void MovingPlatform::Tick(GameStateData * _GSD)
 			stay = false;
 		}
 	}
+
+	GameObject2D::Tick(_GSD);
+	m_physics->Tick(_GSD, m_pos);
+}
+
+void MovingPlatform::CollisionEnter(Physics2D * _collision, Vector2 _normal)
+{
+	Platform::CollisionEnter(_collision, _normal);
+	_collision->GetOwner()->SetParent(this);
+	AddChild(_collision->GetOwner());
+}
+
+void MovingPlatform::CollisionExit(Physics2D * _collision)
+{
+	if (_collision->GetOwner()->GetParent() == this)
+	{
+		Platform::CollisionExit(_collision);
+		_collision->GetOwner()->SetParent(nullptr);
+		RemoveChild(_collision->GetOwner());
+	}
 }

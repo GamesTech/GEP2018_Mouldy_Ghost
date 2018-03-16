@@ -46,6 +46,7 @@ void GameObject2D::Tick(GameStateData * _GSD)
 	if (m_pos != previous_pos)
 	{
 		Vector2 dif = m_pos - previous_pos;
+		dif /= 2;
 		for (int i = 0; i < children.size(); i++)
 		{
 			children[i]->SetPos(children[i]->GetPos() + dif);

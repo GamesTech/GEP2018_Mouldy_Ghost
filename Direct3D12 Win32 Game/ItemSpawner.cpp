@@ -116,13 +116,13 @@ Item* ItemSpawner::createNewItemWithName(std::string name)
 	{
 		if (allItems[i]->GetName() == name)
 		{
-			Item* newitem = nullptr;
-			if (allItems[i]->getitemType() == ItemType::EXPLOSIVE)
+			Item* newitem = new Item(*allItems[i]);;
+		/*	if (allItems[i]->getitemType() == ItemType::EXPLOSIVE)
 			{
 				Explosive* tmp = static_cast<Explosive*>(allItems[i]);
 				newitem = new Explosive(*tmp);
 
-			}
+			}*/
 			return newitem;
 		}
 	}

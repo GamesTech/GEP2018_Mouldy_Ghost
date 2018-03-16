@@ -74,7 +74,7 @@ void GameScene::Initialise(RenderData * _RD,
 		}
 	}
 
-	giveMeItem(_GSD, "bomb");
+	giveMeItem(_GSD, "apple");
 
 	game_stage->addObjectsToScene(m_2DObjects);
 	

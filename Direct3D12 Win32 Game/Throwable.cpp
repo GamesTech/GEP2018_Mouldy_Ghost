@@ -58,16 +58,27 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	{
 		player_ignore = nullptr;
 
-		if (m_hit_ground == "bounce")
+		if (m_physics->GetVel().y < 100)
 		{
-			//m_item_physics->GetVel();
+			m_physics->ResetForce(Axis::Y_AXIS);
+			m_physics->SetGrav(0);
+
+		}
+		else if (m_hit_ground == "bounce")
+		{
+			float tmp = m_physics->GetVel().y;
+			m_physics->ResetForce(Axis::Y_AXIS);
+			m_physics->AddForce(Vector2(0, -(100 * m_physics->GetBounce()*tmp)));
 		}
 		else if (m_hit_ground == "stick")
 		{
 			m_physics->ResetForce(Axis::BOTH_AXES);
 			_collision->GetOwner()->AddChild(this);
 		}
+
+	
 	}
+
 }
 
 void Throwable::Collision(Physics2D * _collision)

@@ -69,6 +69,6 @@ void DamageCollider::Tick(GameStateData * _GSD)
 
 void DamageCollider::Render(RenderData * _RD, int _sprite)
 {
-	//DON'T UNCOMMENT THIS, IT CRASHES THE COMPUTER
+	//DON'T UNCOMMENT THIS, IT CRASHES THE UNI COMPUTERS
 	//ImageGO2D::Render(_RD, _sprite);
 }

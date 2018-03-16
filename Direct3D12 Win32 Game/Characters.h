@@ -4,6 +4,25 @@
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
+enum AttackMap
+{
+	BASIC_BASIC,
+	SIDE_BASIC,
+	UP_BASIC,
+	DOWN_BASIC,
+
+	BASIC_SPECIAL,
+	SIDE_SPECIAL,
+	UP_SPECIAL,
+	DOWN_SPECIAL,
+
+	GRAB,
+	FORWARD_THROW,
+	BACK_THROW,
+	UP_THROW,
+	DOWN_THROW
+};
+
 class CharacterController;
 class SpawnHandler;
 
@@ -42,7 +61,9 @@ protected:
 	int PlayerMove(std::vector<GameAction> _actions);
 	void PlayerAttack(GameStateData * _GSD);
 
-	int m_jumps;
+	float m_recovery_time = 0;
+
+	int m_jumps = 1;
 
 	int m_damage = 0;
 
@@ -53,5 +74,10 @@ protected:
 
 	CharacterController* m_controller = nullptr;
 	std::vector<Attack*> m_attacks;
+	Attack* m_charging_attack = nullptr;
+	float m_charge_time = 0;
+	Attack* m_spamming_attack = nullptr;
+	float m_spam_cooldown = 0;
+	bool m_can_attack = true;
 	SpawnHandler* m_spawner;
 };

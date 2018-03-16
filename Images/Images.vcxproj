@@ -150,6 +150,9 @@
   <ItemGroup>
     <ImageContentTask Include="default_item_texture.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="hit.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

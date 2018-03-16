@@ -360,7 +360,6 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp" />
     <ClCompile Include="MenuScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>

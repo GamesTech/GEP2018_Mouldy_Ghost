@@ -50,9 +50,9 @@ void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEn
 		(*it)->Tick(m_GSD);
 	}
 
-	for (int i = 0; i < m_GSD->m_2DObjects.size(); i++)
+	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
-		m_GSD->m_2DObjects[i]->Tick(m_GSD);
+		m_2DObjects[i]->Tick(m_GSD);
 	}
 	//for (vector<GameObject2D *>::iterator it = m_GSD->m_2DObjects.begin(); it != m_GSD->m_2DObjects.end(); it++)
 	//{
@@ -111,16 +111,16 @@ void Scene::PhysicsInScene(GameStateData* _GSD)
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
 		bool in_vector = false;
-		for (int j = 0; j < _GSD->m_2DObjects.size(); j++)
+		for (int j = 0; j < m_2DObjects.size(); j++)
 		{
-			if (_GSD->m_2DObjects[j] == m_2DObjects[i])
+			if (m_2DObjects[j] == m_2DObjects[i])
 			{
 				in_vector = true;
 			}
 		}
 		if (!in_vector)
 		{
-			_GSD->m_2DObjects.push_back(m_2DObjects[i]);
+			m_2DObjects.push_back(m_2DObjects[i]);
 		}
 		_GSD->objects_in_scene.push_back(m_2DObjects[i]->GetPhysics());
 	}

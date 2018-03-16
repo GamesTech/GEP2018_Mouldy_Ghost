@@ -46,24 +46,16 @@ ImageGO2D::~ImageGO2D()
 
 void ImageGO2D::Render(RenderData * _RD, int _sprite)
 {
-	if (m_spriteSize.x != 0)
-	{
-		int x = m_spriteSize.x * (_sprite % m_sprites_row);
-		int y = m_spriteSize.y * (_sprite / m_sprites_row);
 
-		Rectangle rect = Rectangle(x, y, m_spriteSize.x, m_spriteSize.y);
-		const RECT* r = &RECT(rect);
+	int x = m_spriteSize.x * (_sprite % m_sprites_row);
+	int y = m_spriteSize.y * (_sprite / m_sprites_row);
 
-		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-			GetTextureSize(m_texture.Get()),
-			m_pos, r, m_colour, m_orientation, m_origin, m_scale);
-	}
-	else
-	{
-		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-			GetTextureSize(m_texture.Get()),
-			m_pos, nullptr, m_colour, m_orientation, m_origin, m_scale);
-	}
+	Rectangle rect = Rectangle(x, y, m_spriteSize.x, m_spriteSize.y);
+	const RECT* r = &RECT(rect);
+
+	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+		GetTextureSize(m_texture.Get()),
+		m_pos, r, m_colour, m_orientation, m_origin, m_scale);
 }
 
 void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)
@@ -114,4 +106,12 @@ Vector2 ImageGO2D::TextureSize()
 	{
 		return m_spriteSize;
 	}
+}
+
+void ImageGO2D::FlipX()
+{
+	//this doesn't do anything, flipping textures is harder than I expected
+	flipped = !flipped;
+
+	m_orientation += 3.14159;
 }

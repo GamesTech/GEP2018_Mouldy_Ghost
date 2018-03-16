@@ -21,6 +21,7 @@ enum GameAction
 	P_MOVE_RIGHT,
 	P_CROUCH,
 	P_JUMP,
+	P_HOLD_UP,
 
 	P_GUARD,
 	P_GRAB,

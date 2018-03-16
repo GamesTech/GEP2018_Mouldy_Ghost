@@ -1,4 +1,4 @@
-hold		>0
+hold		>-0.6
 time		>0.8
 speed		>25
 damage		>5

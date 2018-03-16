@@ -105,6 +105,10 @@ void InputSystem::getAction(GamePad::State _state,
 	{
 		_actions.push_back(P_CROUCH);
 	}
+	if (_state.IsLeftThumbStickUp())
+	{
+		_actions.push_back(P_HOLD_UP);
+	}
 	if (_state.IsViewPressed())
 	{
 		_actions.push_back(P_QUIT);

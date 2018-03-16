@@ -1,4 +1,11 @@
-Image	>gens
-Speed	>2
-Jump	>220
-Attack1	>Melee\hit.txt
+Image		>gens
+Speed		>2
+Jump		>220
+A		>Melee\hit.txt
+Side + A	>Melee\hit.txt
+Up + A		>Melee\hit.txt
+Down + A	>Melee\hit.txt
+X		>
+Side + X	>
+Up + X		>
+Down + X	>

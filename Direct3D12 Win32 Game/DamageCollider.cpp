@@ -3,7 +3,7 @@
 #include "Physics2D.h"
 #include "SpawnHandler.h"
 
-DamageCollider::DamageCollider(DamageColData _data, SpawnHandler* _spawner)
+DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandler* _spawner) : ImageGO2D(_RD, "colliderdebug")
 {
 	m_spawner = _spawner;
 	m_physics = new Physics2D();
@@ -65,4 +65,10 @@ void DamageCollider::Tick(GameStateData * _GSD)
 		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
 		delete this;
 	}
+}
+
+void DamageCollider::Render(RenderData * _RD, int _sprite)
+{
+	//DON'T UNCOMMENT THIS, IT CRASHES THE COMPUTER
+	//ImageGO2D::Render(_RD, _sprite);
 }

@@ -18,7 +18,7 @@ public:
 	ImageGO2D() = default;
 	virtual ~ImageGO2D();
 
-	void Render(RenderData* _RD, int _sprite);
+	virtual void Render(RenderData* _RD, int _sprite);
 
 	void scaleFromPoint(Vector2 point, Vector2 scale);
 
@@ -26,6 +26,9 @@ public:
 	Vector2 TextureSize();
 
 protected:
+	void FlipX();
+	bool flipped = false;
+
 	Microsoft::WRL::ComPtr<ID3D12Resource> m_texture;
 	int m_resourceNum = -1;
 	Vector2 m_spriteSize;

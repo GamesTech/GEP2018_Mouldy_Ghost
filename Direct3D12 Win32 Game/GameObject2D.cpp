@@ -30,6 +30,10 @@ void GameObject2D::ResetPos()
 	{
 		m_pos = m_spawn_pos;
 	}
+	if (m_physics)
+	{
+		m_physics->ResetForce(BOTH_AXES);
+	}
 }
 
 void GameObject2D::SetOri(float _ori)

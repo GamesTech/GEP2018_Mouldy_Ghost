@@ -74,6 +74,8 @@ void GameScene::Initialise(RenderData * _RD,
 		}
 	}
 
+	giveMeItem(_GSD, "bomb");
+
 	game_stage->addObjectsToScene(m_2DObjects);
 	
 }
@@ -109,6 +111,14 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
 		//temp->scaleFromPoint(Vector2(800, 600), Vector2(temp->GetScale().x + 0.1, temp->GetScale().y + 0.1));
 	}
+}
+
+void GameScene::giveMeItem(GameStateData* _GSD, std::string _name)
+{
+	Item* itm = item_spawner.createNewItemWithName(_name);
+	itm->SetSpawn(Vector2(500,100));
+	_GSD->objects_in_scene.push_back(itm->GetPhysics());
+	m_2DObjects.push_back(itm);
 }
 
 void GameScene::Reset()

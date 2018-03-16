@@ -173,6 +173,7 @@
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="CharacterManager.h" />
+    <ClInclude Include="CharacterSelectScene.h" />
     <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
     <ClInclude Include="AttackData.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="GameSettingsScene.h" />
     <ClInclude Include="GrabAttack.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Item.h" />
@@ -237,6 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharacterManager.cpp" />
+    <ClCompile Include="CharacterSelectScene.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />
@@ -249,6 +252,7 @@
     <ClCompile Include="Explosive.cpp" />
     <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSettingsScene.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemSpawner.cpp" />

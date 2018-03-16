@@ -38,8 +38,10 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD, SpawnHandler* _spa
 		Character character = Character(_RD, imageFile, _spawner);
 		character.SetName(char_name);
 
-		int speed = std::stoi(getFileData(character_file));
+		float speed = std::stof(getFileData(character_file));
 		character.SetMoveSpeed(speed);
+		int jump_limit = std::stoi(getFileData(character_file));
+		character.SetJumpLimit(jump_limit);
 		int jump = std::stoi(getFileData(character_file));
 		character.SetJumpHeight(jump);
 

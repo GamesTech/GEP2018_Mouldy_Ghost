@@ -47,6 +47,7 @@ public:
 
 	void SetJumpHeight(float _height) { m_jump_height = _height; }
 	const float GetJumpHeight() { return m_jump_height; }
+	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
 
 	void TakeDamage(int _dam) { m_damage += _dam; }
 	void ResetDamage() { m_damage = 0; }
@@ -71,6 +72,7 @@ protected:
 	int m_damage = 0;
 
 	float m_move_speed = 1.0f;
+	int m_jump_limit = 2;
 	float m_jump_height = 1.0f;
 
 	int m_facing = 1;

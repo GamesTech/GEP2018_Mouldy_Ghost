@@ -132,7 +132,7 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 {
 	if (InputSystem::searchForAction(P_JUMP, _actions))
 	{
-		if (m_jumps < 1)
+		if (m_jumps < m_jump_limit)
 		{
 			m_physics->ResetForce(Y_AXIS);
 			m_jumps++;

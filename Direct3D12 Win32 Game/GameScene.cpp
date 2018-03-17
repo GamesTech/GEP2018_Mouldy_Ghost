@@ -125,7 +125,9 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 
 	Vector2 average_pos = Vector2(average_x, average_y);
 	Vector2 mid = (m_GSD->window_size / 2);
-	m_cam_pos = (average_pos * -1) + mid;
+	Vector2 cam_target = (average_pos * -1) + mid;
+	Vector2 dir_to_target = cam_target - m_cam_pos;
+	m_cam_pos += dir_to_target / 20;
 
 	if (m_GSD->game_actions[0].size() > 0)
 	{

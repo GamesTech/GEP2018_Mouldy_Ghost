@@ -59,11 +59,13 @@ void GameScene::Initialise(RenderData * _RD,
 	game_stage = std::make_unique<FinalDestination>();
 	game_stage->init(m_RD,m_GSD);
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		entities[i] = new Player(i);
-		players[i] = new Character(c_manager.GetCharacterByName("Character001"));
-		players[i]->SetSpawn(Vector2(i * 200 + 200, 100));
+		std::string char_name = "Character00";
+		char_name += std::to_string(i + 1);
+		players[i] = new Character(c_manager.GetCharacterByName(char_name));
+		players[i]->SetSpawn(Vector2(i * 100 + 500, 100));
 		players[i]->SetColour(player_tints[i]);
 
 		players[i]->CreatePhysics(_RD);

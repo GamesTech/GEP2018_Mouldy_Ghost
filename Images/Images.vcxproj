@@ -159,6 +159,13 @@
   <ItemGroup>
     <ImageContentTask Include="gens.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="greenmario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="terraria.png" />
+    <ImageContentTask Include="yoshi.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

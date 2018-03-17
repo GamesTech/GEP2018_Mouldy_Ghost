@@ -1,4 +1,4 @@
-Image		>gens
+Image		>greenmario
 Speed		>2
 Jump Count	>21
 Jump		>220

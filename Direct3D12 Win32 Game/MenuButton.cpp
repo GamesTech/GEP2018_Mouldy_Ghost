@@ -78,7 +78,8 @@ void MenuButton::Tick(GameStateData * _GSD)
 		}
 		break;
 	}
-	m_text.SetPos(this->GetPos() + m_textOffset);
+	//m_textOffset is broken?
+	m_text.SetPos(this->GetPos() + m_textOffset + Vector2(100,0));
 }
 
 void MenuButton::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)

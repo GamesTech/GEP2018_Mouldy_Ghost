@@ -13,6 +13,9 @@
     <ImageContentTask Include="apple.png" />
     <ImageContentTask Include="bomb.png" />
     <ImageContentTask Include="gens.png" />
+    <ImageContentTask Include="greenmario.png" />
+    <ImageContentTask Include="terraria.png" />
+    <ImageContentTask Include="yoshi.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

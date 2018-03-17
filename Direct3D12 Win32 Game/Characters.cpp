@@ -53,6 +53,11 @@ void Character::Tick(GameStateData * _GSD)
 		m_physics->AddForce(gamePadPush * 100);
 
 		PlayerAttack(_GSD);
+
+		if (m_attacking)
+		{
+			m_charge_time += _GSD->m_dt;
+		}
 	}
 	else
 	{

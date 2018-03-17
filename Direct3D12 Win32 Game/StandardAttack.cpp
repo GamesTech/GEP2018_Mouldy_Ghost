@@ -1,16 +1,33 @@
 #include "pch.h"
-#include "MeleeAttack.h"
+#include "StandardAttack.h"
 #include "GameStateData.h"
 #include <fstream>
 
 std::string getFileData(std::ifstream & _file);
 
-MeleeAttack::MeleeAttack(std::string _attack_file, RenderData* _RD)
+StandardAttack::StandardAttack(std::string _attack_file, RenderData* _RD)
 {
 	m_RD = _RD;
 
 	std::ifstream attack_file;
 	attack_file.open("..\\GameAssets\\Characters\\Attacks\\" + _attack_file);
+
+	std::string destroy = getFileData(attack_file);
+	switch (destroy[0])
+	{
+	case 'a':
+	case 'A':
+		m_data.contact = Destroy::ON_ANYTHING_HIT;
+		break;
+	case 'p':
+	case 'P':
+		m_data.contact = Destroy::ON_PLAYER_HIT;
+		break;
+	case 'n':
+	case 'N':
+		m_data.contact = Destroy::AFTER_TIME;
+		break;
+	}
 
 	m_hold_val = std::stof(getFileData(attack_file));
 	if(m_hold_val == 0)
@@ -32,7 +49,7 @@ MeleeAttack::MeleeAttack(std::string _attack_file, RenderData* _RD)
 	attack_file.close();
 }
 
-void MeleeAttack::PerformAttack(Vector2 _position, int _direction,
+void StandardAttack::PerformAttack(Vector2 _position, int _direction,
 	Character* _user, GameStateData* _GSD, 
 	SpawnHandler* _spawner, float _charge)
 {
@@ -48,7 +65,6 @@ void MeleeAttack::PerformAttack(Vector2 _position, int _direction,
 
 	attack.direction.x *= _direction;
 	attack.child_to_player = true;
-	attack.contact = Destroy::ON_ANYTHING_HIT;
 	attack.user = _user;
 
 	DamageCollider* collider = new DamageCollider(m_RD, attack, _spawner);

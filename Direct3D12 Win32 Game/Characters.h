@@ -1,5 +1,5 @@
 #pragma once
-#include "MeleeAttack.h"
+#include "StandardAttack.h"
 #include "DashAttack.h"
 #include "InputSystem.h"
 
@@ -63,13 +63,17 @@ public:
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	virtual void Collision(Physics2D* _collision) override;
 
-	void AddAttack(MeleeAttack _attack);
+	void AddAttack(StandardAttack _attack);
 	void AddAttack(DashAttack _attack);
 
 protected:
 	int PlayerJump(std::vector<GameAction> _actions);
 	int PlayerMove(std::vector<GameAction> _actions);
 	void PlayerAttack(GameStateData * _GSD);
+	void MeleeAttack(GameStateData * _GSD,
+		std::vector<GameAction> _actions);
+	void SpecialAttack(GameStateData * _GSD,
+		std::vector<GameAction> _actions);
 
 	float m_recovery_time = 0;
 	int m_jumps = 1;
@@ -85,7 +89,8 @@ protected:
 	float m_charge_time = 0;
 	Attack* m_spamming_attack = nullptr;
 	float m_spam_cooldown = 0;
-	bool m_can_attack = true;
+	bool m_attacking = false;
+	bool m_dash_recover = true;
 	SpawnHandler* m_spawner;
 	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
 };

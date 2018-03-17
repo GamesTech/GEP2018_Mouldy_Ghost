@@ -1,3 +1,4 @@
+destory when hit	>nothing
 projectile time		>1
 projectile speed	>10
 projectile damage	>5

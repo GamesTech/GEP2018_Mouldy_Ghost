@@ -107,7 +107,7 @@ void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	if (o_tag == GameObjectTag::PLATFORM)
 	{
 		m_jumps = 0;
-		m_can_attack = true;
+		m_dash_recover = true;
 	}
 }
 
@@ -127,9 +127,9 @@ void Character::Collision(Physics2D * _collision)
 	}
 }
 
-void Character::AddAttack(MeleeAttack _attack)
+void Character::AddAttack(StandardAttack _attack)
 {
-	MeleeAttack* a = new MeleeAttack(_attack);
+	StandardAttack* a = new StandardAttack(_attack);
 	m_attacks.push_back(a);
 }
 
@@ -141,7 +141,7 @@ void Character::AddAttack(DashAttack _attack)
 
 int Character::PlayerJump(std::vector<GameAction> _actions)
 {
-	if (InputSystem::searchForAction(P_JUMP, _actions))
+	if (InputSystem::searchForAction(P_JUMP, _actions) && m_dash_recover && !m_attacking)
 	{
 		if (m_jumps < m_jump_limit)
 		{
@@ -155,61 +155,108 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 
 int Character::PlayerMove(std::vector<GameAction> _actions)
 {
-	if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions))
+	if (!m_attacking)
 	{
-		if (m_facing == -1)
+		if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions))
 		{
-			FlipX();
-			m_facing = 1;
+			if (m_facing == -1)
+			{
+				FlipX();
+				m_facing = 1;
+				if (parent)
+				{
+					m_physics->ResetForce(X_AXIS);
+				}
+			}
 			if (parent)
 			{
-				m_physics->ResetForce(X_AXIS);
+				return m_move_speed * 2;
 			}
+			return m_move_speed;
 		}
-		if (parent)
+		if (InputSystem::searchForAction(P_MOVE_LEFT, _actions))
 		{
-			return m_move_speed * 2;
-		}
-		return m_move_speed;
-	}
-	if (InputSystem::searchForAction(P_MOVE_LEFT, _actions))
-	{
-		if (m_facing == 1)
-		{
-			FlipX();
-			m_facing = -1;
+			if (m_facing == 1)
+			{
+				FlipX();
+				m_facing = -1;
+				if (parent)
+				{
+					m_physics->ResetForce(X_AXIS);
+				}
+			}
 			if (parent)
 			{
-				m_physics->ResetForce(X_AXIS);
+				return -m_move_speed * 2;
 			}
+			return -m_move_speed;
 		}
-		if (parent)
-		{
-			return -m_move_speed * 2;
-		}
-		return -m_move_speed;
 	}
 	return 0;
 }
 
 void Character::PlayerAttack(GameStateData* _GSD)
 {
-	int controller = m_controller->GetControllerID();
-	GameActions actions_to_check = m_controller->GetInput(_GSD);
+	if (m_dash_recover)
+	{
+		int controller = m_controller->GetControllerID();
+		GameActions actions_to_check = m_controller->GetInput(_GSD);
 
-	if (InputSystem::searchForAction(P_HOLD_BASIC, actions_to_check))
+		if (InputSystem::searchForAction(P_HOLD_BASIC, actions_to_check))
+		{
+			MeleeAttack(_GSD, actions_to_check);
+		}
+		if (InputSystem::searchForAction(P_HOLD_SPECIAL, actions_to_check))
+		{
+			SpecialAttack(_GSD, actions_to_check);
+		}
+		if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
+			|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
+		{
+			if (static_cast<StandardAttack*>(m_charging_attack))
+			{
+				m_charging_attack->PerformAttack
+				(m_pos, m_facing, this, _GSD, m_spawner, m_charge_time);
+				m_charging_attack = nullptr;
+			}
+			if (static_cast<StandardAttack*>(m_spamming_attack))
+			{
+				m_spamming_attack = nullptr;
+			}
+			m_attacking = false;
+		}
+
+
+		if (m_spamming_attack)
+		{
+			if (m_spam_cooldown >= 0)
+			{
+				m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, m_spawner);
+				m_spam_cooldown = m_spamming_attack->GetDelay();
+			}
+			else
+			{
+				m_spam_cooldown += _GSD->m_dt;
+			}
+		}
+	}
+}
+
+void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actions)
+{
+	if (!m_attacking)
 	{
 		AttackMap attack_to_use;
-		if (InputSystem::searchForAction(P_MOVE_RIGHT, actions_to_check)
-			|| InputSystem::searchForAction(P_MOVE_LEFT, actions_to_check))
+		if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions)
+			|| InputSystem::searchForAction(P_MOVE_LEFT, _actions))
 		{
 			attack_to_use = AttackMap::SIDE_BASIC;
 		}
-		else if(InputSystem::searchForAction(P_CROUCH, actions_to_check))
+		else if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
 			attack_to_use = AttackMap::DOWN_BASIC;
 		}
-		else if (InputSystem::searchForAction(P_HOLD_UP, actions_to_check))
+		else if (InputSystem::searchForAction(P_HOLD_UP, _actions))
 		{
 			attack_to_use = AttackMap::UP_BASIC;
 		}
@@ -223,50 +270,58 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		case OnHold::HOLD_CHARGE:
 			m_charging_attack = m_attacks[attack_to_use];
 			m_charge_time = 0;
-			m_can_attack = false;
 			break;
 		case OnHold::HOLD_REPEAT:
 			m_spamming_attack = m_attacks[attack_to_use];
 			break;
 		case OnHold::HOLD_NONE:
-			if (m_can_attack)
-			{
-				m_attacks[attack_to_use]->PerformAttack
-				(m_pos, m_facing, this, _GSD, m_spawner);
-				m_can_attack = false;
-			}
+			m_attacks[attack_to_use]->PerformAttack
+			(m_pos, m_facing, this, _GSD, m_spawner);
 			break;
 		}
+		m_attacking = true;
 	}
-	if (InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
+}
+
+void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _actions)
+{
+	if (!m_attacking)
 	{
-		if (static_cast<MeleeAttack*>(m_charging_attack))
+		AttackMap attack_to_use;
+		if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions)
+			|| InputSystem::searchForAction(P_MOVE_LEFT, _actions))
 		{
-			m_charging_attack->PerformAttack
-			(m_pos, m_facing, this, _GSD, m_spawner, m_charge_time);
-			m_charging_attack = nullptr;
+			attack_to_use = AttackMap::SIDE_SPECIAL;
+			m_attacking = true;
 		}
-		if (static_cast<MeleeAttack*>(m_spamming_attack))
+		else if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
-			m_spamming_attack = nullptr;
+			attack_to_use = AttackMap::DOWN_SPECIAL;
+			m_attacking = true;
 		}
-		m_can_attack = true;
-	}
-	if (InputSystem::searchForAction(P_HOLD_SPECIAL, actions_to_check) && m_can_attack)
-	{
-		m_attacks[BASIC_SPECIAL]->PerformAttack(m_pos, m_facing, this, _GSD, m_spawner);
-		m_can_attack = false;
-	}
-	if (m_spamming_attack)
-	{
-		if (m_spam_cooldown >= 0)
+		else if (InputSystem::searchForAction(P_HOLD_UP, _actions))
 		{
-			m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, m_spawner);
-			m_spam_cooldown = m_spamming_attack->GetDelay();
+			attack_to_use = AttackMap::UP_SPECIAL;
+			m_dash_recover = false;
 		}
 		else
 		{
-			m_spam_cooldown += _GSD->m_dt;
+			attack_to_use = AttackMap::BASIC_SPECIAL;
+			m_attacking = true;
+		}
+		switch (m_attacks[attack_to_use]->GetHold())
+		{
+		case OnHold::HOLD_CHARGE:
+			m_charging_attack = m_attacks[attack_to_use];
+			m_charge_time = 0;
+			break;
+		case OnHold::HOLD_REPEAT:
+			m_spamming_attack = m_attacks[attack_to_use];
+			break;
+		case OnHold::HOLD_NONE:
+			m_attacks[attack_to_use]->PerformAttack
+			(m_pos, m_facing, this, _GSD, m_spawner);
+			break;
 		}
 	}
 }

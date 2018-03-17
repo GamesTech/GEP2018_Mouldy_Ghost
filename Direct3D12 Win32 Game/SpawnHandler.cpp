@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SpawnHandler.h"
 #include "Events.h"
+#include "RenderData.h"
 
 void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 {
@@ -14,6 +15,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	}
 	case Event::OBJECT_DESTROYED:
 	{
+		m_RD->m_resourceCount--;
 		int i = 0;
 		for (std::vector<GameObject2D*>::iterator it = m_2DObjects->begin();
 			it != m_2DObjects->end(); it++, i++)
@@ -39,8 +41,10 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	}
 }
 
-void SpawnHandler::setData(std::vector<GameObject2D*>* _2DObjects, std::vector<Physics2D*>* _physics)
+void SpawnHandler::setData(std::vector<GameObject2D*>* _2DObjects,
+	std::vector<Physics2D*>* _physics, RenderData* _RD)
 {
+	m_RD = _RD;
 	m_2DObjects = _2DObjects;
 	m_physics = _physics;
 }

@@ -12,6 +12,24 @@ DashAttack::DashAttack(std::string _attack_file, RenderData * _RD)
 	attack_file.open("..\\GameAssets\\Characters\\Attacks\\" + _attack_file);
 
 	m_hold = HOLD_NONE;
+
+	std::string destroy = getFileData(attack_file);
+	switch (destroy[0])
+	{
+	case 'a':
+	case 'A':
+		m_data.contact = Destroy::ON_ANYTHING_HIT;
+		break;
+	case 'p':
+	case 'P':
+		m_data.contact = Destroy::ON_PLAYER_HIT;
+		break;
+	case 'n':
+	case 'N':
+		m_data.contact = Destroy::AFTER_TIME;
+		break;
+	}
+
 	m_data.time = std::stof(getFileData(attack_file));
 	m_data.speed = std::stof(getFileData(attack_file));
 	m_data.damage = std::stoi(getFileData(attack_file));
@@ -36,7 +54,6 @@ void DashAttack::PerformAttack(Vector2 _position, int _direction, Character * _u
 	DamageColData attack = m_data;
 	attack.direction.x *= _direction;
 	attack.child_to_player = true;
-	attack.contact = Destroy::AFTER_TIME;
 	attack.user = _user;
 
 	DamageCollider* collider = new DamageCollider(m_RD, attack, _spawner);

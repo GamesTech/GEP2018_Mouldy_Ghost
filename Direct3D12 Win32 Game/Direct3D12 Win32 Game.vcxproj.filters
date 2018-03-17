@@ -265,12 +265,6 @@
     <ClInclude Include="DamageCollider.h">
       <Filter>Attacks\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="MeleeAttack.h">
-      <Filter>Attacks\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="RangedAttack.h">
-      <Filter>Attacks\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="CounterAttack.h">
       <Filter>Attacks\Headers</Filter>
     </ClInclude>
@@ -290,6 +284,9 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="StandardAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -425,10 +422,6 @@
     <ClCompile Include="DamageCollider.cpp">
       <Filter>Attacks\Source</Filter>
     </ClCompile>
-    <ClCompile Include="MeleeAttack.cpp">
-      <Filter>Attacks\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="DashAttack.cpp" />
     <ClCompile Include="CharacterSelectScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
@@ -436,6 +429,12 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="DashAttack.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardAttack.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

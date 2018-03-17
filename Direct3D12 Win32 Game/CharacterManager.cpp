@@ -1,10 +1,8 @@
 #include "pch.h"
 #include "CharacterManager.h"
 #include "ReadFile.h"
-#include "MeleeAttack.h"
+#include "StandardAttack.h"
 #include "DashAttack.h"
-
-int g_number_of_attacks = 5;
 
 CharacterManager::CharacterManager()
 {
@@ -45,13 +43,14 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD, SpawnHandler* _spa
 		int jump = std::stoi(getFileData(character_file));
 		character.SetJumpHeight(jump);
 
-		for (int i = 0; i < g_number_of_attacks; i++)
+		while(!character_file.eof())
 		{
 			std::string attack_file = getFileData(character_file);
 			switch (attack_file[0])
 			{
 			case 'M':
-				character.AddAttack(MeleeAttack(attack_file, _RD));
+			case 'R':
+				character.AddAttack(StandardAttack(attack_file, _RD));
 				break;
 			case 'D':
 				character.AddAttack(DashAttack(attack_file, _RD));

@@ -13,6 +13,8 @@ GameScene::GameScene()
 	player_tints[1] = SimpleMath::Color(0.3, 1, 0.3);
 	player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
 	player_tints[3] = SimpleMath::Color(1, 1, 0.3);
+
+	m_2DObjects.reserve(256);
 }
 
 GameScene::~GameScene()
@@ -43,7 +45,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_HUD = new HUD(_GSD);
 
 	m_spawner = std::make_unique<SpawnHandler>();
-	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene);
+	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);
 	c_manager.PopulateCharacterList(_RD, m_spawner.get());
 	item_spawner.loadAllData(_RD);
 

@@ -197,7 +197,7 @@
     <ClInclude Include="ItemSpawner.h" />
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
-    <ClInclude Include="MeleeAttack.h" />
+    <ClInclude Include="StandardAttack.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
@@ -210,7 +210,6 @@
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="RangedAttack.h" />
     <ClInclude Include="ReadFile.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneHandler.h" />
@@ -262,7 +261,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuScene.cpp" />
-    <ClCompile Include="MeleeAttack.cpp" />
+    <ClCompile Include="StandardAttack.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MusicHandler.cpp" />

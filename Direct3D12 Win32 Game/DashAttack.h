@@ -4,7 +4,7 @@
 #include "DamageCollider.h"
 
 class DashAttack
-	: public MeleeAttack
+	: public StandardAttack
 {
 public:
 	DashAttack(std::string _attack_file, RenderData* _RD);

@@ -57,7 +57,7 @@ void GameScene::Initialise(RenderData * _RD,
 	game_stage = std::make_unique<FinalDestination>();
 	game_stage->init(m_RD,m_GSD);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		entities[i] = new Player(i);
 		players[i] = new Character(c_manager.GetCharacterByName("Character001"));
@@ -92,7 +92,6 @@ void GameScene::Initialise(RenderData * _RD,
 	giveMeItem(_GSD, "apple");
 
 	game_stage->addObjectsToScene(m_2DObjects);
-	
 }
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
@@ -109,9 +108,12 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	{
 		if (players[i])
 		{
-			average_x += players[i]->GetPos().x;
-			average_y += players[i]->GetPos().y;
-			num_players++;
+			if (players[i]->GetLives() > 0)
+			{
+				average_x += players[i]->GetPos().x;
+				average_y += players[i]->GetPos().y;
+				num_players++;
+			}
 		}
 	}
 	average_x /= num_players;
@@ -172,6 +174,16 @@ void GameScene::giveMeItem(GameStateData* _GSD, std::string _name)
 void GameScene::Reset()
 {
 	m_cam_pos = Vector2::Zero;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (players[i])
+		{
+			players[i]->ResetDamage();
+			players[i]->ResetLives();
+		}
+	}
+
 	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
 	{
 		m_GSD->objects_in_scene[i]->ResetForce(BOTH_AXES);

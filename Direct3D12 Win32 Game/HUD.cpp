@@ -81,7 +81,7 @@ void HUD::Render(RenderData * _RD)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (m_in_game[i].in_game)
+		if (m_in_game[i].in_game && m_in_game[i].character->GetLives() > 0)
 		{
 			std::string display_text = m_in_game[i].character->GetName();
 			display_text += "\n";

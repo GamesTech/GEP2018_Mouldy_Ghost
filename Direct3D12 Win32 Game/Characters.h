@@ -54,7 +54,9 @@ public:
 	void ResetDamage() { m_damage = 0; }
 
 	void LoseLife() { m_lives--; }
+	void ResetLives() { m_lives = 3; }
 	const int GetLives() { return m_lives; }
+	void SetLives(int _set) { m_lives = _set; }
 
 	void Hit(Vector2 _dir, float _force);
 

@@ -2,6 +2,7 @@
 #include "Characters.h"
 #include "GameStateData.h"
 #include "CharacterController.h"
+#include "SpawnHandler.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -60,7 +61,17 @@ void Character::Tick(GameStateData * _GSD)
 	if (!m_death_zone.Contains(m_pos))
 	{
 		//DIES
-		ResetPos();
+		m_lives--;
+		if (m_lives > 0)
+		{
+			ResetDamage();
+			m_physics->ResetForce(BOTH_AXES);
+			ResetPos();
+		}
+		else
+		{
+			m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+		}
 	}
 
 //GEP:: Lets go up the inheritence and share our functionality

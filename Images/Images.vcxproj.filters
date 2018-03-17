@@ -11,6 +11,8 @@
     <ImageContentTask Include="SpriteSheets\grant.png" />
     <ImageContentTask Include="default_item_texture.png" />
     <ImageContentTask Include="hit.png" />
+    <ImageContentTask Include="apple.png" />
+    <ImageContentTask Include="bomb.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

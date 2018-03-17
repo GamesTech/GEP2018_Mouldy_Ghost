@@ -49,6 +49,7 @@ void Platform::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 			_collision->SetGrav(0);
 		}
 	}
+
 }
 
 void Platform::Collision(Physics2D * _collision)

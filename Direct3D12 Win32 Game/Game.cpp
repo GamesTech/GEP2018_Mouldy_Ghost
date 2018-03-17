@@ -160,6 +160,12 @@ void Game::Initialize(HWND window, int width, int height)
 	m_menuScene = new MenuScene();
 	m_all_scenes.push_back(m_menuScene);
 
+	m_gameSettingsScene = new GameSettingsScene();
+	m_all_scenes.push_back(m_gameSettingsScene);
+
+	m_characterSelectScene = new CharacterSelectScene();
+	m_all_scenes.push_back(m_characterSelectScene);
+
 	//add all listeners to all scenes
 	for (int i = 0; i < m_all_scenes.size(); i++)
 	{

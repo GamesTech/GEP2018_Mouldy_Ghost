@@ -1,5 +1,5 @@
 type:		>explosive
-image:		>default_item_texture
+image:		>bomb
 -- all items
 Name:		>bomb
 pickup:		>activate

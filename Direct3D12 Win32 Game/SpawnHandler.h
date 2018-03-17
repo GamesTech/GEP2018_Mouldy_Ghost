@@ -15,9 +15,4 @@ public:
 private:
 	std::vector<GameObject2D*>* m_2DObjects;
 	std::vector<Physics2D*>* m_physics;
-
-	/*deleting objects as they stopped existing was
-	causing big crashes on uni computers
-	this vector remedies that hopefully*/
-	std::vector<GameObject2D*> m_objects_to_delete;
 };

@@ -25,7 +25,8 @@ public:
 	void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
+		Vector2 _camera_position = Vector2::Zero) override;
 
 	void giveMeItem(GameStateData* _GSD, std::string _name);
 
@@ -33,6 +34,8 @@ public:
 
 private:
 	HUD* m_HUD = nullptr;
+
+	Vector2 m_cam_pos = Vector2::Zero;
 
 	std::unique_ptr<Stage> game_stage = nullptr;
 	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };

@@ -81,7 +81,7 @@ void MenuButton::Tick(GameStateData * _GSD)
 	m_text.SetPos(this->GetPos() + m_textOffset);
 }
 
-void MenuButton::Render(RenderData * _RD, int _sprite)
+void MenuButton::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 {
 	ImageGO2D::Render(_RD, _sprite);
 	m_text.Render(_RD, _sprite);

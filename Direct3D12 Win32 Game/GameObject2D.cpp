@@ -55,7 +55,7 @@ void GameObject2D::Tick(GameStateData * _GSD)
 	}
 }
 
-void GameObject2D::Render(RenderData * _RD, int _sprite)
+void GameObject2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 {
 }
 

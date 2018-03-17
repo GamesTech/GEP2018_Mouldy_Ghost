@@ -27,7 +27,7 @@ Menu::Menu(Vector2 _pos, MenuButton _first, std::string _firstButtonText)
 	
 }
 
-void Menu::Render(RenderData * _RD, int _sprite)
+void Menu::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 {
 	for (int i = 0; i < m_buttons.size(); i++)
 	{

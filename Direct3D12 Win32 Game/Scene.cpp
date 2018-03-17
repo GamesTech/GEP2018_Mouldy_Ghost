@@ -61,7 +61,7 @@ void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEn
 	}
 }
 
-void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
+void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList, Vector2 _camera_position)
 {
 	//primative batch
 	m_RD->m_effect->SetProjection(m_cam->GetProj());
@@ -97,7 +97,7 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 
 	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
 	{
-		(*it)->Render(m_RD, 0);
+		(*it)->Render(m_RD, 0, _camera_position);
 #if _DEBUG
 		//COMMENT OUT THIS BIT IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
 		//if (static_cast<VisiblePhysics*> ((*it)->GetPhysics()))

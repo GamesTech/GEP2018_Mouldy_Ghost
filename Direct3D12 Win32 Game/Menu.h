@@ -12,7 +12,8 @@ public:
 	~Menu();
 
 	Menu(Vector2 _pos, MenuButton _first, std::string _firstButtonText);
-	void Render(RenderData * _RD, int _sprite) override;
+	void Render(RenderData * _RD, int _sprite,
+		Vector2 _cam_pos = Vector2::Zero) override;
 	void Tick(GameStateData* _GSD) override;
 	void CentreOrigin() override {};
 	void addButton(MenuButton _buttonToAdd, std::string _buttonText);

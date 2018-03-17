@@ -44,14 +44,14 @@ ImageGO2D::~ImageGO2D()
 	m_texture.Reset();
 }
 
-void ImageGO2D::Render(RenderData * _RD, int _sprite)
+void ImageGO2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 {
 	Rectangle rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
 	const RECT* r = &RECT(rect);
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(m_texture.Get()),
-		m_pos, r, m_colour, m_orientation, m_origin, m_scale);
+		m_pos + _cam_pos, r, m_colour, m_orientation, m_origin, m_scale);
 }
 
 void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)

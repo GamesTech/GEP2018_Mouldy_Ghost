@@ -18,7 +18,8 @@ public:
 	ImageGO2D() = default;
 	virtual ~ImageGO2D();
 
-	virtual void Render(RenderData* _RD, int _sprite);
+	virtual void Render(RenderData* _RD, int _sprite = 0,
+		Vector2 _cam_pos = Vector2::Zero);
 
 	void scaleFromPoint(Vector2 point, Vector2 scale);
 

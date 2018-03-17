@@ -16,7 +16,8 @@ public:
 	MenuButton(Event _leftEventToSend, Event _rightEventToSend, RenderData * _RD, string _filename);
 	~MenuButton();
 	virtual void Tick(GameStateData* _GSD) override;
-	virtual void Render(RenderData * _RD, int _sprite) override;
+	virtual void Render(RenderData * _RD, int _sprite,
+		Vector2 _cam_pos = Vector2::Zero) override;
 	void setText(std::string _text);
 
 	void setHighlighted(bool _highlighted);

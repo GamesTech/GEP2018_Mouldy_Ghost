@@ -100,6 +100,27 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	Scene::Update(timer, _audEngine);
 	game_stage->update(m_GSD);
 
+	//find average of players location
+	int average_x = 0;
+	int average_y = 0;
+	int num_players = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (players[i])
+		{
+			average_x += players[i]->GetPos().x;
+			average_y += players[i]->GetPos().y;
+			num_players++;
+		}
+	}
+	average_x /= num_players;
+	average_y /= num_players;
+
+	Vector2 average_pos = Vector2(average_x, average_y);
+	Vector2 mid = (m_GSD->window_size / 2);
+	m_cam_pos = (average_pos * -1) + mid;
+
 	if (m_GSD->game_actions[0].size() > 0)
 	{
 		//code for testing zoom
@@ -128,9 +149,10 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	}
 }
 
-void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
+void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
+	Vector2 _camera_position)
 {
-	Scene::Render(_commandList);
+	Scene::Render(_commandList, m_cam_pos);
 
 	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
@@ -149,6 +171,7 @@ void GameScene::giveMeItem(GameStateData* _GSD, std::string _name)
 
 void GameScene::Reset()
 {
+	m_cam_pos = Vector2::Zero;
 	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
 	{
 		m_GSD->objects_in_scene[i]->ResetForce(BOTH_AXES);

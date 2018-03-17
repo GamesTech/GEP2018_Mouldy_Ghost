@@ -24,7 +24,8 @@ public:
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
+		Vector2 _camera_position = Vector2::Zero);
 
 	void PhysicsInScene(GameStateData* _GSD);
 

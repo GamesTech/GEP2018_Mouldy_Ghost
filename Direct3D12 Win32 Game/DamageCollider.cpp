@@ -46,11 +46,13 @@ void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 			if (m_data.contact == Destroy::ON_PLAYER_HIT)
 			{
 				m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+				delete this;
 			}
 		}
 		if (m_data.contact == Destroy::ON_ANYTHING_HIT)
 		{
 			m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+			delete this;
 		}
 	}
 }
@@ -64,5 +66,6 @@ void DamageCollider::Tick(GameStateData * _GSD)
 	if (m_lifetime > m_data.time)
 	{
 		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+		delete this;
 	}
 }

@@ -50,9 +50,13 @@ public:
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
 
 	void TakeDamage(int _dam) { m_damage += _dam; }
+	const int GetDamage() { return m_damage; }
 	void ResetDamage() { m_damage = 0; }
 
-	void GetHit(Vector2 _dir, float _force);
+	void LoseLife() { m_lives--; }
+	const int GetLives() { return m_lives; }
+
+	void Hit(Vector2 _dir, float _force);
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	virtual void Collision(Physics2D* _collision) override;
@@ -66,17 +70,13 @@ protected:
 	void PlayerAttack(GameStateData * _GSD);
 
 	float m_recovery_time = 0;
-
 	int m_jumps = 1;
-
 	int m_damage = 0;
-
+	int m_lives = 3;
 	float m_move_speed = 1.0f;
 	int m_jump_limit = 2;
 	float m_jump_height = 1.0f;
-
 	int m_facing = 1;
-
 	CharacterController* m_controller = nullptr;
 	std::vector<Attack*> m_attacks;
 	Attack* m_charging_attack = nullptr;
@@ -85,6 +85,5 @@ protected:
 	float m_spam_cooldown = 0;
 	bool m_can_attack = true;
 	SpawnHandler* m_spawner;
-
 	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
 };

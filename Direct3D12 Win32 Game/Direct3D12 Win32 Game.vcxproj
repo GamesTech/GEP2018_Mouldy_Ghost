@@ -191,6 +191,7 @@
     <ClInclude Include="GameObjectTags.h" />
     <ClInclude Include="GameSettingsScene.h" />
     <ClInclude Include="GrabAttack.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemSpawner.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameSettingsScene.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemSpawner.cpp" />

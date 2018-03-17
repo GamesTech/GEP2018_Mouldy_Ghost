@@ -83,7 +83,7 @@ void Character::CreatePhysics(RenderData* _RD)
 	m_physics->SetOwner(this);
 }
 
-void Character::GetHit(Vector2 _dir, float _force)
+void Character::Hit(Vector2 _dir, float _force)
 {
 	float knockback = _force * (m_damage + 1) / 100;
 	m_physics->AddForce(_dir * knockback);

@@ -9,6 +9,10 @@
 
 GameScene::GameScene()
 {
+	player_tints[0] = SimpleMath::Color(0.3, 1, 1);
+	player_tints[1] = SimpleMath::Color(0.3, 1, 0.3);
+	player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
+	player_tints[3] = SimpleMath::Color(1, 1, 0.3);
 }
 
 GameScene::~GameScene()
@@ -21,6 +25,12 @@ GameScene::~GameScene()
 			entities[i] = nullptr;
 		}
 	}
+
+	if (m_HUD)
+	{
+		delete m_HUD;
+		m_HUD = nullptr;
+	}
 }
 
 void GameScene::Initialise(RenderData * _RD,
@@ -29,6 +39,8 @@ void GameScene::Initialise(RenderData * _RD,
 {
 	m_RD = _RD;
 	m_GSD = _GSD;
+
+	m_HUD = new HUD(_GSD);
 
 	m_spawner = std::make_unique<SpawnHandler>();
 	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene);
@@ -45,11 +57,12 @@ void GameScene::Initialise(RenderData * _RD,
 	game_stage = std::make_unique<FinalDestination>();
 	game_stage->init(m_RD,m_GSD);
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		entities[i] = new Player(i);
 		players[i] = new Character(c_manager.GetCharacterByName("Character001"));
-		players[i]->SetSpawn(Vector2(i * 200 + 400, 100));
+		players[i]->SetSpawn(Vector2(i * 200 + 200, 100));
+		players[i]->SetColour(player_tints[i]);
 
 		players[i]->CreatePhysics(_RD);
 		players[i]->GetPhysics()->SetDrag(0.5f);
@@ -64,6 +77,8 @@ void GameScene::Initialise(RenderData * _RD,
 		m_2DObjects.push_back(players[i]);
 		m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
 		entities[i]->SetCharacter(players[i]);
+
+		m_HUD->AddCharacter(players[i]);
 	}
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
@@ -111,6 +126,17 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
 		//temp->scaleFromPoint(Vector2(800, 600), Vector2(temp->GetScale().x + 0.1, temp->GetScale().y + 0.1));
 	}
+}
+
+void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
+{
+	Scene::Render(_commandList);
+
+	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
+	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+	m_RD->m_spriteBatch->Begin(_commandList.Get());
+	m_HUD->Render(m_RD);
+	m_RD->m_spriteBatch->End();
 }
 
 void GameScene::giveMeItem(GameStateData* _GSD, std::string _name)

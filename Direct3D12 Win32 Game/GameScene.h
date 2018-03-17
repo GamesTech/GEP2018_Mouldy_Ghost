@@ -6,6 +6,7 @@
 #include "CharacterController.h"
 #include "CharacterManager.h"
 #include "ItemSpawner.h"
+#include "HUD.h"
 
 using std::vector;
 
@@ -23,15 +24,20 @@ public:
 
 	void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
+	virtual void Render
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
 
 	void giveMeItem(GameStateData* _GSD, std::string _name);
 
 	virtual void Reset();
 
 private:
+	HUD* m_HUD = nullptr;
+
 	std::unique_ptr<Stage> game_stage = nullptr;
 	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
 	Character* players[4] = { nullptr, nullptr, nullptr, nullptr };
+	DirectX::SimpleMath::Color player_tints[4];
 
 	CharacterManager c_manager;
 	std::unique_ptr<SpawnHandler> m_spawner;

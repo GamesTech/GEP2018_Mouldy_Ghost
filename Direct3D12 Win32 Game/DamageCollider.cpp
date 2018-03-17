@@ -41,7 +41,7 @@ void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		{
 			Character* target = static_cast<Character*>(_collision->GetOwner());
 			target->TakeDamage(m_data.damage);
-			target->GetHit(_normal, -m_data.knockback * 500);
+			target->Hit(_normal, -m_data.knockback * 500);
 
 			if (m_data.contact == Destroy::ON_PLAYER_HIT)
 			{

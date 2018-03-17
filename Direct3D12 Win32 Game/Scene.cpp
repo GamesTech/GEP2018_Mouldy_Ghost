@@ -2,6 +2,7 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "Scene.h"
+#include "HUD.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"

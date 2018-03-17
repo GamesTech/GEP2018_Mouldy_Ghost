@@ -48,6 +48,7 @@ protected:
 	vector<EventHandler*> listeners;
 
 	Camera* m_cam;
+	Vector2 m_cam_pos = Vector2::Zero;
 
 	RenderData* m_RD;
 	GameStateData* m_GSD;

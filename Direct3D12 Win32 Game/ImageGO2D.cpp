@@ -34,8 +34,7 @@ ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, Vector2 _spritesize, in
 	{
 		m_spriteSize = _spritesize;
 	}
-
-	SetOrigin(m_spriteSize / 2);
+	CentreOrigin();
 }
 
 
@@ -101,12 +100,4 @@ Vector2 ImageGO2D::TextureSize()
 	{
 		return m_spriteSize;
 	}
-}
-
-void ImageGO2D::FlipX()
-{
-	//this doesn't do anything, flipping textures is harder than I expected
-	flipped = !flipped;
-
-	m_orientation += 3.14159;
 }

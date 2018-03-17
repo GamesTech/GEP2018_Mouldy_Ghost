@@ -12,12 +12,10 @@ class VisiblePhysics :
 public:
 	VisiblePhysics(RenderData* _RD);
 	~VisiblePhysics();
-	void Render();
+	void Render(Vector2 _cam);
 
 private:
 	RenderData* m_RD;
 	ImageGO2D* m_corners[4] = { nullptr, nullptr, nullptr, nullptr };
-
 };
-
 #endif

@@ -39,7 +39,7 @@ public:
 	void MoveCollider(Vector2 _pos) {m_collider.Offset(_pos.x, _pos.y);}
 
 #if _DEBUG
-	void RenderCorners();
+	void RenderCorners(Vector2 _cam);
 #endif;
 
 protected:

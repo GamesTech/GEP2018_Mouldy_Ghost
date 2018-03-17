@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Characters.h"
 #include "GameStateData.h"
+#include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
 
@@ -79,6 +80,27 @@ void Character::Tick(GameStateData * _GSD)
 	m_physics->Tick(_GSD, m_pos);
 
 	GameObject2D::Tick(_GSD);
+}
+
+void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
+{
+	Rectangle rect;
+	if (!flipped)
+	{
+		rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
+	}
+	else
+	{
+		rect = Rectangle(m_spriteSize.x / 2, 0, m_spriteSize.x / 2, m_spriteSize.y);
+	}
+	const RECT* r = &RECT(rect);
+
+	Vector2 render_pos = m_pos + _cam_pos;
+	render_pos.x += m_spriteSize.x / 4;
+
+	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+		GetTextureSize(m_texture.Get()),
+		render_pos, r, m_colour, m_orientation, m_origin, m_scale);
 }
 
 void Character::CreatePhysics(RenderData* _RD)
@@ -324,4 +346,9 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			break;
 		}
 	}
+}
+
+void Character::FlipX()
+{
+	flipped = !flipped;
 }

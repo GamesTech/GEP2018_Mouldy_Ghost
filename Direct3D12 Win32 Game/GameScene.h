@@ -35,8 +35,6 @@ public:
 private:
 	HUD* m_HUD = nullptr;
 
-	Vector2 m_cam_pos = Vector2::Zero;
-
 	std::unique_ptr<Stage> game_stage = nullptr;
 	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
 	Character* players[4] = { nullptr, nullptr, nullptr, nullptr };

@@ -127,9 +127,6 @@
     <ImageContentTask Include="twist.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="gens.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="READ_ME.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="bomb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="gens.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

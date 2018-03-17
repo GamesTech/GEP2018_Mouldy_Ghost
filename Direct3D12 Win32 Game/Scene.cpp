@@ -100,10 +100,10 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 		(*it)->Render(m_RD, 0, _camera_position);
 #if _DEBUG
 		//COMMENT OUT THIS BIT IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
-		//if (static_cast<VisiblePhysics*> ((*it)->GetPhysics()))
-		//{
-		//	(*it)->GetPhysics()->RenderCorners();
-		//}
+		if (dynamic_cast<VisiblePhysics*> ((*it)->GetPhysics()))
+		{
+			(*it)->GetPhysics()->RenderCorners(m_cam_pos);
+		}
 #endif
 	}
 

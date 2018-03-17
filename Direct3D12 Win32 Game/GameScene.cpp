@@ -70,7 +70,7 @@ void GameScene::Initialise(RenderData * _RD,
 		players[i]->GetPhysics()->SetDrag(0.5f);
 		players[i]->GetPhysics()->SetBounce(0.4f);
 
-		float width = players[i]->TextureSize().x;
+		float width = players[i]->TextureSize().x / 2;
 		float height = players[i]->TextureSize().y;
 		Rectangle rect = Rectangle
 		(players[i]->GetPos().x, players[i]->GetPos().y, width, height);

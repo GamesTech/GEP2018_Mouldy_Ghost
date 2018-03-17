@@ -36,6 +36,8 @@ public:
 	virtual ~Character();
 
 	virtual void Tick(GameStateData* _GSD);
+	virtual void Render(RenderData* _RD, int _sprite = 0,
+		Vector2 _cam_pos = Vector2::Zero) override;
 
 	void CreatePhysics(RenderData* _RD = nullptr);
 
@@ -75,6 +77,8 @@ protected:
 	void SpecialAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
 
+	void FlipX();
+	bool flipped = false;
 	float m_recovery_time = 0;
 	int m_jumps = 1;
 	int m_damage = 0;

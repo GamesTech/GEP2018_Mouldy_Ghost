@@ -78,6 +78,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 			if (isValid(i))
 			{
 				m_selected_character[i] = m_ch_manager->GetCharCount();
+				m_confirmed[i] = false;
 			}
 			else
 			{

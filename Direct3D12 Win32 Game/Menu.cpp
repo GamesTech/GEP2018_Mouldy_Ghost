@@ -37,33 +37,36 @@ void Menu::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 
 void Menu::Tick(GameStateData * _GSD)
 {
-	if (_GSD->menu_action[0] == MenuAction::NAV_DOWN)
+	for (int controller = 0; controller < 4; controller++)
 	{
-		m_buttons[m_highlighted_index].setHighlighted(false);
-		m_highlighted_index++;
-		if (m_highlighted_index >= m_buttons.size())
+		if (_GSD->menu_action[controller] == MenuAction::NAV_DOWN)
 		{
-			m_highlighted_index = 0;
+			m_buttons[m_highlighted_index].setHighlighted(false);
+			m_highlighted_index++;
+			if (m_highlighted_index >= m_buttons.size())
+			{
+				m_highlighted_index = 0;
+			}
+
+			m_buttons[m_highlighted_index].setHighlighted(true);
 		}
 
-		m_buttons[m_highlighted_index].setHighlighted(true);
-	}
-
-	if (_GSD->menu_action[0] == MenuAction::NAV_UP)
-	{
-		m_buttons[m_highlighted_index].setHighlighted(false);
-		m_highlighted_index--;
-		if (m_highlighted_index < 0)
+		if (_GSD->menu_action[controller] == MenuAction::NAV_UP)
 		{
-			m_highlighted_index = m_buttons.size() - 1;
+			m_buttons[m_highlighted_index].setHighlighted(false);
+			m_highlighted_index--;
+			if (m_highlighted_index < 0)
+			{
+				m_highlighted_index = m_buttons.size() - 1;
+			}
+
+			m_buttons[m_highlighted_index].setHighlighted(true);
 		}
 
-		m_buttons[m_highlighted_index].setHighlighted(true);
-	}
-
-	for (int i = 0; i < m_buttons.size(); i++)
-	{
-		m_buttons[i].Tick(_GSD);
+		for (int i = 0; i < m_buttons.size(); i++)
+		{
+			m_buttons[i].Tick(_GSD);
+		}
 	}
 }
 

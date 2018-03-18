@@ -50,33 +50,36 @@ void MenuButton::Tick(GameStateData * _GSD)
 		SetColour(Color(1, 1, 1, 0));
 	}
 
-	switch (type)
+	for (int controller = 0; controller < 4; controller++)
 	{
-	case ButtonType::SINGLE_EVENT:
-		if (_GSD->menu_action[0] == MenuAction::CONFIRM && m_highlighted)
+		switch (type)
 		{
-			for (int i = 0; i < listeners.size(); i++)
+		case ButtonType::SINGLE_EVENT:
+			if (_GSD->menu_action[controller] == MenuAction::CONFIRM && m_highlighted)
 			{
-				listeners[i]->onNotify(this, m_eventToSend);
+				for (int i = 0; i < listeners.size(); i++)
+				{
+					listeners[i]->onNotify(this, m_eventToSend);
+				}
 			}
-		}
-		break;
-	case ButtonType::TWO_EVENT:
-		if (_GSD->menu_action[0] == MenuAction::NAV_LEFT && m_highlighted)
-		{
-			for (int i = 0; i < listeners.size(); i++)
+			break;
+		case ButtonType::TWO_EVENT:
+			if (_GSD->menu_action[controller] == MenuAction::NAV_LEFT && m_highlighted)
 			{
-				listeners[i]->onNotify(this, m_eventLeft);
+				for (int i = 0; i < listeners.size(); i++)
+				{
+					listeners[i]->onNotify(this, m_eventLeft);
+				}
 			}
-		}
-		if (_GSD->menu_action[0] == MenuAction::NAV_RIGHT && m_highlighted)
-		{
-			for (int i = 0; i < listeners.size(); i++)
+			if (_GSD->menu_action[controller] == MenuAction::NAV_RIGHT && m_highlighted)
 			{
-				listeners[i]->onNotify(this, m_eventRight);
+				for (int i = 0; i < listeners.size(); i++)
+				{
+					listeners[i]->onNotify(this, m_eventRight);
+				}
 			}
+			break;
 		}
-		break;
 	}
 	//m_textOffset is broken?
 	m_text.SetPos(this->GetPos() + m_textOffset + Vector2(60,-10));

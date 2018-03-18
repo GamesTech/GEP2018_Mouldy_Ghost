@@ -35,32 +35,6 @@ enum GameAction
 	P_QUIT
 };
 
-struct MenuKeyBoard
-{
-	DirectX::Keyboard::State k_state;
-	MenuAction action;
-};
-
-struct GameKeyBoard
-{
-	DirectX::Keyboard::State k_state;
-	GameAction action;
-	bool can_hold;
-};
-
-struct MenuGamepad
-{
-	DirectX::GamePad::State k_state;
-	MenuAction action;
-};
-
-struct GameGamepad
-{
-	DirectX::GamePad::State k_state;
-	GameAction action;
-	bool can_hold;
-};
-
 using GameActions = std::vector<GameAction>;
 
 class GameScene;
@@ -85,8 +59,4 @@ public:
 	static bool searchForAction(GameAction _action, GameActions _actions);
 
 private:
-	MenuKeyBoard m_menu_key[9];
-	MenuGamepad m_menu_pad[9];
-	GameKeyBoard m_game_key[12];
-	GameKeyBoard m_game_pad[12];
 };

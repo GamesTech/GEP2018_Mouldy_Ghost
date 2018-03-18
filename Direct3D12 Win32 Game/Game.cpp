@@ -735,7 +735,7 @@ void Game::ReadInput()
 		//if this is the game scene take inputs for the game
 		if (m_sceneListener->getActiveScene()->getType() == "GameScene")
 		{
-			m_input.getAction(m_keyboard->GetState(),
+			m_input.getAction(i, m_keyboard->GetState(),
 				m_prev_keyboard, m_GSD->game_actions[i]);
 			m_input.getAction(state,
 				m_buttons[i], m_GSD->game_actions[i]);
@@ -743,17 +743,16 @@ void Game::ReadInput()
 		//otherwise take menu inputs
 		else
 		{
-			m_GSD->menu_action[i] = m_input.getAction(m_keyboard->GetState(), m_prev_keyboard);
+			m_GSD->menu_action[i] = m_input.getAction(i, m_keyboard->GetState(), m_prev_keyboard);
 			if (m_GSD->menu_action[i] == NONE)
 			{
 				m_GSD->menu_action[i] = m_input.getAction(state, m_buttons[i]);
 			}
 		}
-
-		m_prev_keyboard = m_keyboard->GetState();
 		m_buttons[i].Update(state);
-
 	}
+
+	m_prev_keyboard = m_keyboard->GetState();
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
 

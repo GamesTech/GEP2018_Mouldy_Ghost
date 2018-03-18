@@ -13,10 +13,17 @@ CharacterSelectScene::CharacterSelectScene(GameScene* _g_scene)
 	m_player_tints[1] = SimpleMath::Color(0.3, 1, 0.3);
 	m_player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
 	m_player_tints[3] = SimpleMath::Color(1, 1, 0.3);
+
+	m_instructions[0] = new Text2D("Left/Right -\n\nA -\n\nStart/Menu -\n\nBack/View -");
+	m_instructions[0]->SetPos(Vector2(0, 0));
+	m_instructions[1]= new Text2D("Select Character\n\nConfirm Character\n\nStart Game\n\nReturn to Menu");
+	m_instructions[1]->SetPos(Vector2(400, 0));
 }
 
 CharacterSelectScene::~CharacterSelectScene()
 {
+	delete m_instructions[0];
+	delete m_instructions[1];
 }
 
 void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
@@ -102,6 +109,9 @@ void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandLi
 	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
 	m_RD->m_spriteBatch->Begin(_commandList.Get());
+
+	m_instructions[0]->Render(m_RD);
+	m_instructions[1]->Render(m_RD);
 
 	for (int i = 0; i < 4; i++)
 	{

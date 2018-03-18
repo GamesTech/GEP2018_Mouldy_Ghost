@@ -24,11 +24,6 @@ Character::~Character()
 		delete m_physics;
 		m_physics = nullptr;
 	}
-	if (m_controller)
-	{
-		delete m_controller;
-		m_controller = nullptr;
-	}
 	m_attacks.clear();
 }
 

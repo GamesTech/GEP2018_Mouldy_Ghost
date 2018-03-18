@@ -34,7 +34,6 @@ public:
 	//TODO: add a 3d player and modes to switch between different views and basic physics
 	Character(RenderData* _RD, string _filename, SpawnHandler* _spawner);
 	virtual ~Character();
-
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD, int _sprite = 0,
 		Vector2 _cam_pos = Vector2::Zero) override;

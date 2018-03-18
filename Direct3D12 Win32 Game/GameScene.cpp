@@ -70,11 +70,19 @@ void GameScene::Initialise(RenderData * _RD,
 	giveMeItem(_GSD, "apple");
 
 	game_stage->addObjectsToScene(m_2DObjects);
+
+	for (int i = 0; i < 4; i++)
+	{
+		entities[i] = new Player(i);
+	}
 }
 
 void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 {
-	entities[i] = new Player(i);
+	if (players[i])
+	{
+		RemoveCharacter(players[i]);
+	}
 	players[i] = new Character(c_manager.GetCharacter(_character));
 	players[i]->SetSpawn(Vector2(i * 100 + 500, 100));
 	players[i]->SetColour(player_tints[i]);
@@ -96,32 +104,27 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	m_HUD->AddCharacter(players[i]);
 }
 
-void GameScene::RemoveCharacter(int i)
+void GameScene::RemoveCharacter(Character* _char)
 {
-	if (players[i])
+	m_HUD->RemoveCharacter(_char);
+	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
-		m_HUD->RemoveCharacter(players[i]);
-		for (int i = 0; i < m_2DObjects.size(); i++)
+		if (m_2DObjects[i] == _char)
 		{
-			if (m_2DObjects[i] == players[i])
-			{
-				m_2DObjects.erase(m_2DObjects.begin() + i);
-			}
+			m_2DObjects.erase(m_2DObjects.begin() + i);
 		}
-
-		for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
-		{
-			if (m_GSD->objects_in_scene[i] == players[i]->GetPhysics())
-			{
-				m_GSD->objects_in_scene.erase(m_GSD->objects_in_scene.begin() + i);
-			}
-		}
-
-		delete players[i];
-		players[i] = nullptr;
-		delete entities[i];
-		entities[i] = nullptr;
 	}
+
+	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
+	{
+		if (m_GSD->objects_in_scene[i] == _char->GetPhysics())
+		{
+			m_GSD->objects_in_scene.erase(m_GSD->objects_in_scene.begin() + i);
+		}
+	}
+
+	delete _char;
+	_char = nullptr;
 }
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)

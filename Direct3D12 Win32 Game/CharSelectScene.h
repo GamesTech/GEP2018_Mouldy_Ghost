@@ -30,4 +30,5 @@ private:
 	GameScene* m_gameScene;
 	CharacterManager* m_ch_manager;
 	SimpleMath::Color m_player_tints[4];
+	Text2D* m_instructions[2];
 };

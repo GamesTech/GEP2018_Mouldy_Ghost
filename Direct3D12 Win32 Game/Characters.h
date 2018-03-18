@@ -67,6 +67,9 @@ public:
 	void AddAttack(StandardAttack _attack);
 	void AddAttack(DashAttack _attack);
 
+	void AddPoints(int _add) { m_points += _add; }
+	const int GetPoints() { return m_points; }
+
 protected:
 	int PlayerJump(std::vector<GameAction> _actions);
 	int PlayerMove(std::vector<GameAction> _actions);
@@ -97,4 +100,5 @@ protected:
 	SpawnHandler* m_spawner;
 	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
 	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
+	int m_points = 0;
 };

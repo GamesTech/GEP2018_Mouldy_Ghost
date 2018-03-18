@@ -62,7 +62,12 @@ void Character::Tick(GameStateData * _GSD)
 	if (!m_death_zone.Contains(m_pos))
 	{
 		//DIES
+		if (m_last_to_hit)
+		{
+			m_last_to_hit->AddPoints(1);
+		}
 		m_lives--;
+		m_points--;
 		if (m_lives > 0)
 		{
 			ResetDamage();

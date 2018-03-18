@@ -156,7 +156,10 @@ void Game::Initialize(HWND window, int width, int height)
 	m_gameSettingsScene = new GameSettingsScene();
 	m_all_scenes.push_back(m_gameSettingsScene);
 
-	m_characterSelectScene = new CharacterSelectScene();
+	m_meleeScene = new MeleeScene();
+	m_all_scenes.push_back(m_meleeScene);
+
+	m_characterSelectScene = new CharacterSelectScene(m_gameScene);
 	m_all_scenes.push_back(m_characterSelectScene);
 
 	//add all listeners to all scenes
@@ -781,6 +784,6 @@ void Game::ReadInput()
 	}
 
 	//Quit if press Esc
-	if (m_GSD->menu_action[0] == PREVIOUS_MENU)
+	if (m_GSD->menu_action[0] == QUIT)
 		PostQuitMessage(0);
 }

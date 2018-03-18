@@ -39,5 +39,5 @@ void GameSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _
 	m_settingsMenu->init();
 	m_2DObjects.push_back(m_settingsMenu.get());
 	m_settingsMenu->addButton(MenuButton(Event::GAME_SETTINGS_DECREASE_TIME, Event::GAME_SETTINGS_INCREASE_TIME, _RD, "gens"), "Time: ");
-	m_settingsMenu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Back");
+	m_settingsMenu->addButton(MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Back");
 }

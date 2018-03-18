@@ -173,8 +173,8 @@
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="CharacterManager.h" />
-    <ClInclude Include="CharacterSelecter.h" />
-    <ClInclude Include="CharacterSelectScene.h" />
+    <ClInclude Include="CharSelectScene.h" />
+    <ClInclude Include="MeleeScene.h" />
     <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
     <ClInclude Include="AttackData.h" />
@@ -237,8 +237,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharacterManager.cpp" />
-    <ClCompile Include="CharacterSelecter.cpp" />
-    <ClCompile Include="CharacterSelectScene.cpp" />
+    <ClCompile Include="CharSelectScene.cpp" />
+    <ClCompile Include="MeleeScene.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterController.cpp" />

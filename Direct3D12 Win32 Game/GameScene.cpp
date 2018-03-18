@@ -74,14 +74,8 @@ void GameScene::Initialise(RenderData * _RD,
 
 void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 {
-	if (!entities[i])
-	{
-		entities[i] = new Player(i);
-	}
-	if (!players[i])
-	{
-		players[i] = new Character(c_manager.GetCharacterByName(_character));
-	}
+	entities[i] = new Player(i);
+	players[i] = new Character(c_manager.GetCharacter(_character));
 	players[i]->SetSpawn(Vector2(i * 100 + 500, 100));
 	players[i]->SetColour(player_tints[i]);
 
@@ -104,27 +98,30 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 
 void GameScene::RemoveCharacter(int i)
 {
-	m_HUD->RemoveCharacter(players[i]);
-	for (int i = 0; i < m_2DObjects.size(); i++)
+	if (players[i])
 	{
-		if (m_2DObjects[i] == players[i])
+		m_HUD->RemoveCharacter(players[i]);
+		for (int i = 0; i < m_2DObjects.size(); i++)
 		{
-			m_2DObjects.erase(m_2DObjects.begin() + i);
+			if (m_2DObjects[i] == players[i])
+			{
+				m_2DObjects.erase(m_2DObjects.begin() + i);
+			}
 		}
-	}
 
-	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
-	{
-		if (m_GSD->objects_in_scene[i] == players[i]->GetPhysics())
+		for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
 		{
-			m_GSD->objects_in_scene.erase(m_GSD->objects_in_scene.begin() + i);
+			if (m_GSD->objects_in_scene[i] == players[i]->GetPhysics())
+			{
+				m_GSD->objects_in_scene.erase(m_GSD->objects_in_scene.begin() + i);
+			}
 		}
-	}
 
-	delete players[i];
-	players[i] = nullptr;
-	delete entities[i];
-	entities[i] = nullptr;
+		delete players[i];
+		players[i] = nullptr;
+		delete entities[i];
+		entities[i] = nullptr;
+	}
 }
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)

@@ -42,12 +42,12 @@ void MenuButton::Tick(GameStateData * _GSD)
 {
 	if (m_highlighted)
 	{
-		scaleFromPoint(GetPos(), Vector2(1.1f, 1.1f));
+		scaleFromPoint(GetPos(), Vector2(0.6f, 0.6f));
 		SetColour(Color(Colors::AliceBlue));
 	}
 	else
 	{
-		scaleFromPoint(GetPos(), Vector2(1.0f, 1.0f));
+		SetColour(Color(1, 1, 1, 0));
 	}
 
 	switch (type)
@@ -79,7 +79,7 @@ void MenuButton::Tick(GameStateData * _GSD)
 		break;
 	}
 	//m_textOffset is broken?
-	m_text.SetPos(this->GetPos() + m_textOffset + Vector2(100,0));
+	m_text.SetPos(this->GetPos() + m_textOffset + Vector2(60,-10));
 }
 
 void MenuButton::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)

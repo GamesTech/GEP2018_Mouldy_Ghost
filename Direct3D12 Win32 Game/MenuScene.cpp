@@ -45,5 +45,5 @@ void MenuScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWi
 	}
 	m_testMenu->init();
 	m_2DObjects.push_back(m_testMenu.get());
-	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Melee!");
+	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Melee!");
 }

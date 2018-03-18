@@ -137,7 +137,7 @@ MenuAction InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_
 	}
 	if (_state.Escape && !_prev_state.Escape)
 	{
-		return (PREVIOUS_MENU);
+		return (QUIT);
 	}
 
 	return NONE;

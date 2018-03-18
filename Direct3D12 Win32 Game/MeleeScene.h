@@ -1,13 +1,13 @@
 #pragma once
 #include "Scene.h"
 #include "Menu.h"
-class CharacterSelectScene :
+class MeleeScene :
 	public Scene
 {
 public:
-	CharacterSelectScene();
-	~CharacterSelectScene();
-	virtual std::string getType() override { return "CharacterSelect"; };
+	MeleeScene();
+	~MeleeScene();
+	virtual std::string getType() override { return "MeleeScene"; };
 
 	virtual void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine) override;
@@ -19,4 +19,3 @@ private:
 	//std::unique_ptr<MenuButton> m_testbutton = nullptr;
 	std::shared_ptr<Menu> m_testMenu = nullptr;
 };
-

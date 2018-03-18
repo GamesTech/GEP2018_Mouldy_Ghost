@@ -30,6 +30,8 @@ public:
 	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
 		Vector2 _camera_position = Vector2::Zero) override;
 
+	CharacterManager* GetCharacterManager() { return &c_manager; }
+
 	void giveMeItem(GameStateData* _GSD, std::string _name);
 
 	virtual void Reset();

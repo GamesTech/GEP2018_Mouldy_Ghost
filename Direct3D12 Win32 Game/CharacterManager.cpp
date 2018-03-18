@@ -9,7 +9,7 @@ CharacterManager::CharacterManager()
 	m_character_list.reserve(20);
 }
 
-Character CharacterManager::GetCharacterByName(std::string _name)
+Character CharacterManager::GetCharacter(std::string _name)
 {
 	for (int i = 0; i < m_character_list.size(); i++)
 	{
@@ -19,6 +19,11 @@ Character CharacterManager::GetCharacterByName(std::string _name)
 		}
 	}
 	assert(false);
+}
+
+Character CharacterManager::GetCharacter(int _index)
+{
+	return m_character_list[_index];
 }
 
 void CharacterManager::PopulateCharacterList(RenderData* _RD, SpawnHandler* _spawner)

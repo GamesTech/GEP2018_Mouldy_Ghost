@@ -11,6 +11,7 @@ enum MenuAction
 	ADVANCE_MENU,
 	PREVIOUS_MENU,
 	CONFIRM,
+	QUIT,
 
 	NONE
 };

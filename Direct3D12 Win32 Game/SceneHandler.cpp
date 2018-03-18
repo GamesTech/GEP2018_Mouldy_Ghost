@@ -71,10 +71,20 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 			}
 		}
 		break;
+	case Event::CHANGE_SCENE_MELEE_MENU:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "MeleeScene")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
 	case Event::CHANGE_SCENE_CHARACTER_SELECT:
 		for (int i = 0; i < m_allScenes.size(); i++)
 		{
-			if (m_allScenes[i]->getType() == "CharacterSelect")
+			if (m_allScenes[i]->getType() == "CharacterScene")
 			{
 				sceneChanged = true;
 				sceneChangeIndex = i;

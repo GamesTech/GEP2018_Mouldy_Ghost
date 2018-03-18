@@ -2,5 +2,6 @@
 
 #include "GameScene.h"
 #include "MenuScene.h"
-#include "CharacterSelectScene.h"
+#include "MeleeScene.h"
+#include "CharSelectScene.h"
 #include "GameSettingsScene.h"

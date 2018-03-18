@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "SceneHandler.h"
 #include "Scene.h"
-#include "TestScene.h"
 
 
 SceneHandler::SceneHandler()
@@ -52,26 +51,6 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 	int sceneChangeIndex;
 	switch (event_)
 	{
-	case Event::CHANGE_SCENE_TEST:
-		for (int i = 0; i < m_allScenes.size(); i++)
-		{
-			if (m_allScenes[i]->getType() == "TestScene")
-			{
-				sceneChanged = true;
-				sceneChangeIndex = i;
-			}
-		}
-		break;
-	case Event::CHANGE_SCENE_PHYSICS:
-		for (int i = 0; i < m_allScenes.size(); i++)
-		{
-			if (m_allScenes[i]->getType() == "PhysicsScene")
-			{
-				sceneChanged = true;
-				sceneChangeIndex = i;
-			}
-		}
-		break;
 	case Event::CHANGE_SCENE_GAME:
 		for (int i = 0; i < m_allScenes.size(); i++)
 		{

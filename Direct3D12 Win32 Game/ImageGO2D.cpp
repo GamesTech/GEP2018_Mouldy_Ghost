@@ -3,7 +3,7 @@
 #include <codecvt>
 #include "RenderData.h"
 
-ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, Vector2 _spritesize, int _in_row)
+ImageGO2D::ImageGO2D(RenderData * _RD, string _filename)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 	string fullpath = "../DDS/" + _filename + ".dds";
@@ -25,22 +25,21 @@ ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, Vector2 _spritesize, in
 
 	uploadResourcesFinished.wait();
 
-	if (_spritesize.x == 0)
-	{
-		m_spriteSize = Vector2(GetTextureSize
-		(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
-	}
-	else
-	{
-		m_spriteSize = _spritesize;
-	}
+	m_spriteSize = Vector2(GetTextureSize
+	(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
+
 	CentreOrigin();
 }
-
 
 ImageGO2D::~ImageGO2D()
 {
 	m_texture.Reset();
+}
+
+void ImageGO2D::SetSpriteSize(Vector2 _size, int _sprites_in_row)
+{
+	m_spriteSize = _size;
+	m_sprites_in_row = _sprites_in_row;
 }
 
 void ImageGO2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)

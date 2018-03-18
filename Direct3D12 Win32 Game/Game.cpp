@@ -6,7 +6,6 @@
 #include "Game.h"
 #include "RenderData.h"
 #include "GameStateData.h"
-#include "TestScene.h"
 #include "MusicHandler.h"
 #include "SceneHandler.h"
 
@@ -150,12 +149,6 @@ void Game::Initialize(HWND window, int width, int height)
 
 	m_gameScene = new GameScene();
 	m_all_scenes.push_back(m_gameScene);
-
-	m_testScene = new TestScene();
-	m_all_scenes.push_back(m_testScene);
-
-	m_physScene = new PhysicsScene();
-	m_all_scenes.push_back(m_physScene);
 
 	m_menuScene = new MenuScene();
 	m_all_scenes.push_back(m_menuScene);

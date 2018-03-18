@@ -59,32 +59,6 @@ void GameScene::Initialise(RenderData * _RD,
 	game_stage = std::make_unique<FinalDestination>();
 	game_stage->init(m_RD,m_GSD);
 
-	for (int i = 0; i < 4; i++)
-	{
-		entities[i] = new Player(i);
-		std::string char_name = "Character00";
-		char_name += std::to_string(i + 1);
-		players[i] = new Character(c_manager.GetCharacterByName(char_name));
-		players[i]->SetSpawn(Vector2(i * 100 + 500, 100));
-		players[i]->SetColour(player_tints[i]);
-
-		players[i]->CreatePhysics(_RD);
-		players[i]->GetPhysics()->SetDrag(0.5f);
-		players[i]->GetPhysics()->SetBounce(0.4f);
-
-		float width = players[i]->TextureSize().x / 2;
-		float height = players[i]->TextureSize().y;
-		Rectangle rect = Rectangle
-		(players[i]->GetPos().x, players[i]->GetPos().y, width, height);
-		players[i]->GetPhysics()->SetCollider(rect);
-
-		m_2DObjects.push_back(players[i]);
-		m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
-		entities[i]->SetCharacter(players[i]);
-
-		m_HUD->AddCharacter(players[i]);
-	}
-
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
 		for (int j = 0; j < listeners.size(); j++)
@@ -96,6 +70,61 @@ void GameScene::Initialise(RenderData * _RD,
 	giveMeItem(_GSD, "apple");
 
 	game_stage->addObjectsToScene(m_2DObjects);
+}
+
+void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
+{
+	if (!entities[i])
+	{
+		entities[i] = new Player(i);
+	}
+	if (!players[i])
+	{
+		players[i] = new Character(c_manager.GetCharacterByName(_character));
+	}
+	players[i]->SetSpawn(Vector2(i * 100 + 500, 100));
+	players[i]->SetColour(player_tints[i]);
+
+	players[i]->CreatePhysics(_RD);
+	players[i]->GetPhysics()->SetDrag(0.5f);
+	players[i]->GetPhysics()->SetBounce(0.4f);
+
+	float width = players[i]->TextureSize().x / 2;
+	float height = players[i]->TextureSize().y;
+	Rectangle rect = Rectangle
+	(players[i]->GetPos().x, players[i]->GetPos().y, width, height);
+	players[i]->GetPhysics()->SetCollider(rect);
+
+	m_2DObjects.push_back(players[i]);
+	m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
+	entities[i]->SetCharacter(players[i]);
+
+	m_HUD->AddCharacter(players[i]);
+}
+
+void GameScene::RemoveCharacter(int i)
+{
+	m_HUD->RemoveCharacter(players[i]);
+	for (int i = 0; i < m_2DObjects.size(); i++)
+	{
+		if (m_2DObjects[i] == players[i])
+		{
+			m_2DObjects.erase(m_2DObjects.begin() + i);
+		}
+	}
+
+	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
+	{
+		if (m_GSD->objects_in_scene[i] == players[i]->GetPhysics())
+		{
+			m_GSD->objects_in_scene.erase(m_GSD->objects_in_scene.begin() + i);
+		}
+	}
+
+	delete players[i];
+	players[i] = nullptr;
+	delete entities[i];
+	entities[i] = nullptr;
 }
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
@@ -120,14 +149,17 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 			}
 		}
 	}
-	average_x /= num_players;
-	average_y /= num_players;
+	if (num_players)
+	{
+		average_x /= num_players;
+		average_y /= num_players;
 
-	Vector2 average_pos = Vector2(average_x, average_y);
-	Vector2 mid = (m_GSD->window_size / 2);
-	Vector2 cam_target = (average_pos * -1) + mid;
-	Vector2 dir_to_target = cam_target - m_cam_pos;
-	m_cam_pos += dir_to_target / 20;
+		Vector2 average_pos = Vector2(average_x, average_y);
+		Vector2 mid = (m_GSD->window_size / 2);
+		Vector2 cam_target = (average_pos * -1) + mid;
+		Vector2 dir_to_target = cam_target - m_cam_pos;
+		m_cam_pos += dir_to_target / 20;
+	}
 
 	if (m_GSD->game_actions[0].size() > 0)
 	{

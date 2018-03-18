@@ -173,6 +173,7 @@
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="CharacterManager.h" />
+    <ClInclude Include="CharacterSelecter.h" />
     <ClInclude Include="CharacterSelectScene.h" />
     <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
@@ -207,7 +208,6 @@
     <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="PassiveAttack.h" />
     <ClInclude Include="Physics2D.h" />
-    <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ReadFile.h" />
@@ -229,8 +229,6 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TestPBGO3D.h" />
-    <ClInclude Include="TestPhys.h" />
-    <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
@@ -239,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharacterManager.cpp" />
+    <ClCompile Include="CharacterSelecter.cpp" />
     <ClCompile Include="CharacterSelectScene.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -266,7 +265,6 @@
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MusicHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
-    <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -289,8 +287,6 @@
     <ClCompile Include="SpawnHandler.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TestPBGO3D.cpp" />
-    <ClCompile Include="TestPhys.cpp" />
-    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
     <ClCompile Include="Throwable.cpp" />

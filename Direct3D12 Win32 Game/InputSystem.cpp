@@ -1,10 +1,6 @@
 #include "pch.h"
 
 #include "InputSystem.h"
-#include "GameScene.h"
-#include "TestScene.h"
-
-//TODO: All instances of "testscene" should be replaced with menuscene when it exists
 
 //Keyboard in game controls
 void InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state

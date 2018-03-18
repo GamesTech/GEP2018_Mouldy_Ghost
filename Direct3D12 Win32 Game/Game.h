@@ -74,8 +74,6 @@ private:
 
     void OnDeviceLost();
 
-	bool SwitchToScene(SceneEnum _scene, bool _reset);
-
     // Application state
     HWND                                                m_window;
     int                                                 m_outputWidth;
@@ -115,8 +113,6 @@ private:
 	SceneEnum m_current_scene;
 
 	GameScene* m_gameScene;
-	TestScene* m_testScene;
-	PhysicsScene* m_physScene;
 	MenuScene* m_menuScene;
 	CharacterSelectScene* m_characterSelectScene;
 	GameSettingsScene* m_gameSettingsScene;

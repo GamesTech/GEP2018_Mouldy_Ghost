@@ -14,10 +14,10 @@ CharacterSelectScene::CharacterSelectScene(GameScene* _g_scene)
 	m_player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
 	m_player_tints[3] = SimpleMath::Color(1, 1, 0.3);
 
-	m_instructions[0] = new Text2D("Left/Right -\n\nA -\n\nStart/Menu -\n\nBack/View -");
-	m_instructions[0]->SetPos(Vector2(0, 0));
-	m_instructions[1]= new Text2D("Select Character\n\nConfirm Character\n\nStart Game\n\nReturn to Menu");
-	m_instructions[1]->SetPos(Vector2(400, 0));
+	m_instructions[0] = new Text2D("Left/Right\n\nA\n\nStart/Menu\n\nBack/View");
+	m_instructions[0]->SetPos(Vector2(50, 50));
+	m_instructions[1]= new Text2D("- Select Character\n\n- Confirm Character\n\n- Start Game\n\n- Return to Menu");
+	m_instructions[1]->SetPos(Vector2(350, 50));
 }
 
 CharacterSelectScene::~CharacterSelectScene()
@@ -82,16 +82,18 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 
 		if((m_GSD->menu_action[i] == MenuAction::PREVIOUS_MENU))
 		{
+			//if the player has a highlighted character, deselect it
 			if (isValid(i))
 			{
 				m_selected_character[i] = m_ch_manager->GetCharCount();
 				m_confirmed[i] = false;
 			}
+			//otherwise quit to the previous menu
 			else
 			{
+				Reset();
 				for (int j = 0; j < listeners.size(); j++)
 				{
-					Reset();
 					listeners[j]->onNotify(nullptr, Event::CHANGE_SCENE_MELEE_MENU);
 				}
 			}

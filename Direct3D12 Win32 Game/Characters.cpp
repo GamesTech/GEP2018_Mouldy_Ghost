@@ -130,6 +130,12 @@ void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	{
 		m_jumps = 0;
 		m_dash_recover = true;
+		m_last_to_hit = nullptr;
+	}
+	if (o_tag == GameObjectTag::ATTACK)
+	{
+		m_last_to_hit = static_cast<DamageCollider*>
+			(_collision->GetOwner())->GetUser();
 	}
 }
 

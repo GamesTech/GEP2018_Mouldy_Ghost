@@ -96,4 +96,5 @@ protected:
 	bool m_dash_recover = true;
 	SpawnHandler* m_spawner;
 	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
+	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
 };

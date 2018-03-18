@@ -3,7 +3,7 @@
 #include "InputSystem.h"
 
 //Keyboard in game controls
-void InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state
+void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State _prev_state
 	, GameActions& _actions)
 {
 	if (_state.W && !_prev_state.W)
@@ -112,7 +112,7 @@ void InputSystem::getAction(GamePad::State _state,
 }
 
 //keyboard menu controls
-MenuAction InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state)
+MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State _prev_state)
 {
 	if (_state.W && !_prev_state.W)
 	{

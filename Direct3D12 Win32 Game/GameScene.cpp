@@ -149,7 +149,14 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 			}
 		}
 	}
-	if (num_players)
+	if (num_players == 1)
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, Event::GAME_OVER);
+		}
+	}
+	else if (num_players)
 	{
 		average_x /= num_players;
 		average_y /= num_players;

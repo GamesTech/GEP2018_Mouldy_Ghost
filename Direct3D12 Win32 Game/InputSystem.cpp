@@ -230,6 +230,10 @@ MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard:
 	default:
 		break;
 	}
+	if (_state.Enter && !_prev_state.Enter)
+	{
+		return ADVANCE_MENU;
+	}
 	if (_state.Escape && !_prev_state.Escape)
 	{
 		return (QUIT);

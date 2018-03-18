@@ -9,6 +9,10 @@ DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandle
 	m_physics = new Physics2D();
 	m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
 
+
+	m_scale.x = _data.size.x / m_spriteSize.x;
+	m_scale.y = _data.size.y / m_spriteSize.y;
+
 	Rectangle rect = Rectangle(m_pos.x, m_pos.y, _data.size.x, _data.size.y);
 	m_physics->SetCollider(rect);
 

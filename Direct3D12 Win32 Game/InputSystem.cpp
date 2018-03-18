@@ -173,15 +173,15 @@ MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard:
 	{
 		if (_state.W && !_prev_state.W)
 		{
-			return (NAV_UP);
+			return NAV_UP;
 		}
 		if (_state.A && !_prev_state.A)
 		{
-			return (NAV_LEFT);
+			return NAV_LEFT;
 		}
 		if (_state.S && !_prev_state.S)
 		{
-			return (NAV_DOWN);
+			return NAV_DOWN;
 		}
 		if (_state.D && !_prev_state.D)
 		{

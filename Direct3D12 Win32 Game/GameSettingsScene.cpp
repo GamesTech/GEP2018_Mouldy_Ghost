@@ -18,10 +18,17 @@ void GameSettingsScene::Update(DX::StepTimer const & timer, std::unique_ptr<Dire
 
 	for (int i = 0; i < listeners.size(); i++)
 	{
-		GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[i]);
-		if (temp->getLives() != NULL)
+		if (listeners[i]->getType() == "GameSettings")
 		{
-			m_livesText->SetText(std::to_string(temp->getLives()));
+			GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[i]);
+			if (temp->getInfiniteLives())
+			{
+				m_livesText->SetText("No Limit");
+			}
+			else
+			{
+				m_livesText->SetText(std::to_string(temp->getLives()));
+			}
 			int tempTime = static_cast<int>(temp->getTime());
 			int minutes = tempTime / 60;
 			int seconds = tempTime - (minutes * 60);
@@ -31,7 +38,7 @@ void GameSettingsScene::Update(DX::StepTimer const & timer, std::unique_ptr<Dire
 				timeOutput += "0";
 			}
 
-			if (temp->getInfinite())
+			if (temp->getInfiniteTime())
 			{
 				timeOutput = "No Limit";
 			}

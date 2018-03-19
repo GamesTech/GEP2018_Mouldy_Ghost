@@ -281,6 +281,9 @@
     <ClInclude Include="CharSelectScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -421,6 +424,9 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="CharSelectScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -23,4 +23,3 @@ private:
 	//std::unique_ptr<MenuButton> m_testbutton = nullptr;
 	std::shared_ptr<Menu> m_testMenu = nullptr;
 };
-

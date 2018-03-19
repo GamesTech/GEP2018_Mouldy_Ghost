@@ -101,6 +101,15 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 			}
 		}
 		break;
+	case Event::GAME_OVER:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "GameOver")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
 	default:
 		break;
 	}

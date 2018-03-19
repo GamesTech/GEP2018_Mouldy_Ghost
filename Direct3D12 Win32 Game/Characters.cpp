@@ -4,6 +4,7 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
+#include "Item.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -48,6 +49,7 @@ void Character::Tick(GameStateData * _GSD)
 		m_physics->AddForce(gamePadPush * 100);
 
 		PlayerAttack(_GSD);
+		PickUpItem(actions_to_check);
 
 		if (m_attacking)
 		{
@@ -121,6 +123,12 @@ void Character::CreatePhysics(RenderData* _RD)
 	m_physics->SetOwner(this);
 }
 
+void Character::TakeDamage(int _dam)
+{
+	m_damage += _dam;
+	m_damage = m_damage < 0 ? 0 : m_damage;
+}
+
 void Character::Hit(Vector2 _dir, float _force)
 {
 	float knockback = _force * (m_damage + 1) / 100;
@@ -184,6 +192,21 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 		}
 	}
 	return 0;
+}
+
+void Character::PickUpItem(std::vector<GameAction> _actions)
+{
+	if (!m_attacking && !m_held_item)
+	{
+		if (InputSystem::searchForAction(P_PICK_UP, _actions))
+		{
+			m_held_item = m_physics->GetItem();
+			if (m_held_item)
+			{
+				m_held_item->pickUp(this);
+			}
+		}
+	}
 }
 
 int Character::PlayerMove(std::vector<GameAction> _actions)

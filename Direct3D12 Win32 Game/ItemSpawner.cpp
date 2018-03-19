@@ -4,8 +4,9 @@
 
 std::string getFileData(std::ifstream & _file);
 
-ItemSpawner::ItemSpawner()
+ItemSpawner::ItemSpawner(SpawnHandler* _spawner)
 {
+	m_spawner = _spawner;
 }
 
 ItemSpawner::~ItemSpawner()
@@ -40,7 +41,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 	Item* loaded_item = nullptr;
 	if (type == "single_use")
 	{
-		Item* tmp = new Item(_RD,image);
+		Item* tmp = new Item(_RD,image, m_spawner);
 		tmp->setitemType(ItemType::SINGLE_USE);
 		loadAllItemProperies(tmp, item_file);
 
@@ -48,7 +49,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 	}
 	else if (type == "throwable")
 	{
-		Throwable* tmp = new Throwable(_RD, image);
+		Throwable* tmp = new Throwable(_RD, image, m_spawner);
 		tmp->setitemType(ItemType::THROWABLE);
 		loadAllItemProperies(tmp, item_file);
 		loadThrowableProperies(tmp, item_file);
@@ -57,7 +58,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 	}
 	else if (type == "explosive")
 	{
-		Explosive* tmp = new Explosive(_RD, image);
+		Explosive* tmp = new Explosive(_RD, image, m_spawner);
 		tmp->setitemType(ItemType::EXPLOSIVE);
 		loadAllItemProperies(tmp, item_file);
 		loadThrowableProperies(tmp, item_file);
@@ -65,7 +66,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 
 		loaded_item = tmp;
 	}
-
+	
 	allItems.push_back(loaded_item);
 
 	item_file.close();
@@ -116,13 +117,19 @@ Item* ItemSpawner::createNewItemWithName(std::string name)
 	{
 		if (allItems[i]->GetName() == name)
 		{
-			Item* newitem = new Item(*allItems[i]);;
-		/*	if (allItems[i]->getitemType() == ItemType::EXPLOSIVE)
-			{
-				Explosive* tmp = static_cast<Explosive*>(allItems[i]);
-				newitem = new Explosive(*tmp);
+			Item* newitem = new Item(*allItems[i]);
 
-			}*/
+			Physics2D* phys = new Physics2D();
+			phys->SetBounce(0.5);
+			phys->SetGrav(1);
+
+			Rectangle collider = Rectangle
+			(newitem->GetPos().x, newitem->GetPos().y, 
+				newitem->TextureSize().x, newitem->TextureSize().y);
+				newitem->GetPhysics()->SetCollider(collider);
+
+				allItems[i]->GetPhysics()->SetOwner(newitem);
+			
 			return newitem;
 		}
 	}

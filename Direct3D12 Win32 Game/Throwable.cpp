@@ -5,7 +5,7 @@ Throwable::Throwable()
 {
 }
 
-Throwable::Throwable(RenderData * _RD, std::string _filename) : Item(_RD, _filename)
+Throwable::Throwable(RenderData * _RD, std::string _filename, SpawnHandler* _spawner) : Item(_RD, _filename, _spawner)
 {
 }
 

@@ -6,7 +6,7 @@ Explosive::Explosive()
 {
 }
 
-Explosive::Explosive(RenderData * _RD, std::string _filename) : Throwable(_RD, _filename)
+Explosive::Explosive(RenderData * _RD, std::string _filename, SpawnHandler* _spawner) : Throwable(_RD, _filename, _spawner)
 {
 }
 

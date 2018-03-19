@@ -52,6 +52,10 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 		{
 			_actions.push_back(P_GUARD);
 		}
+		if (_state.U && !_prev_state.U)
+		{
+			_actions.push_back(P_PICK_UP);
+		}
 		break;
 	}
 	case 2:
@@ -98,6 +102,10 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 		{
 			_actions.push_back(P_GUARD);
 		}
+		if (_state.NumPad6 && !_prev_state.NumPad6)
+		{
+			_actions.push_back(P_PICK_UP);
+		}
 		break;
 	}
 	}
@@ -131,6 +139,11 @@ void InputSystem::getAction(GamePad::State _state,
 	if (_state.IsBPressed() && !_buttons.GetLastState().IsBPressed())
 	{
 		_actions.push_back(P_JUMP);
+	}
+
+	if (_state.IsYPressed() && !_buttons.GetLastState().IsYPressed())
+	{
+		_actions.push_back(P_PICK_UP);
 	}
 
 	if (_state.IsRightTriggerPressed())

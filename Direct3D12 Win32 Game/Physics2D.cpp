@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Physics2D.h"
 #include "GameStateData.h"
+#include "Item.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -59,7 +60,7 @@ void Physics2D::Tick(GameStateData * _GSD, Vector2& _pos)
 	Vector2 newPos = _pos + _GSD->m_dt * m_vel;
 	Vector2 newVel = m_vel + _GSD->m_dt * m_acc;
 
-	newVel.y += m_gravity_scale * m_gravity;
+	newVel.y += m_gravity_scale * 10;
 
 	_pos = newPos;
 	m_vel = newVel;
@@ -150,4 +151,16 @@ Vector2 Physics2D::GetNormal(Vector2 _point)
 	default:
 		return (Vector2(0, 0));
 	}
+}
+
+Item* Physics2D::GetItem()
+{
+	for (int i = 0; i < currently_colliding.size(); i++)
+	{
+		if (Item* r = dynamic_cast<Item*>(currently_colliding[i]->GetOwner()))
+		{
+			return r;
+		}
+	}
+	return nullptr;
 }

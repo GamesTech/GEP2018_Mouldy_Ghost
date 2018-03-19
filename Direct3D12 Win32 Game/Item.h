@@ -7,7 +7,7 @@ class Item :public ImageGO2D
 {
 public:
 	Item();
-	Item(RenderData* _RD, string _filename);
+	Item(RenderData* _RD, string _filename, SpawnHandler* _spawner);
 	~Item();
 
 	virtual void Tick(GameStateData* _GSD);
@@ -26,6 +26,7 @@ public:
 	void setitemType(ItemType type) { m_type = type; }
 	ItemType getitemType() { return m_type; }
 
+	SpawnHandler* m_handler;
 protected:
 	ItemState m_state = ItemState::WAIT;
 	ItemType m_type = ItemType::SINGLE_USE;

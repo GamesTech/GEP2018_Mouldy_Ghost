@@ -4,6 +4,7 @@
 #include "GameStateData.h"
 #include "FinalDestination.h"
 #include "CharacterController.h"
+#include "GameSettingsHandler.h"
 #include "Player.h"
 #include "SpawnHandler.h"
 
@@ -78,6 +79,8 @@ void GameScene::Initialise(RenderData * _RD,
 	{
 		entities[i] = new Player(i);
 	}
+
+	m_HUD->attachTimerPointer(&m_timeLeft);
 }
 
 void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
@@ -89,8 +92,8 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	players[i] = new Character(c_manager.GetCharacter(_character));
 	players[i]->SetSpawn(Vector2(i * 100 + 500, 100));
 	players[i]->SetColour(player_tints[i]);
-
 	players[i]->CreatePhysics(_RD);
+	players[i]->SetLives(m_maxLives);
 	players[i]->GetPhysics()->SetDrag(0.5f);
 	players[i]->GetPhysics()->SetBounce(0.4f);
 
@@ -197,6 +200,8 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
 		//temp->scaleFromPoint(Vector2(800, 600), Vector2(temp->GetScale().x + 0.1, temp->GetScale().y + 0.1));
 	}
+
+	m_timeLeft -= timer.GetElapsedSeconds();
 }
 
 void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
@@ -230,7 +235,6 @@ void GameScene::Reset()
 		if (players[i])
 		{
 			players[i]->ResetDamage();
-			players[i]->ResetLives();
 		}
 	}
 
@@ -246,5 +250,19 @@ void GameScene::Reset()
 	for (int i = 0; i < m_3DObjects.size(); i++)
 	{
 		m_3DObjects[i]->ResetPos();
+	}
+
+	//attaching values of game settings handler to scene
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		if (listeners[i]->getType() == "GameSettings")
+		{
+			GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[i]);
+			m_infiniteLives = temp->getInfiniteLives();
+			m_infiniteTime = temp->getInfiniteTime();
+			m_maxLives = temp->getLives();
+			m_timeLimit = temp->getTime();
+			m_timeLeft = m_timeLimit;
+		}
 	}
 }

@@ -111,25 +111,60 @@ void ItemSpawner::loadExplosiveProperies(Explosive * item, std::ifstream & _open
 
 }
 
-Item* ItemSpawner::createNewItemWithName(std::string name)
+Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 {
+	//copy every proprety of an item and then create a new one
+
 	for (int i = 0; i < allItems.size(); i++)
 	{
 		if (allItems[i]->GetName() == name)
 		{
-			Item* newitem = new Item(*allItems[i]);
+			
+			
+			ItemType tmptype = allItems[i]->getitemType();
+			Item* orig_item = allItems[i];
 
-			Physics2D* phys = new Physics2D();
-			phys->SetBounce(0.5);
-			phys->SetGrav(1);
+			Item* newitem = nullptr;
+		
+			if (tmptype == ItemType::EXPLOSIVE)
+			{
+				Explosive* orig_item_cast = static_cast<Explosive*>(orig_item);
+				Explosive* tmpex = new Explosive(_RD,name);
 
+
+				tmpex->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
+				tmpex->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
+				newitem = tmpex;
+				tmpex->setExpRange(orig_item_cast->getExpRange());
+				tmpex->setFuse(orig_item_cast->getFuse());
+
+				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());
+			else if (tmptype == ItemType::EXPLOSIVE)
+			}
+			{
+				Throwable* orig_item_cast = static_cast<Throwable*>(orig_item);
+				Throwable* tmptr = new Throwable(_RD, name);
+
+				tmptr->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
+				tmptr->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
+				tmptr->setOnThrowString(orig_item_cast->getOnThrowString());
+
+				newitem = tmptr;
+			}
+			else
+			{
+				newitem = new Item(_RD, name);
+			}
 			Rectangle collider = Rectangle
 			(newitem->GetPos().x, newitem->GetPos().y, 
 				newitem->TextureSize().x, newitem->TextureSize().y);
 				newitem->GetPhysics()->SetCollider(collider);
 
-				allItems[i]->GetPhysics()->SetOwner(newitem);
-			
+
+			newitem->setOnPickupString(orig_item->getOnPickupString());
+			newitem->setOnUseString(orig_item->getOnUseString());
+			newitem->setPower(orig_item->getPower());
+	
 			return newitem;
 		}
 	}

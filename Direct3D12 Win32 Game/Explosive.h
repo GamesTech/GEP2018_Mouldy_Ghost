@@ -16,6 +16,8 @@ public:
 	void setFuse(float _fuse) { m_fuse = _fuse; }
 	void setExpRange(float _range) { m_explosion_range = _range; }
 
+	float getFuse() { return m_fuse; }
+	float getExpRange() { return m_explosion_range;}
 private:
 	
 	bool m_explode = false;

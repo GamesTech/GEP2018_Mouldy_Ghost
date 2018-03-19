@@ -1,6 +1,6 @@
 #pragma once
 
-const float m_gravity = 9.8f;
+class Item;
 
 enum Axis
 {
@@ -38,6 +38,7 @@ public:
 	Rectangle GetCollider() { return m_collider; }
 	void MoveCollider(Vector2 _pos) {m_collider.Offset(_pos.x, _pos.y);}
 
+	Item* GetItem();
 #if _DEBUG
 	void RenderCorners(Vector2 _cam);
 #endif;

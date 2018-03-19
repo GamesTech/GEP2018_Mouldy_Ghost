@@ -8,7 +8,8 @@
 class ItemSpawner
 {
 public:
-	ItemSpawner();
+	ItemSpawner() = default;
+	ItemSpawner(SpawnHandler* _spawner);
 	~ItemSpawner();
 
 	//loading stuff
@@ -18,11 +19,10 @@ public:
 	void loadThrowableProperies(Throwable* item, std::ifstream& _opened_file);
 	void loadExplosiveProperies(Explosive* item, std::ifstream& _opened_file);
 
-
-
 	Item* createNewItemWithName(std::string name);
 
 private:
+	SpawnHandler* m_spawner;
 	std::vector<Item*> allItems;
 };
 

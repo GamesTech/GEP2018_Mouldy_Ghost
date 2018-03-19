@@ -45,6 +45,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 				break;
 			}
 		}
+
 		m_delete_queue.push_back(object);
 		break;
 	}

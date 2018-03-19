@@ -46,6 +46,9 @@ void GameScene::Initialise(RenderData * _RD,
 
 	m_spawner = std::make_unique<SpawnHandler>();
 	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);
+
+	item_spawner = ItemSpawner(m_spawner.get());
+
 	c_manager.PopulateCharacterList(_RD, m_spawner.get());
 	item_spawner.loadAllData(_RD);
 
@@ -212,8 +215,10 @@ void GameScene::giveMeItem(GameStateData* _GSD, std::string _name)
 {
 	Item* itm = item_spawner.createNewItemWithName(_name);
 	itm->SetSpawn(Vector2(500,100));
-	_GSD->objects_in_scene.push_back(itm->GetPhysics());
-	m_2DObjects.push_back(itm);
+
+	m_spawner->onNotify(itm, Event::OBJECT_INSTANTIATED);
+	//_GSD->objects_in_scene.push_back(itm->GetPhysics());
+	//m_2DObjects.push_back(itm);
 }
 
 void GameScene::Reset()

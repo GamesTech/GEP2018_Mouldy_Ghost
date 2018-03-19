@@ -18,6 +18,7 @@ using std::vector;
 
 class SceneHandler;
 class MusicHandler;
+class GameSettingsHandler;
 
 struct RenderData;
 struct GameStateData;
@@ -130,5 +131,6 @@ private:
 	//Vector of managers
 	std::unique_ptr<MusicHandler> m_musicListener = nullptr;
 	std::unique_ptr<SceneHandler> m_sceneListener = nullptr;
+	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
 	std::vector<EventHandler*> listeners;
 };

@@ -19,6 +19,8 @@ public:
 	void addButton(MenuButton _buttonToAdd, std::string _buttonText);
 	void init();
 
+	MenuButton* getMenuButton(Event _event);
+
 private:
 	Vector2 m_pos;
 	Vector2 m_nextButtonPos;

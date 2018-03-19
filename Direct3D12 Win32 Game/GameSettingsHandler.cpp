@@ -4,6 +4,9 @@
 
 GameSettingsHandler::GameSettingsHandler()
 {
+	m_lives = 5;
+	m_time = 60;
+	m_infiniteTime = false;
 }
 
 
@@ -16,18 +19,63 @@ void GameSettingsHandler::onNotify(GameObject2D * entity_, Event event_)
 	switch (event_)
 	{
 	case Event::GAME_SETTINGS_INCREASE_LIVES:
-		m_lives++;
+		if (m_lives < 20)
+		{
+			m_lives++;
+		}
 		break;
 	case Event::GAME_SETTINGS_DECREASE_LIVES:
-		m_lives--;
+		if (m_lives > 1)
+		{
+			m_lives--;
+		}
 		break;
 	case Event::GAME_SETTINGS_INCREASE_TIME:
-		m_time += 10;
+		if (m_time < 3630)
+		{
+			m_time += 30;
+		}
+
+		if (m_time >= 3630)
+		{
+			m_infiniteTime = true;
+		}
+		else if (m_time > 0)
+		{
+			m_infiniteTime = false;
+		}
 		break;
 	case Event::GAME_SETTINGS_DECREASE_TIME:
-		m_time -= 10;
+		if (m_time > 0)
+		{
+			m_time -= 30;
+		}
+
+		if (m_time <= 0)
+		{
+			m_infiniteTime = true;
+		}
+		else if (m_time < 3630)
+		{
+			m_infiniteTime = false;
+		}
 		break;
 	default:
 			break;
 	}
+}
+
+int GameSettingsHandler::getLives()
+{
+	return m_lives;
+}
+
+float GameSettingsHandler::getTime()
+{
+	return m_time;
+}
+
+bool GameSettingsHandler::getInfinite()
+{
+	return m_infiniteTime;
 }

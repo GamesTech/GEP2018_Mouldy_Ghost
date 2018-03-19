@@ -62,11 +62,11 @@ void Menu::Tick(GameStateData * _GSD)
 
 			m_buttons[m_highlighted_index].setHighlighted(true);
 		}
+	}
 
-		for (int i = 0; i < m_buttons.size(); i++)
-		{
-			m_buttons[i].Tick(_GSD);
-		}
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		m_buttons[i].Tick(_GSD);
 	}
 }
 
@@ -91,4 +91,16 @@ void Menu::init()
 			m_buttons[i].addListener(listeners[j]);
 		}
 	}
+}
+
+MenuButton * Menu::getMenuButton(Event _event)
+{
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		if (m_buttons[i].getTopEvent() == _event)
+		{
+			return &m_buttons[i];
+		}
+	}
+	return nullptr;
 }

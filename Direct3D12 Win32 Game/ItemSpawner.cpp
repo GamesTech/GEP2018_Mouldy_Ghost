@@ -129,7 +129,7 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 			if (tmptype == ItemType::EXPLOSIVE)
 			{
 				Explosive* orig_item_cast = static_cast<Explosive*>(orig_item);
-				Explosive* tmpex = new Explosive(_RD,name);
+				Explosive* tmpex = new Explosive(_RD, name, m_spawner);
 
 
 				tmpex->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
@@ -139,11 +139,11 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 				tmpex->setFuse(orig_item_cast->getFuse());
 
 				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());
-			else if (tmptype == ItemType::EXPLOSIVE)
 			}
+			else if (tmptype == ItemType::EXPLOSIVE)
 			{
 				Throwable* orig_item_cast = static_cast<Throwable*>(orig_item);
-				Throwable* tmptr = new Throwable(_RD, name);
+				Throwable* tmptr = new Throwable(_RD, name, m_spawner);
 
 				tmptr->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
 				tmptr->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
@@ -153,7 +153,7 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 			}
 			else
 			{
-				newitem = new Item(_RD, name);
+				newitem = new Item(_RD, name, m_spawner);
 			}
 			Rectangle collider = Rectangle
 			(newitem->GetPos().x, newitem->GetPos().y, 

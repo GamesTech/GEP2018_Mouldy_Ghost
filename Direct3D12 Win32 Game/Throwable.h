@@ -19,6 +19,9 @@ public:
 	void setOnHitPlayerString(std::string _hitplayer) { m_hit_player = _hitplayer; }
 	void setOnHitGroundString(std::string _hitground) { m_hit_ground = _hitground; }
 
+	std::string getOnThrowString() { return m_on_throw;}
+	std::string getOnHitPlayerString() { return m_hit_player; }
+	std::string getOnHitGroundString() { return m_hit_ground;}
 
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal);
 	void Collision(Physics2D* _collision);

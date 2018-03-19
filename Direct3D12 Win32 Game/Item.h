@@ -24,6 +24,12 @@ public:
 	void setOnUseString(std::string _use) { m_onUse = _use; }
 	void setPower(float _power) { m_power = _power; }
 	void setitemType(ItemType type) { m_type = type; }
+
+	std::string getOnPickupString() { return m_onPickUp; }
+	std::string getOnUseString() {return m_onUse; }
+	float getPower() { return m_power; }
+	
+
 	ItemType getitemType() { return m_type; }
 
 	SpawnHandler* m_handler;

@@ -70,7 +70,7 @@ void GameScene::Initialise(RenderData * _RD,
 		}
 	}
 
-	giveMeItem(_GSD, "apple");
+	giveMeItem(_RD,_GSD, "apple");
 
 	game_stage->addObjectsToScene(m_2DObjects);
 
@@ -205,9 +205,9 @@ void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _comma
 	m_RD->m_spriteBatch->End();
 }
 
-void GameScene::giveMeItem(GameStateData* _GSD, std::string _name)
+void GameScene::giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _name)
 {
-	Item* itm = item_spawner.createNewItemWithName(_name);
+	Item* itm = item_spawner.createNewItemWithName(_RD,_name);
 	itm->SetSpawn(Vector2(500,100));
 
 	m_spawner->onNotify(itm, Event::OBJECT_INSTANTIATED);

@@ -16,6 +16,7 @@
     <ImageContentTask Include="greenmario.png" />
     <ImageContentTask Include="terraria.png" />
     <ImageContentTask Include="yoshi.png" />
+    <ImageContentTask Include="explosion.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

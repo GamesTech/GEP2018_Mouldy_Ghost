@@ -19,7 +19,8 @@ public:
 	float getFuse() { return m_fuse; }
 	float getExpRange() { return m_explosion_range;}
 private:
-	
+	RenderData* RD_ptr;
+
 	bool m_explode = false;
 	float m_fuse = 0;
 	float m_explosion_range = 5;

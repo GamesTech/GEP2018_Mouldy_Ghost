@@ -166,6 +166,9 @@
     <ImageContentTask Include="terraria.png" />
     <ImageContentTask Include="yoshi.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="explosion.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

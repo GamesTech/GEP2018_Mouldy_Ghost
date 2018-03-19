@@ -10,3 +10,4 @@ direction
 size
 >30
 >30
+gravity			>false

@@ -42,6 +42,8 @@ DashAttack::DashAttack(std::string _attack_file, RenderData * _RD)
 	m_dash_direction.x = std::stof(getFileData(attack_file));
 	m_dash_direction.y = std::stof(getFileData(attack_file));
 	m_dash_distance = std::stof(getFileData(attack_file));
+
+	m_data.grav = getFileData(attack_file)[0] == 't';
 	attack_file.close();
 }
 

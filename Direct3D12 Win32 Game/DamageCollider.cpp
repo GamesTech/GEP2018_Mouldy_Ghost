@@ -17,7 +17,14 @@ DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandle
 	m_physics->SetCollider(rect);
 
 	m_physics->SetOwner(this);
-	m_physics->SetGrav(0);
+	if (_data.grav)
+	{
+		m_physics->SetGrav(1);
+	}
+	else
+	{
+		m_physics->SetGrav(0);
+	}
 	tag = GameObjectTag::ATTACK;
 	m_data = _data;
 	if (_data.child_to_player)
@@ -50,13 +57,13 @@ void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 			if (m_data.contact == Destroy::ON_PLAYER_HIT)
 			{
 				m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
-				delete this;
+				return;
 			}
 		}
 		if (m_data.contact == Destroy::ON_ANYTHING_HIT)
 		{
 			m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
-			delete this;
+			return;
 		}
 	}
 }
@@ -70,6 +77,6 @@ void DamageCollider::Tick(GameStateData * _GSD)
 	if (m_lifetime > m_data.time)
 	{
 		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
-		delete this;
+		return;
 	}
 }

@@ -10,3 +10,4 @@ projectile size y	>25
 dash x			>0.7
 dash y			>-1.6
 dash power		>20
+gravity			>false

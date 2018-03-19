@@ -17,4 +17,7 @@ private:
 	RenderData* m_RD;
 	std::vector<GameObject2D*>* m_2DObjects;
 	std::vector<Physics2D*>* m_physics;
+
+	//TODO: We need a better and more stable fix for this
+	std::vector<GameObject2D*> m_delete_queue;
 };

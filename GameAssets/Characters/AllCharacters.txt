@@ -2,5 +2,3 @@
 >Character002
 >Character003
 >Character004
->Character005
->Character006

@@ -26,4 +26,5 @@ struct DamageColData
 	int damage;
 	int knockback;
 	Vector2 size;
+	bool grav;
 };

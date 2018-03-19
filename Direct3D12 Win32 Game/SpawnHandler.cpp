@@ -15,6 +15,15 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	}
 	case Event::OBJECT_DESTROYED:
 	{
+		int del_count = m_delete_queue.size();
+		if (del_count)
+		{
+			for (int i = 0; i < del_count; i++)
+			{
+				delete m_delete_queue[i];
+			}
+			m_delete_queue.clear();
+		}
 		m_RD->m_resourceCount--;
 		int i = 0;
 		for (std::vector<GameObject2D*>::iterator it = m_2DObjects->begin();
@@ -36,6 +45,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 				break;
 			}
 		}
+		m_delete_queue.push_back(object);
 		break;
 	}
 	}

@@ -47,4 +47,11 @@ private:
 	CharacterManager c_manager;
 	std::unique_ptr<SpawnHandler> m_spawner;
 	ItemSpawner item_spawner;
+
+	int m_maxLives;
+	float m_timeLimit;
+	bool m_infiniteLives;
+	bool m_infiniteTime;
+
+	float m_timeLeft;
 };

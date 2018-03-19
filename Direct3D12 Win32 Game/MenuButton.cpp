@@ -96,6 +96,18 @@ void MenuButton::setText(std::string _text)
 	m_text.SetText(_text);
 }
 
+Event MenuButton::getTopEvent()
+{
+	if (m_eventLeft != NULL)
+	{
+		return m_eventLeft;
+	}
+	else
+	{
+		return m_eventToSend;
+	}
+}
+
 void MenuButton::setHighlighted(bool _highlighted)
 {
 	m_highlighted = _highlighted;

@@ -284,6 +284,9 @@
     <ClInclude Include="Explosion.h">
       <Filter>Items\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="GameSettingsHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -428,6 +431,9 @@
     </ClCompile>
     <ClCompile Include="Explosion.cpp">
       <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettingsHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

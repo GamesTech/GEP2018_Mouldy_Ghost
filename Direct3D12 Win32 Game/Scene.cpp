@@ -30,6 +30,7 @@ Scene::~Scene()
 	m_sounds.clear();
 }
 
+
 void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	//this will update the audio engine but give us chance to do somehting else if that isn't working

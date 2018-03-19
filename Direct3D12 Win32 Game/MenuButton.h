@@ -20,6 +20,8 @@ public:
 		Vector2 _cam_pos = Vector2::Zero) override;
 	void setText(std::string _text);
 
+	Event getTopEvent();
+
 	void setHighlighted(bool _highlighted);
 private:
 	ButtonType type;

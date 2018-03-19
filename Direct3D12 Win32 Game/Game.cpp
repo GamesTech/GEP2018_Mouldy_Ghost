@@ -8,6 +8,7 @@
 #include "GameStateData.h"
 #include "MusicHandler.h"
 #include "SceneHandler.h"
+#include "GameSettingsHandler.h"
 
 extern void ExitGame();
 
@@ -144,8 +145,10 @@ void Game::Initialize(HWND window, int width, int height)
 	//at the moment this needs to be done before a scene is initialised
 	m_musicListener = std::make_unique<MusicHandler>();
 	m_sceneListener = std::make_unique<SceneHandler>();
+	m_gameSettings = std::make_unique<GameSettingsHandler>();
 	listeners.push_back(m_musicListener.get());
 	listeners.push_back(m_sceneListener.get());
+	listeners.push_back(m_gameSettings.get());
 
 	m_gameScene = new GameScene();
 	m_all_scenes.push_back(m_gameScene);

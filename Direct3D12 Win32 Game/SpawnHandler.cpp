@@ -1,16 +1,10 @@
 #include "pch.h"
 #include "SpawnHandler.h"
 #include "Events.h"
+#include "RenderData.h"
 
 void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 {
-	//clear out the old objects
-	for (int i = 0; i < m_objects_to_delete.size(); i++)
-	{
-		delete m_objects_to_delete[i];
-	}
-	m_objects_to_delete.clear();
-
 	switch (_event)
 	{
 	case Event::OBJECT_INSTANTIATED:
@@ -21,7 +15,16 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	}
 	case Event::OBJECT_DESTROYED:
 	{
-		m_objects_to_delete.push_back(object);
+		int del_count = m_delete_queue.size();
+		if (del_count)
+		{
+			for (int i = 0; i < del_count; i++)
+			{
+				delete m_delete_queue[i];
+			}
+			m_delete_queue.clear();
+		}
+		m_RD->m_resourceCount--;
 		int i = 0;
 		for (std::vector<GameObject2D*>::iterator it = m_2DObjects->begin();
 			it != m_2DObjects->end(); it++, i++)
@@ -42,13 +45,16 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 				break;
 			}
 		}
+		m_delete_queue.push_back(object);
 		break;
 	}
 	}
 }
 
-void SpawnHandler::setData(std::vector<GameObject2D*>* _2DObjects, std::vector<Physics2D*>* _physics)
+void SpawnHandler::setData(std::vector<GameObject2D*>* _2DObjects,
+	std::vector<Physics2D*>* _physics, RenderData* _RD)
 {
+	m_RD = _RD;
 	m_2DObjects = _2DObjects;
 	m_physics = _physics;
 }

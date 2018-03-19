@@ -1,56 +1,105 @@
 #include "pch.h"
 
 #include "InputSystem.h"
-#include "GameScene.h"
-#include "TestScene.h"
-
-//TODO: All instances of "testscene" should be replaced with menuscene when it exists
 
 //Keyboard in game controls
-void InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state
+void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State _prev_state
 	, GameActions& _actions)
 {
-	if (_state.W && !_prev_state.W)
+	switch (_player)
 	{
-		_actions.push_back(P_JUMP);
-	}
-	if (_state.A)
+	case 1:
 	{
-		_actions.push_back(P_MOVE_LEFT);
-	}
-	if (_state.S)
-	{
-		_actions.push_back(P_CROUCH);
-	}
-	if (_state.D)
-	{
-		_actions.push_back(P_MOVE_RIGHT);
-	}
+		if (_state.W && !_prev_state.W)
+		{
+			_actions.push_back(P_JUMP);
+		}
+		if (_state.A)
+		{
+			_actions.push_back(P_MOVE_LEFT);
+		}
+		if (_state.S)
+		{
+			_actions.push_back(P_CROUCH);
+		}
+		if (_state.D)
+		{
+			_actions.push_back(P_MOVE_RIGHT);
+		}
 
-	if (_state.Y)
-	{
-		_actions.push_back(P_HOLD_BASIC);
-	}
-	else if (_prev_state.Y)
-	{
-		_actions.push_back(P_RELEASE_BASIC);
-	}
-	if (_state.U)
-	{
-		_actions.push_back(P_HOLD_SPECIAL);
-	}
-	else if (_prev_state.U)
-	{
-		_actions.push_back(P_RELEASE_SPECIAL);
-	}
+		if (_state.Y)
+		{
+			_actions.push_back(P_HOLD_BASIC);
+		}
+		else if (_prev_state.Y)
+		{
+			_actions.push_back(P_RELEASE_BASIC);
+		}
+		if (_state.G)
+		{
+			_actions.push_back(P_HOLD_SPECIAL);
+		}
+		else if (_prev_state.G)
+		{
+			_actions.push_back(P_RELEASE_SPECIAL);
+		}
 
-	if (_state.H && !_prev_state.H)
-	{
-		_actions.push_back(P_GRAB);
+		if (_state.H && !_prev_state.H)
+		{
+			_actions.push_back(P_GRAB);
+		}
+		if (_state.J && !_prev_state.J)
+		{
+			_actions.push_back(P_GUARD);
+		}
+		break;
 	}
-	if (_state.J && !_prev_state.J)
+	case 2:
 	{
-		_actions.push_back(P_GUARD);
+		if (_state.Up && !_prev_state.Up)
+		{
+			_actions.push_back(P_JUMP);
+		}
+		if (_state.Left)
+		{
+			_actions.push_back(P_MOVE_LEFT);
+		}
+		if (_state.Down)
+		{
+			_actions.push_back(P_CROUCH);
+		}
+		if (_state.Right)
+		{
+			_actions.push_back(P_MOVE_RIGHT);
+		}
+
+		if (_state.NumPad5)
+		{
+			_actions.push_back(P_HOLD_BASIC);
+		}
+		else if (_prev_state.NumPad5)
+		{
+			_actions.push_back(P_RELEASE_BASIC);
+		}
+		if (_state.NumPad1)
+		{
+			_actions.push_back(P_HOLD_SPECIAL);
+		}
+		else if (_prev_state.NumPad1)
+		{
+			_actions.push_back(P_RELEASE_SPECIAL);
+		}
+
+		if (_state.NumPad2 && !_prev_state.NumPad2)
+		{
+			_actions.push_back(P_GRAB);
+		}
+		if (_state.NumPad3 && !_prev_state.NumPad3)
+		{
+			_actions.push_back(P_GUARD);
+		}
+		break;
+	}
 	}
 	if (_state.Escape)
 	{
@@ -116,32 +165,78 @@ void InputSystem::getAction(GamePad::State _state,
 }
 
 //keyboard menu controls
-MenuAction InputSystem::getAction(Keyboard::State _state, Keyboard::State _prev_state)
+MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State _prev_state)
 {
-	if (_state.W && !_prev_state.W)
+	switch (_player)
 	{
-		return (NAV_UP);
-	}
-	if (_state.A && !_prev_state.A)
+	case 1:
 	{
-		return (NAV_LEFT);
-	}
-	if (_state.S && !_prev_state.S)
-	{
-		return (NAV_DOWN);
-	}
-	if (_state.D && !_prev_state.D)
-	{
-		return (NAV_RIGHT);
-	}
+		if (_state.W && !_prev_state.W)
+		{
+			return NAV_UP;
+		}
+		if (_state.A && !_prev_state.A)
+		{
+			return NAV_LEFT;
+		}
+		if (_state.S && !_prev_state.S)
+		{
+			return NAV_DOWN;
+		}
+		if (_state.D && !_prev_state.D)
+		{
+			return (NAV_RIGHT);
+		}
 
+		if (_state.R && !_prev_state.R)
+		{
+			return (CONFIRM);
+		}
+		if (_state.Y && !_prev_state.Y)
+		{
+			return PREVIOUS_MENU;
+		}
+		break;
+	}
+	case 2:
+	{
+		if (_state.Up && !_prev_state.Up)
+		{
+			return (NAV_UP);
+		}
+		if (_state.Left && !_prev_state.Left)
+		{
+			return (NAV_LEFT);
+		}
+		if (_state.Down && !_prev_state.Down)
+		{
+			return (NAV_DOWN);
+		}
+		if (_state.Right && !_prev_state.Right)
+		{
+			return (NAV_RIGHT);
+		}
+
+		if (_state.NumPad1 && !_prev_state.NumPad1)
+		{
+			return (CONFIRM);
+		}
+		if (_state.NumPad3 && !_prev_state.NumPad3)
+		{
+			return PREVIOUS_MENU;
+		}
+		break;
+	}
+	default:
+		break;
+	}
 	if (_state.Enter && !_prev_state.Enter)
 	{
-		return (CONFIRM);
+		return ADVANCE_MENU;
 	}
 	if (_state.Escape && !_prev_state.Escape)
 	{
-		return (PREVIOUS_MENU);
+		return (QUIT);
 	}
 
 	return NONE;

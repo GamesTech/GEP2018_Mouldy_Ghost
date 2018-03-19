@@ -169,9 +169,6 @@
     <ClInclude Include="GameScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h">
-      <Filter>Scenes\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="EventHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
@@ -179,14 +176,8 @@
       <Filter>EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="MusicHandler.h" />
-    <ClInclude Include="PhysicsScene.h">
-      <Filter>Scenes\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="AllScenes.h">
       <Filter>Game Base\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="TestPhys.h">
-      <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>GameObjects\Stages\Header</Filter>
@@ -265,12 +256,6 @@
     <ClInclude Include="DamageCollider.h">
       <Filter>Attacks\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="MeleeAttack.h">
-      <Filter>Attacks\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="RangedAttack.h">
-      <Filter>Attacks\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="CounterAttack.h">
       <Filter>Attacks\Headers</Filter>
     </ClInclude>
@@ -283,10 +268,17 @@
     <ClInclude Include="DashAttack.h">
       <Filter>Attacks\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterSelectScene.h">
+    <ClInclude Include="GameSettingsScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="GameSettingsScene.h">
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="StandardAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharSelectScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameSettingsHandler.h" />
@@ -352,20 +344,11 @@
     <ClCompile Include="GameScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Scenes\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="MusicHandler.cpp">
       <Filter>EventSystem\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsScene.cpp">
-      <Filter>Scenes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="TestPhys.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>GameObjects\Stages\Source</Filter>
@@ -425,14 +408,20 @@
     <ClCompile Include="DamageCollider.cpp">
       <Filter>Attacks\Source</Filter>
     </ClCompile>
-    <ClCompile Include="MeleeAttack.cpp">
-      <Filter>Attacks\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="DashAttack.cpp" />
-    <ClCompile Include="CharacterSelectScene.cpp">
+    <ClCompile Include="GameSettingsScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="GameSettingsScene.cpp">
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="DashAttack.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardAttack.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharSelectScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="GameSettingsHandler.cpp" />

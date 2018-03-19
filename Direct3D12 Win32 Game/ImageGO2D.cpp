@@ -3,7 +3,7 @@
 #include <codecvt>
 #include "RenderData.h"
 
-ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, Vector2 _spritesize, int _in_row)
+ImageGO2D::ImageGO2D(RenderData * _RD, string _filename)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 	string fullpath = "../DDS/" + _filename + ".dds";
@@ -25,33 +25,31 @@ ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, Vector2 _spritesize, in
 
 	uploadResourcesFinished.wait();
 
-	if (_spritesize.x == 0)
-	{
-		m_spriteSize = Vector2(GetTextureSize
-		(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
-	}
-	else
-	{
-		m_spriteSize = _spritesize;
-	}
+	m_spriteSize = Vector2(GetTextureSize
+	(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
 
-	SetOrigin(m_spriteSize / 2);
+	CentreOrigin();
 }
-
 
 ImageGO2D::~ImageGO2D()
 {
 	m_texture.Reset();
 }
 
-void ImageGO2D::Render(RenderData * _RD, int _sprite)
+void ImageGO2D::SetSpriteSize(Vector2 _size, int _sprites_in_row)
+{
+	m_spriteSize = _size;
+	m_sprites_in_row = _sprites_in_row;
+}
+
+void ImageGO2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 {
 	Rectangle rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
 	const RECT* r = &RECT(rect);
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(m_texture.Get()),
-		m_pos, r, m_colour, m_orientation, m_origin, m_scale);
+		m_pos + _cam_pos, r, m_colour, m_orientation, m_origin, m_scale);
 }
 
 void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)
@@ -101,12 +99,4 @@ Vector2 ImageGO2D::TextureSize()
 	{
 		return m_spriteSize;
 	}
-}
-
-void ImageGO2D::FlipX()
-{
-	//this doesn't do anything, flipping textures is harder than I expected
-	flipped = !flipped;
-
-	m_orientation += 3.14159;
 }

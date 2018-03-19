@@ -4,13 +4,13 @@
 
 class SpawnHandler;
 
-class MeleeAttack
+class StandardAttack
 	:public Attack
 {
 public:
-	MeleeAttack() = default;
-	MeleeAttack(std::string _attack_file, RenderData* _RD);
-	~MeleeAttack() = default;
+	StandardAttack() = default;
+	StandardAttack(std::string _attack_file, RenderData* _RD);
+	~StandardAttack() = default;
 
 	virtual void PerformAttack(Vector2 _position, int _direction,
 		Character* _user, GameStateData* _GSD,

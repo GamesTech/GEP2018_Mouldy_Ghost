@@ -27,7 +27,7 @@ VisiblePhysics::~VisiblePhysics()
 	}
 }
 
-void VisiblePhysics::Render()
+void VisiblePhysics::Render(Vector2 _cam)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -36,7 +36,7 @@ void VisiblePhysics::Render()
 			Vector2 corner = Vector2(m_collider.x + (m_collider.width * (i % 2))
 				, m_collider.y + (m_collider.height * (i / 2)));
 			m_corners[i]->SetPos(corner);
-			m_corners[i]->Render(m_RD, 0);
+			m_corners[i]->Render(m_RD, 0, _cam);
 		}
 	}
 }

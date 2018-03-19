@@ -22,14 +22,6 @@ class MusicHandler;
 struct RenderData;
 struct GameStateData;
 
-enum SceneEnum
-{
-	GAME_SCENE,
-	TEST_SCENE,
-	PHYSICS_SCENE,
-	MENU_SCENE
-};
-
 // A basic game implementation that creates a D3D12 device and
 // provides a game loop.
 class Game
@@ -74,8 +66,6 @@ private:
 
     void OnDeviceLost();
 
-	bool SwitchToScene(SceneEnum _scene, bool _reset);
-
     // Application state
     HWND                                                m_window;
     int                                                 m_outputWidth;
@@ -112,12 +102,10 @@ private:
 	GameStateData* m_GSD;
 
 	Scene* m_activeScene;
-	SceneEnum m_current_scene;
 
 	GameScene* m_gameScene;
-	TestScene* m_testScene;
-	PhysicsScene* m_physScene;
 	MenuScene* m_menuScene;
+	MeleeScene* m_meleeScene;
 	CharacterSelectScene* m_characterSelectScene;
 	GameSettingsScene* m_gameSettingsScene;
 

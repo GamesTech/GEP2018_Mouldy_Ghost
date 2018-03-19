@@ -14,11 +14,14 @@ class ImageGO2D
 	: public GameObject2D
 {
 public:
-	ImageGO2D(RenderData* _RD, string _filename, Vector2 _spritesize = Vector2(0,0), int _in_row = 0);
+	ImageGO2D(RenderData* _RD, string _filename);
 	ImageGO2D() = default;
 	virtual ~ImageGO2D();
 
-	virtual void Render(RenderData* _RD, int _sprite);
+	void SetSpriteSize(Vector2 _size, int _sprites_in_row);
+
+	virtual void Render(RenderData* _RD, int _sprite = 0,
+		Vector2 _cam_pos = Vector2::Zero);
 
 	void scaleFromPoint(Vector2 point, Vector2 scale);
 
@@ -26,11 +29,9 @@ public:
 	Vector2 TextureSize();
 
 protected:
-	void FlipX();
-	bool flipped = false;
-
 	Microsoft::WRL::ComPtr<ID3D12Resource> m_texture;
 	int m_resourceNum = -1;
 	Vector2 m_spriteSize;
+	int m_sprites_in_row;
 };
 

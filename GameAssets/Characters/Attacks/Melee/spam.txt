@@ -1,3 +1,4 @@
+destory when hit	>anything
 hold		>-0.6
 time		>0.8
 speed		>25
@@ -7,5 +8,6 @@ direction
 >1
 >0
 size
->20
->20
+>30
+>30
+gravity		>false

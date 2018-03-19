@@ -5,9 +5,9 @@
 #if _DEBUG
 #include "VisiblePhysics.h"
 
-void Physics2D::RenderCorners()
+void Physics2D::RenderCorners(Vector2 _cam)
 {
-	static_cast <VisiblePhysics*> (this)->Render();
+	static_cast <VisiblePhysics*> (this)->Render(_cam);
 }
 #endif
 

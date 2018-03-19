@@ -6,7 +6,6 @@
 #include "Game.h"
 #include "RenderData.h"
 #include "GameStateData.h"
-#include "TestScene.h"
 #include "MusicHandler.h"
 #include "SceneHandler.h"
 
@@ -151,19 +150,16 @@ void Game::Initialize(HWND window, int width, int height)
 	m_gameScene = new GameScene();
 	m_all_scenes.push_back(m_gameScene);
 
-	m_testScene = new TestScene();
-	m_all_scenes.push_back(m_testScene);
-
-	m_physScene = new PhysicsScene();
-	m_all_scenes.push_back(m_physScene);
-
 	m_menuScene = new MenuScene();
 	m_all_scenes.push_back(m_menuScene);
 
 	m_gameSettingsScene = new GameSettingsScene();
 	m_all_scenes.push_back(m_gameSettingsScene);
 
-	m_characterSelectScene = new CharacterSelectScene();
+	m_meleeScene = new MeleeScene();
+	m_all_scenes.push_back(m_meleeScene);
+
+	m_characterSelectScene = new CharacterSelectScene(m_gameScene);
 	m_all_scenes.push_back(m_characterSelectScene);
 
 	//add all listeners to all scenes
@@ -739,7 +735,7 @@ void Game::ReadInput()
 		//if this is the game scene take inputs for the game
 		if (m_sceneListener->getActiveScene()->getType() == "GameScene")
 		{
-			m_input.getAction(m_keyboard->GetState(),
+			m_input.getAction(i, m_keyboard->GetState(),
 				m_prev_keyboard, m_GSD->game_actions[i]);
 			m_input.getAction(state,
 				m_buttons[i], m_GSD->game_actions[i]);
@@ -747,17 +743,16 @@ void Game::ReadInput()
 		//otherwise take menu inputs
 		else
 		{
-			m_GSD->menu_action[i] = m_input.getAction(m_keyboard->GetState(), m_prev_keyboard);
+			m_GSD->menu_action[i] = m_input.getAction(i, m_keyboard->GetState(), m_prev_keyboard);
 			if (m_GSD->menu_action[i] == NONE)
 			{
 				m_GSD->menu_action[i] = m_input.getAction(state, m_buttons[i]);
 			}
 		}
-
-		m_prev_keyboard = m_keyboard->GetState();
 		m_buttons[i].Update(state);
-
 	}
+
+	m_prev_keyboard = m_keyboard->GetState();
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
 
@@ -788,6 +783,6 @@ void Game::ReadInput()
 	}
 
 	//Quit if press Esc
-	if (m_GSD->menu_action[0] == PREVIOUS_MENU)
+	if (m_GSD->menu_action[0] == QUIT)
 		PostQuitMessage(0);
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "MeleeAttack.h"
+#include "StandardAttack.h"
 #include "DashAttack.h"
 #include "InputSystem.h"
 
@@ -34,8 +34,9 @@ public:
 	//TODO: add a 3d player and modes to switch between different views and basic physics
 	Character(RenderData* _RD, string _filename, SpawnHandler* _spawner);
 	virtual ~Character();
-
 	virtual void Tick(GameStateData* _GSD);
+	virtual void Render(RenderData* _RD, int _sprite = 0,
+		Vector2 _cam_pos = Vector2::Zero) override;
 
 	void CreatePhysics(RenderData* _RD = nullptr);
 
@@ -50,41 +51,54 @@ public:
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
 
 	void TakeDamage(int _dam) { m_damage += _dam; }
+	const int GetDamage() { return m_damage; }
 	void ResetDamage() { m_damage = 0; }
 
-	void GetHit(Vector2 _dir, float _force);
+	void LoseLife() { m_lives--; }
+	void ResetLives() { m_lives = 3; }
+	const int GetLives() { return m_lives; }
+	void SetLives(int _set) { m_lives = _set; }
+
+	void Hit(Vector2 _dir, float _force);
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	virtual void Collision(Physics2D* _collision) override;
 
-	void AddAttack(MeleeAttack _attack);
+	void AddAttack(StandardAttack _attack);
 	void AddAttack(DashAttack _attack);
+
+	void AddPoints(int _add) { m_points += _add; }
+	const int GetPoints() { return m_points; }
 
 protected:
 	int PlayerJump(std::vector<GameAction> _actions);
 	int PlayerMove(std::vector<GameAction> _actions);
 	void PlayerAttack(GameStateData * _GSD);
+	void MeleeAttack(GameStateData * _GSD,
+		std::vector<GameAction> _actions);
+	void SpecialAttack(GameStateData * _GSD,
+		std::vector<GameAction> _actions);
 
+	void FlipX();
+	bool flipped = false;
 	float m_recovery_time = 0;
-
 	int m_jumps = 1;
-
 	int m_damage = 0;
-
+	int m_lives = 3;
 	float m_move_speed = 1.0f;
 	int m_jump_limit = 2;
 	float m_jump_height = 1.0f;
-
 	int m_facing = 1;
-
 	CharacterController* m_controller = nullptr;
 	std::vector<Attack*> m_attacks;
 	Attack* m_charging_attack = nullptr;
 	float m_charge_time = 0;
 	Attack* m_spamming_attack = nullptr;
 	float m_spam_cooldown = 0;
-	bool m_can_attack = true;
+	bool m_attacking = false;
+	bool m_dash_recover = true;
 	SpawnHandler* m_spawner;
-
 	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
+	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
+	int m_points = 0;
 };

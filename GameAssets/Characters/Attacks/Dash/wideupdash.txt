@@ -1,3 +1,4 @@
+destory when hit	>nothing
 projectile time		>1
 projectile speed	>10
 projectile damage	>5
@@ -5,7 +6,8 @@ projectile knockback	>5
 projectile dir x	>0
 projectile dir y	>1
 projectile size x	>150
-projectile size y	>10
+projectile size y	>25
 dash x			>0.7
 dash y			>-1.6
 dash power		>20
+gravity			>false

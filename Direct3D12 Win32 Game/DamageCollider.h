@@ -19,6 +19,7 @@ public:
 
 	virtual void Tick(GameStateData* _GSD) override;
 
+	Character* GetUser() { return m_data.user; };
 private:
 	DamageColData m_data;
 	SpawnHandler* m_spawner;

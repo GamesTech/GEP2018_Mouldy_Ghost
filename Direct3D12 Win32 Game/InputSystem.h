@@ -11,6 +11,7 @@ enum MenuAction
 	ADVANCE_MENU,
 	PREVIOUS_MENU,
 	CONFIRM,
+	QUIT,
 
 	NONE
 };
@@ -45,15 +46,17 @@ public:
 	InputSystem() = default;
 	~InputSystem() = default;
 
-	void getAction(Keyboard::State _state,
+	void getAction(int _player, Keyboard::State _state,
 		Keyboard::State _prev_state, GameActions& _actions);
 	void getAction(GamePad::State _state,
 		GamePad::ButtonStateTracker _buttons, GameActions& _actions);
 
-	MenuAction getAction(Keyboard::State _state,
+	MenuAction getAction(int _player, Keyboard::State _state,
 		Keyboard::State _prev_state);
 	MenuAction getAction(GamePad::State _state,
 		GamePad::ButtonStateTracker _buttons);
 
 	static bool searchForAction(GameAction _action, GameActions _actions);
+
+private:
 };

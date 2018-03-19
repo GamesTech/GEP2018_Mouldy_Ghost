@@ -11,13 +11,13 @@ public:
 
 	virtual void onNotify(GameObject2D* object, Event _event);
 
-	void setData(std::vector<GameObject2D*>* _2DObjects, std::vector<Physics2D*>* _physics);
+	void setData(std::vector<GameObject2D*>* _2DObjects,
+		std::vector<Physics2D*>* _physics, RenderData* _RD);
 private:
+	RenderData* m_RD;
 	std::vector<GameObject2D*>* m_2DObjects;
 	std::vector<Physics2D*>* m_physics;
 
-	/*deleting objects as they stopped existing was
-	causing big crashes on uni computers
-	this vector remedies that hopefully*/
-	std::vector<GameObject2D*> m_objects_to_delete;
+	//TODO: We need a better and more stable fix for this
+	std::vector<GameObject2D*> m_delete_queue;
 };

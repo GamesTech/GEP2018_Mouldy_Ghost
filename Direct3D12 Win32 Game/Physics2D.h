@@ -38,6 +38,8 @@ public:
 	Rectangle GetCollider() { return m_collider; }
 	void MoveCollider(Vector2 _pos) {m_collider.Offset(_pos.x, _pos.y);}
 
+	void ScaleCollider(Vector2 _by, Vector2 _owner_scale);
+
 	Item* GetItem();
 #if _DEBUG
 	void RenderCorners(Vector2 _cam);
@@ -60,4 +62,6 @@ protected:
 
 	float m_gravity_scale;
 	float m_bounciness;
+
+	Vector2 m_collider_scale = Vector2::One;
 };

@@ -171,32 +171,26 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		m_cam_pos += dir_to_target / 20;
 	}
 
-	if (m_GSD->game_actions[0].size() > 0)
-	{
-		//code for testing zoom
-		//if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_SPECIAL)
-		//{
-		//	for (int i = 0; i < m_2DObjects.size(); i++)
-		//	{
-		//		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
-		//		temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x + 0.1f, temp->GetScale().y + 0.1f));
-		//	}
-		//}
-		//if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_BASIC)
-		//{
-		//	for (int i = 0; i < m_2DObjects.size(); i++)
-		//	{
-		//		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
-		//		temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x - 0.1f, temp->GetScale().y - 0.1f));
-		//	}
-		//}
-	}
-
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
-		//temp->scaleFromPoint(Vector2(800, 600), Vector2(temp->GetScale().x + 0.1, temp->GetScale().y + 0.1));
-	}
+	//if (m_GSD->game_actions[0].size() > 0)
+	//{
+	//	//code for testing zoom
+	//	if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_SPECIAL)
+	//	{
+	//		for (int i = 0; i < m_2DObjects.size(); i++)
+	//		{
+	//			ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
+	//			temp->scaleFromPoint(m_cam_pos, Vector2(temp->GetScale().x + 0.1f, temp->GetScale().y + 0.1f));
+	//		}
+	//	}
+	//	if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_BASIC)
+	//	{
+	//		for (int i = 0; i < m_2DObjects.size(); i++)
+	//		{
+	//			ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
+	//			temp->scaleFromPoint(m_cam_pos, Vector2(temp->GetScale().x - 0.1f, temp->GetScale().y - 0.1f));
+	//		}
+	//	}
+	//}
 }
 
 void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,

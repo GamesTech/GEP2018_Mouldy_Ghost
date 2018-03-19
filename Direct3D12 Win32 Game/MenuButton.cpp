@@ -42,7 +42,7 @@ void MenuButton::Tick(GameStateData * _GSD)
 {
 	if (m_highlighted)
 	{
-		scaleFromPoint(GetPos(), Vector2(0.6f, 0.6f));
+		//scaleFromPoint(GetPos(), Vector2(0.6f, 0.6f));
 		SetColour(Color(Colors::AliceBlue));
 	}
 	else

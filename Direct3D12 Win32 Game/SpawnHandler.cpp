@@ -5,6 +5,7 @@
 
 void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 {
+	if(this)
 	switch (_event)
 	{
 	case Event::OBJECT_INSTANTIATED:

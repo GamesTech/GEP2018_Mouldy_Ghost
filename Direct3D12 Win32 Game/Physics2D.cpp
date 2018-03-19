@@ -153,6 +153,19 @@ Vector2 Physics2D::GetNormal(Vector2 _point)
 	}
 }
 
+void Physics2D::ScaleCollider(Vector2 _by, Vector2 _owner_scale)
+{
+	Vector2 size = Vector2(m_collider.width, m_collider.height);
+
+	Vector2 realSize = Vector2((size.x * m_collider_scale.x), (size.y * m_collider_scale.y));
+	Vector2 realSizeAfterScale((size.x * _by.x), (size.y * _by.y));
+	realSizeAfterScale = realSizeAfterScale / _owner_scale;
+	Vector2 diff = realSizeAfterScale - realSize;
+
+	m_collider.width += (diff.x);
+	m_collider.height += (diff.y);
+}
+
 Item* Physics2D::GetItem()
 {
 	for (int i = 0; i < currently_colliding.size(); i++)

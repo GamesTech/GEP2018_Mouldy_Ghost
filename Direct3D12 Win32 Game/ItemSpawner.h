@@ -20,7 +20,7 @@ public:
 
 
 
-	Item* createNewItemWithName(std::string name);
+	Item* createNewItemWithName(RenderData* _RD, std::string name);
 
 private:
 	std::vector<Item*> allItems;

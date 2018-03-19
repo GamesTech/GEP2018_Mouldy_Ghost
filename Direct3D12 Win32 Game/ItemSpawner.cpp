@@ -110,19 +110,55 @@ void ItemSpawner::loadExplosiveProperies(Explosive * item, std::ifstream & _open
 
 }
 
-Item* ItemSpawner::createNewItemWithName(std::string name)
+Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 {
+	//copy every proprety of an item and then create a new one
+
 	for (int i = 0; i < allItems.size(); i++)
 	{
 		if (allItems[i]->GetName() == name)
 		{
-			Item* newitem = new Item(*allItems[i]);;
-		/*	if (allItems[i]->getitemType() == ItemType::EXPLOSIVE)
-			{
-				Explosive* tmp = static_cast<Explosive*>(allItems[i]);
-				newitem = new Explosive(*tmp);
+			
+			
+			ItemType tmptype = allItems[i]->getitemType();
 
-			}*/
+			Item* orig_item = allItems[i];
+			Item* newitem = nullptr;
+		
+			if (tmptype == ItemType::EXPLOSIVE)
+			{
+				Explosive* orig_item_cast = static_cast<Explosive*>(orig_item);
+				Explosive* tmpex = new Explosive(_RD,name);
+
+
+				tmpex->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
+				tmpex->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
+				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());
+
+				tmpex->setFuse(orig_item_cast->getFuse());
+				tmpex->setExpRange(orig_item_cast->getExpRange());
+				newitem = tmpex;
+			}
+			else if (tmptype == ItemType::EXPLOSIVE)
+			{
+				Throwable* orig_item_cast = static_cast<Throwable*>(orig_item);
+				Throwable* tmptr = new Throwable(_RD, name);
+
+				tmptr->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
+				tmptr->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
+				tmptr->setOnThrowString(orig_item_cast->getOnThrowString());
+
+				newitem = tmptr;
+			}
+			else
+			{
+				newitem = new Item(_RD, name);
+			}
+
+			newitem->setOnPickupString(orig_item->getOnPickupString());
+			newitem->setOnUseString(orig_item->getOnUseString());
+			newitem->setPower(orig_item->getPower());
+	
 			return newitem;
 		}
 	}

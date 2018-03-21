@@ -290,6 +290,9 @@
     <ClInclude Include="GameSettingsHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="CharacterLifeHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -441,6 +444,7 @@
     <ClCompile Include="GameSettingsHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterLifeHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

@@ -7,7 +7,7 @@ class SpawnHandler
 {
 public:
 	SpawnHandler() = default;
-	~SpawnHandler() = default;
+	virtual ~SpawnHandler();
 
 	virtual void onNotify(GameObject2D* object, Event _event);
 

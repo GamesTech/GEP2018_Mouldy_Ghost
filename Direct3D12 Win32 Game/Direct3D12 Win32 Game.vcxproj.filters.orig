@@ -282,12 +282,15 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
 <<<<<<< HEAD
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Scenes\Headers</Filter>
+=======
     <ClInclude Include="Explosion.h">
       <Filter>Items\Headers</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="GameSettingsHandler.h">
       <Filter>EventSystem\Headers</Filter>
->>>>>>> event_system
+>>>>>>> develop
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -432,12 +435,15 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
 <<<<<<< HEAD
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>Scenes\Source</Filter>
+=======
     <ClCompile Include="Explosion.cpp">
       <Filter>Items\Source</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="GameSettingsHandler.cpp">
       <Filter>EventSystem\Source</Filter>
->>>>>>> event_system
+>>>>>>> develop
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

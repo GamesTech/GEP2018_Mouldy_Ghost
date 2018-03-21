@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SceneHandler.h"
 #include "Scene.h"
+#include "GameOverScene.h"
 
 
 SceneHandler::SceneHandler()
@@ -106,6 +107,7 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 		{
 			if (m_allScenes[i]->getType() == "GameOver")
 			{
+				static_cast<GameOverScene*>(m_allScenes[i])->SortByScores();
 				sceneChanged = true;
 				sceneChangeIndex = i;
 			}

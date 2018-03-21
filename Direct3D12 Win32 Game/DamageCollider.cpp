@@ -39,8 +39,6 @@ DamageCollider::~DamageCollider()
 {
 	if(parent)
 	parent->RemoveChild(this);
-	delete m_physics;
-	m_physics = nullptr;
 }
 
 void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)

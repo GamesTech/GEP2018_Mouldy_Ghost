@@ -5,6 +5,7 @@
 class GameOverScene
 	: public Scene
 {
+public:
 	GameOverScene();
 	~GameOverScene();
 
@@ -12,16 +13,17 @@ class GameOverScene
 
 	virtual void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine) override;
-	virtual void Reset() override;
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
+	virtual void Reset() {}
 
-	void ShowStandings();
+	void AddCharacterToScene(Character* _c);
 
-	void PlayerEliminated(Character* _character);
-	void SortByScores(Character** _character);
+	void PlayerEliminated(int index);
+	void SortByScores();
 private:
+	std::vector<Character*> m_chars_in_game;
 	Text2D* m_scores[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::vector<Character*> m_standings;
 	Color m_text_colour[4];

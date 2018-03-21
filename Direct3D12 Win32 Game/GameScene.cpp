@@ -108,6 +108,11 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	entities[i]->SetCharacter(players[i]);
 
 	m_HUD->AddCharacter(players[i]);
+
+	for (int j = 0; j < listeners.size(); j++)
+	{
+		listeners[j]->onNotify(players[i], Event::PLAYER_SPAWN);
+	}
 }
 
 void GameScene::RemoveCharacter(Character* _char)

@@ -6,7 +6,8 @@
 
 MenuButton::MenuButton()
 
-{}
+{
+}
 
 MenuButton::MenuButton(Event _eventToSend, RenderData * _RD, string _filename) : ImageGO2D(_RD, _filename)
 {

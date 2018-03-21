@@ -33,4 +33,3 @@ private:
 	Text2D  m_text = Text2D("");
 	Vector2 m_textOffset;
 };
-

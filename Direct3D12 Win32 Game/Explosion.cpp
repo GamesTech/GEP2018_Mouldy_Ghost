@@ -12,7 +12,7 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 #if _DEBUG
 	m_physics = new VisiblePhysics(_RD);
 #else
-	m_physics = new Physics2D();
+	m_physics =Physics2D();
 #endif
 	m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
 

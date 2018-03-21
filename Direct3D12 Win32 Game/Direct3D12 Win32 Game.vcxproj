@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="CharacterLifeHandler.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="CharSelectScene.h" />
     <ClInclude Include="GameOverScene.h" />
@@ -239,6 +240,7 @@
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterLifeHandler.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="CharSelectScene.cpp" />
     <ClCompile Include="GameOverScene.cpp" />

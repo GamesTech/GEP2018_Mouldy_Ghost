@@ -20,11 +20,6 @@ Character::Character(RenderData* _RD, string _filename, SpawnHandler* _spawner)
 
 Character::~Character()
 {
-	if (m_physics)
-	{
-		delete m_physics;
-		m_physics = nullptr;
-	}
 	m_attacks.clear();
 }
 
@@ -118,7 +113,7 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 void Character::CreatePhysics(RenderData* _RD)
 {
 #if _DEBUG
-	m_physics = new VisiblePhysics(_RD);
+	m_physics =  new VisiblePhysics(_RD);
 #else
 	m_physics = new Physics2D();
 #endif

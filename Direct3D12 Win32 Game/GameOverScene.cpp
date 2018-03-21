@@ -1,8 +1,14 @@
+#include "pch.h"
 #include "GameOverScene.h"
 #include "RenderData.h"
 
 GameOverScene::GameOverScene()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		m_scores[i] = new Text2D("");
+	}
+
 	m_standings.reserve(4);
 
 	m_text_colour[0] = (Color(0.3, 0.3, 1));
@@ -13,15 +19,16 @@ GameOverScene::GameOverScene()
 
 GameOverScene::~GameOverScene()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		if(m_scores[i])
+		delete m_scores[i];
+	}
 }
 
 void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	//wait for input to return to menu
-}
-
-void GameOverScene::Reset()
-{
 }
 
 void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
@@ -37,54 +44,64 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	m_3DObjects.push_back(m_cam);
 }
 
-void GameOverScene::ShowStandings()
+void GameOverScene::AddCharacterToScene(Character * _c)
 {
-	for (int i = m_standings.size(); i <= 0; i--)
-	{
-		//render the standing
-	}
+	m_chars_in_game.push_back(_c);
 }
 
-void GameOverScene::PlayerEliminated(Character * _character)
+void GameOverScene::PlayerEliminated(int index)
 {
-	m_standings.push_back(_character);
-	//set the colour
+	m_scores[m_standings.size()]->SetColour(m_text_colour[index]);
+	m_standings.push_back(m_chars_in_game[index]);
 }
 
-void GameOverScene::SortByScores(Character ** _character)
+void GameOverScene::SortByScores()
 {
 	for (int stand = 0; stand < 4; stand++)
 	{
 		int worst_score_so_far = 5000;
 		int character_index = -1;
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < m_chars_in_game.size(); i++)
 		{
-			if (_character[i])
+			bool character_in_array = false;
+
+			for (int j = 0; j < m_standings.size(); j++)
 			{
-				bool character_in_array = false;
-
-				for (int j = 0; j < m_standings.size(); j++)
+				if (m_standings[j] == m_chars_in_game[i])
 				{
-					if (m_standings[j] == _character[i])
-					{
-						character_in_array = true;
-					}
+					character_in_array = true;
 				}
+			}
 
-				if (_character[i]->GetPoints() < worst_score_so_far && !character_in_array)
-				{
-					worst_score_so_far = _character[i]->GetPoints();
-					character_index = i;
-				}
+			if (m_chars_in_game[i]->GetPoints() < worst_score_so_far && !character_in_array)
+			{
+				worst_score_so_far = m_chars_in_game[i]->GetPoints();
+				character_index = i;
 			}
 		}
 
 		if (character_index != -1)
 		{
-			m_standings.push_back(_character[character_index]);
+			m_scores[m_standings.size()]->SetColour(m_text_colour[character_index]);
+			m_standings.push_back(m_chars_in_game[character_index]);
 		}
 	}
 
-	//set the colour
+	m_2DObjects.clear();
+	for (int i = 0; i < m_standings.size(); i++)
+	{
+		Character* c = m_standings[i];
+		std::string score = "#";
+		score += std::to_string(m_standings.size() - i);
+		score += c->GetName();
+		score += std::to_string(c->GetPoints());
+		m_scores[i]->SetText(score);
+
+		int x = m_GSD->window_size.x / 2 - m_scores[i]->GetWidth(m_RD) / 2;
+		int y = (m_standings.size() - i - 1) * (m_GSD->window_size.y / m_standings.size());
+
+		m_scores[i]->SetPos(Vector2(x, y));
+		m_2DObjects.push_back(m_scores[i]);
+	}
 }

@@ -40,7 +40,7 @@ public:
 
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD, int _sprite = 0,
-		Vector2 _cam_pos = Vector2::Zero) = 0;
+		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) = 0;
 
 	std::string GetName();
 	void SetName(std::string string);

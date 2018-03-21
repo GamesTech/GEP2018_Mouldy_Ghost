@@ -16,8 +16,7 @@ public:
 	virtual void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine) override;
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
-		Vector2 _camera_position = Vector2::Zero);
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 	virtual void Reset() override;
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,

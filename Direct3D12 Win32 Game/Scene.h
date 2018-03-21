@@ -24,8 +24,7 @@ public:
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
-		Vector2 _camera_position = Vector2::Zero);
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 
 	void PhysicsInScene(GameStateData* _GSD);
 
@@ -49,6 +48,9 @@ protected:
 
 	Camera* m_cam;
 	Vector2 m_cam_pos = Vector2::Zero;
+	float m_cam_zoom = 1;
+	float m_max_zoom = 1.5;
+	float m_min_zoom = 0.5f;
 
 	RenderData* m_RD;
 	GameStateData* m_GSD;

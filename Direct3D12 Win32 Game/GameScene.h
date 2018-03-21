@@ -27,8 +27,7 @@ public:
 	void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
-		Vector2 _camera_position = Vector2::Zero) override;
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
 
 	CharacterManager* GetCharacterManager() { return &c_manager; }
 

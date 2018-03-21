@@ -89,7 +89,7 @@ void Character::Tick(GameStateData * _GSD)
 	GameObject2D::Tick(_GSD);
 }
 
-void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
+void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
 	if (!flipped)
@@ -102,12 +102,17 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 	}
 	const RECT* r = &RECT(rect);
 
-	Vector2 render_pos = m_pos + _cam_pos;
+	Vector2 render_scale = m_scale * _zoom;
+
+	Vector2 distance_from_origin = m_pos - _cam_pos;
+	distance_from_origin *= _zoom;
+
+	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(m_texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, m_scale);
+		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
 }
 
 void Character::CreatePhysics(RenderData* _RD)

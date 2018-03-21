@@ -139,8 +139,9 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	game_stage->update(m_GSD);
 
 	//find average of players location
-	int average_x = 0;
-	int average_y = 0;
+	Vector2 top_left = Vector2(100000,100000);
+	Vector2 bottom_right = Vector2(-1000, -1000);
+	Vector2 avg_pos = Vector2::Zero;
 	int num_players = 0;
 
 	for (int i = 0; i < 4; i++)
@@ -149,8 +150,12 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		{
 			if (players[i]->GetLives() > 0)
 			{
-				average_x += players[i]->GetPos().x;
-				average_y += players[i]->GetPos().y;
+				Vector2 p = players[i]->GetPos();
+				avg_pos += (p * m_cam_zoom);
+				top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
+				top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
+				bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
+				bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
 				num_players++;
 			}
 		}
@@ -164,50 +169,34 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	}
 	else if (num_players)
 	{
-		average_x /= num_players;
-		average_y /= num_players;
-
-		Vector2 average_pos = Vector2(average_x, average_y);
-		Vector2 mid = (m_GSD->window_size / 2);
-		Vector2 cam_target = (average_pos * -1) + mid;
+		avg_pos /= num_players;
+		avg_pos /= m_cam_zoom;
+		Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
+		Vector2 cam_target = (avg_pos * -1) + mid;
 		Vector2 dir_to_target = cam_target - m_cam_pos;
-		m_cam_pos += dir_to_target / 20;
-	}
+		m_cam_pos += dir_to_target / 5;
 
-	if (m_GSD->game_actions[0].size() > 0)
-	{
-		//code for testing zoom
-		//if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_SPECIAL)
-		//{
-		//	for (int i = 0; i < m_2DObjects.size(); i++)
-		//	{
-		//		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
-		//		temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x + 0.1f, temp->GetScale().y + 0.1f));
-		//	}
-		//}
-		//if (m_GSD->game_actions[0][0] == GameAction::P_RELEASE_BASIC)
-		//{
-		//	for (int i = 0; i < m_2DObjects.size(); i++)
-		//	{
-		//		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
-		//		temp->scaleFromPoint(Vector2(0, 0), Vector2(temp->GetScale().x - 0.1f, temp->GetScale().y - 0.1f));
-		//	}
-		//}
-	}
-
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		ImageGO2D* temp = static_cast<ImageGO2D*>(m_2DObjects[i]);
-		//temp->scaleFromPoint(Vector2(800, 600), Vector2(temp->GetScale().x + 0.1, temp->GetScale().y + 0.1));
+		float x_dist = top_left.x - bottom_right.x;
+		float y_dist = top_left.y - bottom_right.y;
+		float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
+		
+		m_cam_zoom = 700.0f / dist;
+		if (m_cam_zoom < m_min_zoom)
+		{
+			m_cam_zoom = m_min_zoom;
+		}
+		if (m_cam_zoom > m_max_zoom)
+		{
+			m_cam_zoom = m_max_zoom;
+		}
 	}
 
 	m_timeLeft -= timer.GetElapsedSeconds();
 }
 
-void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
-	Vector2 _camera_position)
+void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
 {
-	Scene::Render(_commandList, m_cam_pos);
+	Scene::Render(_commandList);
 
 	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
@@ -229,6 +218,7 @@ void GameScene::giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _n
 void GameScene::Reset()
 {
 	m_cam_pos = Vector2::Zero;
+	m_cam_zoom = 1;
 
 	for (int i = 0; i < 4; i++)
 	{

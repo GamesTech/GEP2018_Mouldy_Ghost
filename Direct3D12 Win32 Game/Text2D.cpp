@@ -25,7 +25,7 @@ void Text2D::CentreOrigin()
 	m_dirtyOrigin = true;
 }
 
-void Text2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
+void Text2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	if (m_dirtyOrigin)
 	{

@@ -45,6 +45,7 @@ void Item::pickUp(Character * _player)
 	else if (m_type != ItemType::SINGLE_USE)
 	{
 		_player->AddChild(this);
+		//player->equip items
 		//_player->setHeldItem(this);
 		if (m_onPickUp == "activate")
 		{
@@ -70,9 +71,11 @@ void Item::use(Character * _player)
 
 void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-
-	m_physics->ResetForce(Axis::Y_AXIS);
-	m_physics->SetGrav(0);
+	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
+	{
+		m_physics->ResetForce(Axis::Y_AXIS);
+		m_physics->SetGrav(0);
+	}
 }
 
 void Item::Collision(Physics2D * _collision)

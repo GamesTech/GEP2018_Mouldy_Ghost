@@ -165,7 +165,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 			}
 		}
 	}
-	if (num_players == 1)
+	if (num_players == 1 || m_timeLeft <= 0)
 	{
 		for (int i = 0; i < listeners.size(); i++)
 		{

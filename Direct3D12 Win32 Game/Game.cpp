@@ -701,39 +701,6 @@ void Game::OnDeviceLost()
     CreateResources();
 }
 
-//bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
-//{
-//	////m_current_scene = _scene;
-//	//m_GSD->m_2DObjects.clear();
-//	//m_GSD->objects_in_scene.clear();
-//
-//	//if (_reset)
-//	//{
-//	//	m_activeScene->Reset();
-//	//}
-//
-//	//switch (_scene)
-//	//{
-//	//case GAME_SCENE:
-//	//	m_activeScene = m_gameScene;
-//	//	break;
-//	//case TEST_SCENE:
-//	//	m_activeScene = m_testScene;
-//	//	break;
-//	//case PHYSICS_SCENE:
-//	//	m_activeScene = m_physScene;
-//	//	break;
-//	//case MENU_SCENE:
-//	//	m_activeScene = m_menuScene;
-//	//	break;
-//	//default:
-//	//	return false;
-//	//}
-//
-//	//m_activeScene->PhysicsInScene(m_GSD);
-//	return false;
-//}
-
 void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
@@ -769,28 +736,11 @@ void Game::ReadInput()
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
 
-	//Commented this out so i can test the menu stuff. I don't think this should be managed in game.cpp but by the scene manager
-	//switch (m_GSD->menu_action[0])
-	//{
-	//case NAV_UP:
-	//	SwitchToScene(GAME_SCENE, true);
-	//	break;
-	//case NAV_LEFT:
-	//	SwitchToScene(PHYSICS_SCENE, true);
-	//	break;
-	//case NAV_RIGHT:
-	//	SwitchToScene(TEST_SCENE, true);
-	//	break;
-	//case NAV_DOWN:
-	//	SwitchToScene(MENU_SCENE, false);
-	//default:
-	//	break;
-	//}
-
 	if (m_GSD->game_actions[0].size() > 0)
 	{
 		if (m_GSD->game_actions[0][0] == P_QUIT)
 		{
+			m_gameScene->RemoveAllCharacters();
 			m_sceneListener->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
 		}
 	}

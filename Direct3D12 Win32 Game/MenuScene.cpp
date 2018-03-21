@@ -38,12 +38,11 @@ void MenuScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWi
 	//m_testbutton->SetPos(Vector2(100, 100));
 	//m_testbutton->addListener(listeners[0]);
 
-	m_testMenu = std::make_unique<Menu>((m_GSD->window_size / 3.5), MenuButton(Event::CHANGE_SCENE_GAME, _RD, "gens"), "Go to game scene");
+	m_testMenu = std::make_unique<Menu>((m_GSD->window_size / 3.5), MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Melee!");
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		m_testMenu->addListener(listeners[i]);
 	}
 	m_testMenu->init();
 	m_2DObjects.push_back(m_testMenu.get());
-	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Melee!");
 }

@@ -20,6 +20,8 @@ public:
 
 	void AddCharacterToScene(Character* _c);
 
+	void PlayerEliminated(Character * _c);
+
 	void PlayerEliminated(int index);
 	void SortByScores();
 private:

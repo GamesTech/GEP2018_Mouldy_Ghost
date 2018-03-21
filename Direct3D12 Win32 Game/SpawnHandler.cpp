@@ -10,6 +10,7 @@ SpawnHandler::~SpawnHandler()
 	{
 		for (int i = 0; i < del_count; i++)
 		{
+			if(m_delete_queue[i])
 			delete m_delete_queue[i];
 		}
 		m_delete_queue.clear();
@@ -27,6 +28,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 		break;
 	}
 	case Event::OBJECT_DESTROYED:
+	case Event::PLAYER_ELIMINATED:
 	{
 		m_RD->m_resourceCount--;
 		int i = 0;

@@ -26,7 +26,7 @@ Character CharacterManager::GetCharacter(int _index)
 	return m_character_list[_index];
 }
 
-void CharacterManager::PopulateCharacterList(RenderData* _RD, SpawnHandler* _spawner)
+void CharacterManager::PopulateCharacterList(RenderData* _RD)
 {
 	std::ifstream all_characters_file;
 	all_characters_file.open("..\\GameAssets\\Characters\\AllCharacters.txt");
@@ -38,7 +38,7 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD, SpawnHandler* _spa
 		character_file.open("..\\GameAssets\\Characters\\" + char_name + ".txt");
 
 		std::string imageFile = getFileData(character_file);
-		Character character = Character(_RD, imageFile, _spawner);
+		Character character = Character(_RD, imageFile);
 		character.SetName(char_name);
 
 		float speed = std::stof(getFileData(character_file));

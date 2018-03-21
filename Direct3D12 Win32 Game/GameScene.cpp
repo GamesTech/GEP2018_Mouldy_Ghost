@@ -45,12 +45,16 @@ void GameScene::Initialise(RenderData * _RD,
 
 	m_HUD = new HUD(_GSD);
 
-	m_spawner = std::make_unique<SpawnHandler>();
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		m_spawner = static_cast<SpawnHandler*>(listeners[i]);
+	}
+
 	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);
 
-	item_spawner = ItemSpawner(m_spawner.get());
+	item_spawner = ItemSpawner(m_spawner);
 
-	c_manager.PopulateCharacterList(_RD, m_spawner.get());
+	c_manager.PopulateCharacterList(_RD);
 	item_spawner.loadAllData(_RD);
 
 	//GEP::This is where I am creating the test objects
@@ -111,6 +115,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 
 	for (int j = 0; j < listeners.size(); j++)
 	{
+		players[i]->addListener(listeners[j]);
 		listeners[j]->onNotify(players[i], Event::PLAYER_SPAWN);
 	}
 }

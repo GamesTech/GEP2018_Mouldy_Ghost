@@ -44,7 +44,7 @@ private:
 	DirectX::SimpleMath::Color player_tints[4];
 
 	CharacterManager c_manager;
-	std::unique_ptr<SpawnHandler> m_spawner;
+	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
 
 	int m_maxLives;

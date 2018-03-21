@@ -144,6 +144,7 @@ void CharacterSelectScene::Reset()
 		m_confirmed[i] = false;
 		m_selected_character[i] = m_ch_manager->GetCharCount();
 	}
+	m_gameScene->Reset();
 }
 
 void CharacterSelectScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWidth, int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine)

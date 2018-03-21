@@ -4,7 +4,7 @@
 
 GameSettingsHandler::GameSettingsHandler()
 {
-	m_lives = 1;
+	m_lives = 5;
 	m_time = 60;
 	m_infiniteTime = false;
 	m_infiniteLives = false;

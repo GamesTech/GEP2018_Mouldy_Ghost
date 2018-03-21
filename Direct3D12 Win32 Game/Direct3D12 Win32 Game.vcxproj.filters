@@ -175,7 +175,6 @@
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="AllScenes.h">
       <Filter>Game Base\Headers</Filter>
     </ClInclude>
@@ -190,9 +189,6 @@
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="MusicHandler.h">
-      <Filter>EventSystem\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>GameObjects\2D\Headers</Filter>
@@ -293,6 +289,9 @@
     <ClInclude Include="CharacterLifeHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="AudioHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -357,9 +356,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="MusicHandler.cpp">
-      <Filter>EventSystem\Source</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>GameObjects\Stages\Source</Filter>
@@ -442,6 +438,9 @@
       <Filter>Items\Source</Filter>
     </ClCompile>
     <ClCompile Include="GameSettingsHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
     <ClCompile Include="CharacterLifeHandler.cpp">

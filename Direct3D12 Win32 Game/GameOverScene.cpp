@@ -101,9 +101,9 @@ void GameOverScene::SortByScores()
 		Character* c = m_standings[i];
 		std::string score = "#";
 		score += std::to_string(m_standings.size() - i);
-		//score += "  ";
+		score += "  ";
 		score += c->GetName();
-		//score += "  ";
+		score += "  ";
 		score += std::to_string(c->GetPoints());
 		m_scores[i]->SetText(score);
 

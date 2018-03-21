@@ -59,6 +59,7 @@ void MenuButton::Tick(GameStateData * _GSD)
 			{
 				for (int i = 0; i < listeners.size(); i++)
 				{
+					listeners[i]->onNotify(this, Event::BUTTON_PRESSED);
 					listeners[i]->onNotify(this, m_eventToSend);
 				}
 			}

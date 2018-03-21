@@ -31,6 +31,11 @@ void Loop::Play()
 
 }
 
+void Loop::Stop()
+{
+	m_loop->Stop();
+}
+
 
 void Loop::Tick(GameStateData* _GSD)
 {

@@ -209,7 +209,7 @@
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
-    <ClInclude Include="MusicHandler.h" />
+    <ClInclude Include="AudioHandler.h" />
     <ClInclude Include="PassiveAttack.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="Platform.h" />
@@ -271,7 +271,7 @@
     <ClCompile Include="StandardAttack.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
-    <ClCompile Include="MusicHandler.cpp" />
+    <ClCompile Include="AudioHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />

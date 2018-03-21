@@ -32,15 +32,6 @@ void SceneHandler::init(GameStateData * _GSD , std::vector<Scene*> _allScenes)
 	}
 }
 
-void SceneHandler::populateScenesList(std::vector<Scene*> _allScenes)
-{
-	for (int i = 0; i < _allScenes.size(); i++)
-	{
-		m_allScenes.push_back(_allScenes[i]);
-		m_allScenes[i]->Reset();
-	}
-}
-
 void SceneHandler::addScene(Scene * _scene)
 {
 	m_allScenes.push_back(_scene);

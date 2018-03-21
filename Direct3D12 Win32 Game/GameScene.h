@@ -22,6 +22,7 @@ public:
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	void AddCharacter(int i, std::string _character, RenderData* _RD);
+	void RemoveAllCharacters();
 	void RemoveCharacter(Character * _char);
 
 	void Update(DX::StepTimer const & timer,
@@ -34,13 +35,14 @@ public:
 	void giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _name);
 
 	virtual void Reset();
+	void LoadSettings();
 
 private:
 	HUD* m_HUD = nullptr;
 
 	std::unique_ptr<Stage> game_stage = nullptr;
 	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
-	Character* players[4] = { nullptr, nullptr, nullptr, nullptr };
+	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
 
 	CharacterManager c_manager;

@@ -101,7 +101,6 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 			//otherwise quit to the previous menu
 			else
 			{
-				Reset();
 				for (int j = 0; j < listeners.size(); j++)
 				{
 					listeners[j]->onNotify(nullptr, Event::CHANGE_SCENE_MELEE_MENU);

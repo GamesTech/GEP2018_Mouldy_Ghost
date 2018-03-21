@@ -14,14 +14,15 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 #else
 	m_physics =Physics2D();
 #endif
+	m_pos = _pos;
 	m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
 
 	Rectangle rect = Rectangle(m_pos.x - _exp_radius/2, m_pos.y - _exp_radius / 2,
 		m_pos.x + _exp_radius / 2, m_pos.y+ _exp_radius / 2);
 	m_physics->SetCollider(rect);
 
-	m_scale = Vector2(0.1, 0.1);
-
+	//m_scale = Vector2(0.1, 0.1);
+	
 	m_physics->SetGrav(0);
 
 	tag = GameObjectTag::YO;
@@ -43,6 +44,7 @@ void Explosion::Tick(GameStateData * _GSD)
 
 void Explosion::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLAYER)
 	{
 		Character* player = static_cast<Character*>(_collision->GetOwner());
@@ -51,6 +53,6 @@ void Explosion::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		dir.Normalize();
 
 		//debug values
-		player->Hit(dir, 2000, nullptr);
+		player->Hit(dir, 20, nullptr);
 	}
 }

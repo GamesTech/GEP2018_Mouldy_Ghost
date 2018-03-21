@@ -6,7 +6,7 @@
 #include "Game.h"
 #include "RenderData.h"
 #include "GameStateData.h"
-#include "MusicHandler.h"
+#include "AudioHandler.h"
 #include "SceneHandler.h"
 #include "GameSettingsHandler.h"
 #include "CharacterLifeHandler.h"
@@ -144,7 +144,7 @@ void Game::Initialize(HWND window, int width, int height)
 
 	//populate the listener vector with all listeners
 	//at the moment this needs to be done before a scene is initialised
-	m_musicListener = std::make_unique<MusicHandler>();
+	m_musicListener = std::make_unique<AudioHandler>();
 	m_sceneListener = std::make_unique<SceneHandler>();
 	m_gameSettings = std::make_unique<GameSettingsHandler>();
 	m_lifeListener = std::make_unique<CharacterLifeHandler>();
@@ -185,11 +185,17 @@ void Game::Initialize(HWND window, int width, int height)
 	}
 	//m_sceneListener->populateScenesList(m_all_scenes);
 
-	//SwitchToScene(MENU_SCENE, false);
+
 	m_sceneListener->init(m_GSD, m_all_scenes);
 	m_lifeListener->SetGameOver(m_gameOverScene);
 	//m_sceneListener->initActiveScene(m_activeScene);
+	m_musicListener->init(m_GSD);
 
+
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		listeners[i]->onNotify(nullptr, Event::APPLICATION_LOADED);
+	}
 
 }
 

@@ -190,9 +190,6 @@
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="MusicHandler.h">
-      <Filter>EventSystem\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
@@ -289,8 +286,10 @@
     <ClInclude Include="GameSettingsHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="AudioHandler.h" />
     <ClInclude Include="CharacterLifeHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
   </ItemGroup>

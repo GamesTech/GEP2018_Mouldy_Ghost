@@ -127,7 +127,7 @@ void HUD::Render(RenderData * _RD)
 		hundrethString += "0";
 	}
 	hundrethString += std::to_string(hundrethSecond);
-	std::string timeOutput = std::to_string(minutes) + ":" + std::to_string(seconds) + ":" + hundrethString;
+	std::string timeOutput = std::to_string(minutes) + ":" + seconds_string + ":" + hundrethString;
 
 	m_timeText->SetText(timeOutput);
 	m_timeText->Render(_RD);

@@ -20,6 +20,8 @@ private:
 	std::unique_ptr<Loop> m_theme = nullptr;
 	std::unique_ptr<Loop> m_levelMusic = nullptr;
 	std::unique_ptr<TestSound> m_menuOk = nullptr;
+	std::unique_ptr<TestSound> m_playerDie = nullptr;
+	std::unique_ptr<TestSound> m_playerHit = nullptr;
 	std::vector<Sound*> m_sounds;
 };
 

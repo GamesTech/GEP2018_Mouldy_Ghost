@@ -41,16 +41,16 @@ void Character::Tick(GameStateData * _GSD)
 			GameActions actions_to_check = m_controller->GetInput(_GSD);
 			Vector2 gamePadPush = Vector2(0, 0);
 			gamePadPush.x = PlayerMove(actions_to_check);
-			gamePadPush.y = PlayerJump(actions_to_check);
-			m_physics->AddForce(gamePadPush * 100);
+gamePadPush.y = PlayerJump(actions_to_check);
+m_physics->AddForce(gamePadPush * 100);
 
-			PlayerAttack(_GSD);
-			PickUpItem(actions_to_check);
+PlayerAttack(_GSD);
+PickUpItem(actions_to_check);
 
-			if (m_attacking)
-			{
-				m_charge_time += _GSD->m_dt;
-			}
+if (m_attacking)
+{
+	m_charge_time += _GSD->m_dt;
+}
 		}
 		else
 		{
@@ -66,6 +66,10 @@ void Character::Tick(GameStateData * _GSD)
 			}
 			m_lives--;
 			m_points--;
+			for (int i = 0; i < listeners.size(); i++)
+			{
+				listeners[i]->onNotify(this, Event::PLAYER_DEAD);
+			}
 			if (m_lives > 0)
 			{
 				ResetDamage();
@@ -82,7 +86,7 @@ void Character::Tick(GameStateData * _GSD)
 		}
 	}
 
-//GEP:: Lets go up the inheritence and share our functionality
+	//GEP:: Lets go up the inheritence and share our functionality
 
 	m_physics->Tick(_GSD, m_pos);
 
@@ -118,7 +122,7 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 void Character::CreatePhysics(RenderData* _RD)
 {
 #if _DEBUG
-	m_physics =  new VisiblePhysics(_RD);
+	m_physics = new VisiblePhysics(_RD);
 #else
 	m_physics = new Physics2D();
 #endif
@@ -136,6 +140,11 @@ void Character::TakeDamage(int _dam)
 
 void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 {
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		listeners[i]->onNotify(this, Event::PLAYER_HIT);
+	}
+
 	float knockback = _force * (m_damage + 1) / 100;
 	m_physics->AddForce(_dir * knockback);
 	m_recovery_time = (float)m_damage / 15.0f;

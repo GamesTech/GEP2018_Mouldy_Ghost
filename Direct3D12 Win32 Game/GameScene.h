@@ -37,7 +37,6 @@ public:
 	void giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _name);
 
 	virtual void Reset();
-	void LoadSettings();
 
 private:
 	HUD* m_HUD = nullptr;

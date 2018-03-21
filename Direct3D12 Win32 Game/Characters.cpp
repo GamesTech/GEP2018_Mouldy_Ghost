@@ -26,14 +26,6 @@ void Character::Tick(GameStateData * _GSD)
 {
 	if (m_lives > 0)
 	{
-		//check death zone is accurate
-		if (m_death_zone.width != _GSD->window_size.x + 800
-			|| m_death_zone.height != _GSD->window_size.y + 800)
-		{
-			m_death_zone.width = _GSD->window_size.x + 800;
-			m_death_zone.height = _GSD->window_size.y + 800;
-		}
-
 		//get input
 		if (m_recovery_time <= 0)
 		{
@@ -41,16 +33,16 @@ void Character::Tick(GameStateData * _GSD)
 			GameActions actions_to_check = m_controller->GetInput(_GSD);
 			Vector2 gamePadPush = Vector2(0, 0);
 			gamePadPush.x = PlayerMove(actions_to_check);
-gamePadPush.y = PlayerJump(actions_to_check);
-m_physics->AddForce(gamePadPush * 100);
+			gamePadPush.y = PlayerJump(actions_to_check);
+			m_physics->AddForce(gamePadPush * 100);
 
-PlayerAttack(_GSD);
-PickUpItem(actions_to_check);
+			PlayerAttack(_GSD);
+			PickUpItem(actions_to_check);
 
-if (m_attacking)
-{
-	m_charge_time += _GSD->m_dt;
-}
+			if (m_attacking)
+			{
+				m_charge_time += _GSD->m_dt;
+			}
 		}
 		else
 		{

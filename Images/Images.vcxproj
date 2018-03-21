@@ -173,6 +173,15 @@
     <ImageContentTask Include="ball.png" />
     <ImageContentTask Include="mine.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="sky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="field.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

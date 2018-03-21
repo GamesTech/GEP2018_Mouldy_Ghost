@@ -100,7 +100,7 @@ protected:
 	float m_spam_cooldown = 0;
 	bool m_attacking = false;
 	bool m_dash_recover = true;
-	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
+	Rectangle m_death_zone = Rectangle(-500,-500, 1700, 1400);
 	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
 	int m_points = 0;
 	Item* m_held_item = nullptr;

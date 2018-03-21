@@ -19,6 +19,9 @@
     <ImageContentTask Include="explosion.png" />
     <ImageContentTask Include="ball.png" />
     <ImageContentTask Include="mine.png" />
+    <ImageContentTask Include="tree.png" />
+    <ImageContentTask Include="sky.png" />
+    <ImageContentTask Include="field.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

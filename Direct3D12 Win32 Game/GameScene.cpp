@@ -46,9 +46,19 @@ void GameScene::Initialise(RenderData * _RD,
 
 	m_HUD = new HUD(_GSD);
 
+	float w = m_GSD->window_size.x;
+	float h = m_GSD->window_size.y;
+
+	m_bg[0] = new Background(m_RD, "sky", 1);
+	m_bg[0]->SetSpawn(Vector2(w * 0.4, 100));
+	m_bg[1] = new Background(m_RD, "field", 1);
+	m_bg[1]->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
+	m_bg[2] = new Background(m_RD, "tree", 2);
+	m_bg[2]->SetSpawn(Vector2(w * 0.4, h));
+	
 	for (int i = 0; i < 3; i++)
 	{
-		m_bg[i] = new Background(m_RD, "gens", 1);
+		m_bg[i]->SetScale(Vector2(w / 900, h / 600));
 		m_2DObjects.push_back(m_bg[i]);
 	}
 
@@ -101,7 +111,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	//	RemoveCharacter(players[i]);
 	//}
 	players[i] = std::make_unique<Character>(c_manager.GetCharacter(_character));
-	players[i]->SetSpawn(Vector2(i * 100 + 500, 100));
+	players[i]->SetSpawn(game_stage->getSpawn(i));
 	players[i]->SetColour(player_tints[i]);
 	players[i]->CreatePhysics(_RD);
 	players[i]->SetLives(m_maxLives);
@@ -208,18 +218,18 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		float y_dist = top_left.y - bottom_right.y;
 		float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
 		
-		//m_cam_zoom = 700.0f / dist;
-		//if (m_cam_zoom < m_min_zoom)
-		//{
-		//	m_cam_zoom = m_min_zoom;
-		//}
-		//if (m_cam_zoom > m_max_zoom)
-		//{
-		//	m_cam_zoom = m_max_zoom;
-		//}
+		m_cam_zoom = 700.0f / dist;
+		if (m_cam_zoom < m_min_zoom)
+		{
+			m_cam_zoom = m_min_zoom;
+		}
+		if (m_cam_zoom > m_max_zoom)
+		{
+			m_cam_zoom = m_max_zoom;
+		}
 
-		////this scales the zoom to the screen size
-		//m_cam_zoom *= (m_GSD->window_size.x / 1000);
+		//this scales the zoom to the screen size
+		m_cam_zoom *= (m_GSD->window_size.x / 1000);
 	}
 
 	m_timeLeft -= timer.GetElapsedSeconds();
@@ -247,48 +257,6 @@ void GameScene::giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _n
 }
 
 void GameScene::Reset()
-{
-	m_cam_pos = Vector2::Zero;
-	m_cam_zoom = 1;
-
-	//attaching values of game settings handler to scene
-	for (int i = 0; i < listeners.size(); i++)
-	{
-		if (listeners[i]->getType() == "GameSettings")
-		{
-			GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[i]);
-			m_infiniteLives = temp->getInfiniteLives();
-			m_infiniteTime = temp->getInfiniteTime();
-			m_maxLives = temp->getLives();
-			m_timeLimit = temp->getTime();
-			m_timeLeft = m_timeLimit;
-		}
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		if (players[i])
-		{
-			players[i]->ResetDamage();
-		}
-	}
-
-	for (int i = 0; i < m_GSD->objects_in_scene.size(); i++)
-	{
-		m_GSD->objects_in_scene[i]->ResetForce(BOTH_AXES);
-	}
-	for (int i = 0; i < m_2DObjects.size(); i++)
-	{
-		m_2DObjects[i]->ResetPos();
-	}
-
-	for (int i = 0; i < m_3DObjects.size(); i++)
-	{
-		m_3DObjects[i]->ResetPos();
-	}
-}
-
-void GameScene::LoadSettings()
 {
 	m_cam_pos = Vector2::Zero;
 	m_cam_zoom = 1;

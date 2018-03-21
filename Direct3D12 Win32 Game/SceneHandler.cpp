@@ -108,8 +108,8 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 	if (sceneChanged)
 	{
 		m_GSD->objects_in_scene.clear();
-		m_activeScene->Reset();
 		m_activeScene = m_allScenes[sceneChangeIndex];
 		m_activeScene->PhysicsInScene(m_GSD);
+		m_activeScene->Reset();
 	}
 }

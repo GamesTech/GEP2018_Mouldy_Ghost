@@ -7,6 +7,7 @@
 #include "GameSettingsHandler.h"
 #include "Player.h"
 #include "SpawnHandler.h"
+#include "Background.h"
 
 GameScene::GameScene()
 {
@@ -44,6 +45,12 @@ void GameScene::Initialise(RenderData * _RD,
 	m_GSD = _GSD;
 
 	m_HUD = new HUD(_GSD);
+
+	for (int i = 0; i < 3; i++)
+	{
+		m_bg[i] = new Background(m_RD, "gens", 1);
+		m_2DObjects.push_back(m_bg[i]);
+	}
 
 	for (int i = 0; i < listeners.size(); i++)
 	{
@@ -201,18 +208,18 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		float y_dist = top_left.y - bottom_right.y;
 		float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
 		
-		m_cam_zoom = 700.0f / dist;
-		if (m_cam_zoom < m_min_zoom)
-		{
-			m_cam_zoom = m_min_zoom;
-		}
-		if (m_cam_zoom > m_max_zoom)
-		{
-			m_cam_zoom = m_max_zoom;
-		}
+		//m_cam_zoom = 700.0f / dist;
+		//if (m_cam_zoom < m_min_zoom)
+		//{
+		//	m_cam_zoom = m_min_zoom;
+		//}
+		//if (m_cam_zoom > m_max_zoom)
+		//{
+		//	m_cam_zoom = m_max_zoom;
+		//}
 
-		//this scales the zoom to the screen size
-		m_cam_zoom *= (m_GSD->window_size.x / 1000);
+		////this scales the zoom to the screen size
+		//m_cam_zoom *= (m_GSD->window_size.x / 1000);
 	}
 
 	m_timeLeft -= timer.GetElapsedSeconds();

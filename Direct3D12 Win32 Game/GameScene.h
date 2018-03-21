@@ -10,6 +10,8 @@
 
 using std::vector;
 
+class Background;
+
 class GameScene : public Scene
 {
 public:
@@ -44,6 +46,8 @@ private:
 	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
+
+	Background* m_bg[3];
 
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;

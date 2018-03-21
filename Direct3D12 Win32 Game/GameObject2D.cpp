@@ -71,6 +71,7 @@ void GameObject2D::SetName(std::string string)
 
 GameObjectTag GameObject2D::GetTag()
 {
+	if(this)
 	return tag;
 }
 

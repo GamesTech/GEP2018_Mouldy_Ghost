@@ -27,12 +27,11 @@ public:
 	void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
-		Vector2 _camera_position = Vector2::Zero) override;
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
 
 	CharacterManager* GetCharacterManager() { return &c_manager; }
 
-	void giveMeItem(GameStateData* _GSD, std::string _name);
+	void giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _name);
 
 	virtual void Reset();
 
@@ -47,4 +46,11 @@ private:
 	CharacterManager c_manager;
 	std::unique_ptr<SpawnHandler> m_spawner;
 	ItemSpawner item_spawner;
+
+	int m_maxLives;
+	float m_timeLimit;
+	bool m_infiniteLives;
+	bool m_infiniteTime;
+
+	float m_timeLeft;
 };

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GameSettingsScene.h"
+#include "GameSettingsHandler.h"
 #include "RenderData.h"
 
 
@@ -14,6 +15,38 @@ GameSettingsScene::~GameSettingsScene()
 
 void GameSettingsScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		if (listeners[i]->getType() == "GameSettings")
+		{
+			GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[i]);
+			if (temp->getInfiniteLives())
+			{
+				m_livesText->SetText("No Limit");
+			}
+			else
+			{
+				m_livesText->SetText(std::to_string(temp->getLives()));
+			}
+			int tempTime = static_cast<int>(temp->getTime());
+			int minutes = tempTime / 60;
+			int seconds = tempTime - (minutes * 60);
+			std::string timeOutput = std::to_string(minutes) + ":" + std::to_string(seconds);
+			if (seconds == 0)
+			{
+				timeOutput += "0";
+			}
+
+			if (temp->getInfiniteTime())
+			{
+				timeOutput = "No Limit";
+			}
+
+			m_timeText->SetText(timeOutput);
+		}
+	}
+
 	m_settingsMenu->Tick(m_GSD);
 }
 
@@ -36,8 +69,19 @@ void GameSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _
 	{
 		m_settingsMenu->addListener(listeners[i]);
 	}
+
 	m_settingsMenu->init();
 	m_2DObjects.push_back(m_settingsMenu.get());
 	m_settingsMenu->addButton(MenuButton(Event::GAME_SETTINGS_DECREASE_TIME, Event::GAME_SETTINGS_INCREASE_TIME, _RD, "gens"), "Time: ");
 	m_settingsMenu->addButton(MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Back");
+
+	m_livesText = new Text2D("");
+	m_livesText->SetText("Test");
+	m_livesText->SetPos(m_settingsMenu->getMenuButton(Event::GAME_SETTINGS_DECREASE_LIVES)->GetPos() + Vector2(220, -10));
+	m_2DObjects.push_back(m_livesText);
+
+	m_timeText = new Text2D("");
+	m_timeText->SetText("Test");
+	m_timeText->SetPos(m_settingsMenu->getMenuButton(Event::GAME_SETTINGS_DECREASE_TIME)->GetPos() + Vector2(200, -10));
+	m_2DObjects.push_back(m_timeText);
 }

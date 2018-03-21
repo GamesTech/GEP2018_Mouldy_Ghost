@@ -101,7 +101,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 	}
 }
 
-void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList, Vector2 _camera_position)
+void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
 {
 	//primative batch
 	m_RD->m_effect->SetProjection(m_cam->GetProj());

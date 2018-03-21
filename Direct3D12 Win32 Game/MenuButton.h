@@ -17,8 +17,10 @@ public:
 	~MenuButton();
 	virtual void Tick(GameStateData* _GSD) override;
 	virtual void Render(RenderData * _RD, int _sprite,
-		Vector2 _cam_pos = Vector2::Zero) override;
+		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
 	void setText(std::string _text);
+
+	Event getTopEvent();
 
 	void setHighlighted(bool _highlighted);
 private:

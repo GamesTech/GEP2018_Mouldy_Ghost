@@ -2,6 +2,7 @@
 #include "ImageGO2D.h"
 #include "ItemState.h"
 #include "Physics2D.h"
+#include "SpawnHandler.h"
 
 class Item :public ImageGO2D
 {
@@ -24,10 +25,18 @@ public:
 	void setOnUseString(std::string _use) { m_onUse = _use; }
 	void setPower(float _power) { m_power = _power; }
 	void setitemType(ItemType type) { m_type = type; }
+
+	std::string getOnPickupString() { return m_onPickUp; }
+	std::string getOnUseString() {return m_onUse; }
+	float getPower() { return m_power; }
+	
+
 	ItemType getitemType() { return m_type; }
 
 	SpawnHandler* m_handler;
 protected:
+	SpawnHandler* m_spawner = nullptr;
+
 	ItemState m_state = ItemState::WAIT;
 	ItemType m_type = ItemType::SINGLE_USE;
 

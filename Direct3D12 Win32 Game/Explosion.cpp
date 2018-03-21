@@ -51,6 +51,6 @@ void Explosion::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		dir.Normalize();
 
 		//debug values
-		player->Hit(dir, 2000);
+		player->Hit(dir, 2000, nullptr);
 	}
 }

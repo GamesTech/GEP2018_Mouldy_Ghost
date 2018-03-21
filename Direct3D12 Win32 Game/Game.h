@@ -135,5 +135,6 @@ private:
 	std::unique_ptr<SceneHandler> m_sceneListener = nullptr;
 	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
 	std::unique_ptr<CharacterLifeHandler> m_lifeListener = nullptr;
+	std::unique_ptr<SpawnHandler> m_spawner = nullptr;
 	std::vector<EventHandler*> listeners;
 };

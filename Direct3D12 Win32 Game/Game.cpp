@@ -148,10 +148,12 @@ void Game::Initialize(HWND window, int width, int height)
 	m_sceneListener = std::make_unique<SceneHandler>();
 	m_gameSettings = std::make_unique<GameSettingsHandler>();
 	m_lifeListener = std::make_unique<CharacterLifeHandler>();
+	m_spawner = std::make_unique<SpawnHandler>();
 	listeners.push_back(m_musicListener.get());
 	listeners.push_back(m_sceneListener.get());
 	listeners.push_back(m_gameSettings.get());
 	listeners.push_back(m_lifeListener.get());
+	listeners.push_back(m_spawner.get());
 
 	m_gameScene = new GameScene();
 	m_all_scenes.push_back(m_gameScene);

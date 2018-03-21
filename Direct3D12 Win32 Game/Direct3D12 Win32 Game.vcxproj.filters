@@ -444,7 +444,9 @@
     <ClCompile Include="GameSettingsHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterLifeHandler.cpp" />
+    <ClCompile Include="CharacterLifeHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

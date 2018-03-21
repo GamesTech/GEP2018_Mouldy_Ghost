@@ -4,7 +4,8 @@ enum class ItemState
 {
 	HELD,
 	THROWN,
-	WAIT
+	WAIT,
+	ARMED
 
 
 };

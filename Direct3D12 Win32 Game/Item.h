@@ -8,8 +8,8 @@ class Item :public ImageGO2D
 {
 public:
 	Item();
-	Item(RenderData* _RD, string _filename);
-	~Item();
+	Item(RenderData* _RD, std::string _filename);
+	virtual ~Item();
 
 	virtual void Tick(GameStateData* _GSD);
 

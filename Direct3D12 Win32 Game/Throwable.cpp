@@ -19,6 +19,8 @@ void Throwable::Throw(Character* _player)
 	m_physics->SetGrav(1);
 	player_ignore = _player;
 	m_state = ItemState::THROWN;
+
+	_player->RemoveChild(this);
 	//_player->get direction?
 	// not sure how throw is going to work just yet
 	// eeeeh
@@ -33,6 +35,7 @@ void Throwable::pickUp(Character * _player)
 {
 	Item::pickUp(_player);
 	player_ignore = _player;
+	m_state = ItemState::HELD;
 
 }
 
@@ -49,8 +52,11 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	{
 		if (m_hit_player == "bounce")
 		{
-			//hit the player
-			//and bounce
+			Character* tmpchar = static_cast<Character*>(_collision->GetOwner());
+			tmpchar->TakeDamage(5);
+			//bounce?
+			m_physics->AddForce(50 * _normal);
+			
 		}
 	}
 
@@ -62,6 +68,12 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		{
 			m_physics->ResetForce(Axis::Y_AXIS);
 			m_physics->SetGrav(0);
+			
+			if (name != "mine")
+			{
+				m_state = ItemState::WAIT;
+			}
+			
 
 		}
 		else if (m_hit_ground == "bounce")
@@ -73,6 +85,7 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		else if (m_hit_ground == "stick")
 		{
 			m_physics->ResetForce(Axis::BOTH_AXES);
+			m_physics->SetGrav(0);
 			_collision->GetOwner()->AddChild(this);
 		}
 

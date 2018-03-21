@@ -138,7 +138,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	Scene::Update(timer, _audEngine);
 	game_stage->update(m_GSD);
 
-	//find average of players location
+	//find average and furthest points of players locations
 	Vector2 top_left = Vector2(100000,100000);
 	Vector2 bottom_right = Vector2(-1000, -1000);
 	Vector2 avg_pos = Vector2::Zero;
@@ -189,6 +189,9 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		{
 			m_cam_zoom = m_max_zoom;
 		}
+
+		//this scales the zoom to the screen size
+		m_cam_zoom *= (m_GSD->window_size.x / 1000);
 	}
 
 	m_timeLeft -= timer.GetElapsedSeconds();

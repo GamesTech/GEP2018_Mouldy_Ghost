@@ -230,6 +230,20 @@ void GameScene::Reset()
 {
 	m_cam_pos = Vector2::Zero;
 
+	//attaching values of game settings handler to scene
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		if (listeners[i]->getType() == "GameSettings")
+		{
+			GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[i]);
+			m_infiniteLives = temp->getInfiniteLives();
+			m_infiniteTime = temp->getInfiniteTime();
+			m_maxLives = temp->getLives();
+			m_timeLimit = temp->getTime();
+			m_timeLeft = m_timeLimit;
+		}
+	}
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (players[i])
@@ -250,19 +264,5 @@ void GameScene::Reset()
 	for (int i = 0; i < m_3DObjects.size(); i++)
 	{
 		m_3DObjects[i]->ResetPos();
-	}
-
-	//attaching values of game settings handler to scene
-	for (int i = 0; i < listeners.size(); i++)
-	{
-		if (listeners[i]->getType() == "GameSettings")
-		{
-			GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[i]);
-			m_infiniteLives = temp->getInfiniteLives();
-			m_infiniteTime = temp->getInfiniteTime();
-			m_maxLives = temp->getLives();
-			m_timeLimit = temp->getTime();
-			m_timeLeft = m_timeLimit;
-		}
 	}
 }

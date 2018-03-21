@@ -10,7 +10,7 @@ on throw	>activate
 player hit 	>explode
 ground hit 	>stick
 -- explosive
-fuse		>infinite
+fuse		>50
 exp range	>5
 
 

@@ -19,7 +19,7 @@ public:
 	void loadThrowableProperies(Throwable* item, std::ifstream& _opened_file);
 	void loadExplosiveProperies(Explosive* item, std::ifstream& _opened_file);
 
-	Item* createNewItemWithName(std::string name);
+	Item* createNewItemWithName(RenderData* _RD, std::string name);
 
 private:
 	SpawnHandler* m_spawner;

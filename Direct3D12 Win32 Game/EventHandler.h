@@ -8,7 +8,7 @@ class EventHandler
 {
 public:
 	EventHandler();
-	~EventHandler();
+	virtual ~EventHandler();
 
 	virtual void init(GameStateData* _GSD) { m_GSD = _GSD; };
 	virtual void onNotify(GameObject2D* entity_, Event event_) = 0;

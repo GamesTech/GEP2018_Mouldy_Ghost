@@ -16,8 +16,11 @@ public:
 	void setFuse(float _fuse) { m_fuse = _fuse; }
 	void setExpRange(float _range) { m_explosion_range = _range; }
 
+	float getFuse() { return m_fuse; }
+	float getExpRange() { return m_explosion_range;}
 private:
-	
+	RenderData* RD_ptr;
+
 	bool m_explode = false;
 	float m_fuse = 0;
 	float m_explosion_range = 5;

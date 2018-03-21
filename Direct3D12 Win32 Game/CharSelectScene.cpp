@@ -52,12 +52,22 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 		if ((m_GSD->menu_action[i] == MenuAction::ADVANCE_MENU))
 		{
 			bool all_confirmed = true;
+			int numPlayers = 0;
 			for (int j = 0; j < 4; j++)
 			{
 				if (isValid(j) && !m_confirmed[j])
 				{
 					all_confirmed = false;
 				}
+				if (m_confirmed[j])
+				{
+					numPlayers++;
+				}
+			}
+
+			if (numPlayers <= 1)
+			{
+				all_confirmed = false;
 			}
 
 			if (all_confirmed)
@@ -101,7 +111,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 	}
 }
 
-void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList, Vector2 _camera_position)
+void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
 {
 	//primative batch
 	m_RD->m_effect->SetProjection(m_cam->GetProj());

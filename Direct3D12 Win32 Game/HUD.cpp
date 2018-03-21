@@ -25,10 +25,10 @@ HUD::HUD(GameStateData* _GSD)
 		m_shadow[i]->SetColour(Color(0, 0, 0));
 	}
 
-	m_text_display[0]->SetColour(Color(0.3, 0.3, 1));
-	m_text_display[1]->SetColour(Color(0, 0.7, 0));
-	m_text_display[2]->SetColour(Color(1, 0, 0));
-	m_text_display[3]->SetColour(Color(1, 1, 0));
+	m_text_colours[0] = (Color(0.3, 0.3, 1));
+	m_text_colours[1] = (Color(0, 0.7, 0));
+	m_text_colours[2] = (Color(1, 0, 0));
+	m_text_colours[3] = (Color(1, 1, 0));
 
 	m_timeText = new Text2D("");
 	m_timeText->SetPos(Vector2((_GSD->window_size.x / 2) - 100,25));
@@ -92,6 +92,8 @@ void HUD::Render(RenderData * _RD)
 	{
 		if (m_in_game[i].in_game && m_in_game[i].character->GetLives() > 0)
 		{
+			m_text_display[i]->SetColour
+			(m_text_colours[m_in_game[i].character->GetControllerIndex()]);
 			std::string display_text = m_in_game[i].character->GetName();
 			display_text += "\n";
 			display_text += std::to_string(m_in_game[i].character->GetDamage()) + "%";
@@ -109,7 +111,15 @@ void HUD::Render(RenderData * _RD)
 
 	int tempTime = static_cast<int>(*m_timer);
 	int minutes = tempTime / 60;
+
 	int seconds = tempTime - (minutes * 60);
+	std::string seconds_string = "";
+	if (seconds < 10)
+	{
+		seconds_string += "0";
+	}
+	seconds_string += std::to_string(seconds);
+
 	int hundrethSecond = (*m_timer - tempTime) * 100;
 	std::string hundrethString = "";
 	if (hundrethSecond < 10)

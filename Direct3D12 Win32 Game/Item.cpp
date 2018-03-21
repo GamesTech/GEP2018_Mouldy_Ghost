@@ -33,6 +33,8 @@ void Item::Tick(GameStateData * _GSD)
 {
 	m_physics->Tick(_GSD,m_pos);
 	GameObject2D::Tick(_GSD);
+
+
 }
 
 void Item::pickUp(Character * _player)
@@ -45,6 +47,7 @@ void Item::pickUp(Character * _player)
 	else if (m_type != ItemType::SINGLE_USE)
 	{
 		_player->AddChild(this);
+		//m_physics->SetGrav(0);
 		//player->equip items
 		//_player->setHeldItem(this);
 		if (m_onPickUp == "activate")

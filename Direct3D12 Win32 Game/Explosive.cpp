@@ -24,6 +24,11 @@ void Explosive::Tick(GameStateData * _GSD)
 		m_fuse -= _GSD->m_dt;
 	}
 
+	if (m_state == ItemState::HELD)
+	{
+		m_pos = player_ignore->GetPos();
+	}
+
 	if (m_explode == true)
 	{
 		Explosion* explosion = new Explosion(m_pos, RD_ptr, _GSD, m_spawner, m_explosion_range, m_power);

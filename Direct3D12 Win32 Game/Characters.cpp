@@ -202,6 +202,8 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 		{
 			Throwable* tmp = static_cast<Throwable*>(m_held_item);
 			tmp->Throw(this);
+			m_held_item = nullptr;
+			
 			return;
 
 		}

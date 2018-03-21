@@ -1,5 +1,5 @@
 type:		>exlosive
-image:		>default_item_texture
+image:		>mine
 -- all items
 Name:		>mine
 pickup:		>none
@@ -11,7 +11,7 @@ player hit 	>explode
 ground hit 	>stick
 -- explosive
 fuse		>50
-exp range	>5
+exp range	>25
 
 
 

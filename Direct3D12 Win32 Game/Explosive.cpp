@@ -10,6 +10,7 @@ Explosive::Explosive()
 Explosive::Explosive(RenderData * _RD, std::string _filename, SpawnHandler* _spawner) : Throwable(_RD, _filename, _spawner)
 {
 	RD_ptr = _RD;
+	m_spawner = _spawner;
 }
 
 Explosive::~Explosive()
@@ -33,14 +34,21 @@ void Explosive::Tick(GameStateData * _GSD)
 	{
 		Explosion* explosion = new Explosion(m_pos, RD_ptr, _GSD, m_spawner, m_explosion_range, m_power);
 
-		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
 
-		
+		//m_pos = Vector2(1500, 1000);
+		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+		m_explode = false;
 	}
+
+
 }
 
 void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+	if (_collision->GetOwner()->GetTag() == GameObjectTag::YO)
+	{
+		int i = 0;
+	}
 	Throwable::CollisionEnter(_collision, _normal);
 
 

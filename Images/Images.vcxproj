@@ -170,8 +170,8 @@
     <ImageContentTask Include="explosion.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="ball.png" />
-    <Image Include="mine.png" />
+    <ImageContentTask Include="ball.png" />
+    <ImageContentTask Include="mine.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

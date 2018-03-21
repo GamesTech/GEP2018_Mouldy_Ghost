@@ -17,12 +17,10 @@
     <ImageContentTask Include="terraria.png" />
     <ImageContentTask Include="yoshi.png" />
     <ImageContentTask Include="explosion.png" />
+    <ImageContentTask Include="ball.png" />
+    <ImageContentTask Include="mine.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="ball.png" />
-    <Image Include="mine.png" />
   </ItemGroup>
 </Project>

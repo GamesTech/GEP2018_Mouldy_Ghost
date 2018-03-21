@@ -1,4 +1,4 @@
-type:		>exlosive
+type:		>explosive
 image:		>mine
 -- all items
 Name:		>mine

@@ -110,7 +110,7 @@ void HUD::Render(RenderData * _RD)
 	int tempTime = static_cast<int>(*m_timer);
 	int minutes = tempTime / 60;
 	int seconds = tempTime - (minutes * 60);
-	int hundrethSecond = (*m_timer - minutes - seconds) * 100;
+	int hundrethSecond = (*m_timer - tempTime) * 100;
 	std::string hundrethString = "";
 	if (hundrethSecond < 10)
 	{

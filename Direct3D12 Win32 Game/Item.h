@@ -9,7 +9,7 @@ class Item :public ImageGO2D
 public:
 	Item();
 	Item(RenderData* _RD, string _filename, SpawnHandler* _spawner);
-	~Item();
+	virtual ~Item();
 
 	virtual void Tick(GameStateData* _GSD);
 

@@ -123,7 +123,7 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 			
 			ItemType tmptype = allItems[i]->getitemType();
 			Item* orig_item = allItems[i];
-
+			
 			Item* newitem = nullptr;
 		
 			if (tmptype == ItemType::EXPLOSIVE)
@@ -155,6 +155,8 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 			{
 				newitem = new Item(_RD, name, m_spawner);
 			}
+
+			newitem->setitemType(tmptype);
 			Rectangle collider = Rectangle
 			(newitem->GetPos().x, newitem->GetPos().y, 
 				newitem->TextureSize().x, newitem->TextureSize().y);

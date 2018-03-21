@@ -4,7 +4,7 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
-#include "Item.h"
+#include "Throwable.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -206,17 +206,32 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 
 void Character::PickUpItem(std::vector<GameAction> _actions)
 {
-	if (!m_attacking && !m_held_item)
+	if (!m_attacking && m_held_item)
 	{
 		if (InputSystem::searchForAction(P_PICK_UP, _actions))
 		{
+			Throwable* tmp = static_cast<Throwable*>(m_held_item);
+			tmp->Throw(this);
+			m_held_item = nullptr;
+			
+			return;
+
+		}
+	}
+	else if (!m_attacking && !m_held_item)
+	{
+		if (InputSystem::searchForAction(P_PICK_UP, _actions))
+		{
+			
 			m_held_item = m_physics->GetItem();
 			if (m_held_item)
 			{
 				m_held_item->pickUp(this);
 			}
+			
 		}
 	}
+	
 }
 
 int Character::PlayerMove(std::vector<GameAction> _actions)

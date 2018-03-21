@@ -82,7 +82,7 @@ void GameScene::Initialise(RenderData * _RD,
 		}
 	}
 
-	giveMeItem(_RD,_GSD, "apple");
+	giveMeItem(_RD,_GSD, "mine");
 
 	game_stage->addObjectsToScene(m_2DObjects);
 

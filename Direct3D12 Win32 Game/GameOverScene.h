@@ -19,10 +19,8 @@ public:
 	virtual void Reset() {}
 
 	void AddCharacterToScene(Character* _c);
-
-	void PlayerEliminated(Character * _c);
-
-	void PlayerEliminated(int index);
+	
+	void PlayerEliminated(Character* _c, int index);
 	void SortByScores();
 private:
 	std::vector<Character*> m_chars_in_game;

@@ -49,10 +49,17 @@ void GameOverScene::AddCharacterToScene(Character * _c)
 	m_chars_in_game.push_back(_c);
 }
 
-void GameOverScene::PlayerEliminated(int index)
+void GameOverScene::PlayerEliminated(Character * _c, int index)
 {
 	m_scores[m_standings.size()]->SetColour(m_text_colour[index]);
-	m_standings.push_back(m_chars_in_game[index]);
+
+	for (int i = 0; i < m_chars_in_game.size(); i++)
+	{
+		if (m_chars_in_game[i] == _c)
+		{
+			m_standings.push_back(m_chars_in_game[i]);
+		}
+	}
 }
 
 void GameOverScene::SortByScores()
@@ -94,7 +101,9 @@ void GameOverScene::SortByScores()
 		Character* c = m_standings[i];
 		std::string score = "#";
 		score += std::to_string(m_standings.size() - i);
+		//score += "  ";
 		score += c->GetName();
+		//score += "  ";
 		score += std::to_string(c->GetPoints());
 		m_scores[i]->SetText(score);
 

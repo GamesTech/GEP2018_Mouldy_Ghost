@@ -23,6 +23,7 @@ public:
 	void Render(RenderData* _RD);
 private:
 	InScene m_in_game[4];
+	Color m_text_colours[4];
 	Text2D* m_text_display[4];
 	Text2D* m_highlight[4];
 	Text2D* m_shadow[4];

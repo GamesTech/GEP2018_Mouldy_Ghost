@@ -10,7 +10,7 @@ void CharacterLifeHandler::onNotify(GameObject2D * entity_, Event event_)
 		switch (event_)
 		{
 		case PLAYER_ELIMINATED:
-			m_go_scene->PlayerEliminated(c->GetControllerIndex());
+			m_go_scene->PlayerEliminated(c, c->GetControllerIndex());
 			break;
 		case PLAYER_SPAWN:
 			m_go_scene->AddCharacterToScene(c);

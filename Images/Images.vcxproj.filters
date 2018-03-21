@@ -21,4 +21,8 @@
   <ItemGroup>
     <Text Include="READ_ME.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="ball.png" />
+    <Image Include="mine.png" />
+  </ItemGroup>
 </Project>

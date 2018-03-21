@@ -175,7 +175,6 @@
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="MusicHandler.h" />
     <ClInclude Include="AllScenes.h">
       <Filter>Game Base\Headers</Filter>
     </ClInclude>
@@ -284,6 +283,7 @@
     <ClInclude Include="GameSettingsHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="AudioHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -348,9 +348,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="MusicHandler.cpp">
-      <Filter>EventSystem\Source</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>GameObjects\Stages\Source</Filter>
@@ -427,6 +424,9 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="GameSettingsHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioHandler.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,7 +17,7 @@
 using std::vector;
 
 class SceneHandler;
-class MusicHandler;
+class AudioHandler;
 class GameSettingsHandler;
 
 struct RenderData;
@@ -129,7 +129,7 @@ private:
 	std::unique_ptr<DirectX::AudioEngine> m_audEngine;
 
 	//Vector of managers
-	std::unique_ptr<MusicHandler> m_musicListener = nullptr;
+	std::unique_ptr<AudioHandler> m_musicListener = nullptr;
 	std::unique_ptr<SceneHandler> m_sceneListener = nullptr;
 	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
 	std::vector<EventHandler*> listeners;

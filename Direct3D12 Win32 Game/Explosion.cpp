@@ -9,7 +9,11 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 	float _exp_radius, float _power):ImageGO2D(_RD,"explosion")
 {
 	m_spawner = _spawner;
+#if _DEBUG
 	m_physics = new VisiblePhysics(_RD);
+#else
+	m_physics =Physics2D();
+#endif
 	m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
 
 	Rectangle rect = Rectangle(m_pos.x - _exp_radius/2, m_pos.y - _exp_radius / 2,

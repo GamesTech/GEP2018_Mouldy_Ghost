@@ -25,11 +25,6 @@ Platform::Platform()
 
 Platform::~Platform()
 {
-	if (m_physics)
-	{
-		delete m_physics;
-		m_physics = nullptr;
-	}
 }
 
 void Platform::Tick(GameStateData * _GSD)

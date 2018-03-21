@@ -30,6 +30,7 @@ Scene::~Scene()
 	m_sounds.clear();
 }
 
+
 void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	//this will update the audio engine but give us chance to do somehting else if that isn't working
@@ -61,7 +62,7 @@ void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEn
 	}
 }
 
-void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList, Vector2 _camera_position)
+void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
 {
 	//primative batch
 	m_RD->m_effect->SetProjection(m_cam->GetProj());
@@ -97,13 +98,13 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 
 	for (vector<GameObject2D *>::iterator it = m_2DObjects.begin(); it != m_2DObjects.end(); it++)
 	{
-		(*it)->Render(m_RD, 0, _camera_position);
+		(*it)->Render(m_RD, 0, m_cam_pos, m_cam_zoom);
 #if _DEBUG
 		//COMMENT OUT THIS BIT IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
-		if (dynamic_cast<VisiblePhysics*> ((*it)->GetPhysics()))
-		{
-			(*it)->GetPhysics()->RenderCorners(m_cam_pos);
-		}
+		//if (dynamic_cast<VisiblePhysics*> ((*it)->GetPhysics()))
+		//{
+			//(*it)->GetPhysics()->RenderCorners(m_cam_pos);
+		//}
 #endif
 	}
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SceneHandler.h"
 #include "Scene.h"
+#include "GameOverScene.h"
 
 
 SceneHandler::SceneHandler()
@@ -101,6 +102,16 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 			}
 		}
 		break;
+	case Event::GAME_OVER:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "GameOver")
+			{
+				static_cast<GameOverScene*>(m_allScenes[i])->SortByScores();
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
 	default:
 		break;
 	}
@@ -108,8 +119,8 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 	if (sceneChanged)
 	{
 		m_GSD->objects_in_scene.clear();
-		m_activeScene->Reset();
 		m_activeScene = m_allScenes[sceneChangeIndex];
 		m_activeScene->PhysicsInScene(m_GSD);
+		m_activeScene->Reset();
 	}
 }

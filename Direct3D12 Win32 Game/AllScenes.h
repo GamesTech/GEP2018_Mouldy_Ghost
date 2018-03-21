@@ -5,3 +5,4 @@
 #include "MeleeScene.h"
 #include "CharSelectScene.h"
 #include "GameSettingsScene.h"
+#include "GameOverScene.h"

@@ -8,10 +8,12 @@ class EventHandler
 {
 public:
 	EventHandler();
-	~EventHandler();
+	virtual ~EventHandler();
 
 	virtual void init(GameStateData* _GSD) { m_GSD = _GSD; };
 	virtual void onNotify(GameObject2D* entity_, Event event_) = 0;
+
+	virtual std::string getType() { return "Base"; };
 	//this is a base class for other eventhandlers/listeners
 	//the reason I have made this empty base class is so that 
 	//so that listeners can be placed into a vector for every gameobject that need it

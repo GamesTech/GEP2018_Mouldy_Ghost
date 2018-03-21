@@ -6,7 +6,8 @@
 
 MenuButton::MenuButton()
 
-{}
+{
+}
 
 MenuButton::MenuButton(Event _eventToSend, RenderData * _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
@@ -42,7 +43,6 @@ void MenuButton::Tick(GameStateData * _GSD)
 {
 	if (m_highlighted)
 	{
-		scaleFromPoint(GetPos(), Vector2(0.6f, 0.6f));
 		SetColour(Color(Colors::AliceBlue));
 	}
 	else
@@ -85,7 +85,7 @@ void MenuButton::Tick(GameStateData * _GSD)
 	m_text.SetPos(this->GetPos() + m_textOffset + Vector2(60,-10));
 }
 
-void MenuButton::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
+void MenuButton::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	ImageGO2D::Render(_RD, _sprite);
 	m_text.Render(_RD, _sprite);
@@ -94,6 +94,18 @@ void MenuButton::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 void MenuButton::setText(std::string _text)
 {
 	m_text.SetText(_text);
+}
+
+Event MenuButton::getTopEvent()
+{
+	if (m_eventLeft != NULL)
+	{
+		return m_eventLeft;
+	}
+	else
+	{
+		return m_eventToSend;
+	}
 }
 
 void MenuButton::setHighlighted(bool _highlighted)

@@ -26,6 +26,7 @@ enum AttackMap
 
 class CharacterController;
 class SpawnHandler;
+class Item;
 
 class Character
 	: public ImageGO2D
@@ -36,7 +37,7 @@ public:
 	virtual ~Character();
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD, int _sprite = 0,
-		Vector2 _cam_pos = Vector2::Zero) override;
+		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
 
 	void CreatePhysics(RenderData* _RD = nullptr);
 
@@ -50,7 +51,7 @@ public:
 	const float GetJumpHeight() { return m_jump_height; }
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
 
-	void TakeDamage(int _dam) { m_damage += _dam; }
+	void TakeDamage(int _dam);
 	const int GetDamage() { return m_damage; }
 	void ResetDamage() { m_damage = 0; }
 
@@ -71,8 +72,10 @@ public:
 	const int GetPoints() { return m_points; }
 
 protected:
+
 	int PlayerJump(std::vector<GameAction> _actions);
 	int PlayerMove(std::vector<GameAction> _actions);
+	void PickUpItem(std::vector<GameAction> _actions);
 	void PlayerAttack(GameStateData * _GSD);
 	void MeleeAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
@@ -101,4 +104,5 @@ protected:
 	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
 	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
 	int m_points = 0;
+	Item* m_held_item = nullptr;
 };

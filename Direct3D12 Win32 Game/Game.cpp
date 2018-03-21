@@ -8,6 +8,8 @@
 #include "GameStateData.h"
 #include "MusicHandler.h"
 #include "SceneHandler.h"
+#include "GameSettingsHandler.h"
+#include "CharacterLifeHandler.h"
 
 extern void ExitGame();
 
@@ -144,8 +146,12 @@ void Game::Initialize(HWND window, int width, int height)
 	//at the moment this needs to be done before a scene is initialised
 	m_musicListener = std::make_unique<MusicHandler>();
 	m_sceneListener = std::make_unique<SceneHandler>();
+	m_gameSettings = std::make_unique<GameSettingsHandler>();
+	m_lifeListener = std::make_unique<CharacterLifeHandler>();
 	listeners.push_back(m_musicListener.get());
 	listeners.push_back(m_sceneListener.get());
+	listeners.push_back(m_gameSettings.get());
+	listeners.push_back(m_lifeListener.get());
 
 	m_gameScene = new GameScene();
 	m_all_scenes.push_back(m_gameScene);
@@ -162,6 +168,9 @@ void Game::Initialize(HWND window, int width, int height)
 	m_characterSelectScene = new CharacterSelectScene(m_gameScene);
 	m_all_scenes.push_back(m_characterSelectScene);
 
+	m_gameOverScene = new GameOverScene();
+	m_all_scenes.push_back(m_gameOverScene);
+
 	//add all listeners to all scenes
 	for (int i = 0; i < m_all_scenes.size(); i++)
 	{
@@ -176,6 +185,7 @@ void Game::Initialize(HWND window, int width, int height)
 
 	//SwitchToScene(MENU_SCENE, false);
 	m_sceneListener->init(m_GSD, m_all_scenes);
+	m_lifeListener->SetGameOver(m_gameOverScene);
 	//m_sceneListener->initActiveScene(m_activeScene);
 
 
@@ -267,6 +277,7 @@ void Game::Present()
     // The first argument instructs DXGI to block until VSync, putting the application
     // to sleep until the next VSync. This ensures we don't waste any cycles rendering
     // frames that will never be displayed to the screen.
+	WaitForGpu();
     HRESULT hr = m_swapChain->Present(1, 0);
 
     // If the device was reset we must completely reinitialize the renderer.

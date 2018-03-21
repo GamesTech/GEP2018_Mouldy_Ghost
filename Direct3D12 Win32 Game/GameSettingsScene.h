@@ -19,5 +19,7 @@ public:
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 private:
 	std::shared_ptr<Menu> m_settingsMenu = nullptr;
+	Text2D* m_livesText = nullptr;
+	Text2D* m_timeText = nullptr;
 };
 

@@ -4,6 +4,7 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
+#include "Item.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -19,11 +20,6 @@ Character::Character(RenderData* _RD, string _filename, SpawnHandler* _spawner)
 
 Character::~Character()
 {
-	if (m_physics)
-	{
-		delete m_physics;
-		m_physics = nullptr;
-	}
 	m_attacks.clear();
 }
 
@@ -48,6 +44,7 @@ void Character::Tick(GameStateData * _GSD)
 		m_physics->AddForce(gamePadPush * 100);
 
 		PlayerAttack(_GSD);
+		PickUpItem(actions_to_check);
 
 		if (m_attacking)
 		{
@@ -87,7 +84,7 @@ void Character::Tick(GameStateData * _GSD)
 	GameObject2D::Tick(_GSD);
 }
 
-void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
+void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
 	if (!flipped)
@@ -100,18 +97,23 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 	}
 	const RECT* r = &RECT(rect);
 
-	Vector2 render_pos = m_pos + _cam_pos;
+	Vector2 render_scale = m_scale * _zoom;
+
+	Vector2 distance_from_origin = m_pos - _cam_pos;
+	distance_from_origin *= _zoom;
+
+	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(m_texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, m_scale);
+		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
 }
 
 void Character::CreatePhysics(RenderData* _RD)
 {
 #if _DEBUG
-	m_physics = new VisiblePhysics(_RD);
+	m_physics =  new VisiblePhysics(_RD);
 #else
 	m_physics = new Physics2D();
 #endif
@@ -119,6 +121,12 @@ void Character::CreatePhysics(RenderData* _RD)
 	m_physics->SetBounce(0.3f);
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
+}
+
+void Character::TakeDamage(int _dam)
+{
+	m_damage += _dam;
+	m_damage = m_damage < 0 ? 0 : m_damage;
 }
 
 void Character::Hit(Vector2 _dir, float _force)
@@ -184,6 +192,21 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 		}
 	}
 	return 0;
+}
+
+void Character::PickUpItem(std::vector<GameAction> _actions)
+{
+	if (!m_attacking && !m_held_item)
+	{
+		if (InputSystem::searchForAction(P_PICK_UP, _actions))
+		{
+			m_held_item = m_physics->GetItem();
+			if (m_held_item)
+			{
+				m_held_item->pickUp(this);
+			}
+		}
+	}
 }
 
 int Character::PlayerMove(std::vector<GameAction> _actions)

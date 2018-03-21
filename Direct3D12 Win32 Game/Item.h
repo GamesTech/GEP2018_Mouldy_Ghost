@@ -8,7 +8,7 @@ class Item :public ImageGO2D
 {
 public:
 	Item();
-	Item(RenderData* _RD, std::string _filename);
+	Item(RenderData* _RD, string _filename, SpawnHandler* _spawner);
 	virtual ~Item();
 
 	virtual void Tick(GameStateData* _GSD);
@@ -33,6 +33,7 @@ public:
 
 	ItemType getitemType() { return m_type; }
 
+	SpawnHandler* m_handler;
 protected:
 	SpawnHandler* m_spawner = nullptr;
 

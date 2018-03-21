@@ -4,8 +4,9 @@
 
 std::string getFileData(std::ifstream & _file);
 
-ItemSpawner::ItemSpawner()
+ItemSpawner::ItemSpawner(SpawnHandler* _spawner)
 {
+	m_spawner = _spawner;
 }
 
 ItemSpawner::~ItemSpawner()
@@ -40,7 +41,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 	Item* loaded_item = nullptr;
 	if (type == "single_use")
 	{
-		Item* tmp = new Item(_RD,image);
+		Item* tmp = new Item(_RD,image, m_spawner);
 		tmp->setitemType(ItemType::SINGLE_USE);
 		loadAllItemProperies(tmp, item_file);
 
@@ -48,7 +49,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 	}
 	else if (type == "throwable")
 	{
-		Throwable* tmp = new Throwable(_RD, image);
+		Throwable* tmp = new Throwable(_RD, image, m_spawner);
 		tmp->setitemType(ItemType::THROWABLE);
 		loadAllItemProperies(tmp, item_file);
 		loadThrowableProperies(tmp, item_file);
@@ -57,7 +58,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 	}
 	else if (type == "explosive")
 	{
-		Explosive* tmp = new Explosive(_RD, image);
+		Explosive* tmp = new Explosive(_RD, image, m_spawner);
 		tmp->setitemType(ItemType::EXPLOSIVE);
 		loadAllItemProperies(tmp, item_file);
 		loadThrowableProperies(tmp, item_file);
@@ -65,7 +66,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 
 		loaded_item = tmp;
 	}
-
+	
 	allItems.push_back(loaded_item);
 
 	item_file.close();
@@ -121,28 +122,28 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 			
 			
 			ItemType tmptype = allItems[i]->getitemType();
-
 			Item* orig_item = allItems[i];
+
 			Item* newitem = nullptr;
 		
 			if (tmptype == ItemType::EXPLOSIVE)
 			{
 				Explosive* orig_item_cast = static_cast<Explosive*>(orig_item);
-				Explosive* tmpex = new Explosive(_RD,name);
+				Explosive* tmpex = new Explosive(_RD, name, m_spawner);
 
 
 				tmpex->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
 				tmpex->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
-				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());
-
-				tmpex->setFuse(orig_item_cast->getFuse());
-				tmpex->setExpRange(orig_item_cast->getExpRange());
 				newitem = tmpex;
+				tmpex->setExpRange(orig_item_cast->getExpRange());
+				tmpex->setFuse(orig_item_cast->getFuse());
+
+				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());
 			}
 			else if (tmptype == ItemType::EXPLOSIVE)
 			{
 				Throwable* orig_item_cast = static_cast<Throwable*>(orig_item);
-				Throwable* tmptr = new Throwable(_RD, name);
+				Throwable* tmptr = new Throwable(_RD, name, m_spawner);
 
 				tmptr->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
 				tmptr->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
@@ -152,8 +153,13 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 			}
 			else
 			{
-				newitem = new Item(_RD, name);
+				newitem = new Item(_RD, name, m_spawner);
 			}
+			Rectangle collider = Rectangle
+			(newitem->GetPos().x, newitem->GetPos().y, 
+				newitem->TextureSize().x, newitem->TextureSize().y);
+				newitem->GetPhysics()->SetCollider(collider);
+
 
 			newitem->setOnPickupString(orig_item->getOnPickupString());
 			newitem->setOnUseString(orig_item->getOnUseString());

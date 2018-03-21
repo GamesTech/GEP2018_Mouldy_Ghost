@@ -278,11 +278,20 @@
     <ClInclude Include="CharSelectScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="Explosion.h">
       <Filter>Items\Headers</Filter>
     </ClInclude>
     <ClInclude Include="ItemState.h">
       <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettingsHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterLifeHandler.h">
+      <Filter>EventSystem\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -426,9 +435,16 @@
     <ClCompile Include="CharSelectScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
     <ClCompile Include="Explosion.cpp">
       <Filter>Items\Source</Filter>
     </ClCompile>
+    <ClCompile Include="GameSettingsHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterLifeHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

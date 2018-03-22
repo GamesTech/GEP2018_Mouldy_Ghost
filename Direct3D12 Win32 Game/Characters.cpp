@@ -139,7 +139,7 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 
 	float knockback = _force * (m_damage + 1) / 100;
 	m_physics->AddForce(_dir * knockback);
-	m_recovery_time = (float)m_damage / 15.0f;
+	m_recovery_time = 0.1f;
 	m_last_to_hit = _attacker;
 }
 

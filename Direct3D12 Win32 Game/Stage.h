@@ -13,6 +13,8 @@ public:
 	virtual void init(RenderData* _RD,GameStateData* _GSD) = 0;
 
 	void addObjectsToScene(std::vector<GameObject2D*>& _g_objects);
+
+	const Vector2 getSpawn(int i) { return spawn[i]; }
 protected:
 
 	std::vector<GameObject2D*> other_objects;
@@ -21,5 +23,6 @@ protected:
 
 	float elapsed_time;
 
+	Vector2 spawn[4];
 };
 

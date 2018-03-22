@@ -25,24 +25,27 @@ Physics2D::~Physics2D()
 
 void Physics2D::ResetForce(Axis _axis)
 {
-	switch(_axis)
+	if (this)
 	{
-	case X_AXIS:
-		m_vel.x = 0;
-		m_acc.x = 0;
-		break;
-	case Y_AXIS:
-		m_vel.y = 0;
-		m_acc.y = 0;
-		break;
-	case BOTH_AXES:
-		m_vel.x = 0;
-		m_vel.y = 0;
-		m_acc.x = 0;
-		m_acc.y = 0;
-		break;
-	default:
-		break;
+		switch (_axis)
+		{
+		case X_AXIS:
+			m_vel.x = 0;
+			m_acc.x = 0;
+			break;
+		case Y_AXIS:
+			m_vel.y = 0;
+			m_acc.y = 0;
+			break;
+		case BOTH_AXES:
+			m_vel.x = 0;
+			m_vel.y = 0;
+			m_acc.x = 0;
+			m_acc.y = 0;
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -85,7 +88,7 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 
 				Vector2 normal = GetNormal(overlap.Center());
 				
-				m_owner->Collision(object);
+				//m_owner->Collision(object);
 
 				//check whether this object was being collided with on the last tick
 				bool on_list = false;

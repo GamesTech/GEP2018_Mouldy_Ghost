@@ -42,61 +42,22 @@ void ImageGO2D::SetSpriteSize(Vector2 _size, int _sprites_in_row)
 	m_sprites_in_row = _sprites_in_row;
 }
 
-void ImageGO2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
+void ImageGO2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
 	const RECT* r = &RECT(rect);
 
+	Vector2 render_scale = m_scale * _zoom;
+
+	Vector2 distance_from_origin = m_pos - _cam_pos;
+	distance_from_origin *= _zoom;
+
+	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
+
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(m_texture.Get()),
-		m_pos + _cam_pos, r, m_colour, m_orientation, m_origin, m_scale);
+		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
 }
-
-//void ImageGO2D::scaleFromPoint(Vector2 point, Vector2 scale)
-//{
-//	//make sure origin is in the middle
-//	CentreOrigin();
-//
-//	//get the size of the texture
-//	Vector2 size = m_spriteSize;
-//
-//	//get the current scale of the texture
-//	//this gives us the real size of the texture (width and height) as a vector2
-//	Vector2 realSize((size.x * m_scale.x), (size.y * m_scale.y));
-//	//obtain the real size of the texture after scaling
-//	Vector2 realSizeAfterScale((size.x * scale.x), (size.y * scale.y));
-//	//get the difference in size between these two
-//	Vector2 diff = realSizeAfterScale - realSize;
-//
-//	//THOMAS'S CODE
-//	Vector2 distance_to_point(m_pos - point);
-//
-//	Vector2 distance_should_be = (distance_to_point * scale);
-//	Vector2 spriteOffset((m_spriteSize * m_scale) / 2);
-//
-//	m_pos = point + distance_should_be;
-//	m_pos += spriteOffset;
-//
-//	m_physics->ScaleCollider(scale, m_scale);
-//	SetScale(scale);
-//
-//	//ARTHUR'S CODE
-//	//make the difference positive
-//	//diff.x = abs(diff.x);
-//	//diff.y = abs(diff.y);
-//
-//	//get the distance of the scale point to the origin of the image as a percentage (1.0f = 100%)
-//	//Vector2 distanceFactor((point.x - GetPos().x) / ((realSize.x / 2) - GetPos().x), ((point.y - GetPos().y) / ((realSize.y / 2) - GetPos().y)));
-//
-//
-//	//multiply the difference in size by this percentage
-//	//diff = diff * distanceFactor;
-//	//now we have the values, we scale the image
-//
-//	//this is how much we should move the image by
-//	//SetPos(Vector2(GetPos().x + diff.x, GetPos().y + diff.y));
-//	//if point was bottom left we would do: current_pos.x + difference in width, current_pos.y + difference in height
-//}
 
 void ImageGO2D::CentreOrigin()
 {

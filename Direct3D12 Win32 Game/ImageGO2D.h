@@ -21,9 +21,7 @@ public:
 	void SetSpriteSize(Vector2 _size, int _sprites_in_row);
 
 	virtual void Render(RenderData* _RD, int _sprite = 0,
-		Vector2 _cam_pos = Vector2::Zero);
-
-	//void scaleFromPoint(Vector2 point, Vector2 scale);
+		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1);
 
 	void CentreOrigin();
 	Vector2 TextureSize();

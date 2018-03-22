@@ -6,8 +6,10 @@
 #include "Game.h"
 #include "RenderData.h"
 #include "GameStateData.h"
-#include "MusicHandler.h"
+#include "AudioHandler.h"
 #include "SceneHandler.h"
+#include "GameSettingsHandler.h"
+#include "CharacterLifeHandler.h"
 
 extern void ExitGame();
 
@@ -142,10 +144,16 @@ void Game::Initialize(HWND window, int width, int height)
 
 	//populate the listener vector with all listeners
 	//at the moment this needs to be done before a scene is initialised
-	m_musicListener = std::make_unique<MusicHandler>();
+	m_musicListener = std::make_unique<AudioHandler>();
 	m_sceneListener = std::make_unique<SceneHandler>();
+	m_gameSettings = std::make_unique<GameSettingsHandler>();
+	m_lifeListener = std::make_unique<CharacterLifeHandler>();
+	m_spawner = std::make_unique<SpawnHandler>();
 	listeners.push_back(m_musicListener.get());
 	listeners.push_back(m_sceneListener.get());
+	listeners.push_back(m_gameSettings.get());
+	listeners.push_back(m_lifeListener.get());
+	listeners.push_back(m_spawner.get());
 
 	m_gameScene = new GameScene();
 	m_all_scenes.push_back(m_gameScene);
@@ -162,6 +170,9 @@ void Game::Initialize(HWND window, int width, int height)
 	m_characterSelectScene = new CharacterSelectScene(m_gameScene);
 	m_all_scenes.push_back(m_characterSelectScene);
 
+	m_gameOverScene = new GameOverScene();
+	m_all_scenes.push_back(m_gameOverScene);
+
 	//add all listeners to all scenes
 	for (int i = 0; i < m_all_scenes.size(); i++)
 	{
@@ -174,10 +185,17 @@ void Game::Initialize(HWND window, int width, int height)
 	}
 	//m_sceneListener->populateScenesList(m_all_scenes);
 
-	//SwitchToScene(MENU_SCENE, false);
-	m_sceneListener->init(m_GSD, m_all_scenes);
-	//m_sceneListener->initActiveScene(m_activeScene);
 
+	m_sceneListener->init(m_GSD, m_all_scenes);
+	m_lifeListener->SetGameOver(m_gameOverScene);
+	//m_sceneListener->initActiveScene(m_activeScene);
+	m_musicListener->init(m_GSD);
+
+
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		listeners[i]->onNotify(nullptr, Event::APPLICATION_LOADED);
+	}
 
 }
 
@@ -689,39 +707,6 @@ void Game::OnDeviceLost()
     CreateResources();
 }
 
-//bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
-//{
-//	////m_current_scene = _scene;
-//	//m_GSD->m_2DObjects.clear();
-//	//m_GSD->objects_in_scene.clear();
-//
-//	//if (_reset)
-//	//{
-//	//	m_activeScene->Reset();
-//	//}
-//
-//	//switch (_scene)
-//	//{
-//	//case GAME_SCENE:
-//	//	m_activeScene = m_gameScene;
-//	//	break;
-//	//case TEST_SCENE:
-//	//	m_activeScene = m_testScene;
-//	//	break;
-//	//case PHYSICS_SCENE:
-//	//	m_activeScene = m_physScene;
-//	//	break;
-//	//case MENU_SCENE:
-//	//	m_activeScene = m_menuScene;
-//	//	break;
-//	//default:
-//	//	return false;
-//	//}
-//
-//	//m_activeScene->PhysicsInScene(m_GSD);
-//	return false;
-//}
-
 void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
@@ -757,29 +742,13 @@ void Game::ReadInput()
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
 
-	//Commented this out so i can test the menu stuff. I don't think this should be managed in game.cpp but by the scene manager
-	//switch (m_GSD->menu_action[0])
-	//{
-	//case NAV_UP:
-	//	SwitchToScene(GAME_SCENE, true);
-	//	break;
-	//case NAV_LEFT:
-	//	SwitchToScene(PHYSICS_SCENE, true);
-	//	break;
-	//case NAV_RIGHT:
-	//	SwitchToScene(TEST_SCENE, true);
-	//	break;
-	//case NAV_DOWN:
-	//	SwitchToScene(MENU_SCENE, false);
-	//default:
-	//	break;
-	//}
-
 	if (m_GSD->game_actions[0].size() > 0)
 	{
 		if (m_GSD->game_actions[0][0] == P_QUIT)
 		{
+			m_gameScene->RemoveAllCharacters();
 			m_sceneListener->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
+			m_gameOverScene->Reset();
 		}
 	}
 

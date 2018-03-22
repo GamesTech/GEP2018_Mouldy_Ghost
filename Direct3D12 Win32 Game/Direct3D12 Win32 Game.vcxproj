@@ -22,7 +22,7 @@
     <RootNamespace>Direct3D12_Win32_Game</RootNamespace>
     <ProjectGuid>{48d1b087-0658-4dcc-a845-655543ce48a4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -172,8 +172,12 @@
   <ItemGroup>
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="CharacterLifeHandler.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="CharSelectScene.h" />
+    <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="Explosion.h" />
     <ClInclude Include="MeleeScene.h" />
     <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
@@ -190,6 +194,7 @@
     <ClInclude Include="FinalDestination.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="GameSettingsHandler.h" />
     <ClInclude Include="GameSettingsScene.h" />
     <ClInclude Include="GrabAttack.h" />
     <ClInclude Include="HUD.h" />
@@ -205,7 +210,7 @@
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
-    <ClInclude Include="MusicHandler.h" />
+    <ClInclude Include="AudioHandler.h" />
     <ClInclude Include="PassiveAttack.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="Platform.h" />
@@ -236,8 +241,12 @@
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="CharacterLifeHandler.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="CharSelectScene.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="MeleeScene.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -251,6 +260,7 @@
     <ClCompile Include="Explosive.cpp" />
     <ClCompile Include="FinalDestination.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSettingsHandler.cpp" />
     <ClCompile Include="GameSettingsScene.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InputSystem.cpp" />
@@ -263,7 +273,7 @@
     <ClCompile Include="StandardAttack.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
-    <ClCompile Include="MusicHandler.cpp" />
+    <ClCompile Include="AudioHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -10,6 +10,8 @@
 
 using std::vector;
 
+class Background;
+
 class GameScene : public Scene
 {
 public:
@@ -22,13 +24,13 @@ public:
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	void AddCharacter(int i, std::string _character, RenderData* _RD);
+	void RemoveAllCharacters();
 	void RemoveCharacter(Character * _char);
 
 	void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	virtual void Render
-	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList,
-		Vector2 _camera_position = Vector2::Zero) override;
+	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
 
 	CharacterManager* GetCharacterManager() { return &c_manager; }
 
@@ -41,10 +43,19 @@ private:
 
 	std::unique_ptr<Stage> game_stage = nullptr;
 	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
-	Character* players[4] = { nullptr, nullptr, nullptr, nullptr };
+	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
 
+	Background* m_bg[3];
+
 	CharacterManager c_manager;
-	std::unique_ptr<SpawnHandler> m_spawner;
+	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
+
+	int m_maxLives;
+	float m_timeLimit;
+	bool m_infiniteLives;
+	bool m_infiniteTime;
+
+	float m_timeLeft;
 };

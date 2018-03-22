@@ -52,12 +52,22 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 		if ((m_GSD->menu_action[i] == MenuAction::ADVANCE_MENU))
 		{
 			bool all_confirmed = true;
+			int numPlayers = 0;
 			for (int j = 0; j < 4; j++)
 			{
 				if (isValid(j) && !m_confirmed[j])
 				{
 					all_confirmed = false;
 				}
+				if (m_confirmed[j])
+				{
+					numPlayers++;
+				}
+			}
+
+			if (numPlayers <= 1)
+			{
+				all_confirmed = false;
 			}
 
 			if (all_confirmed)
@@ -91,7 +101,6 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 			//otherwise quit to the previous menu
 			else
 			{
-				Reset();
 				for (int j = 0; j < listeners.size(); j++)
 				{
 					listeners[j]->onNotify(nullptr, Event::CHANGE_SCENE_MELEE_MENU);
@@ -101,7 +110,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 	}
 }
 
-void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList, Vector2 _camera_position)
+void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)
 {
 	//primative batch
 	m_RD->m_effect->SetProjection(m_cam->GetProj());
@@ -144,6 +153,7 @@ void CharacterSelectScene::Reset()
 		m_confirmed[i] = false;
 		m_selected_character[i] = m_ch_manager->GetCharCount();
 	}
+	m_gameScene->Reset();
 }
 
 void CharacterSelectScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWidth, int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine)

@@ -4,92 +4,88 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
-#include "Item.h"
+#include "Throwable.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
 #endif
 
-Character::Character(RenderData* _RD, string _filename, SpawnHandler* _spawner)
+Character::Character(RenderData* _RD, string _filename)
 	: ImageGO2D(_RD, _filename)
 {
 	CentreOrigin();
 	tag = GameObjectTag::PLAYER;
-	m_spawner = _spawner;
 }
 
 Character::~Character()
 {
-	if (m_physics)
-	{
-		delete m_physics;
-		m_physics = nullptr;
-	}
 	m_attacks.clear();
 }
 
 void Character::Tick(GameStateData * _GSD)
 {
-	//check death zone is accurate
-	if (m_death_zone.width != _GSD->window_size.x + 800
-		|| m_death_zone.height != _GSD->window_size.y + 800)
+	if (m_lives > 0)
 	{
-		m_death_zone.width = _GSD->window_size.x + 800;
-		m_death_zone.height = _GSD->window_size.y + 800;
-	}
-
-	//get input
-	if (m_recovery_time <= 0)
-	{
-		int controller = m_controller->GetControllerID();
-		GameActions actions_to_check = m_controller->GetInput(_GSD);
-		Vector2 gamePadPush = Vector2(0, 0);
-		gamePadPush.x = PlayerMove(actions_to_check);
-		gamePadPush.y = PlayerJump(actions_to_check);
-		m_physics->AddForce(gamePadPush * 100);
-
-		PlayerAttack(_GSD);
-		PickUpItem(actions_to_check);
-
-		if (m_attacking)
+		//get input
+		if (m_recovery_time <= 0)
 		{
-			m_charge_time += _GSD->m_dt;
-		}
-	}
-	else
-	{
-		m_recovery_time -= _GSD->m_dt;
-	}
+			int controller = m_controller->GetControllerID();
+			GameActions actions_to_check = m_controller->GetInput(_GSD);
+			Vector2 gamePadPush = Vector2(0, 0);
+			gamePadPush.x = PlayerMove(actions_to_check);
+			gamePadPush.y = PlayerJump(actions_to_check);
+			m_physics->AddForce(gamePadPush * 100);
 
-	if (!m_death_zone.Contains(m_pos))
-	{
-		//DIES
-		if (m_last_to_hit)
-		{
-			m_last_to_hit->AddPoints(1);
-		}
-		m_lives--;
-		m_points--;
-		if (m_lives > 0)
-		{
-			ResetDamage();
-			m_physics->ResetForce(BOTH_AXES);
-			ResetPos();
+			PlayerAttack(_GSD);
+			PickUpItem(actions_to_check);
+
+			if (m_attacking)
+			{
+				m_charge_time += _GSD->m_dt;
+			}
 		}
 		else
 		{
-			m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+			m_recovery_time -= _GSD->m_dt;
+		}
+
+		if (!m_death_zone.Contains(m_pos))
+		{
+			//DIES
+			if (m_last_to_hit)
+			{
+				m_last_to_hit->AddPoints(1);
+			}
+			m_lives--;
+			m_points--;
+			for (int i = 0; i < listeners.size(); i++)
+			{
+				listeners[i]->onNotify(this, Event::PLAYER_DEAD);
+			}
+			if (m_lives > 0)
+			{
+				ResetDamage();
+				m_physics->ResetForce(BOTH_AXES);
+				ResetPos();
+			}
+			else
+			{
+				for (int i = 0; i < listeners.size(); i++)
+				{
+					listeners[i]->onNotify(this, Event::PLAYER_ELIMINATED);
+				}
+			}
 		}
 	}
 
-//GEP:: Lets go up the inheritence and share our functionality
+	//GEP:: Lets go up the inheritence and share our functionality
 
 	m_physics->Tick(_GSD, m_pos);
 
 	GameObject2D::Tick(_GSD);
 }
 
-void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
+void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
 	if (!flipped)
@@ -102,12 +98,17 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos)
 	}
 	const RECT* r = &RECT(rect);
 
-	Vector2 render_pos = m_pos + _cam_pos;
+	Vector2 render_scale = m_scale * _zoom;
+
+	Vector2 distance_from_origin = m_pos - _cam_pos;
+	distance_from_origin *= _zoom;
+
+	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(m_texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, m_scale);
+		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
 }
 
 void Character::CreatePhysics(RenderData* _RD)
@@ -129,11 +130,17 @@ void Character::TakeDamage(int _dam)
 	m_damage = m_damage < 0 ? 0 : m_damage;
 }
 
-void Character::Hit(Vector2 _dir, float _force)
+void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 {
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		listeners[i]->onNotify(this, Event::PLAYER_HIT);
+	}
+
 	float knockback = _force * (m_damage + 1) / 100;
 	m_physics->AddForce(_dir * knockback);
 	m_recovery_time = (float)m_damage / 15.0f;
+	m_last_to_hit = _attacker;
 }
 
 void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
@@ -144,11 +151,6 @@ void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		m_jumps = 0;
 		m_dash_recover = true;
 		m_last_to_hit = nullptr;
-	}
-	if (o_tag == GameObjectTag::ATTACK)
-	{
-		m_last_to_hit = static_cast<DamageCollider*>
-			(_collision->GetOwner())->GetUser();
 	}
 }
 
@@ -196,17 +198,32 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 
 void Character::PickUpItem(std::vector<GameAction> _actions)
 {
-	if (!m_attacking && !m_held_item)
+	if (!m_attacking && m_held_item)
 	{
 		if (InputSystem::searchForAction(P_PICK_UP, _actions))
 		{
+			Throwable* tmp = static_cast<Throwable*>(m_held_item);
+			tmp->Throw(this);
+			m_held_item = nullptr;
+			
+			return;
+
+		}
+	}
+	else if (!m_attacking && !m_held_item)
+	{
+		if (InputSystem::searchForAction(P_PICK_UP, _actions))
+		{
+			
 			m_held_item = m_physics->GetItem();
 			if (m_held_item)
 			{
 				m_held_item->pickUp(this);
 			}
+			
 		}
 	}
+	
 }
 
 int Character::PlayerMove(std::vector<GameAction> _actions)
@@ -253,6 +270,14 @@ int Character::PlayerMove(std::vector<GameAction> _actions)
 
 void Character::PlayerAttack(GameStateData* _GSD)
 {
+	SpawnHandler* spawn;
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		if (spawn = dynamic_cast<SpawnHandler*>(listeners[i]))
+		{
+			break;
+		}
+	}
 	if (m_dash_recover)
 	{
 		int controller = m_controller->GetControllerID();
@@ -272,7 +297,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 			if (static_cast<StandardAttack*>(m_charging_attack))
 			{
 				m_charging_attack->PerformAttack
-				(m_pos, m_facing, this, _GSD, m_spawner, m_charge_time);
+				(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
 				m_charging_attack = nullptr;
 			}
 			if (static_cast<StandardAttack*>(m_spamming_attack))
@@ -287,7 +312,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		{
 			if (m_spam_cooldown >= 0)
 			{
-				m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, m_spawner);
+				m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, spawn);
 				m_spam_cooldown = m_spamming_attack->GetDelay();
 			}
 			else
@@ -300,6 +325,14 @@ void Character::PlayerAttack(GameStateData* _GSD)
 
 void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actions)
 {
+	SpawnHandler* spawn;
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		if (spawn = dynamic_cast<SpawnHandler*>(listeners[i]))
+		{
+			break;
+		}
+	}
 	if (!m_attacking)
 	{
 		AttackMap attack_to_use;
@@ -332,7 +365,7 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 			break;
 		case OnHold::HOLD_NONE:
 			m_attacks[attack_to_use]->PerformAttack
-			(m_pos, m_facing, this, _GSD, m_spawner);
+			(m_pos, m_facing, this, _GSD, spawn);
 			break;
 		}
 		m_attacking = true;
@@ -341,6 +374,14 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 
 void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _actions)
 {
+	SpawnHandler* spawn;
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		if (spawn = dynamic_cast<SpawnHandler*>(listeners[i]))
+		{
+			break;
+		}
+	}
 	if (!m_attacking)
 	{
 		AttackMap attack_to_use;
@@ -376,7 +417,7 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			break;
 		case OnHold::HOLD_NONE:
 			m_attacks[attack_to_use]->PerformAttack
-			(m_pos, m_facing, this, _GSD, m_spawner);
+			(m_pos, m_facing, this, _GSD, spawn);
 			break;
 		}
 	}

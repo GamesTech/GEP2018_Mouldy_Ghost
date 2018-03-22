@@ -25,11 +25,6 @@ Platform::Platform()
 
 Platform::~Platform()
 {
-	if (m_physics)
-	{
-		delete m_physics;
-		m_physics = nullptr;
-	}
 }
 
 void Platform::Tick(GameStateData * _GSD)
@@ -41,6 +36,11 @@ void Platform::Tick(GameStateData * _GSD)
 
 void Platform::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+	if (_collision->GetOwner()->GetTag() == GameObjectTag::YO)
+	{
+		int i = 0;
+	}
+
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLAYER)
 	{
 		if (_normal.y == 1)

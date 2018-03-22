@@ -2,6 +2,7 @@
 #include "StandardAttack.h"
 #include "DashAttack.h"
 #include "InputSystem.h"
+#include "CharacterController.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
@@ -24,7 +25,6 @@ enum AttackMap
 	DOWN_THROW
 };
 
-class CharacterController;
 class SpawnHandler;
 class Item;
 
@@ -33,16 +33,17 @@ class Character
 {
 public:
 	//TODO: add a 3d player and modes to switch between different views and basic physics
-	Character(RenderData* _RD, string _filename, SpawnHandler* _spawner);
+	Character(RenderData* _RD, string _filename);
 	virtual ~Character();
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD, int _sprite = 0,
-		Vector2 _cam_pos = Vector2::Zero) override;
+		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
 
 	void CreatePhysics(RenderData* _RD = nullptr);
 
 	void SetController(CharacterController* _controller)
 	{ m_controller = _controller; }
+	const int GetControllerIndex() { return m_controller->GetControllerID(); }
 
 	void SetMoveSpeed(float _speed) { m_move_speed = _speed; }
 	const float GetMoveSpeed() { return m_move_speed; }
@@ -52,6 +53,7 @@ public:
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
 
 	void TakeDamage(int _dam);
+	void Hit(Vector2 _dir, float _force, Character * _attacker);
 	const int GetDamage() { return m_damage; }
 	void ResetDamage() { m_damage = 0; }
 
@@ -59,8 +61,6 @@ public:
 	void ResetLives() { m_lives = 3; }
 	const int GetLives() { return m_lives; }
 	void SetLives(int _set) { m_lives = _set; }
-
-	void Hit(Vector2 _dir, float _force);
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	virtual void Collision(Physics2D* _collision) override;
@@ -100,8 +100,7 @@ protected:
 	float m_spam_cooldown = 0;
 	bool m_attacking = false;
 	bool m_dash_recover = true;
-	SpawnHandler* m_spawner;
-	Rectangle m_death_zone = Rectangle(-500,-500, 0, 0);
+	Rectangle m_death_zone = Rectangle(-500,-500, 1700, 1400);
 	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
 	int m_points = 0;
 	Item* m_held_item = nullptr;

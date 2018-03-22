@@ -17,7 +17,9 @@
 using std::vector;
 
 class SceneHandler;
-class MusicHandler;
+class AudioHandler;
+class GameSettingsHandler;
+class CharacterLifeHandler;
 
 struct RenderData;
 struct GameStateData;
@@ -108,6 +110,7 @@ private:
 	MeleeScene* m_meleeScene;
 	CharacterSelectScene* m_characterSelectScene;
 	GameSettingsScene* m_gameSettingsScene;
+	GameOverScene* m_gameOverScene;
 
 
 	std::vector<Scene*> m_all_scenes;
@@ -128,7 +131,10 @@ private:
 	std::unique_ptr<DirectX::AudioEngine> m_audEngine;
 
 	//Vector of managers
-	std::unique_ptr<MusicHandler> m_musicListener = nullptr;
+	std::unique_ptr<AudioHandler> m_musicListener = nullptr;
 	std::unique_ptr<SceneHandler> m_sceneListener = nullptr;
+	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
+	std::unique_ptr<CharacterLifeHandler> m_lifeListener = nullptr;
+	std::unique_ptr<SpawnHandler> m_spawner = nullptr;
 	std::vector<EventHandler*> listeners;
 };

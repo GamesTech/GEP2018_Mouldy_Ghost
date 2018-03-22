@@ -2,13 +2,14 @@
 #include "ImageGO2D.h"
 #include "ItemState.h"
 #include "Physics2D.h"
+#include "SpawnHandler.h"
 
 class Item :public ImageGO2D
 {
 public:
 	Item();
 	Item(RenderData* _RD, string _filename, SpawnHandler* _spawner);
-	~Item();
+	virtual ~Item();
 
 	virtual void Tick(GameStateData* _GSD);
 
@@ -34,6 +35,8 @@ public:
 
 	SpawnHandler* m_handler;
 protected:
+	SpawnHandler* m_spawner = nullptr;
+
 	ItemState m_state = ItemState::WAIT;
 	ItemType m_type = ItemType::SINGLE_USE;
 

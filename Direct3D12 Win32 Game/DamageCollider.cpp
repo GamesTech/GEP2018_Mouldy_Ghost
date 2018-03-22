@@ -39,8 +39,6 @@ DamageCollider::~DamageCollider()
 {
 	if(parent)
 	parent->RemoveChild(this);
-	delete m_physics;
-	m_physics = nullptr;
 }
 
 void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)
@@ -52,7 +50,7 @@ void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		{
 			Character* target = static_cast<Character*>(_collision->GetOwner());
 			target->TakeDamage(m_data.damage);
-			target->Hit(_normal, -m_data.knockback * 500);
+			target->Hit(_normal, -m_data.knockback * 500, m_data.user);
 
 			if (m_data.contact == Destroy::ON_PLAYER_HIT)
 			{

@@ -29,7 +29,7 @@ GameOverScene::~GameOverScene()
 void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	//wait for input to return to menu
-	m_goBack->Tick(m_GSD);
+	//m_goBack->Tick(m_GSD);
 }
 
 void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
@@ -44,12 +44,12 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
 
-	m_goBack = std::make_shared<Menu>(Vector2((m_GSD->window_size.x / 5), (m_GSD->window_size.y - 100)), MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, m_RD, "gens"), "Back to\nCharacter Select");
-	for (int i = 0; i < listeners.size(); i++)
-	{
-		m_goBack->addListener(listeners[i]);
-	}
-	m_goBack->init();
+	//m_goBack = std::make_shared<Menu>(Vector2((m_GSD->window_size.x / 5), (m_GSD->window_size.y - 100)), MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, m_RD, "gens"), "Back to\nCharacter Select");
+	//for (int i = 0; i < listeners.size(); i++)
+	//{
+	//	m_goBack->addListener(listeners[i]);
+	//}
+	//m_goBack->init();
 }
 
 void GameOverScene::Reset()
@@ -126,5 +126,5 @@ void GameOverScene::SortByScores()
 		m_scores[i]->SetPos(Vector2(x, y));
 		m_2DObjects.push_back(m_scores[i]);
 	}
-	m_2DObjects.push_back(m_goBack.get());
+	/*m_2DObjects.push_back(m_goBack.get());*/
 }

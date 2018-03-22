@@ -10,8 +10,11 @@ SpawnHandler::~SpawnHandler()
 	{
 		for (int i = 0; i < del_count; i++)
 		{
-			if(m_delete_queue[i])
-			delete m_delete_queue[i];
+			if (m_delete_queue[i])
+			{
+				m_delete_queue[i] = nullptr;
+				delete m_delete_queue[i];
+			}
 		}
 		m_delete_queue.clear();
 	}

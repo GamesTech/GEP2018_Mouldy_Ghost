@@ -752,7 +752,15 @@ void Game::ReadInput()
 		}
 	}
 
+#if _DEBUG
 	//Quit if press Esc
 	if (m_GSD->menu_action[0] == QUIT)
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, Event::QUIT_GAME);
+		}
 		PostQuitMessage(0);
+	}
+#endif
 }

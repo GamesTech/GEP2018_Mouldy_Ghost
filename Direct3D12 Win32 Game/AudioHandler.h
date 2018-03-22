@@ -11,7 +11,6 @@ public:
 	~AudioHandler();
 
 	virtual void init(GameStateData* _GSD) override;
-
 	virtual void onNotify(GameObject2D * entity, Event event_);
 
 private:

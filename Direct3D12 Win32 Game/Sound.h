@@ -15,7 +15,6 @@ public:
 	virtual ~Sound();
 
 	virtual void Tick(GameStateData* _GSD) {};
-
 	virtual void Play();
 
 	void SetVolume(float _vol) { m_volume = _vol; }

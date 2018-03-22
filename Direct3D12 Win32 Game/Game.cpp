@@ -748,6 +748,7 @@ void Game::ReadInput()
 		{
 			m_gameScene->RemoveAllCharacters();
 			m_sceneListener->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
+			m_gameOverScene->Reset();
 		}
 	}
 

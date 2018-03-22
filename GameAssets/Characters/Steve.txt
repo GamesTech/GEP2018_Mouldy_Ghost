@@ -1,7 +1,7 @@
 Image		>terraria
 Speed		>2
-Jump Count	>21
-Jump		>220
+Jump Count	>4
+Jump		>150
 A		>Melee\hit.txt
 Side + A	>Melee\hold.txt
 Up + A		>Melee\upPunch.txt

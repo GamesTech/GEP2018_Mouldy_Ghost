@@ -1,7 +1,7 @@
 Image		>yoshi
 Speed		>2
-Jump Count	>21
-Jump		>220
+Jump Count	>2
+Jump		>300
 A		>Melee\hit.txt
 Side + A	>Melee\hold.txt
 Up + A		>Melee\upPunch.txt

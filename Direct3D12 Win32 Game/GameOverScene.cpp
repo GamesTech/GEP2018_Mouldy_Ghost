@@ -44,6 +44,11 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	m_3DObjects.push_back(m_cam);
 }
 
+void GameOverScene::Reset()
+{
+	m_chars_in_game.clear();
+}
+
 void GameOverScene::AddCharacterToScene(Character * _c)
 {
 	m_chars_in_game.push_back(_c);

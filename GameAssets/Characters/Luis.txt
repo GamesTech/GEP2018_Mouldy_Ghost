@@ -1,6 +1,6 @@
 Image		>greenmario
 Speed		>2
-Jump Count	>21
+Jump Count	>2
 Jump		>220
 A		>Melee\hit.txt
 Side + A	>Melee\hold.txt

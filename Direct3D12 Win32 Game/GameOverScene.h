@@ -16,7 +16,7 @@ public:
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
-	virtual void Reset() {}
+	virtual void Reset();
 
 	void AddCharacterToScene(Character* _c);
 	

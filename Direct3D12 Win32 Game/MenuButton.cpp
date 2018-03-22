@@ -19,6 +19,7 @@ MenuButton::MenuButton(Event _eventToSend, RenderData * _RD, string _filename) :
 	m_eventToSend = _eventToSend;
 	m_highlighted = false;
 	m_text.SetText("I am test button text");
+	m_text.SetColour(Color(0, 0, 0));
 }
 
 MenuButton::MenuButton(Event _leftEventToSend, Event _rightEventToSend, RenderData * _RD, string _filename) : ImageGO2D (_RD, _filename)
@@ -32,6 +33,7 @@ MenuButton::MenuButton(Event _leftEventToSend, Event _rightEventToSend, RenderDa
 	m_eventRight = _rightEventToSend;
 	m_highlighted = false;
 	m_text.SetText("I am a two event button");
+	m_text.SetColour(Color(0, 0, 0));
 }
 
 

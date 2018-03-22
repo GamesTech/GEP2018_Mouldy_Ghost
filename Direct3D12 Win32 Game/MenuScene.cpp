@@ -2,7 +2,7 @@
 #include "MenuScene.h"
 #include "RenderData.h"
 #include "Events.h"
-
+#include "Background.h"
 
 MenuScene::MenuScene()
 {
@@ -38,7 +38,11 @@ void MenuScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWi
 	//m_testbutton->SetPos(Vector2(100, 100));
 	//m_testbutton->addListener(listeners[0]);
 
-	m_testMenu = std::make_unique<Menu>((m_GSD->window_size / 3.5), MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Melee!");
+	m_background = new Background(m_RD, "nige", 1);
+	m_background->SetSpawn((m_GSD->window_size + Vector2(0, 100)) / 2);
+	m_2DObjects.push_back(m_background);
+
+	m_testMenu = std::make_unique<Menu>(Vector2(m_GSD->window_size.x/2 + (150), m_GSD->window_size.y/2 - 100), MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Press A\nTo Start!");
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		m_testMenu->addListener(listeners[i]);

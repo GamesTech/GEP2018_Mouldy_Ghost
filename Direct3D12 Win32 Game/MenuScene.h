@@ -3,6 +3,7 @@
 #include "MenuButton.h"
 #include "Menu.h"
 
+class Background;
 
 class MenuScene :
 	public Scene
@@ -22,4 +23,5 @@ public:
 private:
 	//std::unique_ptr<MenuButton> m_testbutton = nullptr;
 	std::shared_ptr<Menu> m_testMenu = nullptr;
+	Background* m_background;
 };

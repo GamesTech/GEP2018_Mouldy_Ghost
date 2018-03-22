@@ -5,7 +5,7 @@
 Stage::Stage()
 {
 	spawn[0] = Vector2(-100, -100);
-	spawn[1] = Vector2(150, -50);
+	spawn[1] = Vector2(150, -100);
 	spawn[2] = Vector2(700, 100);
 	spawn[3] = Vector2(400, 100);
 }

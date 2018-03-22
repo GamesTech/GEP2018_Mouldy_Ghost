@@ -22,6 +22,7 @@
     <ImageContentTask Include="tree.png" />
     <ImageContentTask Include="sky.png" />
     <ImageContentTask Include="field.png" />
+    <ImageContentTask Include="nige.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

@@ -752,7 +752,7 @@ void Game::ReadInput()
 		}
 	}
 
-#if _DEBUG
+
 	//Quit if press Esc
 	if (m_GSD->menu_action[0] == QUIT)
 	{
@@ -762,5 +762,4 @@ void Game::ReadInput()
 		}
 		PostQuitMessage(0);
 	}
-#endif
 }

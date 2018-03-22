@@ -168,6 +168,11 @@ void Character::Collision(Physics2D * _collision)
 			m_pos.x++;
 		}
 	}
+
+	if (o_tag == GameObjectTag::YO)
+	{
+		int i = 0;
+	}
 }
 
 void Character::AddAttack(StandardAttack _attack)

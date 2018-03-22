@@ -40,10 +40,13 @@ Explosion::~Explosion()
 
 void Explosion::Tick(GameStateData * _GSD)
 {
-	m_physics->Tick(_GSD,m_pos);
+	if (elapsed_time < 0.1)
+	{
+		m_physics->Tick(_GSD, m_pos);
+	}
 	elapsed_time += _GSD->m_dt;
 
-	if (elapsed_time > 1)
+	if (elapsed_time > 1.5)
 	{
 		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
 	}
@@ -60,7 +63,8 @@ void Explosion::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		dir.Normalize();
 
 		//debug values
-		player->Hit(dir, 2000000, nullptr);
+		player->TakeDamage(20);
+		player->Hit(dir, 200000, nullptr);
 	}
 }
 

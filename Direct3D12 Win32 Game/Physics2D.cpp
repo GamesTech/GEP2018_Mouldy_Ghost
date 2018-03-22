@@ -25,24 +25,27 @@ Physics2D::~Physics2D()
 
 void Physics2D::ResetForce(Axis _axis)
 {
-	switch(_axis)
+	if (this)
 	{
-	case X_AXIS:
-		m_vel.x = 0;
-		m_acc.x = 0;
-		break;
-	case Y_AXIS:
-		m_vel.y = 0;
-		m_acc.y = 0;
-		break;
-	case BOTH_AXES:
-		m_vel.x = 0;
-		m_vel.y = 0;
-		m_acc.x = 0;
-		m_acc.y = 0;
-		break;
-	default:
-		break;
+		switch (_axis)
+		{
+		case X_AXIS:
+			m_vel.x = 0;
+			m_acc.x = 0;
+			break;
+		case Y_AXIS:
+			m_vel.y = 0;
+			m_acc.y = 0;
+			break;
+		case BOTH_AXES:
+			m_vel.x = 0;
+			m_vel.y = 0;
+			m_acc.x = 0;
+			m_acc.y = 0;
+			break;
+		default:
+			break;
+		}
 	}
 }
 

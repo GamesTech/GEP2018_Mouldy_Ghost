@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Scene.h"
+#include "Menu.h"
 
 class GameOverScene
 	: public Scene
@@ -27,4 +28,5 @@ private:
 	Text2D* m_scores[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::vector<Character*> m_standings;
 	Color m_text_colour[4];
+	std::shared_ptr<Menu> m_goBack = nullptr;
 };

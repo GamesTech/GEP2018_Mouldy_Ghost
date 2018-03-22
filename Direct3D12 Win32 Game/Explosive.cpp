@@ -33,10 +33,13 @@ void Explosive::Tick(GameStateData * _GSD)
 	if (m_explode == true)
 	{
 		Explosion* explosion = new Explosion(m_pos, RD_ptr, _GSD, m_spawner, m_explosion_range, m_power);
+		
+		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+
 		m_spawner->onNotify(explosion, Event::OBJECT_INSTANTIATED);
 
 		//m_pos = Vector2(1500, 1000);
-		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+	
 		m_explode = false;
 	}
 

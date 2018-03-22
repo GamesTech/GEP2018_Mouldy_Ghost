@@ -21,7 +21,7 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 		m_pos.x + _exp_radius / 2, m_pos.y+ _exp_radius / 2);*/
 
 	Rectangle collider = Rectangle
-	(m_pos.x - TextureSize().x / 2, m_pos.y - TextureSize().y / 2,
+	(m_pos.x - TextureSize().x / 3, m_pos.y - TextureSize().y / 3,
 		TextureSize().x, TextureSize().y);
 	
 	m_physics->SetCollider(collider);
@@ -29,6 +29,7 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 	//m_scale = Vector2(0.1, 0.1);
 	
 	m_physics->SetGrav(0);
+	m_physics->SetOwner(this);
 
 	tag = GameObjectTag::YO;
 }
@@ -39,9 +40,13 @@ Explosion::~Explosion()
 
 void Explosion::Tick(GameStateData * _GSD)
 {
+	if (elapsed_time < 0.1)
+	{
+		m_physics->Tick(_GSD, m_pos);
+	}
 	elapsed_time += _GSD->m_dt;
 
-	if (elapsed_time > 10)
+	if (elapsed_time > 1.5)
 	{
 		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
 	}
@@ -58,7 +63,8 @@ void Explosion::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		dir.Normalize();
 
 		//debug values
-		player->Hit(dir, 2000, nullptr);
+		player->TakeDamage(20);
+		player->Hit(dir, 200000, nullptr);
 	}
 }
 

@@ -33,6 +33,7 @@ void AudioHandler::init(GameStateData * _GSD)
 	m_sounds.push_back(m_playerHit.get());
 }
 
+
 void AudioHandler::onNotify(GameObject2D * entity, Event event_)
 {
 	switch (event_)
@@ -66,6 +67,9 @@ void AudioHandler::onNotify(GameObject2D * entity, Event event_)
 			m_activeMusic = m_theme.get();
 			m_activeMusic->Play();
 		}
+		break;
+	case Event::QUIT_GAME:
+		m_audEngine->Suspend();
 		break;
 	}
 }

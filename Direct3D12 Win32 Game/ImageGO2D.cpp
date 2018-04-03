@@ -27,7 +27,6 @@ ImageGO2D::ImageGO2D(RenderData * _RD, string _filename)
 
 	m_spriteSize = Vector2(GetTextureSize
 	(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
-
 	CentreOrigin();
 }
 

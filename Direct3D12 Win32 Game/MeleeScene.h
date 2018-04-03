@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Menu.h"
+#include "Particle.h"
 class MeleeScene :
 	public Scene
 {
@@ -18,4 +19,6 @@ public:
 private:
 	//std::unique_ptr<MenuButton> m_testbutton = nullptr;
 	std::shared_ptr<Menu> m_testMenu = nullptr;
+
+	std::unique_ptr<Particle> m_testParticle = nullptr;
 };

@@ -15,6 +15,7 @@ MeleeScene::~MeleeScene()
 void MeleeScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	m_testMenu->Tick(m_GSD);
+	m_testParticle->Tick(m_GSD);
 }
 
 void MeleeScene::Reset()
@@ -39,6 +40,12 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	}
 	m_testMenu->init();
 	m_2DObjects.push_back(m_testMenu.get());
+
+	m_testParticle = std::make_unique<Particle>(Vector2(500, 500), "gens", _RD);
+	m_testParticle->setDestination(Vector2(500, 0));
+	m_testParticle->setSpeed(100);
+	m_testParticle->setLifetime(5);
+	m_2DObjects.push_back(m_testParticle.get());
 
 	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Select Characters");
 	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_MAIN_MENU, _RD, "gens"), "Back");

@@ -203,6 +203,7 @@
     <ClInclude Include="ItemSpawner.h" />
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="StandardAttack.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="StandardAttack.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />

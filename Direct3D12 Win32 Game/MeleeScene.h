@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Menu.h"
 #include "Particle.h"
+#include "Emitter.h"
 class MeleeScene :
 	public Scene
 {
@@ -21,4 +22,6 @@ private:
 	std::shared_ptr<Menu> m_testMenu = nullptr;
 
 	std::unique_ptr<Particle> m_testParticle = nullptr;
+
+	std::unique_ptr<Emitter> m_testEmitter = nullptr;
 };

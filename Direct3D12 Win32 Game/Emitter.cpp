@@ -76,7 +76,8 @@ void Emitter::addParticles(int amount, RenderData * _RD)
 		newPointTo = rotateVector(newPointTo, angle);
 		newPointTo = rotateVector(newPointTo, distributionAngle / -2);
 		newPointTo = rotateVector(newPointTo, random(mt));
-		particles.back().setDestination(newPointTo);
+		//particles.back().setDestination(newPointTo);
+		particles.back().setDirection(newPointTo);
 
 		std::random_device rd2;
 		std::mt19937 mt2(rd2());

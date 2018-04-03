@@ -45,6 +45,11 @@ void Particle::setDestination(Vector2 _destination)
 	m_direction = Vector2(m_direction.x / length, m_direction.y / length);
 }
 
+void Particle::setDirection(Vector2 _direction)
+{
+	m_direction = _direction;
+}
+
 void Particle::setSpeed(float _speed)
 {
 	m_speed = _speed;

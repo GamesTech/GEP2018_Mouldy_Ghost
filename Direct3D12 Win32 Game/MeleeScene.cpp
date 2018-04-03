@@ -49,10 +49,10 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	m_2DObjects.push_back(m_testParticle.get());
 
 	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "gens");
-	m_testEmitter->setAngle(90);
-	m_testEmitter->setDistribution(360);
-	m_testEmitter->setSpeeds(100, 201);
-	m_testEmitter->setLifetimes(5, 6);
+	m_testEmitter->setAngle(0);
+	m_testEmitter->setDistribution(3.14159265 / 100);
+	m_testEmitter->setSpeeds(200, 300);
+	m_testEmitter->setLifetimes(1, 3);
 	m_testEmitter->addParticles(30, _RD);
 	m_2DObjects.push_back(m_testEmitter.get());
 

@@ -8,6 +8,7 @@ class Throwable: public Item
 public:
 	Throwable();
 	Throwable(RenderData* _RD, std::string _filename, SpawnHandler* _spawner);
+	Throwable(Item* item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner); //copy constructor
 	~Throwable();
 
 

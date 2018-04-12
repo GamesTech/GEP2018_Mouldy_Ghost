@@ -31,12 +31,16 @@ void ItemSpawner::loadAllData(RenderData* _RD)
 
 void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 {
+	//open up the text file
 	std::string file_string = "..\\GameAssets\\Items\\" + _item_file + ".txt";
 	std::ifstream item_file;
 	item_file.open(file_string);
 
 	std::string type = getFileData(item_file);
 	std::string image = getFileData(item_file);
+
+	//depending on what the type is, we load other item properties
+	//they are split into chunks depending on type
 
 	Item* loaded_item = nullptr;
 	if (type == "single_use")
@@ -106,7 +110,7 @@ void ItemSpawner::loadExplosiveProperies(Explosive * item, std::ifstream & _open
 	//fuse
 	item->setFuse(std::stof(getFileData(_opened_file)));
 
-	//fuse
+	//explosion radius
 	item->setExpRange(std::stof(getFileData(_opened_file)));
 
 }
@@ -114,12 +118,13 @@ void ItemSpawner::loadExplosiveProperies(Explosive * item, std::ifstream & _open
 Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 {
 	//copy every proprety of an item and then create a new one
+	//Item* newitem = new Item(item_to_copy); did not work 
+	//because when it came down to function calls, it called the function of the original
 
 	for (int i = 0; i < allItems.size(); i++)
 	{
 		if (allItems[i]->GetName() == name)
 		{
-			
 			
 			ItemType tmptype = allItems[i]->getitemType();
 			Item* orig_item = allItems[i];
@@ -128,7 +133,9 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 		
 			if (tmptype == ItemType::EXPLOSIVE)
 			{
-				Explosive* orig_item_cast = static_cast<Explosive*>(orig_item);
+				Explosive* exp = new Explosive(orig_item, _RD, name, m_spawner);
+				newitem = exp;
+				/*Explosive* orig_item_cast = static_cast<Explosive*>(orig_item);
 				Explosive* tmpex = new Explosive(_RD, name, m_spawner);
 
 
@@ -138,34 +145,37 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 				tmpex->setExpRange(orig_item_cast->getExpRange());
 				tmpex->setFuse(orig_item_cast->getFuse());
 
-				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());
+				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());*/
 			}
 			else if (tmptype == ItemType::EXPLOSIVE)
 			{
-				Throwable* orig_item_cast = static_cast<Throwable*>(orig_item);
+				Throwable* thr = new Throwable(orig_item, _RD, name, m_spawner);
+				newitem = thr;
+				/*Throwable* orig_item_cast = static_cast<Throwable*>(orig_item);
 				Throwable* tmptr = new Throwable(_RD, name, m_spawner);
 
 				tmptr->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
 				tmptr->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
 				tmptr->setOnThrowString(orig_item_cast->getOnThrowString());
 
-				newitem = tmptr;
+				newitem = tmptr;*/
 			}
 			else
 			{
-				newitem = new Item(_RD, name, m_spawner);
+				//newitem = new Item( _RD, name, m_spawner);
+				newitem = new Item(orig_item, _RD, name, m_spawner);
 			}
 
-			newitem->setitemType(tmptype);
+			//newitem->setitemType(tmptype);
 			Rectangle collider = Rectangle
 			(newitem->GetPos().x, newitem->GetPos().y, 
 				newitem->TextureSize().x, newitem->TextureSize().y);
 				newitem->GetPhysics()->SetCollider(collider);
 
 
-			newitem->setOnPickupString(orig_item->getOnPickupString());
+			/*newitem->setOnPickupString(orig_item->getOnPickupString());
 			newitem->setOnUseString(orig_item->getOnUseString());
-			newitem->setPower(orig_item->getPower());
+			newitem->setPower(orig_item->getPower());*/
 	
 			return newitem;
 		}

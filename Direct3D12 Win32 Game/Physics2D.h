@@ -40,6 +40,8 @@ public:
 
 	void ScaleCollider(Vector2 _by, Vector2 _owner_scale);
 
+	void removeFromCurrentlyColliding(Physics2D* col);
+
 	Item* GetItem();
 #if _DEBUG
 	void RenderCorners(Vector2 _cam);

@@ -30,6 +30,16 @@ void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX:
 {
 	//wait for input to return to menu
 	//m_goBack->Tick(m_GSD);
+	for (int i = 0; i < 4; i++)
+	{
+		if (m_GSD->menu_action[i] == MenuAction::ADVANCE_MENU)
+		{
+			for (int j = 0; j < listeners.size(); j++)
+			{
+				listeners[i]->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
+			}
+		}
+	}
 }
 
 void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,

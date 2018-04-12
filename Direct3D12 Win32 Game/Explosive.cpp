@@ -13,6 +13,17 @@ Explosive::Explosive(RenderData * _RD, std::string _filename, SpawnHandler* _spa
 	m_spawner = _spawner;
 }
 
+Explosive::Explosive(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner) : Throwable(item_to_copy,_RD,_filename,_spawner)
+{
+	Explosive* explosive_ptr = static_cast<Explosive*>(item_to_copy);
+
+	m_fuse = explosive_ptr->getFuse();
+	m_explosion_range = explosive_ptr->getExpRange();
+
+	RD_ptr = _RD;
+	m_spawner = _spawner;
+}
+
 Explosive::~Explosive()
 {
 }
@@ -32,14 +43,13 @@ void Explosive::Tick(GameStateData * _GSD)
 
 	if (m_explode == true)
 	{
+		//instantiate explosion
 		Explosion* explosion = new Explosion(m_pos, RD_ptr, _GSD, m_spawner, m_explosion_range, m_power);
-		
-		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
-
 		m_spawner->onNotify(explosion, Event::OBJECT_INSTANTIATED);
 
-		//m_pos = Vector2(1500, 1000);
-	
+		//destroy this
+		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
+		  	
 		m_explode = false;
 	}
 

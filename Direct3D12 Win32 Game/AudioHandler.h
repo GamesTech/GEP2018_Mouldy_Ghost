@@ -13,6 +13,8 @@ public:
 	virtual void init(GameStateData* _GSD) override;
 	virtual void onNotify(GameObject2D * entity, Event event_);
 
+	virtual std::string getType() override { return "Audio"; }
+
 private:
 	Loop* m_activeMusic;
 	std::unique_ptr<AudioEngine> m_audEngine = nullptr;

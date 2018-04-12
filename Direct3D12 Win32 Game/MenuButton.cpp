@@ -11,6 +11,7 @@ MenuButton::MenuButton()
 
 MenuButton::MenuButton(Event _eventToSend, RenderData * _RD, string _filename) : ImageGO2D(_RD, _filename)
 {
+	//constructor for a single event (press a to do the thing)
 	type = ButtonType::SINGLE_EVENT;
 	m_physics = new Physics2D();
 	m_physics->SetBounce(0.3f);
@@ -24,6 +25,7 @@ MenuButton::MenuButton(Event _eventToSend, RenderData * _RD, string _filename) :
 
 MenuButton::MenuButton(Event _leftEventToSend, Event _rightEventToSend, RenderData * _RD, string _filename) : ImageGO2D (_RD, _filename)
 {
+	//constructor for a two event button (left/right for increasing of decreasing a value)
 	type = ButtonType::TWO_EVENT;
 	m_physics = new Physics2D();
 	m_physics->SetBounce(0.3f);
@@ -54,11 +56,13 @@ void MenuButton::Tick(GameStateData * _GSD)
 
 	for (int controller = 0; controller < 4; controller++)
 	{
+		//take input from all controllers
 		switch (type)
 		{
 		case ButtonType::SINGLE_EVENT:
 			if (_GSD->menu_action[controller] == MenuAction::CONFIRM && m_highlighted)
 			{
+				//if the button is highlighted and they press A then do the thing
 				for (int i = 0; i < listeners.size(); i++)
 				{
 					listeners[i]->onNotify(this, Event::BUTTON_PRESSED);
@@ -69,6 +73,7 @@ void MenuButton::Tick(GameStateData * _GSD)
 		case ButtonType::TWO_EVENT:
 			if (_GSD->menu_action[controller] == MenuAction::NAV_LEFT && m_highlighted)
 			{
+				//if the button is highlighted and they press left or right then do the thing
 				for (int i = 0; i < listeners.size(); i++)
 				{
 					listeners[i]->onNotify(this, m_eventLeft);
@@ -84,7 +89,7 @@ void MenuButton::Tick(GameStateData * _GSD)
 			break;
 		}
 	}
-	//m_textOffset is broken?
+	//set the position of the text in accordance with the position of the button
 	m_text.SetPos(this->GetPos() + m_textOffset + Vector2(60,-10));
 }
 

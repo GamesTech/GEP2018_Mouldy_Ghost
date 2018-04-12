@@ -13,7 +13,7 @@ AudioHandler::~AudioHandler()
 
 void AudioHandler::init(GameStateData * _GSD)
 {
-
+	//load in our audio files on startup
 	m_audEngine = std::make_unique<AudioEngine>();
 	m_GSD = _GSD;
 
@@ -36,6 +36,7 @@ void AudioHandler::init(GameStateData * _GSD)
 
 void AudioHandler::onNotify(GameObject2D * entity, Event event_)
 {
+	//play sounds when things happen
 	switch (event_)
 	{
 	case Event::APPLICATION_LOADED:

@@ -56,7 +56,10 @@ void Character::Tick(GameStateData * _GSD)
 			{
 				m_last_to_hit->AddPoints(1);
 			}
-			m_lives--;
+			if (!m_infiniteLives)
+			{
+				m_lives--;
+			}
 			m_points--;
 			for (int i = 0; i < listeners.size(); i++)
 			{

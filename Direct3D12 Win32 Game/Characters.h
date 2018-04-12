@@ -61,6 +61,7 @@ public:
 	void ResetLives() { m_lives = 3; }
 	const int GetLives() { return m_lives; }
 	void SetLives(int _set) { m_lives = _set; }
+	void setinfinitelives(bool _set) { m_infiniteLives = _set; }
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	virtual void Collision(Physics2D* _collision) override;
@@ -88,6 +89,7 @@ protected:
 	int m_jumps = 1;
 	int m_damage = 0;
 	int m_lives = 3;
+	bool m_infiniteLives = false;
 	float m_move_speed = 1.0f;
 	int m_jump_limit = 2;
 	float m_jump_height = 1.0f;

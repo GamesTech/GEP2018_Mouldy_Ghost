@@ -65,7 +65,10 @@ void GameScene::Initialise(RenderData * _RD,
 
 	for (int i = 0; i < listeners.size(); i++)
 	{
-		m_spawner = static_cast<SpawnHandler*>(listeners[i]);
+		if (listeners[i]->getType() == "Spawn")
+		{
+			m_spawner = static_cast<SpawnHandler*>(listeners[i]);
+		}
 	}
 
 	//give the spawner the object vectors and the render data
@@ -106,6 +109,8 @@ void GameScene::Initialise(RenderData * _RD,
 		entities[i] = new Player(i);
 	}
 
+
+
 	m_HUD->attachTimerPointer(&m_timeLeft);
 }
 
@@ -126,7 +131,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	players[i]->CreatePhysics(_RD);
 	//give the player lives
 	players[i]->SetLives(m_maxLives);
-
+	players[i]->setinfinitelives(m_infiniteLives);
 	players[i]->GetPhysics()->SetDrag(0.5f);
 	players[i]->GetPhysics()->SetBounce(0.4f);
 
@@ -252,7 +257,10 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		m_cam_zoom *= (m_GSD->window_size.x / 1000);
 	}
 
-	m_timeLeft -= timer.GetElapsedSeconds();
+	if (!m_infiniteTime)
+	{
+		m_timeLeft -= timer.GetElapsedSeconds();
+	}
 }
 
 void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList)

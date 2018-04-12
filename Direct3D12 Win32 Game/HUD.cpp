@@ -33,6 +33,7 @@ HUD::HUD(GameStateData* _GSD)
 	m_timeText = new Text2D("");
 	m_timeText->SetPos(Vector2((_GSD->window_size.x / 2) - 100,25));
 
+
 }
 
 HUD::~HUD()
@@ -113,6 +114,12 @@ void HUD::Render(RenderData * _RD)
 			display_text += std::to_string(m_in_game[i].character->GetLives());
 			
 			//show the shadow and highlight on the text
+			//check if we're on infinite lives
+			if (m_in_game[i].character->GetLives() < 20)
+			{
+				display_text += std::to_string(m_in_game[i].character->GetLives());
+			}
+
 			m_shadow[i]->SetText(display_text);
 			m_shadow[i]->Render(_RD);
 			m_highlight[i]->SetText(display_text);
@@ -122,26 +129,30 @@ void HUD::Render(RenderData * _RD)
 		}
 	}
 
-	int tempTime = static_cast<int>(*m_timer);
-	int minutes = tempTime / 60;
-
-	int seconds = tempTime - (minutes * 60);
-	std::string seconds_string = "";
-	if (seconds < 10)
+	//check we're not running on infinite time
+	if (*m_timer < 3060)
 	{
-		seconds_string += "0";
-	}
-	seconds_string += std::to_string(seconds);
+		int tempTime = static_cast<int>(*m_timer);
+		int minutes = tempTime / 60;
 
-	int hundrethSecond = (*m_timer - tempTime) * 100;
-	std::string hundrethString = "";
-	if (hundrethSecond < 10)
-	{
-		hundrethString += "0";
-	}
-	hundrethString += std::to_string(hundrethSecond);
-	std::string timeOutput = std::to_string(minutes) + ":" + seconds_string + ":" + hundrethString;
+		int seconds = tempTime - (minutes * 60);
+		std::string seconds_string = "";
+		if (seconds < 10)
+		{
+			seconds_string += "0";
+		}
+		seconds_string += std::to_string(seconds);
 
-	m_timeText->SetText(timeOutput);
-	m_timeText->Render(_RD);
+		int hundrethSecond = (*m_timer - tempTime) * 100;
+		std::string hundrethString = "";
+		if (hundrethSecond < 10)
+		{
+			hundrethString += "0";
+		}
+		hundrethString += std::to_string(hundrethSecond);
+		std::string timeOutput = std::to_string(minutes) + ":" + seconds_string + ":" + hundrethString;
+
+		m_timeText->SetText(timeOutput);
+		m_timeText->Render(_RD);
+	}
 }

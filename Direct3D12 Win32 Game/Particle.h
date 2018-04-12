@@ -14,8 +14,10 @@ public:
 	void setDirection(Vector2 _direction);
 	void setSpeed(float _speed);
 	void setLifetime(float _lifetime);
+	void setSprite(ID3D12Resource* _sprite);
 	bool getDead();
 private:
+
 	Vector2 m_origin;
 	Vector2 m_destination;
 	Vector2 m_direction;

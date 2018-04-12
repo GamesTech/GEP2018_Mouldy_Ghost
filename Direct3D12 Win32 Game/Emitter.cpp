@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Emitter.h"
+#include "RenderData.h"
 #include <random>
 
 
@@ -9,6 +10,32 @@ Emitter::Emitter()
 
 Emitter::Emitter(Vector2 _pos, std::string _file, RenderData * _RD)
 {
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+	string fullpath = "../DDS/" + _file + ".dds";
+	std::wstring wFilename = converter.from_bytes(fullpath.c_str());
+
+	ResourceUploadBatch resourceUpload(_RD->m_d3dDevice.Get());
+
+	resourceUpload.Begin();
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(_RD->m_d3dDevice.Get(), resourceUpload, wFilename.c_str(),
+			m_texture.ReleaseAndGetAddressOf()));
+
+
+	CreateShaderResourceView(_RD->m_d3dDevice.Get(), m_texture.Get(),
+		_RD->m_resourceDescriptors->GetCpuHandle(m_resourceNum = _RD->m_resourceCount++));
+
+	auto uploadResourcesFinished = resourceUpload.End(_RD->m_commandQueue.Get());
+
+	uploadResourcesFinished.wait();
+
+	m_spriteSize = Vector2(GetTextureSize
+	(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
+	CentreOrigin();
+
+
+	particles.reserve(100);
 	SetPos(_pos);
 	file = _file;
 	RD = _RD;
@@ -72,7 +99,7 @@ void Emitter::addParticles(int amount)
 	for (int i = 0; i < amount; i++)
 	{
 		particles.push_back(Particle(GetPos(), file, RD));
-
+		particles.back().setSprite(m_texture.Get());
 		Vector2 newPointTo(0, 1);
 		newPointTo = rotateVector(newPointTo, angle);
 		newPointTo = rotateVector(newPointTo, distributionAngle / -2);
@@ -133,8 +160,24 @@ void Emitter::Tick(GameStateData * _GSD)
 
 void Emitter::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
+	Rectangle rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
+	const RECT* r = &RECT(rect);
+
+	Vector2 render_scale = m_scale * _zoom;
+	
+
 	for (int i = 0; i < particles.size(); i++)
 	{
-		particles[i].Render(_RD, _sprite, _cam_pos, _zoom);
+	Vector2 distance_from_origin = particles[i].GetPos() - _cam_pos;
+	distance_from_origin *= _zoom;
+
+	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
+
+	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+		GetTextureSize(m_texture.Get()),
+		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+
+
+		//particles[i].Render(_RD, _sprite, _cam_pos, _zoom);
 	}
 }

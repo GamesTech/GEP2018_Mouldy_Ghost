@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Particle.h"
 #include "GameStateData.h"
+#include "RenderData.h"
 
 
 Particle::Particle()
@@ -59,6 +60,12 @@ void Particle::setLifetime(float _lifetime)
 {
 	m_lifetime = _lifetime;
 }
+
+void Particle::setSprite(ID3D12Resource * _sprite)
+{
+	m_texture = _sprite;
+}
+
 
 bool Particle::getDead()
 {

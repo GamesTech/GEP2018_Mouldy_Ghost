@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObject2D.h"
+#include "ImageGO2D.h"
 #include "Particle.h"
 
 class Emitter :
-	public GameObject2D
+	public ImageGO2D
 {
 public:
 	Emitter();
@@ -23,6 +23,7 @@ public:
 	virtual void Render(RenderData* _RD, int _sprite = 0,
 		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
 private:
+
 	float angle;
 	float distributionAngle;
 	float maxSpeed;

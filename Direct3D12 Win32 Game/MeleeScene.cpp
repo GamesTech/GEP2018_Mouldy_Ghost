@@ -15,7 +15,8 @@ MeleeScene::~MeleeScene()
 void MeleeScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	m_testMenu->Tick(m_GSD);
-	m_testParticle->Tick(m_GSD);
+	//m_testParticle->Tick(m_GSD);
+	m_testEmitter->addParticles(1);
 	m_testEmitter->Tick(m_GSD);
 }
 
@@ -42,18 +43,18 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	m_testMenu->init();
 	m_2DObjects.push_back(m_testMenu.get());
 
-	m_testParticle = std::make_unique<Particle>(Vector2(500, 500), "gens", _RD);
-	m_testParticle->setDestination(Vector2(500, 0));
-	m_testParticle->setSpeed(100);
-	m_testParticle->setLifetime(5);
-	m_2DObjects.push_back(m_testParticle.get());
+	//m_testParticle = std::make_unique<Particle>(Vector2(500, 500), "gens", _RD);
+	//m_testParticle->setDestination(Vector2(500, 0));
+	//m_testParticle->setSpeed(100);
+	//m_testParticle->setLifetime(5);
+	//m_2DObjects.push_back(m_testParticle.get());
 
-	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "gens", _RD);
+	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
 	m_testEmitter->setAngle(0);
 	m_testEmitter->setDistribution(3.14159265);
 	m_testEmitter->setSpeeds(200, 300);
 	m_testEmitter->setLifetimes(1, 3);
-	//m_testEmitter->addParticles(30);
+	m_testEmitter->addParticles(40);
 	m_2DObjects.push_back(m_testEmitter.get());
 
 	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Select Characters");

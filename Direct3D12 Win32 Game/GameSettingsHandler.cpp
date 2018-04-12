@@ -24,6 +24,10 @@ void GameSettingsHandler::onNotify(GameObject2D * entity_, Event event_)
 		{
 			m_lives++;
 		}
+		else
+		{
+			m_lives = 1;
+		}
 
 		if (m_lives > 20)
 		{
@@ -43,6 +47,7 @@ void GameSettingsHandler::onNotify(GameObject2D * entity_, Event event_)
 		if (m_lives < 1)
 		{
 			m_infiniteLives = true;
+			m_lives = 21;
 		}
 		else if (m_lives <= 20)
 		{
@@ -53,6 +58,10 @@ void GameSettingsHandler::onNotify(GameObject2D * entity_, Event event_)
 		if (m_time < 3630)
 		{
 			m_time += 30;
+		}
+		else
+		{
+			m_time = 30;
 		}
 
 		if (m_time >= 3630)
@@ -73,6 +82,7 @@ void GameSettingsHandler::onNotify(GameObject2D * entity_, Event event_)
 		if (m_time <= 0)
 		{
 			m_infiniteTime = true;
+			m_time = 3630;
 		}
 		else if (m_time < 3630)
 		{

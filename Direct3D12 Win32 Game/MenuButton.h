@@ -11,6 +11,7 @@ class MenuButton :
 	public ImageGO2D
 {
 public:
+	//Menu Button class. Has an event that it sends to it's observers
 	MenuButton();
 	MenuButton(Event _eventToSend, RenderData * _RD, string _filename);
 	MenuButton(Event _leftEventToSend, Event _rightEventToSend, RenderData * _RD, string _filename);

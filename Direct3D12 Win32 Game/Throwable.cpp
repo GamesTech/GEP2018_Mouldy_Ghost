@@ -9,6 +9,15 @@ Throwable::Throwable(RenderData * _RD, std::string _filename, SpawnHandler* _spa
 {
 }
 
+Throwable::Throwable(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner) : Item(item_to_copy,_RD,_filename,_spawner)
+{
+	Throwable* throwable_ptr = static_cast<Throwable*>(item_to_copy);
+
+	m_on_throw = throwable_ptr->getOnThrowString();
+	m_hit_player = throwable_ptr->getOnHitPlayerString();
+	m_hit_ground = throwable_ptr->getOnHitGroundString();
+}
+
 Throwable::~Throwable()
 {
 }

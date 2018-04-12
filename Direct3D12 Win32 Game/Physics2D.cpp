@@ -169,6 +169,18 @@ void Physics2D::ScaleCollider(Vector2 _by, Vector2 _owner_scale)
 	m_collider.height += (diff.y);
 }
 
+void Physics2D::removeFromCurrentlyColliding(Physics2D * col)
+{
+	for (int i = 0; i < currently_colliding.size(); i++)
+	{
+		if (currently_colliding[i] == col)
+		{
+			currently_colliding.erase(currently_colliding.begin() + i);
+			return;
+		}
+	}
+}
+
 Item* Physics2D::GetItem()
 {
 	for (int i = 0; i < currently_colliding.size(); i++)

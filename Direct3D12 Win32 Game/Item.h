@@ -8,7 +8,13 @@ class Item :public ImageGO2D
 {
 public:
 	Item();
+	/* Items get loaded n from a text file 
+	The data read from the files gets saved into variables
+	The variables say how should the iem behave in certain scenarios*/
 	Item(RenderData* _RD, string _filename, SpawnHandler* _spawner);
+
+	Item(Item* item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner); // copy constructor;
+
 	virtual ~Item();
 
 	virtual void Tick(GameStateData* _GSD);

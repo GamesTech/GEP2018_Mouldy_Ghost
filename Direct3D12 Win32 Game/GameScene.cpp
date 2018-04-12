@@ -64,7 +64,10 @@ void GameScene::Initialise(RenderData * _RD,
 
 	for (int i = 0; i < listeners.size(); i++)
 	{
-		m_spawner = static_cast<SpawnHandler*>(listeners[i]);
+		if (listeners[i]->getType() == "Spawn")
+		{
+			m_spawner = static_cast<SpawnHandler*>(listeners[i]);
+		}
 	}
 
 	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);

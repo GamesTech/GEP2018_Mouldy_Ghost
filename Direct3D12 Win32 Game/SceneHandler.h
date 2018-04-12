@@ -16,6 +16,8 @@ public:
 	void addScene(Scene* _scene);
 	virtual void onNotify(GameObject2D* entity_, Event event_) override;
 
+	virtual std::string getType() override { return "Scene"; }
+
 private:
 	std::vector<Scene*> m_allScenes;
 	Scene* m_activeScene;

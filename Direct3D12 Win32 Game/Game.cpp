@@ -30,6 +30,7 @@ Game::Game() :
 
 Game::~Game()
 {
+	//stop the audio engine
 	if (m_audEngine)
 	{
 		m_audEngine->Suspend();
@@ -41,6 +42,7 @@ Game::~Game()
 	delete m_RD;
 	delete m_GSD;
 
+	//deallocate scene pointers
 	for (int i = 0; i < m_all_scenes.size(); i++)
 	{
 		delete m_all_scenes[i];
@@ -181,17 +183,14 @@ void Game::Initialize(HWND window, int width, int height)
 			m_all_scenes[i]->addListener(listeners[j]);
 		}
 		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
-		//m_sceneListener->addScene(m_all_scenes[i]);
 	}
-	//m_sceneListener->populateScenesList(m_all_scenes);
 
-
+	//init listeners
 	m_sceneListener->init(m_GSD, m_all_scenes);
 	m_lifeListener->SetGameOver(m_gameOverScene);
-	//m_sceneListener->initActiveScene(m_activeScene);
 	m_musicListener->init(m_GSD);
 
-
+	//tell the listeners we've loaded!
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		listeners[i]->onNotify(nullptr, Event::APPLICATION_LOADED);

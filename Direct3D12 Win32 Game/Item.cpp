@@ -25,6 +25,18 @@ Item::Item(RenderData * _RD, string _filename, SpawnHandler* _spawner) : ImageGO
 	
 }
 
+Item::Item(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner) : Item(_RD, _filename, _spawner)
+{
+	m_type = item_to_copy->getitemType();
+
+	name = item_to_copy->GetName();
+	m_onPickUp = item_to_copy->getOnPickupString();
+	m_onUse = item_to_copy->getOnUseString();
+	m_power = item_to_copy->getPower();
+	
+	
+}
+
 Item::~Item()
 {
 }
@@ -39,12 +51,13 @@ void Item::Tick(GameStateData * _GSD)
 
 void Item::pickUp(Character * _player)
 {
-	if (m_onPickUp == "use")
+	
+	if (m_onPickUp == "use") //singe used items are used immediately on pickup and then destroyed
 	{
 		use(_player);
 		m_handler->onNotify(this, Event::OBJECT_DESTROYED);
 	}
-	else if (m_type != ItemType::SINGLE_USE)
+	else if (m_type != ItemType::SINGLE_USE) //every other item type gets equipped
 	{
 		_player->AddChild(this);
 		//m_physics->SetGrav(0);
@@ -63,7 +76,7 @@ void Item::use(Character * _player)
 	
 		if (m_onUse == "heal")
 		{
-			_player->TakeDamage(-m_power);
+			_player->TakeDamage(-m_power); 
 		}
 		else if (m_onUse == "hammer_yo")
 		{
@@ -74,6 +87,7 @@ void Item::use(Character * _player)
 
 void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+	
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
 	{
 		m_physics->ResetForce(Axis::Y_AXIS);

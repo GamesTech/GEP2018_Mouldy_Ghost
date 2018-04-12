@@ -6,6 +6,7 @@ class Explosive : public Throwable
 public:
 	Explosive();
 	Explosive(RenderData* _RD, std::string _filename, SpawnHandler* _spawner);
+	Explosive(Item* item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner);
 	~Explosive();
 
 	virtual void Tick(GameStateData* _GSD);

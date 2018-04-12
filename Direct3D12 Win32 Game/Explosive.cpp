@@ -13,6 +13,17 @@ Explosive::Explosive(RenderData * _RD, std::string _filename, SpawnHandler* _spa
 	m_spawner = _spawner;
 }
 
+Explosive::Explosive(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner) : Throwable(item_to_copy,_RD,_filename,_spawner)
+{
+	Explosive* explosive_ptr = static_cast<Explosive*>(item_to_copy);
+
+	m_fuse = explosive_ptr->getFuse();
+	m_explosion_range = explosive_ptr->getExpRange();
+
+	RD_ptr = _RD;
+	m_spawner = _spawner;
+}
+
 Explosive::~Explosive()
 {
 }

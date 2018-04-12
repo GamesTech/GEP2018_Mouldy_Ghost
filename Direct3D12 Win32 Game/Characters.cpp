@@ -203,6 +203,7 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 
 void Character::PickUpItem(std::vector<GameAction> _actions)
 {
+
 	if (!m_attacking && m_held_item)
 	{
 		if (InputSystem::searchForAction(P_PICK_UP, _actions))

@@ -6,6 +6,7 @@
 #include "CharacterController.h"
 #include "CharacterManager.h"
 #include "ItemSpawner.h"
+#include "Emitter.h"
 #include "HUD.h"
 
 using std::vector;
@@ -52,6 +53,8 @@ private:
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
+
+	std::unique_ptr<Emitter> m_testEmitter = nullptr;
 
 	int m_maxLives;
 	float m_timeLimit;

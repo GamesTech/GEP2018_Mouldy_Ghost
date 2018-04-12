@@ -12,6 +12,7 @@ Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD)
 {
 	m_origin = _origin;
 	SetPos(m_origin);
+	m_fade = true;
 }
 
 
@@ -27,8 +28,8 @@ void Particle::Tick(GameStateData * _GSD)
 	SetPos(GetPos() + ((m_direction * (m_speed * - 1)) * _GSD->m_dt));
 	if (m_fade)
 	{
-		float visibility = m_elapsed_time / m_lifetime;
-		visibility = 255 - (visibility * 255);	}
+		visibility = 1 - (m_elapsed_time / m_lifetime);
+	}
 	if (m_elapsed_time > m_lifetime)
 	{
 		m_dead = true;

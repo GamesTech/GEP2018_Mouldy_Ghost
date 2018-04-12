@@ -173,6 +173,8 @@ void Emitter::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoo
 
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 
+	m_colour.A(particles[i].getVisibility());
+
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(m_texture.Get()),
 		render_pos, r, m_colour, m_orientation, m_origin, render_scale);

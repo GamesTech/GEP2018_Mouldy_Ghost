@@ -13,6 +13,7 @@ public:
 	void setSpeed(float _speed);
 	void setLifetime(float _lifetime);
 	void setSprite(ID3D12Resource* _sprite);
+	float getVisibility() { return visibility; }
 	bool getDead();
 private:
 
@@ -21,6 +22,7 @@ private:
 	Vector2 m_direction;
 	bool m_dead = false;
 	bool m_fade = false;
+	float visibility;
 	float m_speed;
 	float m_lifetime;
 	float m_elapsed_time = 0;

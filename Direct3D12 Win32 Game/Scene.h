@@ -26,6 +26,7 @@ public:
 	virtual void Render
 	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 
+	//adds the physics from the game's gameobjects to this scene
 	void PhysicsInScene(GameStateData* _GSD);
 
 	//Find game objects

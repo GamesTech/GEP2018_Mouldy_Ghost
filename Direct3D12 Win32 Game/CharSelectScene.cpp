@@ -30,6 +30,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 {
 	for (int i = 0; i < 4; i++)
 	{
+		//left and right to select characters
 		if (m_GSD->menu_action[i] == MenuAction::NAV_LEFT && !m_confirmed[i])
 		{
 			m_selected_character[i]--;
@@ -40,21 +41,26 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 				% (m_ch_manager->GetCharCount() + 1);
 		}
 
+		//if they go below 0, loop back to the last one
 		if (m_selected_character[i] < 0)
 		{
 			m_selected_character[i] = m_ch_manager->GetCharCount();
 		}
+		//check for a valid selection and confirm their player
 		if ((m_GSD->menu_action[i] == MenuAction::CONFIRM) && isValid(i))
 		{
 			m_confirmed[i] = !m_confirmed[i];
 		}
 
+		//if someone pressed the advance menu button
 		if ((m_GSD->menu_action[i] == MenuAction::ADVANCE_MENU))
 		{
 			bool all_confirmed = true;
 			int numPlayers = 0;
 			for (int j = 0; j < 4; j++)
 			{
+				//if a player has a character highlighted and
+				//not selected, don't let the menu advance
 				if (isValid(j) && !m_confirmed[j])
 				{
 					all_confirmed = false;
@@ -65,26 +71,30 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 				}
 			}
 
+			//if there is one or fewer confirmed players
+			//don't advance
 			if (numPlayers <= 1)
 			{
 				all_confirmed = false;
 			}
 
+			//if the menu can advance
 			if (all_confirmed)
 			{
 				for (int j = 0; j < 4; j++)
 				{
 					if (isValid(j))
 					{
+						//add the character to the game scene
 						std::string character_name =
 							m_ch_manager->GetCharacter(m_selected_character[j]).GetName();
 
 						m_gameScene->AddCharacter(j, character_name, m_RD);
 					}
 				}
+				Reset();
 				for (int j = 0; j < listeners.size(); j++)
 				{
-					Reset();
 					listeners[j]->onNotify(nullptr, Event::CHANGE_SCENE_GAME);
 				}
 			}
@@ -148,6 +158,7 @@ void CharacterSelectScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandLi
 
 void CharacterSelectScene::Reset()
 {
+	//on leaving this scene, link the game settings to the game scene
 	for (int i = 0; i < 4; i++)
 	{
 		m_confirmed[i] = false;
@@ -173,6 +184,7 @@ void CharacterSelectScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 
 bool CharacterSelectScene::isValid(int i)
 {
+	//character is selected
 	return m_selected_character[i] < m_ch_manager->GetCharCount()
 		&& m_selected_character >= 0;
 }

@@ -110,14 +110,20 @@ void HUD::Render(RenderData * _RD)
 			//show their damage
 			display_text += std::to_string(m_in_game[i].character->GetDamage()) + "%";
 			display_text += " ";
+<<<<<<< HEAD
+			//show their lives
+			display_text += std::to_string(m_in_game[i].character->GetLives());
+			
 			//show the shadow and highlight on the text
+=======
+
 			//check if we're on infinite lives
 			if (m_in_game[i].character->GetLives() < 20)
 			{
-				//show their lives
 				display_text += std::to_string(m_in_game[i].character->GetLives());
 			}
 
+>>>>>>> 0ab0dbc5250900c7503eea43670b335627317933
 			m_shadow[i]->SetText(display_text);
 			m_shadow[i]->Render(_RD);
 			m_highlight[i]->SetText(display_text);
@@ -128,7 +134,7 @@ void HUD::Render(RenderData * _RD)
 	}
 
 	//check we're not running on infinite time
-	if (*m_timer < 3600)
+	if (*m_timer < 3060)
 	{
 		int tempTime = static_cast<int>(*m_timer);
 		int minutes = tempTime / 60;

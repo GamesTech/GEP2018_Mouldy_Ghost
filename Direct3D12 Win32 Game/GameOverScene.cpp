@@ -64,6 +64,7 @@ void GameOverScene::AddCharacterToScene(Character * _c)
 
 void GameOverScene::PlayerEliminated(Character * _c, int index)
 {
+	//if a player is eliminated, add them to the loser list
 	m_scores[m_standings.size()]->SetColour(m_text_colour[index]);
 
 	for (int i = 0; i < m_chars_in_game.size(); i++)
@@ -79,11 +80,14 @@ void GameOverScene::SortByScores()
 {
 	for (int stand = 0; stand < 4; stand++)
 	{
+		//set these to invalid values
 		int worst_score_so_far = 5000;
 		int character_index = -1;
 
 		for (int i = 0; i < m_chars_in_game.size(); i++)
 		{
+			//look for the character already in the standings
+			//(they were eliminated or have already been added)
 			bool character_in_array = false;
 
 			for (int j = 0; j < m_standings.size(); j++)
@@ -94,8 +98,10 @@ void GameOverScene::SortByScores()
 				}
 			}
 
+			//find the worst scoring non-eliminated character
 			if (m_chars_in_game[i]->GetPoints() < worst_score_so_far && !character_in_array)
 			{
+				//add them to the list
 				worst_score_so_far = m_chars_in_game[i]->GetPoints();
 				character_index = i;
 			}
@@ -103,11 +109,16 @@ void GameOverScene::SortByScores()
 
 		if (character_index != -1)
 		{
-			m_scores[m_standings.size()]->SetColour(m_text_colour[character_index]);
+			//if that character does exist, set the text colour
+			//to the one associated with that character
+			m_scores[m_standings.size()]->SetColour
+			(m_text_colour[m_chars_in_game[character_index]
+				->GetControllerIndex()]);
 			m_standings.push_back(m_chars_in_game[character_index]);
 		}
 	}
 
+	//add the standing objects to the scene
 	m_2DObjects.clear();
 	for (int i = 0; i < m_standings.size(); i++)
 	{

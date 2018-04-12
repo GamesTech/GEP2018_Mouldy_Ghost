@@ -115,6 +115,7 @@ void Scene::PhysicsInScene(GameStateData* _GSD)
 {
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
+		//check that the object isn't already in the scene
 		bool in_vector = false;
 		for (int j = 0; j < m_2DObjects.size(); j++)
 		{
@@ -123,6 +124,7 @@ void Scene::PhysicsInScene(GameStateData* _GSD)
 				in_vector = true;
 			}
 		}
+		//add it and its physics to scene
 		if (!in_vector)
 		{
 			m_2DObjects.push_back(m_2DObjects[i]);

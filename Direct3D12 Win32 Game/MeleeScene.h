@@ -16,6 +16,5 @@ public:
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 private:
-	//std::unique_ptr<MenuButton> m_testbutton = nullptr;
 	std::shared_ptr<Menu> m_testMenu = nullptr;
 };

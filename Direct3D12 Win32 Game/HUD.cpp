@@ -59,12 +59,16 @@ HUD::~HUD()
 
 void HUD::AddCharacter(Character * _char)
 {
+	//iterate through each character
 	for (int i = 0; i < 4; i++)
 	{
+		//find the first empty space
 		if (!m_in_game[i].in_game)
 		{
+			//add the character
 			m_in_game[i].character = _char;
 			m_in_game[i].in_game = true;
+			//don't continue trying to add this character
 			break;
 		}
 	}
@@ -72,10 +76,13 @@ void HUD::AddCharacter(Character * _char)
 
 void HUD::RemoveCharacter(Character * _char)
 {
+	//find the character in the hud
 	for (int i = 0; i < 4; i++)
 	{
 		if (m_in_game[i].character == _char)
 		{
+			//remove them
+			m_in_game[i].character = nullptr;
 			m_in_game[i].in_game = false;
 		}
 	}
@@ -90,16 +97,22 @@ void HUD::Render(RenderData * _RD)
 {
 	for (int i = 0; i < 4; i++)
 	{
+		//character in game and alive
 		if (m_in_game[i].in_game && m_in_game[i].character->GetLives() > 0)
 		{
+			//set colour to the one associated with their player number
 			m_text_display[i]->SetColour
 			(m_text_colours[m_in_game[i].character->GetControllerIndex()]);
+			//show their name
 			std::string display_text = m_in_game[i].character->GetName();
 			display_text += "\n";
+			//show their damage
 			display_text += std::to_string(m_in_game[i].character->GetDamage()) + "%";
 			display_text += " ";
+			//show their lives
 			display_text += std::to_string(m_in_game[i].character->GetLives());
-
+			
+			//show the shadow and highlight on the text
 			m_shadow[i]->SetText(display_text);
 			m_shadow[i]->Render(_RD);
 			m_highlight[i]->SetText(display_text);

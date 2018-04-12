@@ -49,6 +49,7 @@ void GameScene::Initialise(RenderData * _RD,
 	float w = m_GSD->window_size.x;
 	float h = m_GSD->window_size.y;
 
+	//set background
 	m_bg[0] = new Background(m_RD, "sky", 1);
 	m_bg[0]->SetSpawn(Vector2(w * 0.4, 100));
 	m_bg[1] = new Background(m_RD, "field", 1);
@@ -67,14 +68,15 @@ void GameScene::Initialise(RenderData * _RD,
 		m_spawner = static_cast<SpawnHandler*>(listeners[i]);
 	}
 
+	//give the spawner the object vectors and the render data
 	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);
 
 	item_spawner = ItemSpawner(m_spawner);
 
+	//load every character into the character manager
 	c_manager.PopulateCharacterList(_RD);
 	item_spawner.loadAllData(_RD);
 
-	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
@@ -96,6 +98,7 @@ void GameScene::Initialise(RenderData * _RD,
 
 	giveMeItem(_RD, _GSD, "apple", Vector2(600, 100));
 
+	//adds all 2d objects to the stage
 	game_stage->addObjectsToScene(m_2DObjects);
 
 	for (int i = 0; i < 4; i++)
@@ -112,26 +115,36 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	//{
 	//	RemoveCharacter(players[i]);
 	//}
+	
+	//make a character for the scene
 	players[i] = std::make_unique<Character>(c_manager.GetCharacter(_character));
+	//give the player a spawn point
 	players[i]->SetSpawn(game_stage->getSpawn(i));
+	//colour the player
 	players[i]->SetColour(player_tints[i]);
+	//give the player physics
 	players[i]->CreatePhysics(_RD);
+	//give the player lives
 	players[i]->SetLives(m_maxLives);
+
 	players[i]->GetPhysics()->SetDrag(0.5f);
 	players[i]->GetPhysics()->SetBounce(0.4f);
 
+	//give the player a collider
 	float width = players[i]->TextureSize().x / 2;
 	float height = players[i]->TextureSize().y;
 	Rectangle rect = Rectangle
 	(players[i]->GetPos().x, players[i]->GetPos().y, width, height);
 	players[i]->GetPhysics()->SetCollider(rect);
 
+	//add the player to the scene and the hud
 	m_2DObjects.push_back(players[i].get());
 	m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
 	entities[i]->SetCharacter(players[i].get());
 
 	m_HUD->AddCharacter(players[i].get());
 
+	//notify the listeners that a player is spawning in
 	for (int j = 0; j < listeners.size(); j++)
 	{
 		players[i]->addListener(listeners[j]);
@@ -152,6 +165,7 @@ void GameScene::RemoveAllCharacters()
 
 void GameScene::RemoveCharacter(Character* _char)
 {
+	//search for and remove the character from the list
 	if (_char)
 	{
 		_char->SetLives(0);
@@ -179,6 +193,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	Scene::Update(timer, _audEngine);
 	game_stage->update(m_GSD);
 
+	//adjust the camera pan or zoom
 	//find average and furthest points of players locations
 	Vector2 top_left = Vector2(100000,100000);
 	Vector2 bottom_right = Vector2(-1000, -1000);
@@ -201,6 +216,8 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 			}
 		}
 	}
+
+	//if there are fewer then 2 players or no time left
 	if (num_players <= 1 || m_timeLeft <= 0)
 	{
 		for (int i = 0; i < listeners.size(); i++)

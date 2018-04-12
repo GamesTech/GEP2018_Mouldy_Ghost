@@ -28,5 +28,4 @@ private:
 	Text2D* m_scores[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::vector<Character*> m_standings;
 	Color m_text_colour[4];
-	//std::shared_ptr<Menu> m_goBack = nullptr;
 };

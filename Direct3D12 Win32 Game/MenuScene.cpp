@@ -15,7 +15,6 @@ MenuScene::~MenuScene()
 
 void MenuScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	//m_testbutton->Tick(m_GSD);
 	m_testMenu->Tick(m_GSD);
 }
 
@@ -29,14 +28,9 @@ void MenuScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWi
 	m_RD = _RD;
 	m_GSD = _GSD;
 
-	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
-
-	//m_testbutton = std::make_unique<MenuButton>(Event::CHANGE_SCENE, _RD, "gens");
-	//m_testbutton->SetPos(Vector2(100, 100));
-	//m_testbutton->addListener(listeners[0]);
 
 	m_background = new Background(m_RD, "nige", 1);
 	m_background->SetSpawn((m_GSD->window_size + Vector2(0, 100)) / 2);

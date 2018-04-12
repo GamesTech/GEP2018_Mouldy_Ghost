@@ -2,6 +2,12 @@
 #include "pch.h"
 #include "InputSystem.h"
 
+/*
+Character controller takes the input and transfers them into the
+avatar, telling them what actions to perform.
+This is a parent class from which PlayerController and AIController will inherit
+*/
+
 class Character;
 
 class CharacterController

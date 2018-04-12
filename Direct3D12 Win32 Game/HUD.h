@@ -2,6 +2,7 @@
 
 #include "Characters.h"
 
+//Hold a character and whether they exist in the scene
 struct InScene
 {
 	Character* character;
@@ -18,6 +19,7 @@ public:
 	void AddCharacter(Character* _char);
 	void RemoveCharacter(Character* _char);
 
+	//The game's timer is passed in using this pointer
 	void attachTimerPointer(float* _timer);
 
 	void Render(RenderData* _RD);

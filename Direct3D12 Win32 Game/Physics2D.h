@@ -38,6 +38,8 @@ public:
 	Rectangle GetCollider() { return m_collider; }
 	void MoveCollider(Vector2 _pos) {m_collider.Offset(_pos.x, _pos.y);}
 
+	void removeFromCurrentlyColliding(Physics2D* col);
+
 	Item* GetItem();
 #if _DEBUG
 	void RenderCorners(Vector2 _cam);

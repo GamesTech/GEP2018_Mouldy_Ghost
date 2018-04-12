@@ -51,6 +51,17 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 				break;
 			}
 		}
+		//after deleting the mine, it was removed from all vectors 
+		//before its "collision exit" could be called 
+		//because of that the Character thought it is still colliding with it
+		//thus I had to force the removal when removing it from vector
+
+		//loop trought the whole vector remove the physics of the deleted object from all other physics
+		for (std::vector<Physics2D*>::iterator it = m_physics->begin();
+			it != m_physics->end(); it++, i++)
+		{
+			(*m_physics)[i]->removeFromCurrentlyColliding(object->GetPhysics());
+		}
 
 		m_delete_queue.push_back(object);
 		break;

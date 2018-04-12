@@ -8,7 +8,7 @@ Particle::Particle()
 {
 }
 
-Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD) : ImageGO2D(_RD, _filename)
+Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD)
 {
 	m_origin = _origin;
 	SetPos(m_origin);
@@ -28,9 +28,7 @@ void Particle::Tick(GameStateData * _GSD)
 	if (m_fade)
 	{
 		float visibility = m_elapsed_time / m_lifetime;
-		visibility = 255 - (visibility * 255);
-		//sprite.setColor(sf::Color(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, (visibility)));
-	}
+		visibility = 255 - (visibility * 255);	}
 	if (m_elapsed_time > m_lifetime)
 	{
 		m_dead = true;

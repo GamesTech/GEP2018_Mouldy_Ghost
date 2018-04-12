@@ -8,8 +8,6 @@ public:
 	Particle(Vector2 _origin, std::string _filename, RenderData * _RD);
 	~Particle();
 	virtual void Tick(GameStateData* _GSD) override;
-	//virtual void Render(RenderData * _RD, int _sprite,
-	//	Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
 	void setDestination(Vector2 _destination);
 	void setDirection(Vector2 _direction);
 	void setSpeed(float _speed);

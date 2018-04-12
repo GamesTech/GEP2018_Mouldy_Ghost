@@ -41,6 +41,7 @@ public:
 
 	SpawnHandler* m_handler;
 protected:
+
 	SpawnHandler* m_spawner = nullptr;
 
 	ItemState m_state = ItemState::WAIT;

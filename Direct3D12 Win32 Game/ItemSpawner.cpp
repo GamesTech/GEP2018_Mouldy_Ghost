@@ -40,6 +40,7 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 	std::string image = getFileData(item_file);
 
 	//depending on what the type is, we load other item properties
+	//they are split into chunks depending on type
 
 	Item* loaded_item = nullptr;
 	if (type == "single_use")

@@ -25,8 +25,9 @@ Item::Item(RenderData * _RD, string _filename, SpawnHandler* _spawner) : ImageGO
 	
 }
 
-Item::Item(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner) : Item(_RD, _filename, _spawner)
+Item::Item(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner) : Item(_RD, _filename, _spawner) //call standard constructor to create physics and image
 {
+	//all items need to have these
 	m_type = item_to_copy->getitemType();
 
 	name = item_to_copy->GetName();
@@ -39,6 +40,11 @@ Item::Item(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler*
 
 Item::~Item()
 {
+	if (m_physics)
+	{
+		delete m_physics;
+		m_physics = nullptr;
+	}
 }
 
 void Item::Tick(GameStateData * _GSD)
@@ -87,7 +93,7 @@ void Item::use(Character * _player)
 
 void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-	
+	//no bouncing, simply stop and wait to be picked up
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
 	{
 		m_physics->ResetForce(Axis::Y_AXIS);

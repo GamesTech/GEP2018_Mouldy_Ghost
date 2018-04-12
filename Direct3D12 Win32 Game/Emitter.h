@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject2D.h"
 #include "Particle.h"
+
 class Emitter :
 	public GameObject2D
 {
 public:
 	Emitter();
-	Emitter(Vector2 _pos, std::string _file);
+	Emitter(Vector2 _pos, std::string _file, RenderData* _RD);
 	~Emitter();
 	std::vector<Particle> getParticles() { return particles; };
 	void setSpeeds(float _min, float _max);
@@ -14,7 +15,7 @@ public:
 	void setLifetimes(float _min, float _max);
 	void setAngle(float _angle);
 	void setDistribution(float _angle);
-	void addParticles(int amount, RenderData * _RD);
+	void addParticles(int amount);
 	Vector2 rotateVector(Vector2 _vector, double _angle);
 
 	virtual void CentreOrigin() override;
@@ -30,6 +31,7 @@ private:
 	float maxLifetime;
 	float minLifetime;
 	bool empty;
+	RenderData * RD;
 	std::string file;
 	std::vector<Particle> particles;
 };

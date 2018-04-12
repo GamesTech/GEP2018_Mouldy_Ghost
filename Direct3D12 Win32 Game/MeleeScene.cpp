@@ -48,12 +48,12 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	m_testParticle->setLifetime(5);
 	m_2DObjects.push_back(m_testParticle.get());
 
-	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "gens");
+	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "gens", _RD);
 	m_testEmitter->setAngle(0);
-	m_testEmitter->setDistribution(3.14159265 / 100);
+	m_testEmitter->setDistribution(3.14159265);
 	m_testEmitter->setSpeeds(200, 300);
 	m_testEmitter->setLifetimes(1, 3);
-	m_testEmitter->addParticles(30, _RD);
+	//m_testEmitter->addParticles(30);
 	m_2DObjects.push_back(m_testEmitter.get());
 
 	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Select Characters");

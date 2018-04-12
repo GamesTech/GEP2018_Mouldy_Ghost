@@ -7,10 +7,11 @@ Emitter::Emitter()
 {
 }
 
-Emitter::Emitter(Vector2 _pos, std::string _file)
+Emitter::Emitter(Vector2 _pos, std::string _file, RenderData * _RD)
 {
 	SetPos(_pos);
 	file = _file;
+	RD = _RD;
 }
 
 
@@ -63,14 +64,14 @@ void Emitter::setDistribution(float _angle)
 	distributionAngle = _angle;
 }
 
-void Emitter::addParticles(int amount, RenderData * _RD)
+void Emitter::addParticles(int amount)
 {
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_real_distribution<float> random(0, distributionAngle);
 	for (int i = 0; i < amount; i++)
 	{
-		particles.push_back(Particle(GetPos(), file, _RD));
+		particles.push_back(Particle(GetPos(), file, RD));
 
 		Vector2 newPointTo(0, 1);
 		newPointTo = rotateVector(newPointTo, angle);

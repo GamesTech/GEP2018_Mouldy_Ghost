@@ -35,7 +35,7 @@ public:
 	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
 	void SetCollider(Rectangle _collider){ m_collider = _collider; }
-	Rectangle GetCollider() { return m_collider; }
+	Rectangle GetCollider() { if (&m_collider) { return m_collider; } else return Rectangle(); }
 	void MoveCollider(Vector2 _pos) {m_collider.Offset(_pos.x, _pos.y);}
 
 	void ScaleCollider(Vector2 _by, Vector2 _owner_scale);

@@ -10,11 +10,6 @@ GameOverScene::GameOverScene()
 	}
 
 	m_standings.reserve(4);
-
-	m_text_colour[0] = (Color(0.3, 0.3, 1));
-	m_text_colour[1] = (Color(0, 0.7, 0));
-	m_text_colour[2] = (Color(1, 0, 0));
-	m_text_colour[3] = (Color(1, 1, 0));
 }
 
 GameOverScene::~GameOverScene()
@@ -54,17 +49,22 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
 
-	//m_goBack = std::make_shared<Menu>(Vector2((m_GSD->window_size.x / 5), (m_GSD->window_size.y - 100)), MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, m_RD, "gens"), "Back to\nCharacter Select");
-	//for (int i = 0; i < listeners.size(); i++)
-	//{
-	//	m_goBack->addListener(listeners[i]);
-	//}
-	//m_goBack->init();
+	m_goBack = std::make_shared<Menu>(Vector2((m_GSD->window_size.x / 5),
+		(m_GSD->window_size.y - 100)),
+		MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, m_RD, "gens"), 
+		"Back to\nCharacter Select");
+
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		m_goBack->addListener(listeners[i]);
+	}
+	m_goBack->init();
 }
 
 void GameOverScene::Reset()
 {
 	m_chars_in_game.clear();
+	m_standings.clear();
 }
 
 void GameOverScene::AddCharacterToScene(Character * _c)
@@ -72,10 +72,10 @@ void GameOverScene::AddCharacterToScene(Character * _c)
 	m_chars_in_game.push_back(_c);
 }
 
-void GameOverScene::PlayerEliminated(Character * _c, int index)
+void GameOverScene::PlayerEliminated(Character * _c)
 {
 	//if a player is eliminated, add them to the loser list
-	m_scores[m_standings.size()]->SetColour(m_text_colour[index]);
+	m_scores[m_standings.size()]->SetColour(_c->getTextColour());
 
 	for (int i = 0; i < m_chars_in_game.size(); i++)
 	{
@@ -122,8 +122,7 @@ void GameOverScene::SortByScores()
 			//if that character does exist, set the text colour
 			//to the one associated with that character
 			m_scores[m_standings.size()]->SetColour
-			(m_text_colour[m_chars_in_game[character_index]
-				->GetControllerIndex()]);
+			(m_chars_in_game[character_index]->getTextColour());
 			m_standings.push_back(m_chars_in_game[character_index]);
 		}
 	}

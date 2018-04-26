@@ -127,6 +127,28 @@ void Character::CreatePhysics(RenderData* _RD)
 	m_physics->SetOwner(this);
 }
 
+void Character::SetController(CharacterController * _controller)
+{
+	m_controller = _controller;
+	switch (_controller->GetControllerID())
+	{
+	case 0:
+		m_text_colour = (Color(0.3, 0.3, 1));
+		break;
+	case 1:
+		m_text_colour = (Color(0, 0.7, 0));
+		break;
+	case 2:
+		m_text_colour = (Color(1, 0, 0));
+		break;
+	case 3:
+		m_text_colour = (Color(1, 1, 0));
+		break;
+	default:
+		break;
+	}
+}
+
 void Character::TakeDamage(int _dam)
 {
 	m_damage += _dam;
@@ -188,6 +210,16 @@ void Character::AddAttack(DashAttack _attack)
 {
 	DashAttack* a = new DashAttack(_attack);
 	m_attacks.push_back(a);
+}
+
+const Color Character::getTextColour() const
+{
+	return m_text_colour;
+}
+
+void Character::setTextColour(Color colour)
+{
+	m_text_colour = colour;
 }
 
 int Character::PlayerJump(std::vector<GameAction> _actions)

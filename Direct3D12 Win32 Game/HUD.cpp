@@ -25,11 +25,6 @@ HUD::HUD(GameStateData* _GSD)
 		m_shadow[i]->SetColour(Color(0, 0, 0));
 	}
 
-	m_text_colours[0] = (Color(0.3, 0.3, 1));
-	m_text_colours[1] = (Color(0, 0.7, 0));
-	m_text_colours[2] = (Color(1, 0, 0));
-	m_text_colours[3] = (Color(1, 1, 0));
-
 	m_timeText = new Text2D("");
 	m_timeText->SetPos(Vector2((_GSD->window_size.x / 2) - 100,25));
 
@@ -103,7 +98,7 @@ void HUD::Render(RenderData * _RD)
 		{
 			//set colour to the one associated with their player number
 			m_text_display[i]->SetColour
-			(m_text_colours[m_in_game[i].character->GetControllerIndex()]);
+			(m_in_game[i].character->getTextColour());
 			//show their name
 			std::string display_text = m_in_game[i].character->GetName();
 			display_text += "\n";

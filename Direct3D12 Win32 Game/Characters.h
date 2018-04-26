@@ -41,8 +41,7 @@ public:
 
 	void CreatePhysics(RenderData* _RD = nullptr);
 
-	void SetController(CharacterController* _controller)
-	{ m_controller = _controller; }
+	void SetController(CharacterController* _controller);
 	const int GetControllerIndex() { return m_controller->GetControllerID(); }
 
 	void SetMoveSpeed(float _speed) { m_move_speed = _speed; }
@@ -71,6 +70,8 @@ public:
 
 	void AddPoints(int _add) { m_points += _add; }
 	const int GetPoints() { return m_points; }
+	const Color getTextColour() const;
+	void setTextColour(Color colour);
 
 protected:
 
@@ -106,4 +107,5 @@ protected:
 	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
 	int m_points = 0;
 	Item* m_held_item = nullptr;
+	Color m_text_colour;
 };

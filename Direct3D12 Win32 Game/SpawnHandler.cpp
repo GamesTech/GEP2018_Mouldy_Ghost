@@ -49,6 +49,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 		//thus I had to force the removal when removing it from vector
 
 		//loop trought the whole vector remove the physics of the deleted object from all other physics
+		i = 0;
 		for (std::vector<Physics2D*>::iterator it = m_physics->begin();
 			it != m_physics->end(); it++, i++)
 		{

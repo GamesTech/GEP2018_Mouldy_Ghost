@@ -21,11 +21,11 @@ public:
 
 	void AddCharacterToScene(Character* _c);
 	
-	void PlayerEliminated(Character* _c, int index);
+	void PlayerEliminated(Character* _c);
 	void SortByScores();
 private:
 	std::vector<Character*> m_chars_in_game;
 	Text2D* m_scores[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::vector<Character*> m_standings;
-	Color m_text_colour[4];
+	std::shared_ptr<Menu> m_goBack = nullptr;
 };

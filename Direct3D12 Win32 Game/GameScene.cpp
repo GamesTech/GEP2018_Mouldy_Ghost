@@ -204,73 +204,93 @@ void GameScene::RemoveCharacter(Character* _char)
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	Scene::Update(timer, _audEngine);
-	game_stage->update(m_GSD);
-
-	//m_testEmitter->Tick(m_GSD);
-
-	//adjust the camera pan or zoom
-	//find average and furthest points of players locations
-	Vector2 top_left = Vector2(100000,100000);
-	Vector2 bottom_right = Vector2(-1000, -1000);
-	Vector2 avg_pos = Vector2::Zero;
-	int num_players = 0;
-
-	for (int i = 0; i < 4; i++)
+	if (m_game_over_check != GameOverCheck::FREEZE)
 	{
-		if (players[i])
+		Scene::Update(timer, _audEngine);
+		game_stage->update(m_GSD);
+
+		//m_testEmitter->Tick(m_GSD);
+
+		//adjust the camera pan or zoom
+		//find average and furthest points of players locations
+		Vector2 top_left = Vector2(100000, 100000);
+		Vector2 bottom_right = Vector2(-1000, -1000);
+		Vector2 avg_pos = Vector2::Zero;
+		int num_players = 0;
+
+		for (int i = 0; i < 4; i++)
 		{
-			if (players[i]->GetLives() > 0)
+			if (players[i])
 			{
-				Vector2 p = players[i]->GetPos();
-				avg_pos += (p * m_cam_zoom);
-				top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
-				top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
-				bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
-				bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
-				num_players++;
+				if (players[i]->GetLives() > 0)
+				{
+					Vector2 p = players[i]->GetPos();
+					avg_pos += (p * m_cam_zoom);
+					top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
+					top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
+					bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
+					bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
+					num_players++;
+				}
 			}
 		}
-	}
 
-	//if there are fewer then 2 players or no time left
-	if (num_players <= 1 || m_timeLeft <= 0)
-	{
-		for (int i = 0; i < listeners.size(); i++)
+		//if there are fewer then 2 players or no time left
+		if (num_players <= 1 || m_timeLeft <= 0)
 		{
-			listeners[i]->onNotify(nullptr, Event::GAME_OVER);
+			m_game_over_check = GameOverCheck::WAIT;
+		}
+		if (num_players)
+		{
+			avg_pos /= num_players;
+			avg_pos /= m_cam_zoom;
+			Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
+			Vector2 cam_target = (avg_pos * -1) + mid;
+			Vector2 dir_to_target = cam_target - m_cam_pos;
+			m_cam_pos += dir_to_target / 5;
+
+			float x_dist = top_left.x - bottom_right.x;
+			float y_dist = top_left.y - bottom_right.y;
+			float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
+
+			if (m_game_over_check == GameOverCheck::WAIT)
+			{
+				m_cam_zoom = 700.0f / dist;
+				if (m_cam_zoom < m_min_zoom)
+				{
+					m_cam_zoom = m_min_zoom;
+				}
+				if (m_cam_zoom > m_max_zoom)
+				{
+					m_cam_zoom = m_max_zoom;
+				}
+
+				//this scales the zoom to the screen size
+				m_cam_zoom *= (m_GSD->window_size.x / 1000);
+			}
+		}
+
+		if (!m_infiniteTime)
+		{
+			m_timeLeft -= timer.GetElapsedSeconds();
 		}
 	}
-	else if (num_players)
+
+	if(m_game_over_check != GameOverCheck::NONE)
 	{
-		avg_pos /= num_players;
-		avg_pos /= m_cam_zoom;
-		Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
-		Vector2 cam_target = (avg_pos * -1) + mid;
-		Vector2 dir_to_target = cam_target - m_cam_pos;
-		m_cam_pos += dir_to_target / 5;
+		m_game_over_timer[(int)m_game_over_check] += timer.GetElapsedSeconds();
 
-		float x_dist = top_left.x - bottom_right.x;
-		float y_dist = top_left.y - bottom_right.y;
-		float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
-		
-		m_cam_zoom = 700.0f / dist;
-		if (m_cam_zoom < m_min_zoom)
+		if (m_game_over_timer[0] >= 0.5f)
 		{
-			m_cam_zoom = m_min_zoom;
+			m_game_over_check = GameOverCheck::FREEZE;
 		}
-		if (m_cam_zoom > m_max_zoom)
+		if (m_game_over_timer[1] >= 1.5f)
 		{
-			m_cam_zoom = m_max_zoom;
+			for (int i = 0; i < listeners.size(); i++)
+			{
+				listeners[i]->onNotify(nullptr, Event::GAME_OVER);
+			}
 		}
-
-		//this scales the zoom to the screen size
-		m_cam_zoom *= (m_GSD->window_size.x / 1000);
-	}
-
-	if (!m_infiniteTime)
-	{
-		m_timeLeft -= timer.GetElapsedSeconds();
 	}
 }
 

@@ -27,6 +27,7 @@ enum AttackMap
 
 class SpawnHandler;
 class Item;
+class Animation2D;
 
 class Character
 	: public ImageGO2D
@@ -82,6 +83,7 @@ protected:
 		std::vector<GameAction> _actions);
 	void SpecialAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
+
 
 	void FlipX();
 	bool flipped = false;

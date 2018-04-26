@@ -3,6 +3,8 @@
 #include "Menu.h"
 #include "Particle.h"
 #include "Emitter.h"
+#include "Characters.h"
+#include "TestAnim.h"
 class MeleeScene :
 	public Scene
 {
@@ -23,4 +25,6 @@ private:
 	std::unique_ptr<Particle> m_testParticle = nullptr;
 
 	std::unique_ptr<Emitter> m_testEmitter = nullptr;
+
+	std::unique_ptr<TestAnim> m_test_anim = nullptr;
 };

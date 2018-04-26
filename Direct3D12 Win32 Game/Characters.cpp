@@ -5,6 +5,7 @@
 #include "CharacterController.h"
 #include "SpawnHandler.h"
 #include "Throwable.h"
+#include "Animation2D.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -13,6 +14,8 @@
 Character::Character(RenderData* _RD, string _filename)
 	: ImageGO2D(_RD, _filename)
 {
+	
+
 	CentreOrigin();
 	tag = GameObjectTag::PLAYER;
 }
@@ -83,6 +86,7 @@ void Character::Tick(GameStateData * _GSD)
 
 	//GEP:: Lets go up the inheritence and share our functionality
 
+	//run->update(_GSD);
 	m_physics->Tick(_GSD, m_pos);
 
 	GameObject2D::Tick(_GSD);

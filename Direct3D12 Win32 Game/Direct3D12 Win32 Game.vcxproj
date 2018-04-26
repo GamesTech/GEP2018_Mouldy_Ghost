@@ -247,6 +247,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllScenes.h" />
+    <ClInclude Include="Animation2D.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="CharacterLifeHandler.h" />
@@ -311,6 +312,7 @@
     <ClInclude Include="SpawnHandler.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StepTimer.h" />
+    <ClInclude Include="TestAnim.h" />
     <ClInclude Include="TestPBGO3D.h" />
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
@@ -319,6 +321,7 @@
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="CharacterLifeHandler.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
@@ -378,6 +381,7 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SpawnHandler.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="TestAnim.cpp" />
     <ClCompile Include="TestPBGO3D.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />

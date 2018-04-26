@@ -18,6 +18,7 @@ void MeleeScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Au
 	//m_testParticle->Tick(m_GSD);
 	//m_testEmitter->addParticles(1);
 	m_testEmitter->Tick(m_GSD);
+	m_test_anim->update(m_GSD);
 }
 
 void MeleeScene::Reset()
@@ -56,6 +57,9 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	m_testEmitter->setLifetimes(1, 3);
 	m_testEmitter->addParticles(1000);
 	m_2DObjects.push_back(m_testEmitter.get());
+
+	m_test_anim = std::make_unique<TestAnim>(_RD, "grant");
+	m_2DObjects.push_back(m_test_anim.get());
 
 	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Select Characters");
 	m_testMenu->addButton(MenuButton(Event::CHANGE_SCENE_MAIN_MENU, _RD, "gens"), "Back");

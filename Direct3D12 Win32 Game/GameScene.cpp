@@ -59,6 +59,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_bg[2]->SetSpawn(Vector2(w * 0.4, h));
 
 	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
+	m_testEmitter->SetSpawn(Vector2(500, 500));
 	m_testEmitter->setAngle(0);
 	m_testEmitter->setDistribution(3.14159265);
 	m_testEmitter->setSpeeds(200, 300);
@@ -207,7 +208,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	Scene::Update(timer, _audEngine);
 	game_stage->update(m_GSD);
 
-
+	m_testEmitter->addParticles(1);
 	//adjust the camera pan or zoom
 	//find average and furthest points of players locations
 	Vector2 top_left = Vector2(100000,100000);

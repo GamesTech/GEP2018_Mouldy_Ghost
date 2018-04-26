@@ -226,10 +226,13 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 				{
 					Vector2 p = players[i]->GetPos();
 					avg_pos += (p * m_cam_zoom);
+
 					top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
 					top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
+
 					bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
 					bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
+
 					num_players++;
 				}
 			}

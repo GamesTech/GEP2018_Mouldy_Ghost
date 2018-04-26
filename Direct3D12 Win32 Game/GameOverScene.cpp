@@ -24,7 +24,6 @@ GameOverScene::~GameOverScene()
 void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	//wait for input to return to menu
-	//m_goBack->Tick(m_GSD);
 	for (int i = 0; i < 4; i++)
 	{
 		if (m_GSD->menu_action[i] == MenuAction::ADVANCE_MENU)
@@ -35,7 +34,16 @@ void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX:
 			}
 		}
 	}
+	for (int i = 0; i < m_falling.size(); i++)
+	{
+		if (m_falling[i].character->GetPos().y < m_falling[i].target)
+		{
+			m_falling[i].character->move(Vector2(0, 300 * timer.GetElapsedSeconds()));
+			break;
+		}
+	}
 }
+
 
 void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	int _outputWidth, int _outputHeight,
@@ -44,21 +52,17 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	m_RD = _RD;
 	m_GSD = _GSD;
 
+	int lowest_point = (m_GSD->window_size.y / 4) * 3;
+	int mid_screen = m_GSD->window_size.x / 2;
+	m_podium_positions[0] = Vector2(100, m_GSD->window_size.y - 100);
+	m_podium_positions[1] = Vector2(mid_screen + 100, lowest_point - 100);
+	m_podium_positions[2] = Vector2(mid_screen - 100, lowest_point - 50);
+	m_podium_positions[3] = Vector2(mid_screen, lowest_point);
+
 	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
-
-	m_goBack = std::make_shared<Menu>(Vector2((m_GSD->window_size.x / 5),
-		(m_GSD->window_size.y - 100)),
-		MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, m_RD, "gens"), 
-		"Back to\nCharacter Select");
-
-	for (int i = 0; i < listeners.size(); i++)
-	{
-		m_goBack->addListener(listeners[i]);
-	}
-	m_goBack->init();
 }
 
 void GameOverScene::Reset()
@@ -121,6 +125,7 @@ void GameOverScene::SortByScores()
 		{
 			//if that character does exist, set the text colour
 			//to the one associated with that character
+
 			m_scores[m_standings.size()]->SetColour
 			(m_chars_in_game[character_index]->getTextColour());
 			m_standings.push_back(m_chars_in_game[character_index]);
@@ -131,6 +136,10 @@ void GameOverScene::SortByScores()
 	m_2DObjects.clear();
 	for (int i = 0; i < m_standings.size(); i++)
 	{
+		FallingCharacter fall;
+		fall.character = m_standings[i];
+		m_falling.push_back(fall);
+
 		Character* c = m_standings[i];
 		std::string score = "#";
 		score += std::to_string(m_standings.size() - i);
@@ -146,5 +155,11 @@ void GameOverScene::SortByScores()
 		m_scores[i]->SetPos(Vector2(x, y));
 		m_2DObjects.push_back(m_scores[i]);
 	}
-	/*m_2DObjects.push_back(m_goBack.get());*/
+
+	for (int i = 0; i < m_falling.size(); i++)
+	{
+		m_falling[i].target = m_podium_positions[i].y;
+		m_falling[i].character->SetPos(Vector2(m_podium_positions[i].x, -100));
+		m_2DObjects.push_back(m_falling[i].character);
+	}
 }

@@ -3,6 +3,12 @@
 #include "Scene.h"
 #include "Menu.h"
 
+struct FallingCharacter
+{
+	Character* character = nullptr;
+	int target;
+};
+
 class GameOverScene
 	: public Scene
 {
@@ -26,6 +32,8 @@ public:
 private:
 	std::vector<Character*> m_chars_in_game;
 	Text2D* m_scores[4] = { nullptr, nullptr, nullptr, nullptr };
+	std::vector<FallingCharacter> m_falling;
+	Vector2 m_podium_positions[4];
 	std::vector<Character*> m_standings;
 	std::shared_ptr<Menu> m_goBack = nullptr;
 };

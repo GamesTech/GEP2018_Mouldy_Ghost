@@ -84,7 +84,7 @@ void Item::use(Character * _player)
 		{
 			_player->TakeDamage(-m_power); 
 		}
-		else if (m_onUse == "hammer_yo")
+		else if (m_onUse == "hammer")
 		{
 		
 		}

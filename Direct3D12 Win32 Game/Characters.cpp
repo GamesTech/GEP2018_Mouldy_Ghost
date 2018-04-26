@@ -213,6 +213,7 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 		{
 			Throwable* tmp = static_cast<Throwable*>(m_held_item);
 			tmp->Throw(this);
+			tmp->GetPhysics()->AddForce(Vector2(1000 * m_facing, 1));
 			m_held_item = nullptr;
 			
 			return;

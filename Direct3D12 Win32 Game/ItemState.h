@@ -5,7 +5,8 @@ enum class ItemState
 	HELD,
 	THROWN,
 	WAIT,
-	ARMED
+	ARMED,
+	ATTACKING
 
 
 };

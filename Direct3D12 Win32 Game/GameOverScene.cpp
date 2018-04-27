@@ -55,9 +55,9 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	int lowest_point = (m_GSD->window_size.y / 4) * 3;
 	int mid_screen = m_GSD->window_size.x / 2;
 	m_podium_positions[0] = Vector2(100, m_GSD->window_size.y - 100);
-	m_podium_positions[1] = Vector2(mid_screen + 100, lowest_point - 100);
-	m_podium_positions[2] = Vector2(mid_screen - 100, lowest_point - 50);
-	m_podium_positions[3] = Vector2(mid_screen, lowest_point);
+	m_podium_positions[1] = Vector2(mid_screen + 100, lowest_point);
+	m_podium_positions[2] = Vector2(mid_screen - 100, lowest_point - 30);
+	m_podium_positions[3] = Vector2(mid_screen, lowest_point - 60);
 
 	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
@@ -158,8 +158,9 @@ void GameOverScene::SortByScores()
 
 	for (int i = 0; i < m_falling.size(); i++)
 	{
-		m_falling[i].target = m_podium_positions[i].y;
-		m_falling[i].character->SetPos(Vector2(m_podium_positions[i].x, -100));
+		int podium_position = i + (4 - m_falling.size());
+		m_falling[i].target = m_podium_positions[podium_position].y;
+		m_falling[i].character->SetPos(Vector2(m_podium_positions[podium_position].x, -100));
 		m_2DObjects.push_back(m_falling[i].character);
 	}
 }

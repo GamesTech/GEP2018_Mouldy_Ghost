@@ -85,6 +85,8 @@ protected:
 		std::vector<GameAction> _actions);
 	void SpecialAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
+	void MeleeWeaponAttack(GameStateData * _GSD,
+		std::vector<GameAction> _actions);
 
 
 	bool usesAnimation = false;

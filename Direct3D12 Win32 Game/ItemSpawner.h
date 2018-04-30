@@ -18,6 +18,7 @@ public:
 	void loadAllItemProperies(Item* item, std::ifstream& _opened_file);
 	void loadThrowableProperies(Throwable* item, std::ifstream& _opened_file);
 	void loadExplosiveProperies(Explosive* item, std::ifstream& _opened_file);
+	void loadMeleeWeaponProperties(MeleeWeapon* item, std::ifstream& _opened_file);
 
 	Item* createNewItemWithName(RenderData* _RD, std::string name);
 

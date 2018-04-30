@@ -2,3 +2,4 @@
 >Bomb
 >Ball
 >Mine
+>Baseball_bat

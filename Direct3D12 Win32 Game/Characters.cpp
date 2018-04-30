@@ -305,7 +305,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 			|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
 		{
 
-			if (m_held_item && m_held_item->getitemType() == ItemType::MELEE_WEAPON)
+			/*if (m_held_item && m_held_item->getitemType() == ItemType::MELEE_WEAPON)
 			{
 				MeleeWeapon* tmp = static_cast<MeleeWeapon*>(m_held_item);
 
@@ -316,7 +316,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 				m_charging_attack = nullptr;
 			}
 			else
-			{
+			{*/
 				if (static_cast<StandardAttack*>(m_charging_attack))
 				{
 					m_charging_attack->PerformAttack
@@ -328,7 +328,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 					m_spamming_attack = nullptr;
 				}
 				m_attacking = false;
-			}
+			
 		}
 
 

@@ -28,5 +28,5 @@ void TestAnim::update(GameStateData * _GSD)
 
 void TestAnim::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
-	run->Render(_RD, _cam_pos, _zoom, m_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin);
+	run->Render(_RD, _cam_pos, _zoom, m_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin, true);
 }

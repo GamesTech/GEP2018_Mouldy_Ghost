@@ -37,7 +37,7 @@ Animation2D::~Animation2D()
 }
 
 void Animation2D::Render(RenderData * _RD, Vector2 _cam_pos, float _zoom, Vector2 _scale,
-	Vector2 _pos, int _resourceNum, Color _colour, float _orientation, Vector2 _origin)
+	Vector2 _pos, int _resourceNum, Color _colour, float _orientation, Vector2 _origin, bool _flipped)
 {
 	const RECT* r = &RECT(m_spritebox);
 
@@ -50,9 +50,18 @@ void Animation2D::Render(RenderData * _RD, Vector2 _cam_pos, float _zoom, Vector
 
 	_origin = Vector2(m_spritebox.width / 2, m_spritebox.height / 2);
 
-	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
-		GetTextureSize(m_texture.Get()),
-		render_pos, r, _colour, _orientation, _origin, render_scale);
+	if (_flipped)
+	{ 
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
+			GetTextureSize(m_texture.Get()),
+			render_pos, r, _colour, _orientation, _origin, render_scale,SpriteEffects::SpriteEffects_FlipHorizontally,0);
+	}
+	else
+	{
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
+			GetTextureSize(m_texture.Get()),
+			render_pos, r, _colour, _orientation, _origin, render_scale);
+	}
 }
 
 void Animation2D::update(GameStateData * _GSD)

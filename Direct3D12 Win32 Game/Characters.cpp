@@ -113,7 +113,7 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 
 	if (usesAnimation)
 	{
-		active_anim->Render(_RD, _cam_pos, _zoom, render_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin);
+		active_anim->Render(_RD, _cam_pos, _zoom, render_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin, flipped);
 	}
 	else
 	{

@@ -4,7 +4,7 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
-#include "Throwable.h"
+#include "MeleeWeapon.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -213,6 +213,7 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 		{
 			Throwable* tmp = static_cast<Throwable*>(m_held_item);
 			tmp->Throw(this);
+			m_held_item->GetPhysics()->AddForce(Vector2(50000 * m_facing, -10000));
 			m_held_item = nullptr;
 			
 			return;
@@ -292,41 +293,69 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		int controller = m_controller->GetControllerID();
 		GameActions actions_to_check = m_controller->GetInput(_GSD);
 
-		if (InputSystem::searchForAction(P_HOLD_BASIC, actions_to_check))
+		//if you are holding a weapon
+		if (m_held_item && m_held_item->getitemType() == ItemType::MELEE_WEAPON)
 		{
-			MeleeAttack(_GSD, actions_to_check);
-		}
-		if (InputSystem::searchForAction(P_HOLD_SPECIAL, actions_to_check))
-		{
-			SpecialAttack(_GSD, actions_to_check);
-		}
-		if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
-			|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
-		{
-			if (static_cast<StandardAttack*>(m_charging_attack))
+			MeleeWeapon* tmp = static_cast<MeleeWeapon*>(m_held_item);
+
+			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
+				|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
 			{
-				m_charging_attack->PerformAttack
-				(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
-				m_charging_attack = nullptr;
+
+				tmp->use(this);
+				if (m_facing == 1)
+				{
+					tmp->attack(m_charge_time, 1);
+				}
+				else
+				{
+					tmp->attack(m_charge_time, 2);
+				}
 			}
-			if (static_cast<StandardAttack*>(m_spamming_attack))
-			{
-				m_spamming_attack = nullptr;
-			}
-			m_attacking = false;
 		}
+		else //no weapon equipped
+		{
+
+			if (InputSystem::searchForAction(P_HOLD_BASIC, actions_to_check))
+			{
+				MeleeAttack(_GSD, actions_to_check);
+			}
+			if (InputSystem::searchForAction(P_HOLD_SPECIAL, actions_to_check))
+			{
+				SpecialAttack(_GSD, actions_to_check);
+			}
+			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
+				|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
+			{
 
 
-		if (m_spamming_attack)
-		{
-			if (m_spam_cooldown >= 0)
-			{
-				m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, spawn);
-				m_spam_cooldown = m_spamming_attack->GetDelay();
+				if (static_cast<StandardAttack*>(m_charging_attack))
+				{
+					m_charging_attack->PerformAttack
+					(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
+					m_charging_attack = nullptr;
+				}
+				if (static_cast<StandardAttack*>(m_spamming_attack))
+				{
+					m_spamming_attack = nullptr;
+				}
+
+
+				m_attacking = false;
 			}
-			else
+
+
+			if (m_spamming_attack)
 			{
-				m_spam_cooldown += _GSD->m_dt;
+				if (m_spam_cooldown >= 0)
+				{
+					m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, spawn);
+					m_spam_cooldown = m_spamming_attack->GetDelay();
+				}
+				else
+				{
+					m_spam_cooldown += _GSD->m_dt;
+				}
 			}
 		}
 	}
@@ -430,6 +459,11 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			break;
 		}
 	}
+}
+
+void Character::MeleeWeaponAttack(GameStateData * _GSD, std::vector<GameAction> _actions)
+{
+	
 }
 
 void Character::FlipX()

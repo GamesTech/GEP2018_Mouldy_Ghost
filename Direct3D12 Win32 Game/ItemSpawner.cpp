@@ -70,6 +70,16 @@ void ItemSpawner::loadItem(RenderData* _RD, std::string _item_file)
 
 		loaded_item = tmp;
 	}
+	else if (type == "meleeweapon")
+	{
+		MeleeWeapon* tmp = new MeleeWeapon(_RD, image, m_spawner);
+		tmp->setitemType(ItemType::MELEE_WEAPON);
+		loadAllItemProperies(tmp, item_file);
+		loadThrowableProperies(tmp, item_file);
+		loadMeleeWeaponProperties(tmp, item_file);
+
+		loaded_item = tmp;
+	}
 	
 	allItems.push_back(loaded_item);
 
@@ -115,6 +125,18 @@ void ItemSpawner::loadExplosiveProperies(Explosive * item, std::ifstream & _open
 
 }
 
+void ItemSpawner::loadMeleeWeaponProperties(MeleeWeapon * item, std::ifstream & _opened_file)
+{
+	//max charge
+	item->setMaxCharge(std::stof(getFileData(_opened_file)));
+
+	//full charge
+	item->setOnFullCharge(getFileData(_opened_file));
+
+	//durability
+	item->setDurability(std::stof(getFileData(_opened_file)));
+}
+
 Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 {
 	//copy every proprety of an item and then create a new one
@@ -135,47 +157,30 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 			{
 				Explosive* exp = new Explosive(orig_item, _RD, name, m_spawner);
 				newitem = exp;
-				/*Explosive* orig_item_cast = static_cast<Explosive*>(orig_item);
-				Explosive* tmpex = new Explosive(_RD, name, m_spawner);
-
-
-				tmpex->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
-				tmpex->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
-				newitem = tmpex;
-				tmpex->setExpRange(orig_item_cast->getExpRange());
-				tmpex->setFuse(orig_item_cast->getFuse());
-
-				tmpex->setOnThrowString(orig_item_cast->getOnThrowString());*/
+				
 			}
-			else if (tmptype == ItemType::EXPLOSIVE)
+			else if (tmptype == ItemType::MELEE_WEAPON)
+			{
+				MeleeWeapon* melee = new MeleeWeapon(orig_item, _RD, name, m_spawner);
+				newitem = melee;
+			}
+			else if (tmptype == ItemType::THROWABLE)
 			{
 				Throwable* thr = new Throwable(orig_item, _RD, name, m_spawner);
 				newitem = thr;
-				/*Throwable* orig_item_cast = static_cast<Throwable*>(orig_item);
-				Throwable* tmptr = new Throwable(_RD, name, m_spawner);
-
-				tmptr->setOnHitGroundString(orig_item_cast->getOnHitGroundString());
-				tmptr->setOnHitPlayerString(orig_item_cast->getOnHitPlayerString());
-				tmptr->setOnThrowString(orig_item_cast->getOnThrowString());
-
-				newitem = tmptr;*/
+				
 			}
 			else
 			{
-				//newitem = new Item( _RD, name, m_spawner);
+				
 				newitem = new Item(orig_item, _RD, name, m_spawner);
 			}
 
-			//newitem->setitemType(tmptype);
+		
 			Rectangle collider = Rectangle
 			(newitem->GetPos().x, newitem->GetPos().y, 
 				newitem->TextureSize().x, newitem->TextureSize().y);
 				newitem->GetPhysics()->SetCollider(collider);
-
-
-			/*newitem->setOnPickupString(orig_item->getOnPickupString());
-			newitem->setOnUseString(orig_item->getOnUseString());
-			newitem->setPower(orig_item->getPower());*/
 	
 			return newitem;
 		}

@@ -33,3 +33,5 @@ std::string getFileData(std::ifstream & _file)
 	//return the data
 	return ret_str;
 }
+
+//If the file is definitely correct, check if there is not an extra space or extra line at the end 

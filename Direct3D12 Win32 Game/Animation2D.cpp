@@ -48,6 +48,7 @@ void Animation2D::Render(RenderData * _RD, Vector2 _cam_pos, float _zoom, Vector
 
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 
+	_origin = Vector2(m_spritebox.width / 2, m_spritebox.height / 2);
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
 		GetTextureSize(m_texture.Get()),

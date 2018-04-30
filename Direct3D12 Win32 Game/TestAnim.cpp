@@ -12,7 +12,7 @@ TestAnim::TestAnim(RenderData * _RD, string _filename)
 	run->setSpriteBox(Rectangle(0, 0, 160, 290));
 	run->setSpriteBoxStartPos(Vector2(0, 0));
 	run->setIncrements(Vector2(165, 293));
-	run->setMaxFrames(64);
+	run->setMaxFrames(28);
 	m_pos = Vector2(500, 300);
 	m_origin = Vector2::Zero;
 }

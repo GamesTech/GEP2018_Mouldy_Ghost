@@ -1,0 +1,24 @@
+{
+  "run": {
+    "spritesheet": "grant",
+    "framerate": 30,
+    "xIncrements": 165,
+    "yIncrements": 293,
+    "boxWidth": 160,
+    "boxHeight": 290,
+    "startX": 0,
+    "startY": 0,
+    "frames": 28
+  },
+    "jump": {
+    "spritesheet": "grant",
+    "framerate": 30,
+    "xIncrements": 165,
+    "yIncrements": 293,
+    "boxWidth": 160,
+    "boxHeight": 290,
+    "startX": 1155,
+    "startY": 586,
+    "frames": 31
+  }
+}

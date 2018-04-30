@@ -6,6 +6,7 @@
 #include "SpawnHandler.h"
 #include "Throwable.h"
 #include "Animation2D.h"
+#include <jsoncons\json.hpp>
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -14,8 +15,6 @@
 Character::Character(RenderData* _RD, string _filename)
 	: ImageGO2D(_RD, _filename)
 {
-	
-
 	CentreOrigin();
 	tag = GameObjectTag::PLAYER;
 }
@@ -89,20 +88,19 @@ void Character::Tick(GameStateData * _GSD)
 	//run->update(_GSD);
 	m_physics->Tick(_GSD, m_pos);
 
+	if (usesAnimation)
+	{
+		active_anim->update(_GSD);
+	}
+
 	GameObject2D::Tick(_GSD);
 }
 
 void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
-	if (!flipped)
-	{
-		rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
-	}
-	else
-	{
-		rect = Rectangle(m_spriteSize.x / 2, 0, m_spriteSize.x / 2, m_spriteSize.y);
-	}
+	rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
+	
 	const RECT* r = &RECT(rect);
 
 	Vector2 render_scale = m_scale * _zoom;
@@ -113,9 +111,25 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
-	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-		GetTextureSize(m_texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+	if (usesAnimation)
+	{
+		active_anim->Render(_RD, _cam_pos, _zoom, render_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin);
+	}
+	else
+	{
+		if (!flipped)
+		{
+			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+				GetTextureSize(m_texture.Get()),
+				render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+		}
+		else
+		{
+			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+				GetTextureSize(m_texture.Get()),
+				render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);
+		}
+	}
 }
 
 void Character::CreatePhysics(RenderData* _RD)
@@ -129,6 +143,46 @@ void Character::CreatePhysics(RenderData* _RD)
 	m_physics->SetBounce(0.3f);
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
+}
+
+void Character::loadAnimations(std::string _file, RenderData* _RD)
+{
+	//load animations here
+	usesAnimation = true;
+	using jsoncons::json;
+
+	std::string path = "..\\GameAssets\\Characters\\" + _file + ".json";
+
+	std::ifstream
+		is(path);
+
+	json animations;
+	is >> animations;
+
+	for (const auto& type : animations.members())
+	{
+		const std::string name = type.name();
+		const auto& data = type.value();
+
+		if (name == "run")
+		{
+			run_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			run_anim->setFramerate(data["framerate"].as_long());
+			run_anim->setIncrements(Vector2 (data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			run_anim->setSpriteBox(Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long()));
+			run_anim->setMaxFrames(data["frames"].as_int());
+		}
+		else if (name == "jump")
+		{
+			jump_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			jump_anim->setFramerate(data["framerate"].as_long());
+			jump_anim->setIncrements(Vector2(data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			jump_anim->setSpriteBox(Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long()));
+			jump_anim->setMaxFrames(data["frames"].as_int());
+		}
+	}
+
+	active_anim = run_anim.get();
 }
 
 void Character::TakeDamage(int _dam)

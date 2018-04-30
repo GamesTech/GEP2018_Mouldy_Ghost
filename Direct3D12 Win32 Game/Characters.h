@@ -53,6 +53,8 @@ public:
 	const float GetJumpHeight() { return m_jump_height; }
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
 
+	void loadAnimations(std::string _file, RenderData* _RD);
+
 	void TakeDamage(int _dam);
 	void Hit(Vector2 _dir, float _force, Character * _attacker);
 	const int GetDamage() { return m_damage; }
@@ -83,6 +85,12 @@ protected:
 		std::vector<GameAction> _actions);
 	void SpecialAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
+
+
+	bool usesAnimation = false;
+	Animation2D* active_anim = nullptr;
+	std::shared_ptr<Animation2D> jump_anim = nullptr;
+	std::shared_ptr<Animation2D> run_anim = nullptr;
 
 
 	void FlipX();

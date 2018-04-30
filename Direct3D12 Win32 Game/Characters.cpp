@@ -4,7 +4,7 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
-#include "Throwable.h"
+#include "MeleeWeapon.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -213,7 +213,7 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 		{
 			Throwable* tmp = static_cast<Throwable*>(m_held_item);
 			tmp->Throw(this);
-			tmp->GetPhysics()->AddForce(Vector2(1000 * m_facing, 1));
+			m_held_item->GetPhysics()->AddForce(Vector2(50000 * m_facing, -10000));
 			m_held_item = nullptr;
 			
 			return;
@@ -304,17 +304,31 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
 			|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
 		{
-			if (static_cast<StandardAttack*>(m_charging_attack))
+
+			if (m_held_item && m_held_item->getitemType() == ItemType::MELEE_WEAPON)
 			{
+				MeleeWeapon* tmp = static_cast<MeleeWeapon*>(m_held_item);
+
+				tmp->attack(m_charge_time, 1);
+
 				m_charging_attack->PerformAttack
 				(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
 				m_charging_attack = nullptr;
 			}
-			if (static_cast<StandardAttack*>(m_spamming_attack))
+			else
 			{
-				m_spamming_attack = nullptr;
+				if (static_cast<StandardAttack*>(m_charging_attack))
+				{
+					m_charging_attack->PerformAttack
+					(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
+					m_charging_attack = nullptr;
+				}
+				if (static_cast<StandardAttack*>(m_spamming_attack))
+				{
+					m_spamming_attack = nullptr;
+				}
+				m_attacking = false;
 			}
-			m_attacking = false;
 		}
 
 

@@ -39,6 +39,13 @@ void MeleeWeapon::use(Character * char_)
 
 void MeleeWeapon::Tick(GameStateData * _GSD)
 {
+
+	if (m_state == ItemState::HELD)
+	{
+		m_pos = player_ignore->GetPos();
+	}
+
+	Item::Tick(_GSD);
 	if (m_state == ItemState::ATTACKING)
 	{
 		m_attack_time += _GSD->m_dt;
@@ -49,7 +56,7 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 			//right
 			offset = Vector2(100, 0);
 		}
-		else if (attack_type == 1)
+		else if (attack_type == 2)
 		{
 			//left
 			offset = Vector2(-100, 0);
@@ -72,6 +79,7 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 	{
 		m_pos = attacker->GetPos();
 		m_attacking = false;
+		m_state = ItemState::HELD;
 
 		if (m_charge > max_charge)
 		{
@@ -96,6 +104,8 @@ void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		}
 		_collision->AddForce(m_charge* Vector2(0, 0));
 	}
+
+	Throwable::CollisionEnter(_collision,_normal);
 }
 
 void MeleeWeapon::Collision(Physics2D * _collision)

@@ -5,12 +5,17 @@ MeleeWeapon::MeleeWeapon()
 {
 }
 
-MeleeWeapon::MeleeWeapon(RenderData * _RD, std::string _filename, SpawnHandler * _spawner)
+MeleeWeapon::MeleeWeapon(RenderData * _RD, std::string _filename, SpawnHandler * _spawner) : Throwable(_RD, _filename, _spawner)
 {
 }
 
-MeleeWeapon::MeleeWeapon(Item * item_to_copy, RenderData * _RD, string _filename, SpawnHandler * _spawner)
+MeleeWeapon::MeleeWeapon(Item * item_to_copy, RenderData * _RD, string _filename, SpawnHandler * _spawner) : Throwable(item_to_copy, _RD, _filename, _spawner)
 {
+	MeleeWeapon* melee_ptr = static_cast<MeleeWeapon*>(item_to_copy);
+
+	max_charge = melee_ptr->getMaxCharge();
+	on_full_charge = melee_ptr->getOnFullCharge();
+	durability = melee_ptr->getDurability();
 }
 
 MeleeWeapon::~MeleeWeapon()
@@ -28,6 +33,7 @@ void MeleeWeapon::attack(float charged_for, int type)
 void MeleeWeapon::use(Character * char_)
 {
 	player_ignore = char_;
+	attacker = char_;
 
 }
 
@@ -43,17 +49,17 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 			//right
 			offset = Vector2(100, 0);
 		}
-		if (attack_type == 1)
+		else if (attack_type == 1)
 		{
 			//left
 			offset = Vector2(-100, 0);
 		}
-		if (attack_type == 1)
+		else if (attack_type == 1)
 		{
 			//up
 			offset = Vector2(0, 100);
 		}
-		if (attack_type == 1)
+		else if (attack_type == 1)
 		{
 			//down
 			offset = Vector2(0, -100);

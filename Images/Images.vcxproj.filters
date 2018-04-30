@@ -23,6 +23,7 @@
     <ImageContentTask Include="sky.png" />
     <ImageContentTask Include="field.png" />
     <ImageContentTask Include="nige.jpg" />
+    <ImageContentTask Include="baseball_bat.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

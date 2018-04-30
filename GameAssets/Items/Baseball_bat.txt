@@ -1,7 +1,7 @@
 type:		>meleeweapon
-image:		>Baseball_bat
+image:		>baseball_bat
 -- all items
-Name:		>ball
+Name:		>baseball_bat
 pickup:		>none
 use:		>attack
 power:		>10
@@ -10,6 +10,6 @@ on throw	>none
 player hit 	>bounce
 ground hit 	>bounce
 -- melee
-charge mod      >5
+max charge      >2
 full charge     >none
 durability	>5

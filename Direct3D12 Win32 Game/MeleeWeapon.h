@@ -19,6 +19,10 @@ public:
 	std::string getOnFullCharge() { return on_full_charge; }
 	int getDurability() { return durability; }
 
+	void setMaxCharge(float charge_) { max_charge = charge_; }
+	void setOnFullCharge(std::string string_) { on_full_charge = string_; }
+	void setDurability(int dur) { durability = dur; }
+
 
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal);
 	void Collision(Physics2D* _collision);

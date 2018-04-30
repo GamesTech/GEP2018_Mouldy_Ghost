@@ -552,7 +552,3 @@ void Character::FlipX()
 {
 	flipped = !flipped;
 }
-#include "MeleeWeapon.h"
-#include "Throwable.h"
-#include "Animation2D.h"
-#include <jsoncons\json.hpp>

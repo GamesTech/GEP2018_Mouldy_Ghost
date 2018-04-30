@@ -27,7 +27,9 @@ void MeleeWeapon::attack(float charged_for, int type)
 	attack_type = type;
 	m_charge = charged_for;
 
-	m_state == ItemState::ATTACKING;
+	m_attack_time = 0;
+
+	m_state = ItemState::ATTACKING;
 }
 
 void MeleeWeapon::use(Character * char_)
@@ -46,9 +48,10 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 	}
 
 	Item::Tick(_GSD);
+
 	if (m_state == ItemState::ATTACKING)
 	{
-		m_attack_time += _GSD->m_dt;
+		m_attack_time += _GSD->m_dt*3;
 
 		Vector2 offset;
 		if (attack_type == 1)
@@ -61,21 +64,21 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 			//left
 			offset = Vector2(-100, 0);
 		}
-		else if (attack_type == 1)
+		else if (attack_type == 3)
 		{
 			//up
 			offset = Vector2(0, 100);
 		}
-		else if (attack_type == 1)
+		else if (attack_type == 4)
 		{
 			//down
 			offset = Vector2(0, -100);
 		}
 
-		m_pos = Vector2::Lerp(attacker->GetPos(), attacker->GetPos() + Vector2(100, 0), m_attack_time);
+		m_pos = Vector2::Lerp(attacker->GetPos(), attacker->GetPos() + offset, m_attack_time);
 	}
 
-	if (m_attack_time > 0.5)
+	if (m_attack_time > 1)
 	{
 		m_pos = attacker->GetPos();
 		m_attacking = false;

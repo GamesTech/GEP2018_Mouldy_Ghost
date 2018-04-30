@@ -159,6 +159,8 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 	json animations;
 	is >> animations;
 
+	Rectangle spritebox;
+
 	for (const auto& type : animations.members())
 	{
 		const std::string name = type.name();
@@ -169,7 +171,9 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 			run_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
 			run_anim->setFramerate(data["framerate"].as_long());
 			run_anim->setIncrements(Vector2 (data["xIncrements"].as_long(), data["yIncrements"].as_long()));
-			run_anim->setSpriteBox(Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			run_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			run_anim->setSpriteBox(spritebox);
 			run_anim->setMaxFrames(data["frames"].as_int());
 		}
 		else if (name == "jump")
@@ -177,11 +181,14 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 			jump_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
 			jump_anim->setFramerate(data["framerate"].as_long());
 			jump_anim->setIncrements(Vector2(data["xIncrements"].as_long(), data["yIncrements"].as_long()));
-			jump_anim->setSpriteBox(Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			jump_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			jump_anim->setSpriteBox(spritebox);
 			jump_anim->setMaxFrames(data["frames"].as_int());
 		}
 	}
 
+	SetSpriteSize(Vector2(spritebox.width, spritebox.height), 0);
 	active_anim = run_anim.get();
 }
 
@@ -212,6 +219,11 @@ void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		m_jumps = 0;
 		m_dash_recover = true;
 		m_last_to_hit = nullptr;
+
+		if (active_anim)
+		{
+			switchAnimation(run_anim.get());
+		}
 	}
 }
 
@@ -256,6 +268,10 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 		{
 			m_physics->ResetForce(Y_AXIS);
 			m_jumps++;
+			if (usesAnimation)
+			{
+				switchAnimation(jump_anim.get());
+			}
 			return -m_jump_height;
 		}
 	}
@@ -488,6 +504,12 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			break;
 		}
 	}
+}
+
+void Character::switchAnimation(Animation2D * _new)
+{
+	_new->reset();
+	active_anim = _new;
 }
 
 void Character::FlipX()

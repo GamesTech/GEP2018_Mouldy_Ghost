@@ -66,7 +66,7 @@ void Animation2D::update(GameStateData * _GSD)
 		XMUINT2 size = GetTextureSize(m_texture.Get());
 		if (m_spritebox.x >= (size.x - m_spritebox.width))
 		{
-			m_spritebox.x = m_spriteBoxStartPos.x;
+			m_spritebox.x = 0;
 			m_spritebox.y += m_spriteBoxIncrements.y;
 		}
 		if (m_frames >= m_maxFrames)

@@ -91,6 +91,7 @@ protected:
 	Animation2D* active_anim = nullptr;
 	std::shared_ptr<Animation2D> jump_anim = nullptr;
 	std::shared_ptr<Animation2D> run_anim = nullptr;
+	void switchAnimation(Animation2D* _new);
 
 
 	void FlipX();

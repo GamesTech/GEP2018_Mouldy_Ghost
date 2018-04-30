@@ -8,6 +8,7 @@ public:
 		Vector2 _pos, int _resourceNum, Color _colour, float _orientation, Vector2 _origin);
 	void update(GameStateData* _GSD);
 
+	void reset();
 	void setSpriteBox(Rectangle _box);
 	void setFramerate(float _framerate);
 	void setMaxFrames(int _maxFrames);
@@ -19,8 +20,6 @@ private:
 	float m_elapsedTime = 0;
 	int m_frames = 0;
 	int m_maxFrames = 30;
-
-	void reset();
 
 	Vector2 m_spriteBoxIncrements;
 	Vector2 m_spriteBoxStartPos;

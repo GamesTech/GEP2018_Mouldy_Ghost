@@ -72,6 +72,8 @@ public:
 	void AddPoints(int _add) { m_points += _add; }
 	const int GetPoints() { return m_points; }
 
+	void setAttacking(bool attacking_) { m_attacking = attacking_; }
+
 protected:
 
 	int PlayerJump(std::vector<GameAction> _actions);

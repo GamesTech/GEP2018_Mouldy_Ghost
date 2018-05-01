@@ -30,9 +30,7 @@ void Throwable::Throw(Character* _player)
 	m_state = ItemState::THROWN;
 
 	_player->RemoveChild(this);
-	//_player->get direction?
-	// not sure how throw is going to work just yet
-	// eeeeh
+	
 
 	if (m_on_throw == "activate")
 	{
@@ -45,6 +43,7 @@ void Throwable::pickUp(Character * _player)
 	Item::pickUp(_player);
 	player_ignore = _player;
 	m_state = ItemState::HELD;
+	m_physics->SetGrav(0);
 
 }
 

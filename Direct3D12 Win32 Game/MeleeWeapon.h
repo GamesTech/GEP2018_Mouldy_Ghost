@@ -31,7 +31,6 @@ private:
 	bool m_attacking = false;
 	float m_attack_time = 0;
 
-	Character* attacker = nullptr;
 	float max_charge = 0;
 
 	int attack_type = 0;

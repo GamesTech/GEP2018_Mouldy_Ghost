@@ -14,12 +14,16 @@ public:
 	void setMaxFrames(int _maxFrames);
 	void setSpriteBoxStartPos(Vector2 _start);
 	void setIncrements(Vector2 _increments);
+	void setloop(bool _loop);
+	void setPlay(bool _play);
 
 private:
 	float m_framerate = 30;
 	float m_elapsedTime = 0;
 	int m_frames = 0;
 	int m_maxFrames = 30;
+	bool loop = true;
+	bool play = true;
 
 	Vector2 m_spriteBoxIncrements;
 	Vector2 m_spriteBoxStartPos;

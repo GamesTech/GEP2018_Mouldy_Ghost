@@ -66,25 +66,35 @@ void Animation2D::Render(RenderData * _RD, Vector2 _cam_pos, float _zoom, Vector
 
 void Animation2D::update(GameStateData * _GSD)
 {
-	m_elapsedTime += _GSD->m_dt;
-
-	if (m_elapsedTime > 1 / m_framerate)
+	if (play)
 	{
-		m_frames++;
-		m_spritebox.x += m_spriteBoxIncrements.x;
-		XMUINT2 size = GetTextureSize(m_texture.Get());
-		if (m_spritebox.x >= (size.x - m_spritebox.width))
-		{
-			m_spritebox.x = 0;
-			m_spritebox.y += m_spriteBoxIncrements.y;
-		}
-		if (m_frames >= m_maxFrames)
-		{
-			reset();
-		}
+		m_elapsedTime += _GSD->m_dt;
 
-		m_elapsedTime = 0;
-		//m_spritebox.y += m_spriteBoxIncrements.y;
+		if (m_elapsedTime > 1 / m_framerate)
+		{
+			m_frames++;
+			m_spritebox.x += m_spriteBoxIncrements.x;
+			XMUINT2 size = GetTextureSize(m_texture.Get());
+			if (m_spritebox.x >= (size.x - m_spritebox.width))
+			{
+				m_spritebox.x = 0;
+				m_spritebox.y += m_spriteBoxIncrements.y;
+			}
+			if (m_frames >= m_maxFrames)
+			{
+				if (loop)
+				{
+					reset();
+				}
+				else
+				{
+					play = false;
+				}
+			}
+
+			m_elapsedTime = 0;
+			//m_spritebox.y += m_spriteBoxIncrements.y;
+		}
 	}
 }
 
@@ -113,9 +123,20 @@ void Animation2D::setIncrements(Vector2 _increments)
 	m_spriteBoxIncrements = _increments;
 }
 
+void Animation2D::setloop(bool _loop)
+{
+	loop = _loop;
+}
+
+void Animation2D::setPlay(bool _play)
+{
+	play = _play;
+}
+
 void Animation2D::reset()
 {
 	m_frames = 0;
 	m_spritebox.x = m_spriteBoxStartPos.x;
 	m_spritebox.y = m_spriteBoxStartPos.y;
+	play = true;
 }

@@ -187,10 +187,11 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 			jump_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
 			jump_anim->setSpriteBox(spritebox);
 			jump_anim->setMaxFrames(data["frames"].as_int());
+			jump_anim->setloop(false);
 		}
 	}
 
-	SetSpriteSize(Vector2(spritebox.width, spritebox.height), 0);
+	SetSpriteSize(Vector2(spritebox.width *2 , spritebox.height/ 2), 0);
 	active_anim = run_anim.get();
 }
 

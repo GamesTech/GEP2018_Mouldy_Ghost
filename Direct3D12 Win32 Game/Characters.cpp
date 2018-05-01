@@ -5,6 +5,10 @@
 #include "CharacterController.h"
 #include "SpawnHandler.h"
 #include "Throwable.h"
+#include "MeleeWeapon.h"
+#include "Throwable.h"
+#include <jsoncons\json.hpp>
+#include "Animation2D.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -83,7 +87,13 @@ void Character::Tick(GameStateData * _GSD)
 
 	//GEP:: Lets go up the inheritence and share our functionality
 
+	//run->update(_GSD);
 	m_physics->Tick(_GSD, m_pos);
+
+	if (usesAnimation)
+	{
+		active_anim->update(_GSD);
+	}
 
 	GameObject2D::Tick(_GSD);
 }
@@ -91,14 +101,8 @@ void Character::Tick(GameStateData * _GSD)
 void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
-	if (!flipped)
-	{
-		rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
-	}
-	else
-	{
-		rect = Rectangle(m_spriteSize.x / 2, 0, m_spriteSize.x / 2, m_spriteSize.y);
-	}
+	rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
+	
 	const RECT* r = &RECT(rect);
 
 	Vector2 render_scale = m_scale * _zoom;
@@ -109,9 +113,25 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
-	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-		GetTextureSize(m_texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+	if (usesAnimation)
+	{
+		active_anim->Render(_RD, _cam_pos, _zoom, render_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin, flipped);
+	}
+	else
+	{
+		if (!flipped)
+		{
+			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+				GetTextureSize(m_texture.Get()),
+				render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+		}
+		else
+		{
+			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+				GetTextureSize(m_texture.Get()),
+				render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);
+		}
+	}
 }
 
 void Character::CreatePhysics(RenderData* _RD)
@@ -149,6 +169,53 @@ void Character::SetController(CharacterController * _controller)
 	}
 }
 
+void Character::loadAnimations(std::string _file, RenderData* _RD)
+{
+	//load animations here
+	usesAnimation = true;
+	using jsoncons::json;
+
+	std::string path = "..\\GameAssets\\Characters\\" + _file + ".json";
+
+	std::ifstream
+		is(path);
+
+	json animations;
+	is >> animations;
+
+	Rectangle spritebox;
+
+	for (const auto& type : animations.members())
+	{
+		const std::string name = type.name();
+		const auto& data = type.value();
+
+		if (name == "run")
+		{
+			run_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			run_anim->setFramerate(data["framerate"].as_long());
+			run_anim->setIncrements(Vector2 (data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			run_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			run_anim->setSpriteBox(spritebox);
+			run_anim->setMaxFrames(data["frames"].as_int());
+		}
+		else if (name == "jump")
+		{
+			jump_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			jump_anim->setFramerate(data["framerate"].as_long());
+			jump_anim->setIncrements(Vector2(data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			jump_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			jump_anim->setSpriteBox(spritebox);
+			jump_anim->setMaxFrames(data["frames"].as_int());
+		}
+	}
+
+	SetSpriteSize(Vector2(spritebox.width, spritebox.height), 0);
+	active_anim = run_anim.get();
+}
+
 void Character::TakeDamage(int _dam)
 {
 	m_damage += _dam;
@@ -176,6 +243,11 @@ void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		m_jumps = 0;
 		m_dash_recover = true;
 		m_last_to_hit = nullptr;
+
+		if (active_anim)
+		{
+			switchAnimation(run_anim.get());
+		}
 	}
 }
 
@@ -230,6 +302,10 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 		{
 			m_physics->ResetForce(Y_AXIS);
 			m_jumps++;
+			if (usesAnimation)
+			{
+				switchAnimation(jump_anim.get());
+			}
 			return -m_jump_height;
 		}
 	}
@@ -245,6 +321,7 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 		{
 			Throwable* tmp = static_cast<Throwable*>(m_held_item);
 			tmp->Throw(this);
+			m_held_item->GetPhysics()->AddForce(Vector2(50000 * m_facing, -10000));
 			m_held_item = nullptr;
 			
 			return;
@@ -324,41 +401,69 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		int controller = m_controller->GetControllerID();
 		GameActions actions_to_check = m_controller->GetInput(_GSD);
 
-		if (InputSystem::searchForAction(P_HOLD_BASIC, actions_to_check))
+		//if you are holding a weapon
+		if (m_held_item && m_held_item->getitemType() == ItemType::MELEE_WEAPON)
 		{
-			MeleeAttack(_GSD, actions_to_check);
-		}
-		if (InputSystem::searchForAction(P_HOLD_SPECIAL, actions_to_check))
-		{
-			SpecialAttack(_GSD, actions_to_check);
-		}
-		if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
-			|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
-		{
-			if (static_cast<StandardAttack*>(m_charging_attack))
+			MeleeWeapon* tmp = static_cast<MeleeWeapon*>(m_held_item);
+
+			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
+				|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
 			{
-				m_charging_attack->PerformAttack
-				(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
-				m_charging_attack = nullptr;
+
+				tmp->use(this);
+				if (m_facing == 1)
+				{
+					tmp->attack(m_charge_time, 1);
+				}
+				else
+				{
+					tmp->attack(m_charge_time, 2);
+				}
 			}
-			if (static_cast<StandardAttack*>(m_spamming_attack))
-			{
-				m_spamming_attack = nullptr;
-			}
-			m_attacking = false;
 		}
+		else //no weapon equipped
+		{
+
+			if (InputSystem::searchForAction(P_HOLD_BASIC, actions_to_check))
+			{
+				MeleeAttack(_GSD, actions_to_check);
+			}
+			if (InputSystem::searchForAction(P_HOLD_SPECIAL, actions_to_check))
+			{
+				SpecialAttack(_GSD, actions_to_check);
+			}
+			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
+				|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
+			{
 
 
-		if (m_spamming_attack)
-		{
-			if (m_spam_cooldown >= 0)
-			{
-				m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, spawn);
-				m_spam_cooldown = m_spamming_attack->GetDelay();
+				if (static_cast<StandardAttack*>(m_charging_attack))
+				{
+					m_charging_attack->PerformAttack
+					(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
+					m_charging_attack = nullptr;
+				}
+				if (static_cast<StandardAttack*>(m_spamming_attack))
+				{
+					m_spamming_attack = nullptr;
+				}
+
+
+				m_attacking = false;
 			}
-			else
+
+
+			if (m_spamming_attack)
 			{
-				m_spam_cooldown += _GSD->m_dt;
+				if (m_spam_cooldown >= 0)
+				{
+					m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, spawn);
+					m_spam_cooldown = m_spamming_attack->GetDelay();
+				}
+				else
+				{
+					m_spam_cooldown += _GSD->m_dt;
+				}
 			}
 		}
 	}
@@ -462,6 +567,17 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			break;
 		}
 	}
+}
+
+void Character::MeleeWeaponAttack(GameStateData * _GSD, std::vector<GameAction> _actions)
+{
+	
+}
+
+void Character::switchAnimation(Animation2D * _new)
+{
+	_new->reset();
+	active_anim = _new;
 }
 
 void Character::FlipX()

@@ -82,41 +82,44 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 		//if the object in the list isn't this gameobject
 		if (object != this)
 		{
-			if (m_collider.Intersects(object->GetCollider()))
+			if (object)
 			{
-				Rectangle overlap = Rectangle::Intersect(m_collider, object->GetCollider());
-
-				Vector2 normal = GetNormal(overlap.Center());
-				
-				//m_owner->Collision(object);
-
-				//check whether this object was being collided with on the last tick
-				bool on_list = false;
-				for (int j = 0; j < currently_colliding.size(); j++)
+				if (m_collider.Intersects(object->GetCollider()))
 				{
-					if (currently_colliding[j] == object)
+					Rectangle overlap = Rectangle::Intersect(m_collider, object->GetCollider());
+
+					Vector2 normal = GetNormal(overlap.Center());
+
+					//m_owner->Collision(object);
+
+					//check whether this object was being collided with on the last tick
+					bool on_list = false;
+					for (int j = 0; j < currently_colliding.size(); j++)
 					{
-						on_list = true;
+						if (currently_colliding[j] == object)
+						{
+							on_list = true;
+						}
+					}
+					//if not, call collision enter and add it to the list
+					if (!on_list)
+					{
+						currently_colliding.push_back(object);
+						m_owner->CollisionEnter(object, normal);
 					}
 				}
-				//if not, call collision enter and add it to the list
-				if (!on_list)
+				else
 				{
-					currently_colliding.push_back(object);
-					m_owner->CollisionEnter(object, normal);
-				}
-			}
-			else
-			{
-				//if the object isn't being collided with
-				for (int j = 0; j < currently_colliding.size(); j++)
-				{
-					//check whether it was being collided with last tick
-					if (currently_colliding[j] == object)
+					//if the object isn't being collided with
+					for (int j = 0; j < currently_colliding.size(); j++)
 					{
-						//collision exit and remove it from the list
-						m_owner->CollisionExit(object);
-						currently_colliding.erase(currently_colliding.begin() + j);
+						//check whether it was being collided with last tick
+						if (currently_colliding[j] == object)
+						{
+							//collision exit and remove it from the list
+							m_owner->CollisionExit(object);
+							currently_colliding.erase(currently_colliding.begin() + j);
+						}
 					}
 				}
 			}

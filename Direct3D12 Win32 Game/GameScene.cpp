@@ -58,13 +58,14 @@ void GameScene::Initialise(RenderData * _RD,
 	m_bg[2] = new Background(m_RD, "tree", 2);
 	m_bg[2]->SetSpawn(Vector2(w * 0.4, h));
 
-	//m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
-	//m_testEmitter->setAngle(0);
-	//m_testEmitter->setDistribution(3.14159265);
-	//m_testEmitter->setSpeeds(200, 300);
-	//m_testEmitter->setLifetimes(1, 3);
-	//m_testEmitter->addParticles(1000);
-	//m_2DObjects.push_back(m_testEmitter.get());
+	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
+	m_testEmitter->SetSpawn(Vector2(500, 500));
+	m_testEmitter->setAngle(0);
+	m_testEmitter->setDistribution(3.14159265);
+	m_testEmitter->setSpeeds(200, 300);
+	m_testEmitter->setLifetimes(1, 3);
+	m_testEmitter->addParticles(1000);
+	m_2DObjects.push_back(m_testEmitter.get());
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -108,7 +109,7 @@ void GameScene::Initialise(RenderData * _RD,
 
 	giveMeItem(_RD,_GSD, "mine", Vector2(500,100));
 
-	giveMeItem(_RD, _GSD, "apple", Vector2(600, 100));
+	giveMeItem(_RD, _GSD, "baseball_bat", Vector2(600, 100));
 
 	//adds all 2d objects to the stage
 	game_stage->addObjectsToScene(m_2DObjects);

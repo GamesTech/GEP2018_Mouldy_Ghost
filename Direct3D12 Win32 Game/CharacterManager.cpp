@@ -48,6 +48,7 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 		int jump = std::stoi(getFileData(character_file));
 		character.SetJumpHeight(jump);
 
+
 		while(!character_file.eof())
 		{
 			std::string attack_file = getFileData(character_file);
@@ -59,6 +60,9 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 				break;
 			case 'D':
 				character.AddAttack(DashAttack(attack_file, _RD));
+				break;
+			case 'A':
+				character.loadAnimations(attack_file, _RD);
 				break;
 			default:
 				break;

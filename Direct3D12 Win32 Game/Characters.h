@@ -27,6 +27,7 @@ enum AttackMap
 
 class SpawnHandler;
 class Item;
+class Animation2D;
 
 class Character
 	: public ImageGO2D
@@ -50,6 +51,8 @@ public:
 	void SetJumpHeight(float _height) { m_jump_height = _height; }
 	const float GetJumpHeight() { return m_jump_height; }
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
+
+	void loadAnimations(std::string _file, RenderData* _RD);
 
 	void TakeDamage(int _dam);
 	void Hit(Vector2 _dir, float _force, Character * _attacker);
@@ -83,6 +86,16 @@ protected:
 		std::vector<GameAction> _actions);
 	void SpecialAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
+	void MeleeWeaponAttack(GameStateData * _GSD,
+		std::vector<GameAction> _actions);
+
+
+	bool usesAnimation = false;
+	Animation2D* active_anim = nullptr;
+	std::shared_ptr<Animation2D> jump_anim = nullptr;
+	std::shared_ptr<Animation2D> run_anim = nullptr;
+	void switchAnimation(Animation2D* _new);
+
 
 	void FlipX();
 	bool flipped = false;

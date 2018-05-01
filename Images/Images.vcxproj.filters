@@ -24,6 +24,8 @@
     <ImageContentTask Include="field.png" />
     <ImageContentTask Include="nige.jpg" />
     <ImageContentTask Include="baseball_bat.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenFly.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

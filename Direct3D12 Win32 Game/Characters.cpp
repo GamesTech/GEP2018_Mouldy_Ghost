@@ -176,6 +176,7 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
 			run_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
 			run_anim->setSpriteBox(spritebox);
+			run_anim->setFurthestLeftPos(data["furthestLeftPos"].as_long());
 			run_anim->setMaxFrames(data["frames"].as_int());
 		}
 		else if (name == "jump")
@@ -186,6 +187,7 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
 			jump_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
 			jump_anim->setSpriteBox(spritebox);
+			jump_anim->setFurthestLeftPos(data["furthestLeftPos"].as_long());
 			jump_anim->setMaxFrames(data["frames"].as_int());
 			jump_anim->setloop(false);
 		}

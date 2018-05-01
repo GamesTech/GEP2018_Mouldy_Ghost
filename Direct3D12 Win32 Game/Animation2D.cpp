@@ -20,12 +20,12 @@ Animation2D::Animation2D(RenderData * _RD, string _filename, int _resourceNum)
 		CreateDDSTextureFromFile(_RD->m_d3dDevice.Get(), resourceUpload, wFilename.c_str(),
 			m_texture.ReleaseAndGetAddressOf()));
 
+	m_resourcenum = _RD->m_resourceCount;
 
 	CreateShaderResourceView(_RD->m_d3dDevice.Get(), m_texture.Get(),
 		_RD->m_resourceDescriptors->GetCpuHandle(_resourceNum = _RD->m_resourceCount++));
 
 	auto uploadResourcesFinished = resourceUpload.End(_RD->m_commandQueue.Get());
-
 
 
 	uploadResourcesFinished.wait();
@@ -52,13 +52,13 @@ void Animation2D::Render(RenderData * _RD, Vector2 _cam_pos, float _zoom, Vector
 
 	if (_flipped)
 	{ 
-		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourcenum),
 			GetTextureSize(m_texture.Get()),
 			render_pos, r, _colour, _orientation, _origin, _scale,SpriteEffects::SpriteEffects_FlipHorizontally,0);
 	}
 	else
 	{
-		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourcenum),
 			GetTextureSize(m_texture.Get()),
 			render_pos, r, _colour, _orientation, _origin, _scale);
 	}
@@ -73,23 +73,25 @@ void Animation2D::update(GameStateData * _GSD)
 		if (m_elapsedTime > 1 / m_framerate)
 		{
 			m_frames++;
-			m_spritebox.x += m_spriteBoxIncrements.x;
-			XMUINT2 size = GetTextureSize(m_texture.Get());
-			if (m_spritebox.x >= (size.x - m_spritebox.width))
-			{
-				m_spritebox.x = 0;
-				m_spritebox.y += m_spriteBoxIncrements.y;
-			}
 			if (m_frames >= m_maxFrames)
 			{
 				if (loop)
 				{
 					reset();
+					return;
 				}
 				else
 				{
 					play = false;
+					return;
 				}
+			}
+			m_spritebox.x += m_spriteBoxIncrements.x;
+			XMUINT2 size = GetTextureSize(m_texture.Get());
+			if (m_spritebox.x > (size.x - m_spritebox.width))
+			{
+				m_spritebox.x = m_furthestLeftPos;
+				m_spritebox.y += m_spriteBoxIncrements.y;
 			}
 
 			m_elapsedTime = 0;
@@ -118,6 +120,11 @@ void Animation2D::setSpriteBoxStartPos(Vector2 _start)
 	m_spriteBoxStartPos = _start;
 }
 
+void Animation2D::setFurthestLeftPos(float _left)
+{
+	m_furthestLeftPos = _left;
+}
+
 void Animation2D::setIncrements(Vector2 _increments)
 {
 	m_spriteBoxIncrements = _increments;
@@ -144,6 +151,7 @@ const Vector2 Animation2D::getSpriteScale()
 void Animation2D::reset()
 {
 	m_frames = 0;
+	m_elapsedTime = 0;
 	m_spritebox.x = m_spriteBoxStartPos.x;
 	m_spritebox.y = m_spriteBoxStartPos.y;
 	play = true;

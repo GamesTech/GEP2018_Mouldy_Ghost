@@ -9,6 +9,13 @@
 #include "Emitter.h"
 #include "HUD.h"
 
+enum class GameOverCheck
+{
+	NONE = -1,
+	WAIT,
+	FREEZE
+};
+
 using std::vector;
 
 class Background;
@@ -62,4 +69,7 @@ private:
 	bool m_infiniteTime;
 
 	float m_timeLeft;
+
+	GameOverCheck m_game_over_check = GameOverCheck::NONE;
+	float m_game_over_timer[2] = { 0,0 };
 };

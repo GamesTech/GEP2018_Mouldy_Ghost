@@ -33,6 +33,7 @@ public:
 	void SetOri(float _ori);
 	void SetColour(Color _col) { m_colour = _col; }
 	void SetScale(Vector2 _scale) { m_scale = _scale; }
+	void move(Vector2 _move_by);
 
 	virtual void CentreOrigin() = 0;
 	

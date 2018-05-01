@@ -35,8 +35,6 @@ void MeleeWeapon::attack(float charged_for, int type)
 void MeleeWeapon::use(Character * char_)
 {
 	player_ignore = char_;
-	attacker = char_;
-
 }
 
 void MeleeWeapon::Tick(GameStateData * _GSD)
@@ -67,31 +65,34 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 		else if (attack_type == 3)
 		{
 			//up
-			offset = Vector2(0, 100);
+			offset = Vector2(0, -100);
 		}
 		else if (attack_type == 4)
 		{
 			//down
-			offset = Vector2(0, -100);
+			offset = Vector2(0, 100);
 		}
 
-		m_pos = Vector2::Lerp(attacker->GetPos(), attacker->GetPos() + offset, m_attack_time);
-	}
+		m_pos = Vector2::Lerp(player_ignore->GetPos(), player_ignore->GetPos() + offset, m_attack_time);
 
-	if (m_attack_time > 1)
-	{
-		m_pos = attacker->GetPos();
-		m_attacking = false;
-		m_state = ItemState::HELD;
-
-		if (m_charge > max_charge)
+		if (m_attack_time > 1)
 		{
-			if (on_full_charge == "tornado")
+			m_pos = player_ignore->GetPos();
+			m_attacking = false;
+			m_state = ItemState::HELD;
+			player_ignore->setAttacking(false);
+
+			if (m_charge > max_charge)
 			{
-				//release the tornado
+				if (on_full_charge == "tornado")
+				{
+					//release the tornado
+				}
 			}
 		}
 	}
+
+	
 
 }
 
@@ -105,10 +106,25 @@ void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		{
 			m_charge = max_charge;
 		}
-		_collision->AddForce(m_charge* Vector2(0, 0));
-	}
+		//testing line
+		//we definitely want to calculate the direction
+		//_collision->AddForce(Vector2(10000+ 10000*m_charge,-10000));
 
-	Throwable::CollisionEnter(_collision,_normal);
+		float tmpx = m_pos.x - _collision->GetOwner()->GetPos().x;
+		
+		if (tmpx > 0)
+		{
+			_collision->AddForce(Vector2(-(10000 + 10000 * m_charge), -10000));
+		}
+		else
+		{
+			_collision->AddForce(Vector2(10000 + 10000 * m_charge, -10000));
+		}
+	}
+	else if (m_state == ItemState::THROWN || m_state == ItemState::WAIT)
+	{
+		Throwable::CollisionEnter(_collision, _normal);
+	}
 }
 
 void MeleeWeapon::Collision(Physics2D * _collision)

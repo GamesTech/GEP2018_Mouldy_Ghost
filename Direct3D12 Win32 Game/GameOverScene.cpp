@@ -10,11 +10,6 @@ GameOverScene::GameOverScene()
 	}
 
 	m_standings.reserve(4);
-
-	m_text_colour[0] = (Color(0.3, 0.3, 1));
-	m_text_colour[1] = (Color(0, 0.7, 0));
-	m_text_colour[2] = (Color(1, 0, 0));
-	m_text_colour[3] = (Color(1, 1, 0));
 }
 
 GameOverScene::~GameOverScene()
@@ -29,7 +24,6 @@ GameOverScene::~GameOverScene()
 void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	//wait for input to return to menu
-	//m_goBack->Tick(m_GSD);
 	for (int i = 0; i < 4; i++)
 	{
 		if (m_GSD->menu_action[i] == MenuAction::ADVANCE_MENU)
@@ -40,7 +34,16 @@ void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX:
 			}
 		}
 	}
+	for (int i = 0; i < m_falling.size(); i++)
+	{
+		if (m_falling[i].character->GetPos().y < m_falling[i].target)
+		{
+			m_falling[i].character->move(Vector2(0, 300 * timer.GetElapsedSeconds()));
+			break;
+		}
+	}
 }
+
 
 void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	int _outputWidth, int _outputHeight,
@@ -49,22 +52,23 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	m_RD = _RD;
 	m_GSD = _GSD;
 
+	int lowest_point = (m_GSD->window_size.y / 4) * 3;
+	int mid_screen = m_GSD->window_size.x / 2;
+	m_podium_positions[0] = Vector2(100, m_GSD->window_size.y - 100);
+	m_podium_positions[1] = Vector2(mid_screen + 100, lowest_point);
+	m_podium_positions[2] = Vector2(mid_screen - 100, lowest_point - 30);
+	m_podium_positions[3] = Vector2(mid_screen, lowest_point - 60);
+
 	//GEP::This is where I am creating the test objects
 	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam;
 	m_3DObjects.push_back(m_cam);
-
-	//m_goBack = std::make_shared<Menu>(Vector2((m_GSD->window_size.x / 5), (m_GSD->window_size.y - 100)), MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, m_RD, "gens"), "Back to\nCharacter Select");
-	//for (int i = 0; i < listeners.size(); i++)
-	//{
-	//	m_goBack->addListener(listeners[i]);
-	//}
-	//m_goBack->init();
 }
 
 void GameOverScene::Reset()
 {
 	m_chars_in_game.clear();
+	m_standings.clear();
 }
 
 void GameOverScene::AddCharacterToScene(Character * _c)
@@ -72,10 +76,10 @@ void GameOverScene::AddCharacterToScene(Character * _c)
 	m_chars_in_game.push_back(_c);
 }
 
-void GameOverScene::PlayerEliminated(Character * _c, int index)
+void GameOverScene::PlayerEliminated(Character * _c)
 {
 	//if a player is eliminated, add them to the loser list
-	m_scores[m_standings.size()]->SetColour(m_text_colour[index]);
+	m_scores[m_standings.size()]->SetColour(_c->getTextColour());
 
 	for (int i = 0; i < m_chars_in_game.size(); i++)
 	{
@@ -121,9 +125,9 @@ void GameOverScene::SortByScores()
 		{
 			//if that character does exist, set the text colour
 			//to the one associated with that character
+
 			m_scores[m_standings.size()]->SetColour
-			(m_text_colour[m_chars_in_game[character_index]
-				->GetControllerIndex()]);
+			(m_chars_in_game[character_index]->getTextColour());
 			m_standings.push_back(m_chars_in_game[character_index]);
 		}
 	}
@@ -132,6 +136,10 @@ void GameOverScene::SortByScores()
 	m_2DObjects.clear();
 	for (int i = 0; i < m_standings.size(); i++)
 	{
+		FallingCharacter fall;
+		fall.character = m_standings[i];
+		m_falling.push_back(fall);
+
 		Character* c = m_standings[i];
 		std::string score = "#";
 		score += std::to_string(m_standings.size() - i);
@@ -147,5 +155,12 @@ void GameOverScene::SortByScores()
 		m_scores[i]->SetPos(Vector2(x, y));
 		m_2DObjects.push_back(m_scores[i]);
 	}
-	/*m_2DObjects.push_back(m_goBack.get());*/
+
+	for (int i = 0; i < m_falling.size(); i++)
+	{
+		int podium_position = i + (4 - m_falling.size());
+		m_falling[i].target = m_podium_positions[podium_position].y;
+		m_falling[i].character->SetPos(Vector2(m_podium_positions[podium_position].x, -100));
+		m_2DObjects.push_back(m_falling[i].character);
+	}
 }

@@ -119,9 +119,16 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 	{
 	case 1:
 	{
-		if (_state.W && !_prev_state.W)
+		if (_state.W)
 		{
-			_actions.push_back(P_JUMP);
+			if (_prev_state.W)
+			{
+				_actions.push_back(P_HOLD_UP);
+			}
+			else
+			{
+				_actions.push_back(P_JUMP);
+			}
 		}
 		if (_state.A)
 		{

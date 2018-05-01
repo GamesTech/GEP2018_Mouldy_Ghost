@@ -4,9 +4,9 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
-#include "Throwable.h"
+
 #include "MeleeWeapon.h"
-#include "Throwable.h"
+
 #include <jsoncons\json.hpp>
 #include "Animation2D.h"
 
@@ -147,6 +147,28 @@ void Character::CreatePhysics(RenderData* _RD)
 	m_physics->SetOwner(this);
 }
 
+void Character::SetController(CharacterController * _controller)
+{
+	m_controller = _controller;
+	switch (_controller->GetControllerID())
+	{
+	case 0:
+		m_text_colour = (Color(0.3, 0.3, 1));
+		break;
+	case 1:
+		m_text_colour = (Color(0, 0.7, 0));
+		break;
+	case 2:
+		m_text_colour = (Color(1, 0, 0));
+		break;
+	case 3:
+		m_text_colour = (Color(1, 1, 0));
+		break;
+	default:
+		break;
+	}
+}
+
 void Character::loadAnimations(std::string _file, RenderData* _RD)
 {
 	//load animations here
@@ -266,6 +288,16 @@ void Character::AddAttack(DashAttack _attack)
 	m_attacks.push_back(a);
 }
 
+const Color Character::getTextColour() const
+{
+	return m_text_colour;
+}
+
+void Character::setTextColour(Color colour)
+{
+	m_text_colour = colour;
+}
+
 int Character::PlayerJump(std::vector<GameAction> _actions)
 {
 	if (InputSystem::searchForAction(P_JUMP, _actions) && m_dash_recover && !m_attacking)
@@ -293,6 +325,7 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 		{
 			Throwable* tmp = static_cast<Throwable*>(m_held_item);
 			tmp->Throw(this);
+			m_held_item->GetPhysics()->ResetForce(BOTH_AXES);
 			m_held_item->GetPhysics()->AddForce(Vector2(50000 * m_facing, -10000));
 			m_held_item = nullptr;
 			
@@ -376,22 +409,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 		//if you are holding a weapon
 		if (m_held_item && m_held_item->getitemType() == ItemType::MELEE_WEAPON)
 		{
-			MeleeWeapon* tmp = static_cast<MeleeWeapon*>(m_held_item);
-
-			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
-				|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
-			{
-
-				tmp->use(this);
-				if (m_facing == 1)
-				{
-					tmp->attack(m_charge_time, 1);
-				}
-				else
-				{
-					tmp->attack(m_charge_time, 2);
-				}
-			}
+			MeleeWeaponAttack(_GSD, actions_to_check);
 		}
 		else //no weapon equipped
 		{
@@ -543,6 +561,75 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 
 void Character::MeleeWeaponAttack(GameStateData * _GSD, std::vector<GameAction> _actions)
 {
+	MeleeWeapon* tmp_melee = static_cast<MeleeWeapon*>(m_held_item);
+
+	if (m_jumps != 0) //midair
+	{
+
+		if (!m_attacking)
+		{
+			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, _actions)
+				|| InputSystem::searchForAction(P_RELEASE_BASIC, _actions))
+			{
+				tmp_melee->use(this);
+
+				if (InputSystem::searchForAction(P_CROUCH, _actions))
+				{
+					tmp_melee->attack(0, 4);
+					m_physics->ResetForce(Y_AXIS);
+					m_physics->AddForce(Vector2(0, 20000));
+				}
+				else if (InputSystem::searchForAction(P_HOLD_UP, _actions))
+				{
+					tmp_melee->attack(0, 3);
+					m_physics->ResetForce(Y_AXIS);
+					m_physics->AddForce(Vector2(0, -20000));
+				}
+				else
+				{
+					//facing
+
+					if (m_facing == 1)
+					{
+						tmp_melee->attack(0, 1);
+					}
+					else
+					{
+						tmp_melee->attack(0, 2);
+					}
+
+				}
+				m_attacking = true;
+			}
+		}
+	}
+	else
+	{
+		if (InputSystem::searchForAction(P_HOLD_BASIC, _actions)
+		|| InputSystem::searchForAction(P_HOLD_SPECIAL, _actions))
+		{
+			m_charge_time += _GSD->m_dt;
+			m_attacking = true;
+		}
+		
+	
+
+			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, _actions)
+				|| InputSystem::searchForAction(P_RELEASE_BASIC, _actions))
+			{
+				tmp_melee->use(this);
+				if (m_facing == 1)
+				{
+					tmp_melee->attack(m_charge_time, 1);
+				}
+				else
+				{
+					tmp_melee->attack(m_charge_time, 2);
+				}
+				m_charge_time = 0;
+			}
+		
+	}
 	
 }
 

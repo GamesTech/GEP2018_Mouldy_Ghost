@@ -297,6 +297,8 @@
     </ClInclude>
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Emitter.h" />
+    <ClInclude Include="Animation2D.h" />
+    <ClInclude Include="TestAnim.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -456,6 +458,8 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="Animation2D.cpp" />
+    <ClCompile Include="TestAnim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

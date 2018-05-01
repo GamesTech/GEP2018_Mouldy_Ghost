@@ -4,7 +4,11 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
+
 #include "MeleeWeapon.h"
+
+#include <jsoncons\json.hpp>
+#include "Animation2D.h"
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -83,7 +87,13 @@ void Character::Tick(GameStateData * _GSD)
 
 	//GEP:: Lets go up the inheritence and share our functionality
 
+	//run->update(_GSD);
 	m_physics->Tick(_GSD, m_pos);
+
+	if (usesAnimation)
+	{
+		active_anim->update(_GSD);
+	}
 
 	GameObject2D::Tick(_GSD);
 }
@@ -91,14 +101,8 @@ void Character::Tick(GameStateData * _GSD)
 void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
-	if (!flipped)
-	{
-		rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
-	}
-	else
-	{
-		rect = Rectangle(m_spriteSize.x / 2, 0, m_spriteSize.x / 2, m_spriteSize.y);
-	}
+	rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
+	
 	const RECT* r = &RECT(rect);
 
 	Vector2 render_scale = m_scale * _zoom;
@@ -109,9 +113,25 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
-	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-		GetTextureSize(m_texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+	if (usesAnimation)
+	{
+		active_anim->Render(_RD, _cam_pos, _zoom, render_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin, flipped);
+	}
+	else
+	{
+		if (!flipped)
+		{
+			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+				GetTextureSize(m_texture.Get()),
+				render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+		}
+		else
+		{
+			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+				GetTextureSize(m_texture.Get()),
+				render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);
+		}
+	}
 }
 
 void Character::CreatePhysics(RenderData* _RD)
@@ -125,6 +145,75 @@ void Character::CreatePhysics(RenderData* _RD)
 	m_physics->SetBounce(0.3f);
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
+}
+
+void Character::SetController(CharacterController * _controller)
+{
+	m_controller = _controller;
+	switch (_controller->GetControllerID())
+	{
+	case 0:
+		m_text_colour = (Color(0.3, 0.3, 1));
+		break;
+	case 1:
+		m_text_colour = (Color(0, 0.7, 0));
+		break;
+	case 2:
+		m_text_colour = (Color(1, 0, 0));
+		break;
+	case 3:
+		m_text_colour = (Color(1, 1, 0));
+		break;
+	default:
+		break;
+	}
+}
+
+void Character::loadAnimations(std::string _file, RenderData* _RD)
+{
+	//load animations here
+	usesAnimation = true;
+	using jsoncons::json;
+
+	std::string path = "..\\GameAssets\\Characters\\" + _file + ".json";
+
+	std::ifstream
+		is(path);
+
+	json animations;
+	is >> animations;
+
+	Rectangle spritebox;
+
+	for (const auto& type : animations.members())
+	{
+		const std::string name = type.name();
+		const auto& data = type.value();
+
+		if (name == "run")
+		{
+			run_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			run_anim->setFramerate(data["framerate"].as_long());
+			run_anim->setIncrements(Vector2 (data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			run_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			run_anim->setSpriteBox(spritebox);
+			run_anim->setMaxFrames(data["frames"].as_int());
+		}
+		else if (name == "jump")
+		{
+			jump_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			jump_anim->setFramerate(data["framerate"].as_long());
+			jump_anim->setIncrements(Vector2(data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			jump_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			jump_anim->setSpriteBox(spritebox);
+			jump_anim->setMaxFrames(data["frames"].as_int());
+		}
+	}
+
+	SetSpriteSize(Vector2(spritebox.width, spritebox.height), 0);
+	active_anim = run_anim.get();
 }
 
 void Character::TakeDamage(int _dam)
@@ -154,6 +243,11 @@ void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		m_jumps = 0;
 		m_dash_recover = true;
 		m_last_to_hit = nullptr;
+
+		if (active_anim)
+		{
+			switchAnimation(run_anim.get());
+		}
 	}
 }
 
@@ -190,6 +284,16 @@ void Character::AddAttack(DashAttack _attack)
 	m_attacks.push_back(a);
 }
 
+const Color Character::getTextColour() const
+{
+	return m_text_colour;
+}
+
+void Character::setTextColour(Color colour)
+{
+	m_text_colour = colour;
+}
+
 int Character::PlayerJump(std::vector<GameAction> _actions)
 {
 	if (InputSystem::searchForAction(P_JUMP, _actions) && m_dash_recover && !m_attacking)
@@ -198,6 +302,10 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 		{
 			m_physics->ResetForce(Y_AXIS);
 			m_jumps++;
+			if (usesAnimation)
+			{
+				switchAnimation(jump_anim.get());
+			}
 			return -m_jump_height;
 		}
 	}
@@ -519,6 +627,12 @@ void Character::MeleeWeaponAttack(GameStateData * _GSD, std::vector<GameAction> 
 		
 	}
 	
+}
+
+void Character::switchAnimation(Animation2D * _new)
+{
+	_new->reset();
+	active_anim = _new;
 }
 
 void Character::FlipX()

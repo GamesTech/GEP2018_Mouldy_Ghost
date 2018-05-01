@@ -41,6 +41,7 @@ void GameScene::Initialise(RenderData * _RD,
 	GameStateData* _GSD, int _outputWidth,
 	int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+	
 	m_RD = _RD;
 	m_GSD = _GSD;
 
@@ -56,7 +57,16 @@ void GameScene::Initialise(RenderData * _RD,
 	m_bg[1]->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
 	m_bg[2] = new Background(m_RD, "tree", 2);
 	m_bg[2]->SetSpawn(Vector2(w * 0.4, h));
-	
+
+	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
+	m_testEmitter->SetSpawn(Vector2(500, 500));
+	m_testEmitter->setAngle(0);
+	m_testEmitter->setDistribution(3.14159265);
+	m_testEmitter->setSpeeds(200, 300);
+	m_testEmitter->setLifetimes(1, 3);
+	m_testEmitter->addParticles(1000);
+	m_2DObjects.push_back(m_testEmitter.get());
+
 	for (int i = 0; i < 3; i++)
 	{
 		m_bg[i]->SetScale(Vector2(w / 900, h / 600));
@@ -131,11 +141,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	players[i]->CreatePhysics(_RD);
 	//give the player lives
 	players[i]->SetLives(m_maxLives);
-<<<<<<< HEAD
-
-=======
 	players[i]->setinfinitelives(m_infiniteLives);
->>>>>>> 0ab0dbc5250900c7503eea43670b335627317933
 	players[i]->GetPhysics()->SetDrag(0.5f);
 	players[i]->GetPhysics()->SetBounce(0.4f);
 
@@ -199,71 +205,106 @@ void GameScene::RemoveCharacter(Character* _char)
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	Scene::Update(timer, _audEngine);
-	game_stage->update(m_GSD);
+	if (m_game_over_check != GameOverCheck::FREEZE)
+	{
+		Scene::Update(timer, _audEngine);
+		game_stage->update(m_GSD);
 
+<<<<<<< HEAD
+	m_testEmitter->addParticles(1);
 	//adjust the camera pan or zoom
 	//find average and furthest points of players locations
 	Vector2 top_left = Vector2(100000,100000);
 	Vector2 bottom_right = Vector2(-1000, -1000);
 	Vector2 avg_pos = Vector2::Zero;
 	int num_players = 0;
+=======
+		//m_testEmitter->Tick(m_GSD);
 
-	for (int i = 0; i < 4; i++)
-	{
-		if (players[i])
+		//adjust the camera pan or zoom
+		//find average and furthest points of players locations
+		Vector2 top_left = Vector2(100000, 100000);
+		Vector2 bottom_right = Vector2(-1000, -1000);
+		Vector2 avg_pos = Vector2::Zero;
+		int num_players = 0;
+>>>>>>> origin/gameover
+
+		for (int i = 0; i < 4; i++)
 		{
-			if (players[i]->GetLives() > 0)
+			if (players[i])
 			{
-				Vector2 p = players[i]->GetPos();
-				avg_pos += (p * m_cam_zoom);
-				top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
-				top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
-				bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
-				bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
-				num_players++;
+				if (players[i]->GetLives() > 0)
+				{
+					Vector2 p = players[i]->GetPos();
+					avg_pos += (p * m_cam_zoom);
+
+					top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
+					top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
+
+					bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
+					bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
+
+					num_players++;
+				}
 			}
 		}
-	}
 
-	//if there are fewer then 2 players or no time left
-	if (num_players <= 1 || m_timeLeft <= 0)
-	{
-		for (int i = 0; i < listeners.size(); i++)
+		//if there are fewer then 2 players or no time left
+		if (num_players <= 1 || m_timeLeft <= 0)
 		{
-			listeners[i]->onNotify(nullptr, Event::GAME_OVER);
+			m_game_over_check = GameOverCheck::WAIT;
+		}
+		if (num_players)
+		{
+			avg_pos /= num_players;
+			avg_pos /= m_cam_zoom;
+			Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
+			Vector2 cam_target = (avg_pos * -1) + mid;
+			Vector2 dir_to_target = cam_target - m_cam_pos;
+			m_cam_pos += dir_to_target / 5;
+
+			float x_dist = top_left.x - bottom_right.x;
+			float y_dist = top_left.y - bottom_right.y;
+			float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
+
+			if (m_game_over_check == GameOverCheck::WAIT)
+			{
+				m_cam_zoom = 700.0f / dist;
+				if (m_cam_zoom < m_min_zoom)
+				{
+					m_cam_zoom = m_min_zoom;
+				}
+				if (m_cam_zoom > m_max_zoom)
+				{
+					m_cam_zoom = m_max_zoom;
+				}
+
+				//this scales the zoom to the screen size
+				m_cam_zoom *= (m_GSD->window_size.x / 1000);
+			}
+		}
+
+		if (!m_infiniteTime)
+		{
+			m_timeLeft -= timer.GetElapsedSeconds();
 		}
 	}
-	else if (num_players)
+
+	if(m_game_over_check != GameOverCheck::NONE)
 	{
-		avg_pos /= num_players;
-		avg_pos /= m_cam_zoom;
-		Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
-		Vector2 cam_target = (avg_pos * -1) + mid;
-		Vector2 dir_to_target = cam_target - m_cam_pos;
-		m_cam_pos += dir_to_target / 5;
+		m_game_over_timer[(int)m_game_over_check] += timer.GetElapsedSeconds();
 
-		float x_dist = top_left.x - bottom_right.x;
-		float y_dist = top_left.y - bottom_right.y;
-		float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
-		
-		m_cam_zoom = 700.0f / dist;
-		if (m_cam_zoom < m_min_zoom)
+		if (m_game_over_timer[0] >= 0.5f)
 		{
-			m_cam_zoom = m_min_zoom;
+			m_game_over_check = GameOverCheck::FREEZE;
 		}
-		if (m_cam_zoom > m_max_zoom)
+		if (m_game_over_timer[1] >= 1.5f)
 		{
-			m_cam_zoom = m_max_zoom;
+			for (int i = 0; i < listeners.size(); i++)
+			{
+				listeners[i]->onNotify(nullptr, Event::GAME_OVER);
+			}
 		}
-
-		//this scales the zoom to the screen size
-		m_cam_zoom *= (m_GSD->window_size.x / 1000);
-	}
-
-	if (!m_infiniteTime)
-	{
-		m_timeLeft -= timer.GetElapsedSeconds();
 	}
 }
 

@@ -27,6 +27,7 @@ enum AttackMap
 
 class SpawnHandler;
 class Item;
+class Animation2D;
 
 class Character
 	: public ImageGO2D
@@ -41,8 +42,7 @@ public:
 
 	void CreatePhysics(RenderData* _RD = nullptr);
 
-	void SetController(CharacterController* _controller)
-	{ m_controller = _controller; }
+	void SetController(CharacterController* _controller);
 	const int GetControllerIndex() { return m_controller->GetControllerID(); }
 
 	void SetMoveSpeed(float _speed) { m_move_speed = _speed; }
@@ -51,6 +51,8 @@ public:
 	void SetJumpHeight(float _height) { m_jump_height = _height; }
 	const float GetJumpHeight() { return m_jump_height; }
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
+
+	void loadAnimations(std::string _file, RenderData* _RD);
 
 	void TakeDamage(int _dam);
 	void Hit(Vector2 _dir, float _force, Character * _attacker);
@@ -71,6 +73,8 @@ public:
 
 	void AddPoints(int _add) { m_points += _add; }
 	const int GetPoints() { return m_points; }
+	const Color getTextColour() const;
+	void setTextColour(Color colour);
 
 	void setAttacking(bool attacking_) { m_attacking = attacking_; }
 
@@ -86,6 +90,14 @@ protected:
 		std::vector<GameAction> _actions);
 	void MeleeWeaponAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
+
+
+	bool usesAnimation = false;
+	Animation2D* active_anim = nullptr;
+	std::shared_ptr<Animation2D> jump_anim = nullptr;
+	std::shared_ptr<Animation2D> run_anim = nullptr;
+	void switchAnimation(Animation2D* _new);
+
 
 	void FlipX();
 	bool flipped = false;
@@ -110,4 +122,5 @@ protected:
 	Character* m_last_to_hit = nullptr;//The last player to hit this player, used for scoring in time matches
 	int m_points = 0;
 	Item* m_held_item = nullptr;
+	Color m_text_colour;
 };

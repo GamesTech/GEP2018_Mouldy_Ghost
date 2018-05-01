@@ -41,6 +41,11 @@ void GameObject2D::SetOri(float _ori)
 	m_orientation = _ori;	
 }
 
+void GameObject2D::move(Vector2 _move_by)
+{
+	m_pos += _move_by;
+}
+
 void GameObject2D::Tick(GameStateData * _GSD)
 {
 	if (m_pos != previous_pos)

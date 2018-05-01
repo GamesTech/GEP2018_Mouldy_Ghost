@@ -41,7 +41,7 @@ void Animation2D::Render(RenderData * _RD, Vector2 _cam_pos, float _zoom, Vector
 {
 	const RECT* r = &RECT(m_spritebox);
 
-	Vector2 render_scale = _scale * _zoom;
+	//Vector2 render_scale = _scale * _zoom;
 
 	Vector2 distance_from_origin = _pos - _cam_pos;
 	distance_from_origin *= _zoom;
@@ -54,13 +54,13 @@ void Animation2D::Render(RenderData * _RD, Vector2 _cam_pos, float _zoom, Vector
 	{ 
 		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
 			GetTextureSize(m_texture.Get()),
-			render_pos, r, _colour, _orientation, _origin, render_scale,SpriteEffects::SpriteEffects_FlipHorizontally,0);
+			render_pos, r, _colour, _orientation, _origin, _scale,SpriteEffects::SpriteEffects_FlipHorizontally,0);
 	}
 	else
 	{
 		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(_resourceNum),
 			GetTextureSize(m_texture.Get()),
-			render_pos, r, _colour, _orientation, _origin, render_scale);
+			render_pos, r, _colour, _orientation, _origin, _scale);
 	}
 }
 
@@ -131,6 +131,14 @@ void Animation2D::setloop(bool _loop)
 void Animation2D::setPlay(bool _play)
 {
 	play = _play;
+}
+
+const Vector2 Animation2D::getSpriteScale()
+{
+	Vector2 spriteSize(m_spritebox.width, m_spritebox.height);
+	auto desc = m_texture->GetDesc();
+	Vector2 textureSize(static_cast<uint32_t>(desc.Width), static_cast<uint32_t>(desc.Height));
+	return spriteSize / textureSize;
 }
 
 void Animation2D::reset()

@@ -105,8 +105,8 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 	
 	const RECT* r = &RECT(rect);
 
-	Vector2 render_scale = m_scale * _zoom;
-
+	Vector2 render_scale;
+	render_scale = m_scale * _zoom;
 	Vector2 distance_from_origin = m_pos - _cam_pos;
 	distance_from_origin *= _zoom;
 
@@ -191,7 +191,8 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 		}
 	}
 
-	SetSpriteSize(Vector2(spritebox.width *2 , spritebox.height/ 2), 0);
+	SetSpriteSize(Vector2(spritebox.width, spritebox.height), 0);
+	m_origin = Vector2(float(spritebox.x / 2), float(spritebox.y / 2));
 	active_anim = run_anim.get();
 }
 

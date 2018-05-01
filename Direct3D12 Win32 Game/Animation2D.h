@@ -17,6 +17,9 @@ public:
 	void setloop(bool _loop);
 	void setPlay(bool _play);
 
+	const Vector2 getSpriteScale();
+
+
 private:
 	float m_framerate = 30;
 	float m_elapsedTime = 0;

@@ -337,7 +337,13 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 			m_held_item = m_physics->GetItem();
 			if (m_held_item)
 			{
+				
 				m_held_item->pickUp(this);
+
+				if (m_held_item->getitemType() == ItemType::SINGLE_USE)
+				{
+					m_held_item = nullptr;
+				}
 			}
 			
 		}

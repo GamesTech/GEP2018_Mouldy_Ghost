@@ -191,3 +191,8 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 	return nullptr;
 }
 
+std::string ItemSpawner::getRandomItemName()
+{
+	return allItems[rand() % allItems.size()]->GetName();
+}
+

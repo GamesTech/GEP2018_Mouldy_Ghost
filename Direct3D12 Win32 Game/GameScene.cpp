@@ -107,9 +107,6 @@ void GameScene::Initialise(RenderData * _RD,
 		}
 	}
 
-	giveMeItem(_RD,_GSD, "mine", Vector2(500,100));
-
-	giveMeItem(_RD, _GSD, "tornado_sword", Vector2(600, 100));
 
 	//adds all 2d objects to the stage
 	game_stage->addObjectsToScene(m_2DObjects);
@@ -118,8 +115,6 @@ void GameScene::Initialise(RenderData * _RD,
 	{
 		entities[i] = new Player(i);
 	}
-
-
 
 	m_HUD->attachTimerPointer(&m_timeLeft);
 }
@@ -278,6 +273,16 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		{
 			m_timeLeft -= timer.GetElapsedSeconds();
 		}
+
+		//spawning items
+
+		m_spawn_item_time += m_GSD->m_dt;
+		if (m_spawn_item_time > 10)
+		{
+			giveMeItem(m_RD, m_GSD, item_spawner.getRandomItemName(), game_stage->getRandomSpawnPoint());
+			m_spawn_item_time = 0;
+		}
+
 	}
 
 	if(m_game_over_check != GameOverCheck::NONE)

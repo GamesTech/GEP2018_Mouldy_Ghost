@@ -40,7 +40,7 @@ void Tornado::Tick(GameStateData * _GSD)
 		for (int i = 0; i < m_characters_in_tornado.size(); i++)
 		{
 			m_characters_in_tornado[i]->TakeDamage(2);
-		//	m_characters_in_tornado[i]->Hit(m_direction, 100, nullptr);
+		
 			m_characters_in_tornado[i]->Hit(Vector2(m_direction.x,-100), 100, nullptr);
 		}
 		hit_rate = 0;

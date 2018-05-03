@@ -70,6 +70,8 @@ private:
 
 	float m_timeLeft;
 
+	float m_spawn_item_time = 0;
+
 	GameOverCheck m_game_over_check = GameOverCheck::NONE;
 	float m_game_over_timer[2] = { 0,0 };
 };

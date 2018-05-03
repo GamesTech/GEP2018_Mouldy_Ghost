@@ -3,3 +3,4 @@
 >Ball
 >Mine
 >Baseball_bat
+>Tornado_sword

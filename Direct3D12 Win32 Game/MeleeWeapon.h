@@ -39,6 +39,8 @@ private:
 	float m_charge = 0;
 	int durability = 0;
 
+	SpawnHandler* m_spawner = nullptr;
+	RenderData* RD_ptr = nullptr;
 
 };
 

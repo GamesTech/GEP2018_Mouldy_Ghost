@@ -109,7 +109,7 @@ void GameScene::Initialise(RenderData * _RD,
 
 	giveMeItem(_RD,_GSD, "mine", Vector2(500,100));
 
-	giveMeItem(_RD, _GSD, "baseball_bat", Vector2(600, 100));
+	giveMeItem(_RD, _GSD, "tornado_sword", Vector2(600, 100));
 
 	//adds all 2d objects to the stage
 	game_stage->addObjectsToScene(m_2DObjects);

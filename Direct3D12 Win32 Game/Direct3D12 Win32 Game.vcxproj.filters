@@ -299,6 +299,9 @@
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="Animation2D.h" />
     <ClInclude Include="TestAnim.h" />
+    <ClInclude Include="Tornado.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -460,6 +463,9 @@
     <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="TestAnim.cpp" />
+    <ClCompile Include="Tornado.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

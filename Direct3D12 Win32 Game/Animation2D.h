@@ -17,6 +17,7 @@ public:
 	void setIncrements(Vector2 _increments);
 	void setloop(bool _loop);
 	void setPlay(bool _play);
+	bool getPlay();
 
 	const Vector2 getSpriteScale();
 

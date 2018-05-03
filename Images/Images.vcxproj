@@ -194,6 +194,10 @@
   <ItemGroup>
     <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\ChickenAttack.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenIdle.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

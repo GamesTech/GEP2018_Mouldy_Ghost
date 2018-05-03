@@ -22,5 +22,17 @@
     "startX": 1155,
     "startY": 586,
     "frames": 20
+  },
+    "idle": {
+    "spritesheet": "grant",
+    "framerate": 30,
+    "xIncrements": 165,
+    "yIncrements": 293,
+    "boxWidth": 160,
+    "boxHeight": 290,
+    "furthestLeftPos": 0,
+    "startX": 0,
+    "startY": 0,
+    "frames": 28
   }
 }

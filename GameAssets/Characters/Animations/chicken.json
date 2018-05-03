@@ -22,5 +22,30 @@
     "startX": 0,
     "startY": 0,
     "frames": 42
+  },
+    "idle": {
+    "spritesheet": "ChickenIdle",
+    "framerate": 30,
+    "xIncrements": 148,
+    "yIncrements": 110,
+    "boxWidth": 148,
+    "boxHeight": 110,
+    "furthestLeftPos": 0,
+    "startX": 0,
+    "startY": 0,
+    "frames": 67
+  }
+  ,
+    "attack": {
+    "spritesheet": "ChickenAttack",
+    "framerate": 60,
+    "xIncrements": 148,
+    "yIncrements": 110,
+    "boxWidth": 148,
+    "boxHeight": 110,
+    "furthestLeftPos": 0,
+    "startX": 0,
+    "startY": 0,
+    "frames": 12
   }
 }

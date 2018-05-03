@@ -41,6 +41,7 @@ public:
 
 	void addListener(EventHandler* _event);
 	bool getShouldReset() const { return m_gameShouldReset; }
+	void setShouldReset(bool _to) { m_gameShouldReset = _to; }
 
 protected:
 	bool m_input_received = false;

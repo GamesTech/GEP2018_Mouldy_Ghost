@@ -188,6 +188,10 @@ void Game::Render()
 
 void Game::buildGame()
 {
+	m_all_scenes.clear();
+	listeners.clear();
+	m_RD->m_resourceCount = 1;
+
 	//populate the listener vector with all listeners
 	//at the moment this needs to be done before a scene is initialised
 	m_musicListener = std::make_unique<AudioHandler>();

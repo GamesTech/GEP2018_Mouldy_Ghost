@@ -51,12 +51,12 @@ void GameScene::Initialise(RenderData * _RD,
 	float h = m_GSD->window_size.y;
 
 	//set background
-	m_bg[0] = new Background(m_RD, "sky", 1);
-	m_bg[0]->SetSpawn(Vector2(w * 0.4, 100));
-	m_bg[1] = new Background(m_RD, "field", 1);
-	m_bg[1]->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
-	m_bg[2] = new Background(m_RD, "tree", 2);
-	m_bg[2]->SetSpawn(Vector2(w * 0.4, h));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", 1));
+	m_bg.back()->SetSpawn(Vector2(w * 0.4, 100));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "field", 1));
+	m_bg.back()->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
+	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
 	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
 	m_testEmitter->SetSpawn(Vector2(500, 500));
@@ -67,10 +67,10 @@ void GameScene::Initialise(RenderData * _RD,
 	m_testEmitter->addParticles(1000);
 	m_2DObjects.push_back(m_testEmitter.get());
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < m_bg.size(); i++)
 	{
 		m_bg[i]->SetScale(Vector2(w / 900, h / 600));
-		m_2DObjects.push_back(m_bg[i]);
+		m_2DObjects.push_back(m_bg[i].get());
 	}
 
 	for (int i = 0; i < listeners.size(); i++)
@@ -90,9 +90,9 @@ void GameScene::Initialise(RenderData * _RD,
 	c_manager.PopulateCharacterList(_RD);
 	item_spawner.loadAllData(_RD);
 
-	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
-	m_RD->m_cam = m_cam;
-	m_3DObjects.push_back(m_cam);
+	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
+	m_RD->m_cam = m_cam.get();
+	m_3DObjects.push_back(m_cam.get());
 
 	//creating a stage
 	//could pass the name of the stage as a function paratemter
@@ -378,6 +378,10 @@ void GameScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
+
+	m_game_over_check = GameOverCheck::NONE;
+	m_game_over_timer[0] = 0;
+	m_game_over_timer[1] = 0;
 }
 
 void GameScene::LinkSettings()

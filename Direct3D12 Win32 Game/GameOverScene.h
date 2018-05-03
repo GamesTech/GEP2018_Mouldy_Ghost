@@ -35,5 +35,4 @@ private:
 	std::vector<FallingCharacter> m_falling;
 	Vector2 m_podium_positions[4];
 	std::vector<Character*> m_standings;
-	std::shared_ptr<Menu> m_goBack = nullptr;
 };

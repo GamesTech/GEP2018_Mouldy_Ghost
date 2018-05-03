@@ -179,9 +179,9 @@ void CharacterSelectScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	m_RD = _RD;
 	m_GSD = _GSD;
 
-	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
-	m_RD->m_cam = m_cam;
-	m_3DObjects.push_back(m_cam);
+	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
+	m_RD->m_cam = m_cam.get();
+	m_3DObjects.push_back(m_cam.get());
 
 	for (int i = 0; i < 4; i++)
 	{

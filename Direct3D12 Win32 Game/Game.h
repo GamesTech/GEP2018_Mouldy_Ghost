@@ -56,6 +56,8 @@ private:
     void Update(DX::StepTimer const& timer);
     void Render();
 
+	void buildGame();
+
     void Clear();
     void Present();
 
@@ -103,15 +105,12 @@ private:
 
 	GameStateData* m_GSD;
 
-	Scene* m_activeScene;
-
-	GameScene* m_gameScene;
-	MenuScene* m_menuScene;
-	MeleeScene* m_meleeScene;
-	CharacterSelectScene* m_characterSelectScene;
-	GameSettingsScene* m_gameSettingsScene;
-	GameOverScene* m_gameOverScene;
-
+	std::unique_ptr<GameScene> m_gameScene;
+	std::unique_ptr<MenuScene> m_menuScene;
+	std::unique_ptr<MeleeScene> m_meleeScene;
+	std::unique_ptr<CharacterSelectScene> m_characterSelectScene;
+	std::unique_ptr<GameSettingsScene> m_gameSettingsScene;
+	std::unique_ptr<GameOverScene> m_gameOverScene;
 
 	std::vector<Scene*> m_all_scenes;
 

@@ -55,7 +55,7 @@ private:
 	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
 
-	Background* m_bg[3];
+	std::vector<std::unique_ptr<Background>> m_bg;
 
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;

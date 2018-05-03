@@ -22,5 +22,5 @@ public:
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 private:
 	std::shared_ptr<Menu> m_testMenu = nullptr;
-	Background* m_background;
+	std::unique_ptr<Background> m_background = nullptr;
 };

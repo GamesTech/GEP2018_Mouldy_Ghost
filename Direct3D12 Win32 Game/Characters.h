@@ -66,6 +66,7 @@ public:
 	void setinfinitelives(bool _set) { m_infiniteLives = _set; }
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
+	virtual void CollisionExit(Physics2D* _collision) override;
 	virtual void Collision(Physics2D* _collision) override;
 
 	void AddAttack(StandardAttack _attack);
@@ -91,12 +92,15 @@ protected:
 	void MeleeWeaponAttack(GameStateData * _GSD,
 		std::vector<GameAction> _actions);
 
-
+	//animation variables and functions
 	bool usesAnimation = false;
 	Animation2D* active_anim = nullptr;
 	std::shared_ptr<Animation2D> jump_anim = nullptr;
 	std::shared_ptr<Animation2D> run_anim = nullptr;
+	std::shared_ptr<Animation2D> idle_anim = nullptr;
+	std::shared_ptr<Animation2D> attack_anim = nullptr;
 	void switchAnimation(Animation2D* _new);
+	bool on_floor = false;
 
 
 	void FlipX();

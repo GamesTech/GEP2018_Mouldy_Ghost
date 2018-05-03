@@ -295,6 +295,13 @@
     <ClInclude Include="Background.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="Emitter.h" />
+    <ClInclude Include="Animation2D.h" />
+    <ClInclude Include="TestAnim.h" />
+    <ClInclude Include="Tornado.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="Animation2D.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -479,6 +486,13 @@
     </ClCompile>
     <ClCompile Include="Background.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="Animation2D.cpp" />
+    <ClCompile Include="TestAnim.cpp" />
+    <ClCompile Include="Tornado.cpp">
+      <Filter>Items\Source</Filter>
     </ClCompile>
     <ClCompile Include="Animation2D.cpp">
       <Filter>Source</Filter>

@@ -293,6 +293,10 @@ void InputSystem::getAction(GamePad::State _state,
 	{
 		_actions.push_back(P_QUIT);
 	}
+	if (_state.IsMenuPressed() && !_buttons.GetLastState().IsMenuPressed())
+	{
+		_actions.push_back(P_PAUSE);
+	}
 }
 
 //keyboard menu controls

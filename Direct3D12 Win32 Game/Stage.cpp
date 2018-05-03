@@ -30,3 +30,8 @@ void Stage::addObjectsToScene(std::vector<GameObject2D*>& _g_objects)
 		_g_objects.push_back(other_objects[i]);
 	}
 }
+
+Vector2 Stage::getRandomSpawnPoint()
+{
+	return spawn[rand() % 4];
+}

@@ -140,6 +140,11 @@ void Animation2D::setPlay(bool _play)
 	play = _play;
 }
 
+bool Animation2D::getPlay()
+{
+	return play;
+}
+
 const Vector2 Animation2D::getSpriteScale()
 {
 	Vector2 spriteSize(m_spritebox.width, m_spritebox.height);

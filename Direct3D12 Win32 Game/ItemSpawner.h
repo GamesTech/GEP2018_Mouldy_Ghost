@@ -21,6 +21,7 @@ public:
 	void loadMeleeWeaponProperties(MeleeWeapon* item, std::ifstream& _opened_file);
 
 	Item* createNewItemWithName(RenderData* _RD, std::string name);
+	std::string getRandomItemName();
 
 private:
 	SpawnHandler* m_spawner;

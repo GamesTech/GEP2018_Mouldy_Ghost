@@ -62,6 +62,8 @@ private:
 	ItemSpawner item_spawner;
 
 	std::unique_ptr<Emitter> m_testEmitter = nullptr;
+	bool paused = false;
+	std::unique_ptr<Text2D> m_pause_text = nullptr;
 
 	int m_maxLives;
 	float m_timeLimit;
@@ -69,6 +71,8 @@ private:
 	bool m_infiniteTime;
 
 	float m_timeLeft;
+
+	float m_spawn_item_time = 0;
 
 	GameOverCheck m_game_over_check = GameOverCheck::NONE;
 	float m_game_over_timer[2] = { 0,0 };

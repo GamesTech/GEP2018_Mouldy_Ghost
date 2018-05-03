@@ -15,18 +15,13 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 	m_physics = new Physics2D();
 #endif
 	m_pos = _pos;
-	//m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
-
-	/*Rectangle rect = Rectangle(m_pos.x - _exp_radius/2, m_pos.y - _exp_radius / 2,
-		m_pos.x + _exp_radius / 2, m_pos.y+ _exp_radius / 2);*/
 
 	Rectangle collider = Rectangle
-	(m_pos.x - TextureSize().x / 3, m_pos.y - TextureSize().y / 3,
+	(m_pos.x - TextureSize().x, m_pos.y - TextureSize().y,
 		TextureSize().x, TextureSize().y);
 	
 	m_physics->SetCollider(collider);
 
-	//m_scale = Vector2(0.1, 0.1);
 	
 	m_physics->SetGrav(0);
 	m_physics->SetOwner(this);

@@ -41,14 +41,18 @@ void Character::Tick(GameStateData * _GSD)
 
 			m_physics->AddForce(gamePadPush * 100);
 
-			if (gamePadPush.x == 0 && on_floor && !active_anim->getPlay())
+			if (usesAnimation)
 			{
-				switchAnimation(idle_anim.get());
-			}
+				if (gamePadPush.x == 0 && on_floor && !active_anim->getPlay())
+				{
+					switchAnimation(idle_anim.get());
+				}
 
-			if (active_anim == attack_anim.get() && !on_floor && !active_anim->getPlay())
-			{
-				switchAnimation(jump_anim.get());
+				if (active_anim == attack_anim.get() && !on_floor && !active_anim->getPlay())
+				{
+
+					switchAnimation(jump_anim.get());
+				}
 			}
 
 			PlayerAttack(_GSD);

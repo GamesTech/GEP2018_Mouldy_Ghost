@@ -122,6 +122,9 @@ void GameScene::Initialise(RenderData * _RD,
 
 
 	m_HUD->attachTimerPointer(&m_timeLeft);
+
+	m_pause_text = std::make_unique<Text2D>("PAUSED");
+	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
 void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
@@ -222,80 +225,91 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		}
 	}
 
+	for (int i = 0; i < m_GSD->game_actions->size(); i++)
+	{
+		if (InputSystem::searchForAction(GameAction::P_PAUSE, m_GSD->game_actions[i]))
+		{
+			paused = !paused;
+		}
+	}
+
 	if (m_game_over_check != GameOverCheck::FREEZE)
 	{
-		Scene::Update(timer, _audEngine);
-		game_stage->update(m_GSD);
-
-		//m_testEmitter->Tick(m_GSD);
-
-		//adjust the camera pan or zoom
-		//find average and furthest points of players locations
-		Vector2 top_left = Vector2(100000, 100000);
-		Vector2 bottom_right = Vector2(-1000, -1000);
-		Vector2 avg_pos = Vector2::Zero;
-		int num_players = 0;
-
-		for (int i = 0; i < 4; i++)
+		if (!paused)
 		{
-			if (players[i])
+			Scene::Update(timer, _audEngine);
+			game_stage->update(m_GSD);
+
+			//m_testEmitter->Tick(m_GSD);
+
+			//adjust the camera pan or zoom
+			//find average and furthest points of players locations
+			Vector2 top_left = Vector2(100000, 100000);
+			Vector2 bottom_right = Vector2(-1000, -1000);
+			Vector2 avg_pos = Vector2::Zero;
+			int num_players = 0;
+
+			for (int i = 0; i < 4; i++)
 			{
-				if (players[i]->GetLives() > 0)
+				if (players[i])
 				{
+					if (players[i]->GetLives() > 0)
+					{
 
 
-					Vector2 p = players[i]->GetPos();
-					avg_pos += (p * m_cam_zoom);
+						Vector2 p = players[i]->GetPos();
+						avg_pos += (p * m_cam_zoom);
 
-					top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
-					top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
+						top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
+						top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
 
-					bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
-					bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
+						bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
+						bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
 
-					num_players++;
+						num_players++;
+					}
 				}
 			}
-		}
 
-		//if there are fewer then 2 players or no time left
-		if (num_players <= 1 || m_timeLeft <= 0)
-		{
-			m_game_over_check = GameOverCheck::WAIT;
-		}
-		if (num_players)
-		{
-			avg_pos /= num_players;
-			avg_pos /= m_cam_zoom;
-			Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
-			Vector2 cam_target = (avg_pos * -1) + mid;
-			Vector2 dir_to_target = cam_target - m_cam_pos;
-			m_cam_pos += dir_to_target / 5;
-
-			float x_dist = top_left.x - bottom_right.x;
-			float y_dist = top_left.y - bottom_right.y;
-			float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
-
-			if (m_game_over_check != GameOverCheck::FREEZE)
+			//if there are fewer then 2 players or no time left
+			if (num_players <= 1 || m_timeLeft <= 0)
 			{
-				m_cam_zoom = m_zoom_rate / dist;
-				if (m_cam_zoom < m_min_zoom)
-				{
-					m_cam_zoom = m_min_zoom;
-				}
-				if (m_cam_zoom > m_max_zoom)
-				{
-					m_cam_zoom = m_max_zoom;
-				}
-
-				//this scales the zoom to the screen size
-				m_cam_zoom *= (m_GSD->window_size.x / 1000);
+				m_game_over_check = GameOverCheck::WAIT;
 			}
-		}
+			if (num_players)
+			{
+				avg_pos /= num_players;
+				avg_pos /= m_cam_zoom;
+				Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
+				Vector2 cam_target = (avg_pos * -1) + mid;
+				Vector2 dir_to_target = cam_target - m_cam_pos;
+				m_cam_pos += dir_to_target / 5;
 
-		if (!m_infiniteTime)
-		{
-			m_timeLeft -= timer.GetElapsedSeconds();
+				float x_dist = top_left.x - bottom_right.x;
+				float y_dist = top_left.y - bottom_right.y;
+				float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
+
+				if (m_game_over_check != GameOverCheck::FREEZE)
+				{
+					m_cam_zoom = m_zoom_rate / dist;
+					if (m_cam_zoom < m_min_zoom)
+					{
+						m_cam_zoom = m_min_zoom;
+					}
+					if (m_cam_zoom > m_max_zoom)
+					{
+						m_cam_zoom = m_max_zoom;
+					}
+
+					//this scales the zoom to the screen size
+					m_cam_zoom *= (m_GSD->window_size.x / 1000);
+				}
+			}
+
+			if (!m_infiniteTime)
+			{
+				m_timeLeft -= timer.GetElapsedSeconds();
+			}
 		}
 	}
 
@@ -325,6 +339,15 @@ void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _comma
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
 	m_RD->m_spriteBatch->Begin(_commandList.Get());
 	m_HUD->Render(m_RD);
+
+	std::wstring text = L"PAUSED";
+
+	if (paused)
+	{
+		//render a pause text
+		m_pause_text->Render(m_RD, 0);
+	}
+
 	m_RD->m_spriteBatch->End();
 }
 

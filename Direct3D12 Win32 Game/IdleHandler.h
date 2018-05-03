@@ -1,5 +1,7 @@
 #pragma once
-#include "Scene.h"
+#include "StepTimer.h"
+#include "Events.h"
+#include "EventHandler.h"
 
 class IdleHandler
 {

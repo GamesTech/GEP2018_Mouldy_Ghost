@@ -208,7 +208,7 @@ void Game::buildGame()
 	m_gameScene = std::make_unique<GameScene>();
 	m_all_scenes.push_back(m_gameScene.get());
 
-	m_menuScene = std::make_unique<MenuScene>();
+	m_menuScene = std::make_unique<TitleScene>();
 	m_all_scenes.push_back(m_menuScene.get());
 
 	m_gameSettingsScene = std::make_unique<GameSettingsScene>();

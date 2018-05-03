@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "MenuScene.h"
+#include "TitleScene.h"
 #include "RenderData.h"
 #include "Events.h"
 #include "Background.h"
 
-MenuScene::MenuScene()
+TitleScene::TitleScene()
 {
 }
 
 
-MenuScene::~MenuScene()
+TitleScene::~TitleScene()
 {
 }
 
-void MenuScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+void TitleScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	m_testMenu->Tick(m_GSD);
 
@@ -28,12 +28,12 @@ void MenuScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 	}
 }
 
-void MenuScene::Reset()
+void TitleScene::Reset()
 {
 
 }
 
-void MenuScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWidth, int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+void TitleScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputWidth, int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	m_RD = _RD;
 	m_GSD = _GSD;

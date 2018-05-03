@@ -5,12 +5,12 @@
 
 class Background;
 
-class MenuScene :
+class TitleScene :
 	public Scene
 {
 public:
-	MenuScene();
-	~MenuScene();
+	TitleScene();
+	~TitleScene();
 
 	virtual std::string getType() override { return "MenuScene"; };
 

@@ -106,7 +106,7 @@ private:
 	GameStateData* m_GSD;
 
 	std::unique_ptr<GameScene> m_gameScene;
-	std::unique_ptr<MenuScene> m_menuScene;
+	std::unique_ptr<TitleScene> m_menuScene;
 	std::unique_ptr<MeleeScene> m_meleeScene;
 	std::unique_ptr<CharacterSelectScene> m_characterSelectScene;
 	std::unique_ptr<GameSettingsScene> m_gameSettingsScene;

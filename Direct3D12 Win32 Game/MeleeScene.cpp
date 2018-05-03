@@ -72,5 +72,5 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	m_2DObjects.push_back(m_test_anim.get());
 
 	m_menu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Select Characters");
-	m_menu->addButton(MenuButton(Event::CHANGE_SCENE_MAIN_MENU, _RD, "gens"), "Back");
+	//m_menu->addButton(MenuButton(Event::CHANGE_SCENE_MAIN_MENU, _RD, "gens"), "Back");
 }

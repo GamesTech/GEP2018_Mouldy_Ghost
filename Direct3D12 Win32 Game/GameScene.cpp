@@ -205,6 +205,23 @@ void GameScene::RemoveCharacter(Character* _char)
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+#if _ARCADE
+	m_idleHandler.update(timer, Event::GAME_OVER, m_input_received, &listeners);
+#else
+	m_idleHandler.update(timer, Event::GAME_OVER, m_input_received, &listeners, 3600);
+#endif // _ARCADE
+
+	for (CharacterController* entity : entities)
+	{
+		if (entity)
+		{
+			if (entity->GetInput(m_GSD).size())
+			{
+				m_input_received = true;
+			}
+		}
+	}
+
 	if (m_game_over_check != GameOverCheck::FREEZE)
 	{
 		Scene::Update(timer, _audEngine);
@@ -225,6 +242,8 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 			{
 				if (players[i]->GetLives() > 0)
 				{
+
+
 					Vector2 p = players[i]->GetPos();
 					avg_pos += (p * m_cam_zoom);
 

@@ -22,4 +22,3 @@ private:
 	std::vector<Scene*> m_allScenes;
 	Scene* m_activeScene;
 };
-

@@ -257,6 +257,7 @@
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Explosion.h" />
+    <ClInclude Include="IdleHandler.h" />
     <ClInclude Include="MeleeScene.h" />
     <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="IdleHandler.cpp" />
     <ClCompile Include="MeleeScene.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />

@@ -30,7 +30,7 @@
     <RootNamespace>Direct3D12_Win32_Game</RootNamespace>
     <ProjectGuid>{48d1b087-0658-4dcc-a845-655543ce48a4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -257,6 +257,7 @@
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Explosion.h" />
+    <ClInclude Include="IdleHandler.h" />
     <ClInclude Include="MeleeScene.h" />
     <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
@@ -287,7 +288,7 @@
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
-    <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="AudioHandler.h" />
@@ -331,6 +332,7 @@
     <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="IdleHandler.cpp" />
     <ClCompile Include="MeleeScene.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -353,7 +355,7 @@
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
-    <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="StandardAttack.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />

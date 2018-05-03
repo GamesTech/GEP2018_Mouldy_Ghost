@@ -13,16 +13,27 @@ public:
 	void setFramerate(float _framerate);
 	void setMaxFrames(int _maxFrames);
 	void setSpriteBoxStartPos(Vector2 _start);
+	void setFurthestLeftPos(float _left);
 	void setIncrements(Vector2 _increments);
+	void setloop(bool _loop);
+	void setPlay(bool _play);
+	bool getPlay();
+
+	const Vector2 getSpriteScale();
+
 
 private:
 	float m_framerate = 30;
 	float m_elapsedTime = 0;
 	int m_frames = 0;
 	int m_maxFrames = 30;
+	bool loop = true;
+	bool play = true;
+	int m_resourcenum = 0;
 
 	Vector2 m_spriteBoxIncrements;
 	Vector2 m_spriteBoxStartPos;
+	float m_furthestLeftPos;
 	Rectangle m_spritebox;
 	Microsoft::WRL::ComPtr<ID3D12Resource> m_texture = nullptr;
 };

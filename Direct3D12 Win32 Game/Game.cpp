@@ -42,12 +42,6 @@ Game::~Game()
 	delete m_RD;
 	delete m_GSD;
 
-	//deallocate scene pointers
-	for (int i = 0; i < m_all_scenes.size(); i++)
-	{
-		delete m_all_scenes[i];
-	}
-
 	m_keyboard.reset();
 	m_mouse.reset();
 
@@ -136,66 +130,10 @@ void Game::Initialize(HWND window, int width, int height)
 	m_RD->m_GPeffect = std::make_unique<BasicEffect>(m_d3dDevice.Get(), EffectFlags::Lighting, pd3);
 	m_RD->m_GPeffect->EnableDefaultLighting();
 
-	
-    // TODO: Change the timer settings if you want something other than the default variable timestep mode.
-    // e.g. for 60 FPS fixed timestep update logic, call:
-    /*
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
-    */
 
-	//populate the listener vector with all listeners
-	//at the moment this needs to be done before a scene is initialised
-	m_musicListener = std::make_unique<AudioHandler>();
-	m_sceneListener = std::make_unique<SceneHandler>();
-	m_gameSettings = std::make_unique<GameSettingsHandler>();
-	m_lifeListener = std::make_unique<CharacterLifeHandler>();
-	m_spawner = std::make_unique<SpawnHandler>();
-	listeners.push_back(m_musicListener.get());
-	listeners.push_back(m_sceneListener.get());
-	listeners.push_back(m_gameSettings.get());
-	listeners.push_back(m_lifeListener.get());
-	listeners.push_back(m_spawner.get());
-
-	m_gameScene = new GameScene();
-	m_all_scenes.push_back(m_gameScene);
-
-	m_menuScene = new MenuScene();
-	m_all_scenes.push_back(m_menuScene);
-
-	m_gameSettingsScene = new GameSettingsScene();
-	m_all_scenes.push_back(m_gameSettingsScene);
-
-	m_meleeScene = new MeleeScene();
-	m_all_scenes.push_back(m_meleeScene);
-
-	m_characterSelectScene = new CharacterSelectScene(m_gameScene);
-	m_all_scenes.push_back(m_characterSelectScene);
-
-	m_gameOverScene = new GameOverScene();
-	m_all_scenes.push_back(m_gameOverScene);
-
-	//add all listeners to all scenes
-	for (int i = 0; i < m_all_scenes.size(); i++)
-	{
-		for (int j = 0; j < listeners.size(); j++)
-		{
-			m_all_scenes[i]->addListener(listeners[j]);
-		}
-		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
-	}
-
-	//init listeners
-	m_sceneListener->init(m_GSD, m_all_scenes);
-	m_lifeListener->SetGameOver(m_gameOverScene);
-	m_musicListener->init(m_GSD);
-
-	//tell the listeners we've loaded!
-	for (int i = 0; i < listeners.size(); i++)
-	{
-		listeners[i]->onNotify(nullptr, Event::APPLICATION_LOADED);
-	}
-
+	buildGame();
 }
 
 //GEP:: Executes the basic game loop.
@@ -217,7 +155,10 @@ void Game::Update(DX::StepTimer const& timer)
 
 
 	m_sceneListener->getActiveScene()->Update(timer, m_audEngine);
-
+	if (m_sceneListener->getActiveScene()->getShouldReset())
+	{
+		buildGame();
+	}
 	//m_activeScene->Update(timer, m_audEngine);
 }
 
@@ -243,6 +184,65 @@ void Game::Render()
     // Show the new frame.
     Present();
 	m_graphicsMemory->Commit(m_commandQueue.Get());
+}
+
+void Game::buildGame()
+{
+	m_all_scenes.clear();
+	listeners.clear();
+	m_RD->m_resourceCount = 1;
+
+	//populate the listener vector with all listeners
+	//at the moment this needs to be done before a scene is initialised
+	m_musicListener = std::make_unique<AudioHandler>();
+	m_sceneListener = std::make_unique<SceneHandler>();
+	m_gameSettings = std::make_unique<GameSettingsHandler>();
+	m_lifeListener = std::make_unique<CharacterLifeHandler>();
+	m_spawner = std::make_unique<SpawnHandler>();
+	listeners.push_back(m_musicListener.get());
+	listeners.push_back(m_sceneListener.get());
+	listeners.push_back(m_gameSettings.get());
+	listeners.push_back(m_lifeListener.get());
+	listeners.push_back(m_spawner.get());
+
+	m_gameScene = std::make_unique<GameScene>();
+	m_all_scenes.push_back(m_gameScene.get());
+
+	m_menuScene = std::make_unique<TitleScene>();
+	m_all_scenes.push_back(m_menuScene.get());
+
+	m_gameSettingsScene = std::make_unique<GameSettingsScene>();
+	m_all_scenes.push_back(m_gameSettingsScene.get());
+
+	m_meleeScene = std::make_unique<MeleeScene>();
+	m_all_scenes.push_back(m_meleeScene.get());
+
+	m_characterSelectScene = std::make_unique<CharacterSelectScene>(m_gameScene.get());
+	m_all_scenes.push_back(m_characterSelectScene.get());
+
+	m_gameOverScene = std::make_unique<GameOverScene>();
+	m_all_scenes.push_back(m_gameOverScene.get());
+
+	//add all listeners to all scenes
+	for (int i = 0; i < m_all_scenes.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_all_scenes[i]->addListener(listeners[j]);
+		}
+		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	}
+
+	//init listeners
+	m_sceneListener->init(m_GSD, m_all_scenes);
+	m_lifeListener->SetGameOver(m_gameOverScene.get());
+	m_musicListener->init(m_GSD);
+
+	//tell the listeners we've loaded!
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		listeners[i]->onNotify(nullptr, Event::APPLICATION_LOADED);
+	}
 }
 
 // Helper method to prepare the command list for rendering and clear the back buffers.

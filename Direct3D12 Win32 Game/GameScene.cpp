@@ -51,12 +51,12 @@ void GameScene::Initialise(RenderData * _RD,
 	float h = m_GSD->window_size.y;
 
 	//set background
-	m_bg[0] = new Background(m_RD, "sky", 1);
-	m_bg[0]->SetSpawn(Vector2(w * 0.4, 100));
-	m_bg[1] = new Background(m_RD, "field", 1);
-	m_bg[1]->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
-	m_bg[2] = new Background(m_RD, "tree", 2);
-	m_bg[2]->SetSpawn(Vector2(w * 0.4, h));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", 1));
+	m_bg.back()->SetSpawn(Vector2(w * 0.4, 100));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "field", 1));
+	m_bg.back()->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
+	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
 	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
 	m_testEmitter->SetSpawn(Vector2(500, 500));
@@ -67,10 +67,10 @@ void GameScene::Initialise(RenderData * _RD,
 	m_testEmitter->addParticles(1000);
 	m_2DObjects.push_back(m_testEmitter.get());
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < m_bg.size(); i++)
 	{
 		m_bg[i]->SetScale(Vector2(w / 900, h / 600));
-		m_2DObjects.push_back(m_bg[i]);
+		m_2DObjects.push_back(m_bg[i].get());
 	}
 
 	for (int i = 0; i < listeners.size(); i++)
@@ -90,9 +90,9 @@ void GameScene::Initialise(RenderData * _RD,
 	c_manager.PopulateCharacterList(_RD);
 	item_spawner.loadAllData(_RD);
 
-	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
-	m_RD->m_cam = m_cam;
-	m_3DObjects.push_back(m_cam);
+	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
+	m_RD->m_cam = m_cam.get();
+	m_3DObjects.push_back(m_cam.get());
 
 	//creating a stage
 	//could pass the name of the stage as a function paratemter
@@ -117,6 +117,9 @@ void GameScene::Initialise(RenderData * _RD,
 	}
 
 	m_HUD->attachTimerPointer(&m_timeLeft);
+
+	m_pause_text = std::make_unique<Text2D>("PAUSED");
+	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
 void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
@@ -200,78 +203,108 @@ void GameScene::RemoveCharacter(Character* _char)
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+#if _ARCADE
+	m_idleHandler.update(timer, Event::GAME_OVER, m_input_received, &listeners);
+#else
+	m_idleHandler.update(timer, Event::GAME_OVER, m_input_received, &listeners, 3600);
+#endif // _ARCADE
+
+	for (CharacterController* entity : entities)
+	{
+		if (entity)
+		{
+			if (entity->GetInput(m_GSD).size())
+			{
+				m_input_received = true;
+			}
+		}
+	}
+
+	for (int i = 0; i < m_GSD->game_actions->size(); i++)
+	{
+		if (InputSystem::searchForAction(GameAction::P_PAUSE, m_GSD->game_actions[i]))
+		{
+			paused = !paused;
+		}
+	}
+
 	if (m_game_over_check != GameOverCheck::FREEZE)
 	{
-		Scene::Update(timer, _audEngine);
-		game_stage->update(m_GSD);
-
-		//m_testEmitter->Tick(m_GSD);
-
-		//adjust the camera pan or zoom
-		//find average and furthest points of players locations
-		Vector2 top_left = Vector2(100000, 100000);
-		Vector2 bottom_right = Vector2(-1000, -1000);
-		Vector2 avg_pos = Vector2::Zero;
-		int num_players = 0;
-
-		for (int i = 0; i < 4; i++)
+		if (!paused)
 		{
-			if (players[i])
+			Scene::Update(timer, _audEngine);
+			game_stage->update(m_GSD);
+
+			//m_testEmitter->Tick(m_GSD);
+
+			//adjust the camera pan or zoom
+			//find average and furthest points of players locations
+			Vector2 top_left = Vector2(100000, 100000);
+			Vector2 bottom_right = Vector2(-1000, -1000);
+			Vector2 avg_pos = Vector2::Zero;
+			int num_players = 0;
+
+			for (int i = 0; i < 4; i++)
 			{
-				if (players[i]->GetLives() > 0)
+				if (players[i])
 				{
-					Vector2 p = players[i]->GetPos();
-					avg_pos += (p * m_cam_zoom);
+					if (players[i]->GetLives() > 0)
+					{
 
-					top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
-					top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
 
-					bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
-					bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
+						Vector2 p = players[i]->GetPos();
+						avg_pos += (p * m_cam_zoom);
 
-					num_players++;
+						top_left.x = (p.x < top_left.x) ? p.x : top_left.x;
+						top_left.y = (p.y < top_left.y) ? p.y : top_left.y;
+
+						bottom_right.x = (p.x > bottom_right.x) ? p.x : bottom_right.x;
+						bottom_right.y = (p.y > bottom_right.y) ? p.y : bottom_right.y;
+
+						num_players++;
+					}
 				}
 			}
-		}
 
-		//if there are fewer then 2 players or no time left
-		if (num_players <= 1 || m_timeLeft <= 0)
-		{
-			m_game_over_check = GameOverCheck::WAIT;
-		}
-		if (num_players)
-		{
-			avg_pos /= num_players;
-			avg_pos /= m_cam_zoom;
-			Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
-			Vector2 cam_target = (avg_pos * -1) + mid;
-			Vector2 dir_to_target = cam_target - m_cam_pos;
-			m_cam_pos += dir_to_target / 5;
-
-			float x_dist = top_left.x - bottom_right.x;
-			float y_dist = top_left.y - bottom_right.y;
-			float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
-
-			if (m_game_over_check != GameOverCheck::FREEZE)
+			//if there are fewer then 2 players or no time left
+			if (num_players <= 1 || m_timeLeft <= 0)
 			{
-				m_cam_zoom = m_zoom_rate / dist;
-				if (m_cam_zoom < m_min_zoom)
-				{
-					m_cam_zoom = m_min_zoom;
-				}
-				if (m_cam_zoom > m_max_zoom)
-				{
-					m_cam_zoom = m_max_zoom;
-				}
-
-				//this scales the zoom to the screen size
-				m_cam_zoom *= (m_GSD->window_size.x / 1000);
+				m_game_over_check = GameOverCheck::WAIT;
 			}
-		}
+			if (num_players)
+			{
+				avg_pos /= num_players;
+				avg_pos /= m_cam_zoom;
+				Vector2 mid = (m_GSD->window_size / 2) / m_cam_zoom;
+				Vector2 cam_target = (avg_pos * -1) + mid;
+				Vector2 dir_to_target = cam_target - m_cam_pos;
+				m_cam_pos += dir_to_target / 5;
 
-		if (!m_infiniteTime)
-		{
-			m_timeLeft -= timer.GetElapsedSeconds();
+				float x_dist = top_left.x - bottom_right.x;
+				float y_dist = top_left.y - bottom_right.y;
+				float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
+
+				if (m_game_over_check != GameOverCheck::FREEZE)
+				{
+					m_cam_zoom = m_zoom_rate / dist;
+					if (m_cam_zoom < m_min_zoom)
+					{
+						m_cam_zoom = m_min_zoom;
+					}
+					if (m_cam_zoom > m_max_zoom)
+					{
+						m_cam_zoom = m_max_zoom;
+					}
+
+					//this scales the zoom to the screen size
+					m_cam_zoom *= (m_GSD->window_size.x / 1000);
+				}
+			}
+
+			if (!m_infiniteTime)
+			{
+				m_timeLeft -= timer.GetElapsedSeconds();
+			}
 		}
 
 		//spawning items
@@ -311,6 +344,15 @@ void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _comma
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
 	m_RD->m_spriteBatch->Begin(_commandList.Get());
 	m_HUD->Render(m_RD);
+
+	std::wstring text = L"PAUSED";
+
+	if (paused)
+	{
+		//render a pause text
+		m_pause_text->Render(m_RD, 0);
+	}
+
 	m_RD->m_spriteBatch->End();
 }
 
@@ -364,6 +406,10 @@ void GameScene::Reset()
 	{
 		m_3DObjects[i]->ResetPos();
 	}
+
+	m_game_over_check = GameOverCheck::NONE;
+	m_game_over_timer[0] = 0;
+	m_game_over_timer[1] = 0;
 }
 
 void GameScene::LinkSettings()

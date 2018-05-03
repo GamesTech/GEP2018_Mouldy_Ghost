@@ -55,13 +55,15 @@ private:
 	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
 
-	Background* m_bg[3];
+	std::vector<std::unique_ptr<Background>> m_bg;
 
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
 
 	std::unique_ptr<Emitter> m_testEmitter = nullptr;
+	bool paused = false;
+	std::unique_ptr<Text2D> m_pause_text = nullptr;
 
 	int m_maxLives;
 	float m_timeLimit;

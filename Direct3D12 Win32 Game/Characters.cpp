@@ -38,7 +38,22 @@ void Character::Tick(GameStateData * _GSD)
 			Vector2 gamePadPush = Vector2(0, 0);
 			gamePadPush.x = PlayerMove(actions_to_check);
 			gamePadPush.y = PlayerJump(actions_to_check);
+
 			m_physics->AddForce(gamePadPush * 100);
+
+			if (usesAnimation)
+			{
+				if (gamePadPush.x == 0 && on_floor && !active_anim->getPlay())
+				{
+					switchAnimation(idle_anim.get());
+				}
+
+				if (active_anim == attack_anim.get() && !on_floor && !active_anim->getPlay())
+				{
+
+					switchAnimation(jump_anim.get());
+				}
+			}
 
 			PlayerAttack(_GSD);
 			PickUpItem(actions_to_check);
@@ -46,6 +61,7 @@ void Character::Tick(GameStateData * _GSD)
 			if (m_attacking)
 			{
 				m_charge_time += _GSD->m_dt;
+				switchAnimation(attack_anim.get());
 			}
 		}
 		else
@@ -105,8 +121,8 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 	
 	const RECT* r = &RECT(rect);
 
-	Vector2 render_scale = m_scale * _zoom;
-
+	Vector2 render_scale;
+	render_scale = m_scale * _zoom;
 	Vector2 distance_from_origin = m_pos - _cam_pos;
 	distance_from_origin *= _zoom;
 
@@ -198,6 +214,7 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
 			run_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
 			run_anim->setSpriteBox(spritebox);
+			run_anim->setFurthestLeftPos(data["furthestLeftPos"].as_long());
 			run_anim->setMaxFrames(data["frames"].as_int());
 		}
 		else if (name == "jump")
@@ -208,12 +225,38 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
 			jump_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
 			jump_anim->setSpriteBox(spritebox);
+			jump_anim->setFurthestLeftPos(data["furthestLeftPos"].as_long());
 			jump_anim->setMaxFrames(data["frames"].as_int());
+			jump_anim->setloop(false);
+		}
+		else if (name == "idle")
+		{
+			idle_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			idle_anim->setFramerate(data["framerate"].as_long());
+			idle_anim->setIncrements(Vector2(data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			idle_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			idle_anim->setSpriteBox(spritebox);
+			idle_anim->setFurthestLeftPos(data["furthestLeftPos"].as_long());
+			idle_anim->setMaxFrames(data["frames"].as_int());
+		}
+		else if (name == "attack")
+		{
+			attack_anim = std::make_shared<Animation2D>(_RD, data["spritesheet"].as_string(), m_resourceNum);
+			attack_anim->setFramerate(data["framerate"].as_long());
+			attack_anim->setIncrements(Vector2(data["xIncrements"].as_long(), data["yIncrements"].as_long()));
+			spritebox = Rectangle(data["startX"].as_long(), data["startY"].as_long(), data["boxWidth"].as_long(), data["boxHeight"].as_long());
+			attack_anim->setSpriteBoxStartPos(Vector2(spritebox.x, spritebox.y));
+			attack_anim->setSpriteBox(spritebox);
+			attack_anim->setFurthestLeftPos(data["furthestLeftPos"].as_long());
+			attack_anim->setMaxFrames(data["frames"].as_int());
+			attack_anim->setloop(false);
 		}
 	}
 
 	SetSpriteSize(Vector2(spritebox.width, spritebox.height), 0);
-	active_anim = run_anim.get();
+	m_origin = Vector2(float(spritebox.x / 2), float(spritebox.y / 2));
+	switchAnimation(idle_anim.get());
 }
 
 void Character::TakeDamage(int _dam)
@@ -240,14 +283,23 @@ void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
 	if (o_tag == GameObjectTag::PLATFORM)
 	{
+		on_floor = true;
 		m_jumps = 0;
 		m_dash_recover = true;
 		m_last_to_hit = nullptr;
 
-		if (active_anim)
-		{
-			switchAnimation(run_anim.get());
-		}
+
+		switchAnimation(idle_anim.get());
+	}
+}
+
+void Character::CollisionExit(Physics2D * _collision)
+{
+	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
+	if (o_tag == GameObjectTag::PLATFORM)
+	{
+		on_floor = false;
+		switchAnimation(jump_anim.get());
 	}
 }
 
@@ -355,8 +407,13 @@ int Character::PlayerMove(std::vector<GameAction> _actions)
 {
 	if (!m_attacking)
 	{
+	
 		if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions))
 		{
+			if (on_floor)
+			{
+				switchAnimation(run_anim.get());
+			}
 			if (m_facing == -1)
 			{
 				FlipX();
@@ -374,6 +431,10 @@ int Character::PlayerMove(std::vector<GameAction> _actions)
 		}
 		if (InputSystem::searchForAction(P_MOVE_LEFT, _actions))
 		{
+			if (on_floor)
+			{
+				switchAnimation(run_anim.get());
+			}
 			if (m_facing == 1)
 			{
 				FlipX();
@@ -442,6 +503,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 
 
 				m_attacking = false;
+				//switchAnimation(idle_anim.get());
 			}
 
 
@@ -637,8 +699,15 @@ void Character::MeleeWeaponAttack(GameStateData * _GSD, std::vector<GameAction> 
 
 void Character::switchAnimation(Animation2D * _new)
 {
-	_new->reset();
-	active_anim = _new;
+	if (_new && _new != active_anim)
+	{
+		_new->reset();
+		active_anim = _new;
+	}
+	else
+	{
+		OutputDebugString(L"ANIMATION NOT INITIALISED");
+	}
 }
 
 void Character::FlipX()

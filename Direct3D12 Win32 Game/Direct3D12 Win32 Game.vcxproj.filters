@@ -95,6 +95,12 @@
     <Filter Include="Attacks\Source">
       <UniqueIdentifier>{692f295d-8453-4a1d-a5fa-2086be35cfd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{cb8250ec-117a-4e11-ba8f-18bbd60a9c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{27dfed5a-179f-40c2-97ca-9ea8d6398f1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -202,13 +208,9 @@
     <ClInclude Include="InputSystem.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="MenuScene.h">
-      <Filter>Scenes\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="MenuButton.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h" />
     <ClInclude Include="Item.h">
       <Filter>Items\Headers</Filter>
     </ClInclude>
@@ -221,10 +223,6 @@
     <ClInclude Include="Characters.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterController.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="CharacterManager.h" />
-    <ClInclude Include="ReadFile.h" />
     <ClInclude Include="SpawnHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
@@ -264,7 +262,6 @@
     <ClInclude Include="GameSettingsScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h" />
     <ClInclude Include="StandardAttack.h">
       <Filter>Attacks\Headers</Filter>
     </ClInclude>
@@ -301,6 +298,42 @@
     <ClInclude Include="TestAnim.h" />
     <ClInclude Include="Tornado.h">
       <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Emitter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadFile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TestAnim.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleHandler.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scenes\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -385,13 +418,9 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
-    <ClCompile Include="MenuScene.cpp">
-      <Filter>Scenes\Source</Filter>
-    </ClCompile>
     <ClCompile Include="MenuButton.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Item.cpp">
       <Filter>Items\Source</Filter>
     </ClCompile>
@@ -404,9 +433,6 @@
     <ClCompile Include="Characters.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="CharacterController.cpp" />
-    <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Explosive.cpp">
       <Filter>Items\Source</Filter>
     </ClCompile>
@@ -428,7 +454,6 @@
     <ClCompile Include="GameSettingsScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="DashAttack.cpp">
       <Filter>Attacks\Source</Filter>
     </ClCompile>
@@ -465,6 +490,39 @@
     <ClCompile Include="TestAnim.cpp" />
     <ClCompile Include="Tornado.cpp">
       <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Emitter.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAnim.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scenes\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

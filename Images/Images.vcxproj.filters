@@ -26,6 +26,10 @@
     <ImageContentTask Include="baseball_bat.png" />
     <ImageContentTask Include="tornado_sword.png" />
     <ImageContentTask Include="tornado.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenFly.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenAttack.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenIdle.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

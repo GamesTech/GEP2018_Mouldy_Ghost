@@ -15,6 +15,15 @@ GameSettingsScene::~GameSettingsScene()
 
 void GameSettingsScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+	m_idleHandler.update(timer, Event::CHANGE_SCENE_MAIN_MENU,
+		m_input_received, &listeners);
+	for (int i = 0; i < 4; i++)
+	{
+		if (m_GSD->menu_action[i] != MenuAction::NONE)
+		{
+			m_input_received = true;
+		}
+	}
 
 	for (int i = 0; i < listeners.size(); i++)
 	{
@@ -60,11 +69,13 @@ void GameSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _
 	m_GSD = _GSD;
 
 	//GEP::This is where I am creating the test objects
-	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
-	m_RD->m_cam = m_cam;
-	m_3DObjects.push_back(m_cam);
+	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
+	m_RD->m_cam = m_cam.get();
+	m_3DObjects.push_back(m_cam.get());
 
-	m_settingsMenu = std::make_unique<Menu>((m_GSD->window_size / 3.5), MenuButton(Event::GAME_SETTINGS_DECREASE_LIVES,Event::GAME_SETTINGS_INCREASE_LIVES, _RD, "gens"), "Lives: ");
+	m_settingsMenu = std::make_unique<Menu>((m_GSD->window_size / 3.5), MenuButton
+		(Event::GAME_SETTINGS_DECREASE_LIVES,
+			Event::GAME_SETTINGS_INCREASE_LIVES, _RD, "gens"), "Lives: ");
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		m_settingsMenu->addListener(listeners[i]);
@@ -75,13 +86,13 @@ void GameSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _
 	m_settingsMenu->addButton(MenuButton(Event::GAME_SETTINGS_DECREASE_TIME, Event::GAME_SETTINGS_INCREASE_TIME, _RD, "gens"), "Time: ");
 	m_settingsMenu->addButton(MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Back");
 
-	m_livesText = new Text2D("");
+	m_livesText = std::make_unique<Text2D>("");
 	m_livesText->SetText("Test");
 	m_livesText->SetPos(m_settingsMenu->getMenuButton(Event::GAME_SETTINGS_DECREASE_LIVES)->GetPos() + Vector2(220, -10));
-	m_2DObjects.push_back(m_livesText);
+	m_2DObjects.push_back(m_livesText.get());
 
-	m_timeText = new Text2D("");
+	m_timeText = std::make_unique<Text2D>("");
 	m_timeText->SetText("Test");
 	m_timeText->SetPos(m_settingsMenu->getMenuButton(Event::GAME_SETTINGS_DECREASE_TIME)->GetPos() + Vector2(200, -10));
-	m_2DObjects.push_back(m_timeText);
+	m_2DObjects.push_back(m_timeText.get());
 }

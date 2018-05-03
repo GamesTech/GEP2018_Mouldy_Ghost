@@ -20,7 +20,7 @@ public:
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 private:
-	std::shared_ptr<Menu> m_testMenu = nullptr;
+	std::unique_ptr<Menu> m_menu = nullptr;
 
 	std::unique_ptr<Particle> m_testParticle = nullptr;
 

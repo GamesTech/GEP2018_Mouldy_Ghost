@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "StepTimer.h"
 #include "EventHandler.h"
+#include "IdleHandler.h"
 
 using std::vector;
 
@@ -41,11 +42,13 @@ public:
 	void addListener(EventHandler* _event);
 
 protected:
+	bool m_input_received = false;
 	vector<GameObject3D*> m_3DObjects;
 	vector<GameObject2D*> m_2DObjects;
 	vector<Sound*> m_sounds;
 
 	vector<EventHandler*> listeners;
+	IdleHandler m_idleHandler;
 
 	Camera* m_cam;
 	Vector2 m_cam_pos = Vector2::Zero;

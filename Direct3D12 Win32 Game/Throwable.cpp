@@ -63,7 +63,9 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 			Character* tmpchar = static_cast<Character*>(_collision->GetOwner());
 			tmpchar->TakeDamage(5);
 			//bounce?
-			m_physics->AddForce(50 * _normal);
+			m_physics->ResetForce(BOTH_AXES);
+			m_physics->AddForce(5000 * _normal);
+			
 			
 		}
 	}
@@ -72,9 +74,9 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	{
 		player_ignore = nullptr;
 
-		if (m_physics->GetVel().y < 100)
+		if (m_physics->GetVel().y < 200)
 		{
-			m_physics->ResetForce(Axis::Y_AXIS);
+			m_physics->ResetForce(BOTH_AXES);
 			m_physics->SetGrav(0);
 			
 			if (name != "mine")

@@ -34,6 +34,11 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 	{
 		std::string char_name = getFileData(all_characters_file);
 
+		if (char_name == "")
+		{
+			break;
+		}
+
 		std::ifstream character_file;
 		character_file.open("..\\GameAssets\\Characters\\" + char_name + ".txt");
 

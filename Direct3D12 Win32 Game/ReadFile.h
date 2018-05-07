@@ -12,7 +12,10 @@ std::string getFileData(std::ifstream & _file)
 	{
 		c = _file.get();
 		tries++;
-		assert(tries < 10000);	//breaks here if it gets stuck in the file
+		if (tries > 100)
+		{
+			return "";
+		}
 	} while (c != '>');
 
 	//add the rest of the line to the data
@@ -33,5 +36,3 @@ std::string getFileData(std::ifstream & _file)
 	//return the data
 	return ret_str;
 }
-
-//If the file is definitely correct, check if there is not an extra space or extra line at the end 

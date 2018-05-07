@@ -13,6 +13,7 @@ struct RenderData
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>   m_commandList;
 
 	std::unique_ptr<DirectX::SpriteFont> m_font;
+	std::unique_ptr<DirectX::SpriteFont> m_controller_font;
 	int m_fontResNum;
 
 	std::unique_ptr<DirectX::DescriptorHeap> m_resourceDescriptors;
@@ -32,6 +33,7 @@ struct RenderData
 		m_states.reset();
 		m_fxFactory.reset();
 		m_font.reset();
+		m_controller_font.reset();
 		m_resourceDescriptors.reset();
 		m_spriteBatch.reset();
 		m_effect.reset();

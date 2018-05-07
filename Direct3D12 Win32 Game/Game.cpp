@@ -90,19 +90,35 @@ void Game::Initialize(HWND window, int width, int height)
 	//stuff for SDKMeshGO3D renderer
 	m_RD->m_states = std::make_unique<CommonStates>(m_d3dDevice.Get());
 
+
+	buildGame();
+
 	ResourceUploadBatch resourceUpload(m_d3dDevice.Get());
 
 	resourceUpload.Begin();	
 	RenderTargetState rtState(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT);
 
+
+
 	SpriteBatchPipelineStateDescription pd(rtState );
 	pd.blendDesc = m_RD->m_states->NonPremultiplied;
 	m_RD->m_spriteBatch = std::make_unique<SpriteBatch>(m_d3dDevice.Get(), resourceUpload, pd);
-	m_RD->m_font = std::make_unique<SpriteFont>(m_d3dDevice.Get(), resourceUpload,
-		L"courier.spritefont",
+
+	m_RD->m_controller_font = std::make_unique<SpriteFont>(m_d3dDevice.Get(), resourceUpload,
+		L"xboxController.spritefont",
 		m_RD->m_resourceDescriptors->GetCpuHandle(m_RD->m_resourceCount),
 		m_RD->m_resourceDescriptors->GetGpuHandle(m_RD->m_resourceCount));
 	m_RD->m_resourceCount++;
+
+	m_RD->m_font = std::make_unique<SpriteFont>(m_d3dDevice.Get(), resourceUpload,
+		L"Arial.spritefont",
+		m_RD->m_resourceDescriptors->GetCpuHandle(m_RD->m_resourceCount),
+		m_RD->m_resourceDescriptors->GetGpuHandle(m_RD->m_resourceCount));
+	m_RD->m_resourceCount++;
+
+
+
+
 
 	auto uploadResourcesFinished = resourceUpload.End(m_commandQueue.Get());
 
@@ -133,7 +149,7 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
 
-	buildGame();
+
 }
 
 //GEP:: Executes the basic game loop.
@@ -190,7 +206,7 @@ void Game::buildGame()
 {
 	m_all_scenes.clear();
 	listeners.clear();
-	m_RD->m_resourceCount = 1;
+	m_RD->m_resourceCount = 0;
 	ImageGO2D::allTextures.clear();
 
 	//populate the listener vector with all listeners

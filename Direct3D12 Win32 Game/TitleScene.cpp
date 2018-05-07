@@ -46,7 +46,7 @@ void TitleScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	m_background->SetSpawn((m_GSD->window_size + Vector2(0, 100)) / 2);
 	m_2DObjects.push_back(m_background.get());
 
-	m_testMenu = std::make_unique<Menu>(Vector2(m_GSD->window_size.x/2 + (150), m_GSD->window_size.y/2 - 100), MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Press A\nTo Start!");
+	m_testMenu = std::make_unique<Menu>(Vector2(m_GSD->window_size.x/2 + (150), m_GSD->window_size.y/2 - 100), MenuButton(Event::CHANGE_SCENE_MELEE_MENU, _RD, "gens"), "Press [A]\nTo Start!");
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		m_testMenu->addListener(listeners[i]);

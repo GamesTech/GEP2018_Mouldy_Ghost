@@ -338,6 +338,7 @@
     <ClInclude Include="Buff.h">
       <Filter>Items\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="ControllerFont.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">

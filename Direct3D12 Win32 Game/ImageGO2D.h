@@ -5,6 +5,13 @@
 using std::string;
 struct RenderData;
 
+struct TextureItem
+{
+	std::string textureName;
+	int resource_num = -1;
+	Microsoft::WRL::ComPtr<ID3D12Resource> texture = nullptr;
+};
+
 //GEP:: Builds on the Base Game Object 2D class to allow images to be displayed to screen.
 // These need to made into dds format objects which can be done using the Images project in the Asset Pipeline solution folder.
 // Based on this part of the DirectXTK12 wiki documentation
@@ -26,8 +33,11 @@ public:
 	void CentreOrigin();
 	Vector2 TextureSize();
 
+	static std::vector<TextureItem> allTextures;
+
 protected:
-	Microsoft::WRL::ComPtr<ID3D12Resource> m_texture;
+	//Microsoft::WRL::ComPtr<ID3D12Resource> m_texture;
+	int m_textureIndex = -1;
 	int m_resourceNum = -1;
 	Vector2 m_spriteSize;
 	int m_sprites_in_row;

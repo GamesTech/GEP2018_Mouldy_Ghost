@@ -10,28 +10,50 @@ Emitter::Emitter()
 
 Emitter::Emitter(Vector2 _pos, std::string _file, RenderData * _RD)
 {
-	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-	string fullpath = "../DDS/" + _file + ".dds";
-	std::wstring wFilename = converter.from_bytes(fullpath.c_str());
+	bool texture_found = false;
+	for (int i = 0; i < allTextures.size(); i++)
+	{
+		if (allTextures[i].textureName == _file)
+		{
+			texture_found = true;
+			m_textureIndex = i;
+			m_resourceNum = allTextures[i].resource_num;
+		}
+	}
 
-	ResourceUploadBatch resourceUpload(_RD->m_d3dDevice.Get());
+	if (!texture_found)
+	{
+		TextureItem temp;
+		std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+		string fullpath = "../DDS/" + _file + ".dds";
+		std::wstring wFilename = converter.from_bytes(fullpath.c_str());
 
-	resourceUpload.Begin();
+		ResourceUploadBatch resourceUpload(_RD->m_d3dDevice.Get());
 
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(_RD->m_d3dDevice.Get(), resourceUpload, wFilename.c_str(),
-			m_texture.ReleaseAndGetAddressOf()));
+		resourceUpload.Begin();
+
+		DX::ThrowIfFailed(
+			CreateDDSTextureFromFile(_RD->m_d3dDevice.Get(), resourceUpload, wFilename.c_str(),
+				temp.texture.ReleaseAndGetAddressOf()));
 
 
-	CreateShaderResourceView(_RD->m_d3dDevice.Get(), m_texture.Get(),
-		_RD->m_resourceDescriptors->GetCpuHandle(m_resourceNum = _RD->m_resourceCount++));
+		CreateShaderResourceView(_RD->m_d3dDevice.Get(), temp.texture.Get(),
+			_RD->m_resourceDescriptors->GetCpuHandle(m_resourceNum = _RD->m_resourceCount++));
 
-	auto uploadResourcesFinished = resourceUpload.End(_RD->m_commandQueue.Get());
+		auto uploadResourcesFinished = resourceUpload.End(_RD->m_commandQueue.Get());
 
-	uploadResourcesFinished.wait();
+		uploadResourcesFinished.wait();
+
+		m_textureIndex = allTextures.size();
+
+		temp.textureName = _file;
+		temp.resource_num = m_resourceNum;
+		allTextures.push_back(temp);
+	}
 
 	m_spriteSize = Vector2(GetTextureSize
-	(m_texture.Get()).x, GetTextureSize(m_texture.Get()).y);
+	(allTextures[m_textureIndex].texture.Get()).x,
+	GetTextureSize(allTextures[m_textureIndex].texture.Get()).y);
 	CentreOrigin();
 
 
@@ -99,7 +121,7 @@ void Emitter::addParticles(int amount)
 	for (int i = 0; i < amount; i++)
 	{
 		particles.push_back(Particle(GetPos(), file, RD));
-		particles.back().setSprite(m_texture.Get());
+		particles.back().setSprite(allTextures[m_textureIndex].texture.Get());
 		Vector2 newPointTo(0, 1);
 		newPointTo = rotateVector(newPointTo, angle);
 		newPointTo = rotateVector(newPointTo, distributionAngle / -2);
@@ -176,7 +198,7 @@ void Emitter::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoo
 	m_colour.A(particles[i].getVisibility());
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-		GetTextureSize(m_texture.Get()),
+		GetTextureSize(allTextures[m_textureIndex].texture.Get()),
 		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
 
 

@@ -30,6 +30,7 @@
     <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
     <ImageContentTask Include="SpriteSheets\ChickenAttack.png" />
     <ImageContentTask Include="SpriteSheets\ChickenIdle.png" />
+    <ImageContentTask Include="str_buff.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

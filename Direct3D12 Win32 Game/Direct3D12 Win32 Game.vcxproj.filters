@@ -335,6 +335,9 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Buff.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -523,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Buff.cpp">
+      <Filter>Items\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

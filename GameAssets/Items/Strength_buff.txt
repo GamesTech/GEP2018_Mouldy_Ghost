@@ -1,0 +1,7 @@
+type:		>single_use
+image:		>str_buff
+-- all items
+Name:		>str_buff
+pickup:		>use
+use:		>strength_up
+power:		>2

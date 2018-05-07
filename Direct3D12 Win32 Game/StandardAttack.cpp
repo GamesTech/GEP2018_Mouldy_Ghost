@@ -62,6 +62,7 @@ void StandardAttack::PerformAttack(Vector2 _position, int _direction,
 
 	DamageColData attack = m_data;
 
+	attack.damage += _user->GetStrenght();
 	attack.damage *= (1 + _charge);
 	attack.knockback *= (1 + _charge);
 

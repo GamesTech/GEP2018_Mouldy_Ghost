@@ -22,7 +22,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	case Event::OBJECT_DESTROYED:
 	case Event::PLAYER_ELIMINATED:
 	{
-		m_RD->m_resourceCount--;
+		//m_RD->m_resourceCount--;
 
 		
 		//making sure that every object that collided with the deleted one is no longer colliding with it 

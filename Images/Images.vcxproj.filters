@@ -24,6 +24,8 @@
     <ImageContentTask Include="field.png" />
     <ImageContentTask Include="nige.jpg" />
     <ImageContentTask Include="baseball_bat.png" />
+    <ImageContentTask Include="tornado_sword.png" />
+    <ImageContentTask Include="tornado.png" />
     <ImageContentTask Include="SpriteSheets\ChickenFly.png" />
     <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
     <ImageContentTask Include="SpriteSheets\ChickenAttack.png" />

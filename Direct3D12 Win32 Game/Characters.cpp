@@ -41,14 +41,18 @@ void Character::Tick(GameStateData * _GSD)
 
 			m_physics->AddForce(gamePadPush * 100);
 
-			if (gamePadPush.x == 0 && on_floor && !active_anim->getPlay())
+			if (usesAnimation)
 			{
-				switchAnimation(idle_anim.get());
-			}
+				if (gamePadPush.x == 0 && on_floor && !active_anim->getPlay())
+				{
+					switchAnimation(idle_anim.get());
+				}
 
-			if (active_anim == attack_anim.get() && !on_floor && !active_anim->getPlay())
-			{
-				switchAnimation(jump_anim.get());
+				if (active_anim == attack_anim.get() && !on_floor && !active_anim->getPlay())
+				{
+
+					switchAnimation(jump_anim.get());
+				}
 			}
 
 			PlayerAttack(_GSD);
@@ -385,7 +389,13 @@ void Character::PickUpItem(std::vector<GameAction> _actions)
 			m_held_item = m_physics->GetItem();
 			if (m_held_item)
 			{
+				
 				m_held_item->pickUp(this);
+
+				if (m_held_item->getitemType() == ItemType::SINGLE_USE)
+				{
+					m_held_item = nullptr;
+				}
 			}
 			
 		}

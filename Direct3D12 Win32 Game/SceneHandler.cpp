@@ -63,8 +63,9 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 		{
 			if (m_allScenes[i]->getType() == "MenuScene")
 			{
-				sceneChanged = true;
-				sceneChangeIndex = i;
+				//sceneChanged = true;
+				//sceneChangeIndex = i;
+				m_activeScene->setShouldReset(true);
 			}
 		}
 		break;

@@ -23,6 +23,14 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	case Event::PLAYER_ELIMINATED:
 	{
 		m_RD->m_resourceCount--;
+
+		
+		//making sure that every object that collided with the deleted one is no longer colliding with it 
+		for(int i = 1; i< m_physics->size(); i ++ ) //starting with 1 because for some reason the first element is nullptr and we dont know why
+		{
+			(*m_physics)[i]->removeFromCurrentlyColliding(object->GetPhysics());
+		}
+
 		int i = 0;
 		for (std::vector<GameObject2D*>::iterator it = m_2DObjects->begin();
 			it != m_2DObjects->end(); it++, i++)
@@ -39,18 +47,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 		{
 			if (*it == object->GetPhysics())
 			{
-				//after deleting the mine, it was removed from all vectors 
-				//before its "collision exit" could be called 
-				//because of that the Character thought it is still colliding with it
-				//thus I had to force the removal when removing it from vector
-				//i = 0;
-				//loop trought the whole vector remove the physics of the deleted object from all other physics
-
-				for (std::vector<Physics2D*>::iterator it = m_physics->begin();
-					it != m_physics->end(); it++ /*,i++*/)
-				{
-					(*m_physics)[i]->removeFromCurrentlyColliding(object->GetPhysics());
-				}
+				
 
 				m_physics->erase(m_physics->begin() + i);
 				break;

@@ -62,15 +62,20 @@ void GameOverScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	m_podium_positions[3] = Vector2(mid_screen, lowest_point - 60);
 
 	//GEP::This is where I am creating the test objects
-	m_cam = new Camera(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
-	m_RD->m_cam = m_cam;
-	m_3DObjects.push_back(m_cam);
+	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
+	m_RD->m_cam = m_cam.get();
+	m_3DObjects.push_back(m_cam.get());
 }
 
 void GameOverScene::Reset()
 {
 	m_chars_in_game.clear();
 	m_standings.clear();
+
+	for (FallingCharacter fall : m_falling)
+	{
+		fall.character = nullptr;
+	}
 }
 
 void GameOverScene::AddCharacterToScene(Character * _c)

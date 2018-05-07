@@ -189,6 +189,12 @@
     <ImageContentTask Include="baseball_bat.png" />
   </ItemGroup>
   <ItemGroup>
+    <ImageContentTask Include="tornado_sword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tornado.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ImageContentTask Include="SpriteSheets\ChickenFly.png" />
   </ItemGroup>
   <ItemGroup>

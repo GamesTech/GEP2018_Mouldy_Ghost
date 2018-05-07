@@ -288,7 +288,7 @@
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
-    <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="AudioHandler.h" />
@@ -320,6 +320,7 @@
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
     <ClInclude Include="Throwable.h" />
+    <ClInclude Include="Tornado.h" />
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
@@ -354,7 +355,7 @@
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
-    <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="StandardAttack.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
@@ -389,6 +390,7 @@
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
     <ClCompile Include="Throwable.cpp" />
+    <ClCompile Include="Tornado.cpp" />
     <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>

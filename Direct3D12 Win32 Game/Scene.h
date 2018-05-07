@@ -40,6 +40,8 @@ public:
 	//returns a dynamic array of pointers to GameObject2D, you will need to delete it yourself
 
 	void addListener(EventHandler* _event);
+	bool getShouldReset() const { return m_gameShouldReset; }
+	void setShouldReset(bool _to) { m_gameShouldReset = _to; }
 
 protected:
 	bool m_input_received = false;
@@ -50,7 +52,7 @@ protected:
 	vector<EventHandler*> listeners;
 	IdleHandler m_idleHandler;
 
-	Camera* m_cam;
+	std::unique_ptr<Camera> m_cam = nullptr;
 	Vector2 m_cam_pos = Vector2::Zero;
 	float m_cam_zoom = 1;
 	float m_zoom_rate = 700.0f;
@@ -59,4 +61,5 @@ protected:
 
 	RenderData* m_RD;
 	GameStateData* m_GSD;
+	bool m_gameShouldReset = false;
 };

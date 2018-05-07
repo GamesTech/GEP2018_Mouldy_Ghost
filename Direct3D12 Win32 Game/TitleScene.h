@@ -5,12 +5,12 @@
 
 class Background;
 
-class MenuScene :
+class TitleScene :
 	public Scene
 {
 public:
-	MenuScene();
-	~MenuScene();
+	TitleScene();
+	~TitleScene();
 
 	virtual std::string getType() override { return "MenuScene"; };
 
@@ -22,5 +22,5 @@ public:
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 private:
 	std::shared_ptr<Menu> m_testMenu = nullptr;
-	Background* m_background;
+	std::unique_ptr<Background> m_background = nullptr;
 };

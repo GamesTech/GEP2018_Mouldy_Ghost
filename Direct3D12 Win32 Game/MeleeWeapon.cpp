@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MeleeWeapon.h"
+#include "Tornado.h"
 
 MeleeWeapon::MeleeWeapon()
 {
@@ -7,6 +8,8 @@ MeleeWeapon::MeleeWeapon()
 
 MeleeWeapon::MeleeWeapon(RenderData * _RD, std::string _filename, SpawnHandler * _spawner) : Throwable(_RD, _filename, _spawner)
 {
+	m_spawner = _spawner;
+	RD_ptr = _RD;
 }
 
 MeleeWeapon::MeleeWeapon(Item * item_to_copy, RenderData * _RD, string _filename, SpawnHandler * _spawner) : Throwable(item_to_copy, _RD, _filename, _spawner)
@@ -16,6 +19,9 @@ MeleeWeapon::MeleeWeapon(Item * item_to_copy, RenderData * _RD, string _filename
 	max_charge = melee_ptr->getMaxCharge();
 	on_full_charge = melee_ptr->getOnFullCharge();
 	durability = melee_ptr->getDurability();
+
+	m_spawner = _spawner;
+	RD_ptr = _RD;
 }
 
 MeleeWeapon::~MeleeWeapon()
@@ -77,18 +83,20 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 
 		if (m_attack_time > 1)
 		{
-			m_pos = player_ignore->GetPos();
+			
 			m_attacking = false;
 			m_state = ItemState::HELD;
 			player_ignore->setAttacking(false);
 
-			if (m_charge > max_charge)
+			if (m_charge >= max_charge)
 			{
 				if (on_full_charge == "tornado")
 				{
-					//release the tornado
+					Tornado* tornado = new Tornado(m_pos, RD_ptr, _GSD, m_spawner, offset);
+					m_spawner->onNotify(tornado, Event::OBJECT_INSTANTIATED);
 				}
 			}
+			m_pos = player_ignore->GetPos();
 		}
 	}
 
@@ -106,20 +114,34 @@ void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		{
 			m_charge = max_charge;
 		}
-		//testing line
-		//we definitely want to calculate the direction
-		//_collision->AddForce(Vector2(10000+ 10000*m_charge,-10000));
 
-		float tmpx = m_pos.x - _collision->GetOwner()->GetPos().x;
-		
-		if (tmpx > 0)
+		Character* tmpchar = static_cast<Character*>(_collision->GetOwner());	
+		Vector2 dir;
+
+		if (attack_type == 1)
 		{
-			_collision->AddForce(Vector2(-(10000 + 10000 * m_charge), -10000));
+			//right
+			dir = Vector2((m_power +  m_power * m_charge), -1);
 		}
-		else
+		else if (attack_type == 2)
 		{
-			_collision->AddForce(Vector2(10000 + 10000 * m_charge, -10000));
+			//left
+			dir = Vector2(-(m_power +  m_power * m_charge), -1);
 		}
+		else if (attack_type == 3)
+		{
+			//up
+			dir = Vector2(0, -10);
+		}
+		else if (attack_type == 4)
+		{
+			//down
+			dir = Vector2(0, -10);
+		}
+		tmpchar->TakeDamage(m_power + m_power*m_charge);
+		dir.Normalize();
+		tmpchar->Hit(dir, 10000*m_power*m_charge , player_ignore);
+	
 	}
 	else if (m_state == ItemState::THROWN || m_state == ItemState::WAIT)
 	{

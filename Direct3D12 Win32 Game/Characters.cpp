@@ -61,6 +61,7 @@ void Character::Tick(GameStateData * _GSD)
 			if (m_attacking)
 			{
 				m_charge_time += _GSD->m_dt;
+				attack_anim->reset();
 				switchAnimation(attack_anim.get());
 			}
 		}

@@ -12,6 +12,12 @@ GameSettingsHandler::GameSettingsHandler()
 	m_time = 60;
 	m_infiniteTime = false;
 	m_infiniteLives = false;
+
+	//init availavle items
+	for (int i = 0; i < 7; i++)
+	{
+		available_items.push_back(true);
+	}
 }
 
 

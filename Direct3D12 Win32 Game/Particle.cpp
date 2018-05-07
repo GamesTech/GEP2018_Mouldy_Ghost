@@ -8,7 +8,7 @@ Particle::Particle()
 {
 }
 
-Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD)
+Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD) : ImageGO2D(_RD, _filename)
 {
 	m_origin = _origin;
 	SetPos(m_origin);
@@ -62,7 +62,7 @@ void Particle::setLifetime(float _lifetime)
 
 void Particle::setSprite(ID3D12Resource * _sprite)
 {
-	m_texture = _sprite;
+	//allTextures[m_textureIndex].texture = _sprite;
 }
 
 

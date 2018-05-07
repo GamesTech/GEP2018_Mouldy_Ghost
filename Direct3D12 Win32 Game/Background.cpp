@@ -28,6 +28,6 @@ void Background::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-		GetTextureSize(m_texture.Get()),
+		GetTextureSize(allTextures[m_textureIndex].texture.Get()),
 		render_pos, r, m_colour, m_orientation, m_origin, m_scale);
 }

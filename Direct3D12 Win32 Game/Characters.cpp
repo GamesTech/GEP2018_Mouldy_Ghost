@@ -61,7 +61,11 @@ void Character::Tick(GameStateData * _GSD)
 			if (m_attacking)
 			{
 				m_charge_time += _GSD->m_dt;
-				attack_anim->reset();
+
+				if (usesAnimation)
+				{
+					active_anim->reset();
+				}
 				switchAnimation(attack_anim.get());
 			}
 		}
@@ -139,13 +143,13 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 		if (!flipped)
 		{
 			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-				GetTextureSize(m_texture.Get()),
+				GetTextureSize(allTextures[m_textureIndex].texture.Get()),
 				render_pos, r, m_colour, m_orientation, m_origin, render_scale);
 		}
 		else
 		{
 			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-				GetTextureSize(m_texture.Get()),
+				GetTextureSize(allTextures[m_textureIndex].texture.Get()),
 				render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);
 		}
 	}

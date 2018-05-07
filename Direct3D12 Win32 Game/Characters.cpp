@@ -111,6 +111,17 @@ void Character::Tick(GameStateData * _GSD)
 		active_anim->update(_GSD);
 	}
 
+	//tick buffs
+	for (int i = 0; i < buffs.size(); i++)
+	{
+		if (buffs[i]->Tick(_GSD)) // if returns true, the buff should be deleted
+		{
+			delete buffs[i];
+			buffs.erase(buffs.begin() + i);
+			i--;
+		}
+	}
+
 	GameObject2D::Tick(_GSD);
 }
 
@@ -183,6 +194,11 @@ void Character::SetController(CharacterController * _controller)
 	default:
 		break;
 	}
+}
+
+void Character::BuffCharacter(Buff * _buff)
+{
+	buffs.push_back(_buff);
 }
 
 void Character::loadAnimations(std::string _file, RenderData* _RD)

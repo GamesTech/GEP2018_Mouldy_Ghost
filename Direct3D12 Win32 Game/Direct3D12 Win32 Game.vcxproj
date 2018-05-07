@@ -251,6 +251,7 @@
     <ClInclude Include="Animation2D.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Buff.h" />
     <ClInclude Include="CharacterLifeHandler.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="CharSelectScene.h" />
@@ -326,6 +327,7 @@
   <ItemGroup>
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Buff.cpp" />
     <ClCompile Include="CharacterLifeHandler.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="CharSelectScene.cpp" />

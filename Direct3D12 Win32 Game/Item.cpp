@@ -88,6 +88,11 @@ void Item::use(Character * _player)
 		{
 		
 		}
+		else if (m_onUse == "strength_up")
+		{
+			Buff* buff = new Buff(BuffType::STRENGHT_BUFF, _player, m_power);
+			_player->BuffCharacter(buff);
+		}
 	
 }
 

@@ -53,7 +53,9 @@ void DashAttack::PerformAttack(Vector2 _position, int _direction, Character * _u
 	_user->GetPhysics()->ResetForce(BOTH_AXES);
 	_user->GetPhysics()->AddForce(relative_dash * m_dash_distance * 1000);
 
+
 	DamageColData attack = m_data;
+	attack.damage += _user->GetStrenght();
 	attack.direction.x *= _direction;
 	attack.child_to_player = true;
 	attack.user = _user;

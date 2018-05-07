@@ -3,6 +3,7 @@
 #include "DashAttack.h"
 #include "InputSystem.h"
 #include "CharacterController.h"
+#include "Buff.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
@@ -51,6 +52,11 @@ public:
 	void SetJumpHeight(float _height) { m_jump_height = _height; }
 	const float GetJumpHeight() { return m_jump_height; }
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
+
+	int GetStrenght() { return strenght; }
+	void SetStrenght(int _str) { strenght = _str; }
+
+	void BuffCharacter(Buff* _buff);
 
 	void loadAnimations(std::string _file, RenderData* _RD);
 
@@ -109,6 +115,7 @@ protected:
 	int m_jumps = 1;
 	int m_damage = 0;
 	int m_lives = 3;
+	int strenght = 0;
 	bool m_infiniteLives = false;
 	float m_move_speed = 1.0f;
 	int m_jump_limit = 2;
@@ -127,4 +134,5 @@ protected:
 	int m_points = 0;
 	Item* m_held_item = nullptr;
 	Color m_text_colour;
+	std::vector<Buff*> buffs;
 };

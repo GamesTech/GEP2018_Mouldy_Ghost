@@ -12,7 +12,7 @@ std::string getFileData(std::ifstream & _file)
 	{
 		c = _file.get();
 		tries++;
-		if (tries > 100)
+		if (tries > 30)
 		{
 			return "";
 		}

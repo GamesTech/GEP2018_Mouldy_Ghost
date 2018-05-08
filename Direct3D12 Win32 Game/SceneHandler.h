@@ -1,5 +1,6 @@
 #pragma once
 #include "EventHandler.h"
+#include "IdleHandler.h"
 
 class Scene;
 
@@ -7,7 +8,7 @@ class SceneHandler :
 	public EventHandler
 {
 public:
-	SceneHandler();
+	SceneHandler(IdleHandler* _idle);
 	~SceneHandler();
 
 	void init(GameStateData * _GSD, std::vector<Scene*> _allScenes);
@@ -20,4 +21,5 @@ public:
 private:
 	std::vector<Scene*> m_allScenes;
 	Scene* m_activeScene;
+	IdleHandler* m_idle;
 };

@@ -214,7 +214,7 @@ void Game::buildGame()
 	//populate the listener vector with all listeners
 	//at the moment this needs to be done before a scene is initialised
 	m_musicListener = std::make_unique<AudioHandler>();
-	m_sceneListener = std::make_unique<SceneHandler>();
+	m_sceneListener = std::make_unique<SceneHandler>(&m_idleHandler);
 	m_gameSettings = std::make_unique<GameSettingsHandler>();
 	m_lifeListener = std::make_unique<CharacterLifeHandler>();
 	m_spawner = std::make_unique<SpawnHandler>();

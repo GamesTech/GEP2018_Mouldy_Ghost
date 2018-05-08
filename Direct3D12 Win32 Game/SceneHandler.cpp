@@ -5,10 +5,10 @@
 #include "GameOverScene.h"
 
 
-SceneHandler::SceneHandler()
+SceneHandler::SceneHandler(IdleHandler * _idle)
 {
+	m_idle = _idle;
 }
-
 
 SceneHandler::~SceneHandler()
 {
@@ -130,5 +130,7 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 		m_activeScene = m_allScenes[sceneChangeIndex];
 		m_activeScene->PhysicsInScene(m_GSD);
 		m_activeScene->Reset();
+		//reset the idle counter
+		m_idle->reset();
 	}
 }

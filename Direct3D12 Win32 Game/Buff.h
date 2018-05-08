@@ -18,6 +18,6 @@ private:
 	float power;
 	Character* m_buffed_character = nullptr;
 	BuffType type;
-	float duration = 10;
+	float duration = 0;
 };
 

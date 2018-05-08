@@ -90,7 +90,7 @@ void Game::Initialize(HWND window, int width, int height)
 	//stuff for SDKMeshGO3D renderer
 	m_RD->m_states = std::make_unique<CommonStates>(m_d3dDevice.Get());
 
-
+	//Create the game
 	buildGame();
 
 	ResourceUploadBatch resourceUpload(m_d3dDevice.Get());

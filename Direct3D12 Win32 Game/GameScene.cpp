@@ -65,6 +65,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_testEmitter->setSpeeds(200, 300);
 	m_testEmitter->setLifetimes(1, 3);
 	m_testEmitter->addParticles(1000);
+	m_testEmitter->setRate(1);
 	m_2DObjects.push_back(m_testEmitter.get());
 
 	for (int i = 0; i < m_bg.size(); i++)
@@ -223,7 +224,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		}
 	}
 
-	for (int i = 0; i < m_GSD->game_actions->size(); i++)
+	for (int i = 0; i < 4; i++)
 	{
 		if (InputSystem::searchForAction(GameAction::P_PAUSE, m_GSD->game_actions[i]))
 		{

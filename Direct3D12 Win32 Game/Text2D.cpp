@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Text2D.h"
 #include "renderdata.h"
+#include "ControllerFont.h"
 #include <codecvt>
 
 
@@ -34,8 +35,8 @@ void Text2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom
 		m_dirtyOrigin = false;
 		m_origin = _RD->m_font->MeasureString(m_wText.c_str()) / 2.f;
 	}
-
-	_RD->m_font->DrawString(_RD->m_spriteBatch.get(), m_wText.c_str(), m_pos, m_colour, m_orientation, m_scale);
+	DX::DrawControllerString(_RD->m_spriteBatch.get(), _RD->m_font.get(), _RD->m_controller_font.get(), m_wText.c_str(), m_pos, m_colour, m_scale);
+	//_RD->m_font->DrawString(_RD->m_spriteBatch.get(), m_wText.c_str(), m_pos, m_colour, m_orientation, m_scale);
 }
 
 int Text2D::GetWidth(RenderData * _RD)

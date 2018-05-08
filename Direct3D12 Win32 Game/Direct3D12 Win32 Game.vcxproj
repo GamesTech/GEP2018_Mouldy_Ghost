@@ -255,6 +255,7 @@
     <ClInclude Include="CharacterLifeHandler.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="CharSelectScene.h" />
+    <ClInclude Include="ControllerFont.h" />
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Explosion.h" />

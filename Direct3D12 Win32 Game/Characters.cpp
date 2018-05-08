@@ -295,6 +295,7 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 
 	float knockback = _force * (m_damage + 1) / 100;
 	_dir.y += 2;
+	m_physics->ResetForce(Axis::BOTH_AXES);
 	m_physics->AddForce(_dir * knockback);
 	m_recovery_time = 0.1f;
 	m_last_to_hit = _attacker;
@@ -371,7 +372,7 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 {
 	if (InputSystem::searchForAction(P_JUMP, _actions) && m_dash_recover && !m_attacking)
 	{
-		if (canJump())
+		if (m_jumps < m_jump_limit)
 		{
 			m_physics->ResetForce(Y_AXIS);
 			m_jumps++;
@@ -612,7 +613,7 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			attack_to_use = AttackMap::SIDE_SPECIAL;
 			m_attacking = true;
 		}
-		else if (InputSystem::searchForAction(P_CROUCH, _actions))
+		if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
 			attack_to_use = AttackMap::DOWN_SPECIAL;
 			m_attacking = true;

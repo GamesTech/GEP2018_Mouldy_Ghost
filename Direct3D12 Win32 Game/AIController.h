@@ -12,6 +12,13 @@ class AIController
 		ATTACKING
 	};
 
+	enum class Holding
+	{
+		NONE,
+		BASIC,
+		SPECIAL
+	};
+
 public:
 	AIController(int _controller_id);
 	~AIController() = default;
@@ -26,4 +33,5 @@ private:
 	GameActions moveTowards(GameObject2D* _object, GameStateData * _GSD);
 
 	AIState state = AIState::ATTACKING;
+	Holding holding = Holding::NONE;
 };

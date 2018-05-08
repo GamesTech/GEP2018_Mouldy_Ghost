@@ -1,6 +1,6 @@
 Image		>ChickenWalk
-Speed		>2
-Jump Count	>2000
+Speed		>3
+Jump Count	>2
 Jump		>220
 A		>Melee\hit.txt
 Side + A	>Melee\hold.txt

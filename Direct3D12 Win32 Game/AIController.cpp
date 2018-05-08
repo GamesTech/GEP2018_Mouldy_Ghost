@@ -77,7 +77,29 @@ GameActions AIController::attacking(GameStateData * _GSD)
 	}
 	if (nearest_player)
 	{
-		return moveTowards(nearest_player, _GSD);
+		if (player_dist > 150)
+		{
+			return moveTowards(nearest_player, _GSD);
+		}
+		else
+		{
+			GameActions actions;
+			if (holding != Holding::BASIC)
+			{
+				actions.push_back(GameAction::P_HOLD_BASIC);
+				holding = Holding::BASIC;
+			}
+			else
+			{
+				actions.push_back(GameAction::P_RELEASE_BASIC);
+				holding = Holding::NONE;
+			}
+			return actions;
+		}
+	}
+	else
+	{
+		state = AIState::WAITING;
 	}
 }
 
@@ -104,15 +126,27 @@ GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _G
 
 	if (_object->GetPos().y < m_character->GetPos().y)
 	{
-		if (m_character->canJump())
+		if (m_character->GetPhysics()->GetVel().y > 0)
 		{
-			actions.push_back(GameAction::P_JUMP);
-		}
-		else
-		{
-			actions.push_back(GameAction::P_HOLD_UP);
-			actions.push_back(GameAction::P_HOLD_SPECIAL);
-			actions.push_back(GameAction::P_RELEASE_SPECIAL);
+			if (m_character->canJump())
+			{
+				actions.push_back(GameAction::P_JUMP);
+			}
+			else
+			{
+				if (holding != Holding::SPECIAL)
+				{
+					actions.push_back(GameAction::P_HOLD_UP);
+					actions.push_back(GameAction::P_HOLD_SPECIAL);
+					holding = Holding::SPECIAL;
+				}
+				else
+				{
+					actions.push_back(GameAction::P_HOLD_UP);
+					actions.push_back(GameAction::P_RELEASE_SPECIAL);
+					holding = Holding::NONE;
+				}
+			}
 		}
 	}
 	return actions;

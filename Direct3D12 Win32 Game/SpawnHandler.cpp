@@ -21,10 +21,7 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 	}
 	case Event::OBJECT_DESTROYED:
 	case Event::PLAYER_ELIMINATED:
-	{
-		//m_RD->m_resourceCount--;
-
-		
+	{		
 		//making sure that every object that collided with the deleted one is no longer colliding with it 
 		for(int i = 1; i< m_physics->size(); i ++ ) //starting with 1 because for some reason the first element is nullptr and we dont know why
 		{

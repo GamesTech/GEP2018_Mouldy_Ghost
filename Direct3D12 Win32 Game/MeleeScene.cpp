@@ -19,16 +19,6 @@ void MeleeScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Au
 	//m_testEmitter->addParticles(1);
 	m_testEmitter->Tick(m_GSD);
 	m_test_anim->update(m_GSD);
-
-	m_idleHandler.update(timer, Event::CHANGE_SCENE_MAIN_MENU,
-		m_input_received, &listeners);
-	for (int i = 0; i < 4; i++)
-	{
-		if (m_GSD->menu_action[i] != MenuAction::NONE)
-		{
-			m_input_received = true;
-		}
-	}
 }
 
 void MeleeScene::Reset()

@@ -35,11 +35,6 @@ void SceneHandler::init(GameStateData * _GSD , std::vector<Scene*> _allScenes)
 	}
 }
 
-void SceneHandler::addScene(Scene * _scene)
-{
-	m_allScenes.push_back(_scene);
-}
-
 void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 {
 	bool sceneChanged = false;
@@ -93,6 +88,16 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 		for (int i = 0; i < m_allScenes.size(); i++)
 		{
 			if (m_allScenes[i]->getType() == "GameSettings")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
+	case Event::CHANGE_SCENE_DEMO_SCREEN:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "DemoScene")
 			{
 				sceneChanged = true;
 				sceneChangeIndex = i;

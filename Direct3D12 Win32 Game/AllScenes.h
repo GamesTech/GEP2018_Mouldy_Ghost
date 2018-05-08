@@ -6,3 +6,4 @@
 #include "CharSelectScene.h"
 #include "GameSettingsScene.h"
 #include "GameOverScene.h"
+#include "DemoScene.h"

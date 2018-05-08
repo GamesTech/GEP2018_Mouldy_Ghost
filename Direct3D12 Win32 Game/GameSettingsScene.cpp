@@ -15,16 +15,6 @@ GameSettingsScene::~GameSettingsScene()
 
 void GameSettingsScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	m_idleHandler.update(timer, Event::CHANGE_SCENE_MAIN_MENU,
-		m_input_received, &listeners);
-	for (int i = 0; i < 4; i++)
-	{
-		if (m_GSD->menu_action[i] != MenuAction::NONE)
-		{
-			m_input_received = true;
-		}
-	}
-
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		if (listeners[i]->getType() == "GameSettings")

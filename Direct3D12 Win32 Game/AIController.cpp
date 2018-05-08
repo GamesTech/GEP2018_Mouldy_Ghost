@@ -55,9 +55,7 @@ GameActions AIController::waiting(GameStateData * _GSD)
 
 GameActions AIController::attacking(GameStateData * _GSD)
 {
-	//find the nearest player and get to a place where you can attack them then attack them
-	GameObject2D* nearest_player = nullptr;
-	float player_dist = 10000;
+	//find a player and get to a place where you can attack them then attack them
 	for (Physics2D* object2d : _GSD->objects_in_scene)
 	{
 		if (object2d)
@@ -65,41 +63,32 @@ GameActions AIController::attacking(GameStateData * _GSD)
 			GameObject2D* owner = object2d->GetOwner();
 			if (owner->GetTag() == GameObjectTag::PLAYER)
 			{
-				float dist = getDist(owner);
-				if (dist < player_dist
-					&& owner != m_character)
+				if (!m_target_player || rand() % 50 == 0)
 				{
-					player_dist = dist;
-					nearest_player = owner;
+					m_target_player = owner;
 				}
 			}
 		}
 	}
-	if (nearest_player)
+	if (m_target_player)
 	{
-		if (player_dist > 150)
+		float player_dist = getDist(m_target_player);
+		if (player_dist > 100)
 		{
-			return moveTowards(nearest_player, _GSD);
+			return moveTowards(m_target_player, _GSD);
 		}
 		else
 		{
 			GameActions actions;
-			if (holding != Holding::BASIC)
-			{
-				actions.push_back(GameAction::P_HOLD_BASIC);
-				holding = Holding::BASIC;
-			}
-			else
-			{
-				actions.push_back(GameAction::P_RELEASE_BASIC);
-				holding = Holding::NONE;
-			}
+			actions.push_back(GameAction::P_HOLD_BASIC);
+			actions.push_back(GameAction::P_RELEASE_BASIC);
 			return actions;
 		}
 	}
 	else
 	{
 		state = AIState::WAITING;
+		return GameActions();
 	}
 }
 
@@ -124,7 +113,7 @@ GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _G
 		actions.push_back(GameAction::P_MOVE_RIGHT);
 	}
 
-	if (_object->GetPos().y < m_character->GetPos().y)
+	if (_object->GetPos().y <= m_character->GetPos().y)
 	{
 		if (m_character->GetPhysics()->GetVel().y > 0)
 		{
@@ -134,18 +123,9 @@ GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _G
 			}
 			else
 			{
-				if (holding != Holding::SPECIAL)
-				{
-					actions.push_back(GameAction::P_HOLD_UP);
-					actions.push_back(GameAction::P_HOLD_SPECIAL);
-					holding = Holding::SPECIAL;
-				}
-				else
-				{
-					actions.push_back(GameAction::P_HOLD_UP);
-					actions.push_back(GameAction::P_RELEASE_SPECIAL);
-					holding = Holding::NONE;
-				}
+				actions.push_back(GameAction::P_HOLD_UP);
+				actions.push_back(GameAction::P_HOLD_SPECIAL);
+				actions.push_back(GameAction::P_RELEASE_SPECIAL);
 			}
 		}
 	}

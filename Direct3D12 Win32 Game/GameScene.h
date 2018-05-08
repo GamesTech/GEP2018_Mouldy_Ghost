@@ -26,7 +26,7 @@ public:
 	GameScene();
 	~ GameScene();
 
-	virtual std::string getType() override { return "GameScene"; };
+	virtual std::string getType() override { return "GameScene"; }
 
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
@@ -35,7 +35,7 @@ public:
 	void RemoveAllCharacters();
 	void RemoveCharacter(Character * _char);
 
-	void Update(DX::StepTimer const & timer,
+	virtual void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	virtual void Render
 	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
@@ -47,11 +47,11 @@ public:
 	virtual void Reset();
 	void LinkSettings();
 
-private:
+protected:
 	HUD* m_HUD = nullptr;
 
 	std::unique_ptr<Stage> game_stage = nullptr;
-	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
+	std::unique_ptr<CharacterController> entities[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
 

@@ -169,13 +169,15 @@ void Game::Update(DX::StepTimer const& timer)
 	ReadInput();
     m_GSD->m_dt = float(timer.GetElapsedSeconds());
 
+	Scene* active_scene = m_sceneListener->getActiveScene();
+	m_idleHandler.update(m_GSD->m_dt, active_scene->getIdleEvent(), m_input_received,
+		&listeners, active_scene->getIdleTime());
 
 	m_sceneListener->getActiveScene()->Update(timer, m_audEngine);
 	if (m_sceneListener->getActiveScene()->getShouldReset())
 	{
 		buildGame();
 	}
-	//m_activeScene->Update(timer, m_audEngine);
 }
 
 //GEP:: Draws the scene.
@@ -223,9 +225,11 @@ void Game::buildGame()
 	listeners.push_back(m_spawner.get());
 
 	m_gameScene = std::make_unique<GameScene>();
+	m_gameScene->setIdle(3600, Event::CHANGE_SCENE_MAIN_MENU);
 	m_all_scenes.push_back(m_gameScene.get());
 
 	m_menuScene = std::make_unique<TitleScene>();
+	m_menuScene->setIdle(30, Event::CHANGE_SCENE_DEMO_SCREEN);
 	m_all_scenes.push_back(m_menuScene.get());
 
 	m_gameSettingsScene = std::make_unique<GameSettingsScene>();
@@ -240,6 +244,10 @@ void Game::buildGame()
 	m_gameOverScene = std::make_unique<GameOverScene>();
 	m_all_scenes.push_back(m_gameOverScene.get());
 
+	m_demoScene = std::make_unique<DemoScene>();
+	m_demoScene->setIdle(600, Event::CHANGE_SCENE_MAIN_MENU);
+	m_all_scenes.push_back(m_demoScene.get());
+
 	//add all listeners to all scenes
 	for (int i = 0; i < m_all_scenes.size(); i++)
 	{
@@ -249,7 +257,7 @@ void Game::buildGame()
 		}
 		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
 	}
-
+	
 	//init listeners
 	m_sceneListener->init(m_GSD, m_all_scenes);
 	m_lifeListener->SetGameOver(m_gameOverScene.get());
@@ -260,6 +268,12 @@ void Game::buildGame()
 	{
 		listeners[i]->onNotify(nullptr, Event::APPLICATION_LOADED);
 	}
+
+	//add chickens to demo scene
+	m_demoScene->AddCharacter(0, "Chicken", m_RD, true);
+	m_demoScene->AddCharacter(1, "Chicken", m_RD, true);
+	m_demoScene->AddCharacter(2, "Chicken", m_RD, true);
+	m_demoScene->AddCharacter(3, "Chicken", m_RD, true);
 }
 
 // Helper method to prepare the command list for rendering and clear the back buffers.

@@ -782,6 +782,23 @@ void Game::ReadInput()
 		}
 	}
 
+	//was any input received
+	for (std::vector<GameAction> actions : m_GSD->game_actions)
+	{
+		if (actions.size())
+		{
+			m_input_received = true;
+			break;
+		}
+	}
+	for (MenuAction action : m_GSD->menu_action)
+	{
+		if (action != MenuAction::NONE || m_input_received)
+		{
+			m_input_received = true;
+			break;
+		}
+	}
 
 	//Quit if press Esc
 	if (m_GSD->menu_action[0] == QUIT)

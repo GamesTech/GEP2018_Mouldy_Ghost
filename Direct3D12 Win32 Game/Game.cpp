@@ -58,13 +58,6 @@ void Game::Initialize(HWND window, int width, int height)
     CreateDevice();
     CreateResources();
 
-//GEP::init Audio System
-	AUDIO_ENGINE_FLAGS eflags = AudioEngine_Default;
-#ifdef _DEBUG
-	eflags = eflags | AudioEngine_Debug;
-#endif
-	m_audEngine = std::make_unique<AudioEngine>(eflags);
-
 	m_GSD = new GameStateData;
 	m_GSD->window_size.x = width;
 	m_GSD->window_size.y = height;
@@ -170,6 +163,7 @@ void Game::Update(DX::StepTimer const& timer)
     m_GSD->m_dt = float(timer.GetElapsedSeconds());
 
 	Scene* active_scene = m_sceneListener->getActiveScene();
+
 	m_idleHandler.update(m_GSD->m_dt, active_scene->getIdleEvent(), m_input_received,
 		&listeners, active_scene->getIdleTime());
 
@@ -206,6 +200,12 @@ void Game::Render()
 
 void Game::buildGame()
 {
+	AUDIO_ENGINE_FLAGS eflags = AudioEngine_Default;
+#ifdef _DEBUG
+	eflags = eflags | AudioEngine_Debug;
+#endif
+	m_audEngine = std::make_unique<AudioEngine>(eflags);
+
 	m_all_scenes.clear();
 	listeners.clear();
 	m_RD->m_resourceCount = 0;
@@ -229,7 +229,7 @@ void Game::buildGame()
 	m_all_scenes.push_back(m_gameScene.get());
 
 	m_menuScene = std::make_unique<TitleScene>();
-	m_menuScene->setIdle(30, Event::CHANGE_SCENE_DEMO_SCREEN);
+	m_menuScene->setIdle(3, Event::CHANGE_SCENE_DEMO_SCREEN);
 	m_all_scenes.push_back(m_menuScene.get());
 
 	m_gameSettingsScene = std::make_unique<GameSettingsScene>();
@@ -245,7 +245,7 @@ void Game::buildGame()
 	m_all_scenes.push_back(m_gameOverScene.get());
 
 	m_demoScene = std::make_unique<DemoScene>();
-	m_demoScene->setIdle(600, Event::CHANGE_SCENE_MAIN_MENU);
+	m_demoScene->setIdle(-1, Event::CHANGE_SCENE_MELEE_MENU);
 	m_all_scenes.push_back(m_demoScene.get());
 
 	//add all listeners to all scenes
@@ -270,10 +270,10 @@ void Game::buildGame()
 	}
 
 	//add chickens to demo scene
-	m_demoScene->AddCharacter(0, "Chicken", m_RD, true);
-	m_demoScene->AddCharacter(1, "Chicken", m_RD, true);
-	m_demoScene->AddCharacter(2, "Chicken", m_RD, true);
-	m_demoScene->AddCharacter(3, "Chicken", m_RD, true);
+	m_demoScene->AddCharacter(0, "Chicken", m_RD, true, true);
+	m_demoScene->AddCharacter(1, "Chicken", m_RD, true, true);
+	m_demoScene->AddCharacter(2, "Chicken", m_RD, true, true);
+	m_demoScene->AddCharacter(3, "Chicken", m_RD, true, true);
 }
 
 // Helper method to prepare the command list for rendering and clear the back buffers.

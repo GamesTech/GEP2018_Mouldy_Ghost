@@ -3,6 +3,7 @@
 #include "RenderData.h"
 #include "Background.h"
 #include "FinalDestination.h"
+#include "AIController.h"
 
 void DemoScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
@@ -44,6 +45,19 @@ void DemoScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		float x_dist = top_left.x - bottom_right.x;
 		float y_dist = top_left.y - bottom_right.y;
 		float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
+
+		m_cam_zoom = m_zoom_rate / dist;
+		if (m_cam_zoom < m_min_zoom)
+		{
+			m_cam_zoom = m_min_zoom;
+		}
+		if (m_cam_zoom > m_max_zoom)
+		{
+			m_cam_zoom = m_max_zoom;
+		}
+
+		//this scales the zoom to the screen size
+		m_cam_zoom *= (m_GSD->window_size.x / 1000);
 	}
 
 	if (!m_infiniteTime)

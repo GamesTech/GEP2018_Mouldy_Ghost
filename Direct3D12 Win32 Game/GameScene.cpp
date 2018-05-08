@@ -109,7 +109,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
-void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled)
+void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo)
 {
 	if (ai_controlled)
 	{
@@ -155,7 +155,10 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bo
 	for (int j = 0; j < listeners.size(); j++)
 	{
 		players[i]->addListener(listeners[j]);
-		listeners[j]->onNotify(players[i].get(), Event::PLAYER_SPAWN);
+		if (!demo)
+		{
+			listeners[j]->onNotify(players[i].get(), Event::PLAYER_SPAWN);
+		}
 	}
 }
 

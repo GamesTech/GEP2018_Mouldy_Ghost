@@ -24,16 +24,12 @@ void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 {
 	Platform* testplatform = new Platform(_RD, "platform");
 
-	testplatform->SetPos(Vector2(200, 400));
-	//testplatform->SetScale(Vector2(2, 0.2));
-	//testplatform->CentreOrigin();
+	testplatform->SetSpawn(Vector2(600, 400));
 
 	Rectangle rect = Rectangle
 	(testplatform->GetPos().x, testplatform->GetPos().y,
 		testplatform->TextureSize().x,
 		testplatform->TextureSize().y);
-	
-	/*testplatform->CentreOrigin();*/
 
 	testplatform->GetPhysics()->SetCollider(rect);
 
@@ -44,7 +40,7 @@ void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 	MovingPlatform* test_moving = new MovingPlatform(_RD, Vector2(50, 50), Vector2(50, 400), 4.0f, 2.0f, "platform");
 	test_moving->SetPos(Vector2(50, 50));
 
+	test_moving->GetPhysics()->SetCollider(rect);
+
 	platforms.push_back(test_moving);
-	
-	
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-const float m_gravity = 9.8f;
+class Item;
 
 enum Axis
 {
@@ -13,7 +13,7 @@ enum Axis
 class Physics2D
 {
 public:
-	Physics2D(RenderData* _RD, string _filename);
+	Physics2D();
 	~Physics2D();
 
 	void AddForce(Vector2 _push) { m_acc += _push / m_mass; }
@@ -29,21 +29,32 @@ public:
 	const float GetBounce() { return m_bounciness; }
 	void SetGrav(float _grav) { m_gravity_scale = _grav; }
 	const float GetGrav() { return m_gravity_scale; }
-	void SetOwner(GameObject2D* _owner) { owner = _owner; }
-	GameObject2D* GetOwner() { return owner; }
+	void SetOwner(GameObject2D* _owner) { m_owner = _owner; }
+	GameObject2D* GetOwner() { return m_owner; }
 
 	virtual void Tick(GameStateData* _GSD, Vector2& _pos);
 	
-	void SetCollider(Rectangle _collider)
-	{ m_collider = _collider; }
-	Rectangle GetCollider() { return m_collider; }
-	void MoveCollider(Vector2 _pos) { m_collider.Offset(_pos.x, _pos.y); }
+	void SetCollider(Rectangle _collider){ m_collider = _collider; }
+	Rectangle GetCollider() { if (&m_collider) { return m_collider; } else return Rectangle(); }
+	void MoveCollider(Vector2 _pos) {m_collider.Offset(_pos.x, _pos.y);}
+
+	void ScaleCollider(Vector2 _by, Vector2 _owner_scale);
+
+	void removeFromCurrentlyColliding(Physics2D* col);
+
+	Item* GetItem();
+#if _DEBUG
+	void RenderCorners(Vector2 _cam);
+#endif;
 
 protected:
-	GameObject2D* owner = nullptr;
+	GameObject2D* m_owner = nullptr;
 
 	Rectangle m_collider;
 	std::vector<Physics2D*> currently_colliding;
+
+	void CheckForCollisions(GameStateData * _GSD, Vector2& _pos);
+	Vector2 GetNormal(Vector2 _point);
 
 	Vector2 m_vel;
 	Vector2 m_acc;
@@ -53,4 +64,6 @@ protected:
 
 	float m_gravity_scale;
 	float m_bounciness;
+
+	Vector2 m_collider_scale = Vector2::One;
 };

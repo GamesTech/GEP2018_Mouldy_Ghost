@@ -11,18 +11,18 @@
 #include "StepTimer.h"
 #include "Audio.h"
 #include "EventHandler.h"
+#include "InputSystem.h"
+#include "CharacterManager.h"
 #include <vector>
 using std::vector;
 
+class SceneHandler;
+class AudioHandler;
+class GameSettingsHandler;
+class CharacterLifeHandler;
+
 struct RenderData;
 struct GameStateData;
-
-enum SceneEnum
-{
-	GAME_SCENE,
-	TEST_SCENE,
-	PHYSICS_SCENE
-};
 
 // A basic game implementation that creates a D3D12 device and
 // provides a game loop.
@@ -56,6 +56,8 @@ private:
     void Update(DX::StepTimer const& timer);
     void Render();
 
+	void buildGame();
+
     void Clear();
     void Present();
 
@@ -67,8 +69,6 @@ private:
     void GetAdapter(IDXGIAdapter1** ppAdapter);
 
     void OnDeviceLost();
-
-	bool SwitchToScene(SceneEnum _scene, bool _reset);
 
     // Application state
     HWND                                                m_window;
@@ -105,16 +105,22 @@ private:
 
 	GameStateData* m_GSD;
 
-	Scene* m_activeScene;
-	GameScene* m_gameScene;
-	TestScene* m_testScene;
-	PhysicsScene* m_physScene;
+	std::unique_ptr<GameScene> m_gameScene;
+	std::unique_ptr<TitleScene> m_menuScene;
+	std::unique_ptr<MeleeScene> m_meleeScene;
+	std::unique_ptr<CharacterSelectScene> m_characterSelectScene;
+	std::unique_ptr<GameSettingsScene> m_gameSettingsScene;
+	std::unique_ptr<GameOverScene> m_gameOverScene;
 
 	std::vector<Scene*> m_all_scenes;
 
 	//GEP:: Keyboard and Mouse Abstractions for basic input system
 	void ReadInput();
+
+	InputSystem m_input;
 	std::unique_ptr<DirectX::Keyboard> m_keyboard;
+	DirectX::Keyboard::State m_prev_keyboard;
+
 	std::unique_ptr<DirectX::Mouse> m_mouse;
 
 	std::unique_ptr<DirectX::GamePad> m_gamePad;
@@ -124,5 +130,10 @@ private:
 	std::unique_ptr<DirectX::AudioEngine> m_audEngine;
 
 	//Vector of managers
-	std::vector<std::unique_ptr<EventHandler>> listeners;
+	std::unique_ptr<AudioHandler> m_musicListener = nullptr;
+	std::unique_ptr<SceneHandler> m_sceneListener = nullptr;
+	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
+	std::unique_ptr<CharacterLifeHandler> m_lifeListener = nullptr;
+	std::unique_ptr<SpawnHandler> m_spawner = nullptr;
+	std::vector<EventHandler*> listeners;
 };

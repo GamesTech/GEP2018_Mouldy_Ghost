@@ -1,12 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ImageContentTask Include="guides_logo.png" />
-    <ImageContentTask Include="twist.png" />
-    <ImageContentTask Include="gens.png" />
-    <ImageContentTask Include="circle.png" />
-    <ImageContentTask Include="rectangle.png" />
+    <ImageContentTask Include="colliderdebug.png" />
     <ImageContentTask Include="platform.png" />
+    <ImageContentTask Include="SpriteSheets\grant.png" />
+    <ImageContentTask Include="default_item_texture.png" />
+    <ImageContentTask Include="hit.png" />
+    <ImageContentTask Include="apple.png" />
+    <ImageContentTask Include="bomb.png" />
+    <ImageContentTask Include="gens.png" />
+    <ImageContentTask Include="greenmario.png" />
+    <ImageContentTask Include="terraria.png" />
+    <ImageContentTask Include="yoshi.png" />
+    <ImageContentTask Include="explosion.png" />
+    <ImageContentTask Include="ball.png" />
+    <ImageContentTask Include="mine.png" />
+    <ImageContentTask Include="tree.png" />
+    <ImageContentTask Include="sky.png" />
+    <ImageContentTask Include="field.png" />
+    <ImageContentTask Include="nige.jpg" />
+    <ImageContentTask Include="baseball_bat.png" />
+    <ImageContentTask Include="tornado_sword.png" />
+    <ImageContentTask Include="tornado.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenFly.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenAttack.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenIdle.png" />
+    <ImageContentTask Include="str_buff.png" />
+    <ImageContentTask Include="podium0.png" />
+    <ImageContentTask Include="podium1.png" />
+    <ImageContentTask Include="podium2.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

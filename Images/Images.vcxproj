@@ -123,23 +123,84 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ImageContentTask Include="guides_logo.png" />
-    <ImageContentTask Include="twist.png" />
+    <Text Include="READ_ME.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="colliderdebug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="platform.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\grant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="default_item_texture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="hit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="apple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="bomb.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="gens.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="READ_ME.txt" />
+    <ImageContentTask Include="greenmario.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="circle.png" />
+    <ImageContentTask Include="terraria.png" />
+    <ImageContentTask Include="yoshi.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="rectangle.png" />
+    <ImageContentTask Include="explosion.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="platform.png" />
+    <ImageContentTask Include="ball.png" />
+    <ImageContentTask Include="mine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="sky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="field.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="nige.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="baseball_bat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tornado_sword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tornado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\ChickenFly.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\ChickenAttack.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="str_buff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="podium0.png" />
+    <ImageContentTask Include="podium1.png" />
+    <ImageContentTask Include="podium2.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,17 @@
+type:		>explosive
+image:		>mine
+-- all items
+Name:		>mine
+pickup:		>none
+use:		>throw
+power:		>5
+-- throwable
+on throw	>activate
+player hit 	>explode
+ground hit 	>stick
+-- explosive
+fuse		>50
+exp range	>10
+
+
+

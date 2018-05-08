@@ -74,6 +74,33 @@
     <Filter Include="GameObjects\Stages\Source">
       <UniqueIdentifier>{901b3222-49c9-4a70-aab2-7c8d0e2778b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{75a67776-97ae-4f58-b325-a572cc2488b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\Headers">
+      <UniqueIdentifier>{c999f233-620d-4052-a490-63ac4a6d12e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\Source">
+      <UniqueIdentifier>{8db5002c-5dc3-41f3-87df-76ee9f1c409b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Attacks">
+      <UniqueIdentifier>{1dc3f502-6646-4c28-88b7-ec38f84796a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{1d143d64-633e-49e5-a5a5-06765ab49473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Attacks\Headers">
+      <UniqueIdentifier>{7125c717-77a9-45f0-850d-da99fd1b37fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Attacks\Source">
+      <UniqueIdentifier>{692f295d-8453-4a1d-a5fa-2086be35cfd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{cb8250ec-117a-4e11-ba8f-18bbd60a9c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{27dfed5a-179f-40c2-97ca-9ea8d6398f1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -112,9 +139,6 @@
     <ClInclude Include="SDKMeshGO3D.h">
       <Filter>GameObjects\3D\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Player2D.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>GameObjects\Sounds\Headers</Filter>
     </ClInclude>
@@ -136,9 +160,6 @@
     <ClInclude Include="TestSound.h">
       <Filter>GameObjects\Sounds\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Physics2D.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="EventRotate.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
@@ -154,24 +175,14 @@
     <ClInclude Include="GameScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h">
-      <Filter>Scenes\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="EventHandler.h">
       <Filter>EventSystem\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="MusicHandler.h" />
-    <ClInclude Include="PhysicsScene.h">
-      <Filter>Scenes\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="AllScenes.h">
       <Filter>Game Base\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="TestPhys.h">
-      <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>GameObjects\Stages\Header</Filter>
@@ -185,9 +196,6 @@
     <ClInclude Include="Events.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="MusicHandler.h">
-      <Filter>EventSystem\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
@@ -197,6 +205,140 @@
     <ClInclude Include="GameObjectTags.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Throwable.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Characters.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosive.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemSpawner.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics2D.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="VisiblePhysics.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackData.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageCollider.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CounterAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GrabAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PassiveAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DashAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettingsScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardAttack.h">
+      <Filter>Attacks\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharSelectScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemState.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettingsHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterLifeHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="Emitter.h" />
+    <ClInclude Include="Animation2D.h" />
+    <ClInclude Include="TestAnim.h" />
+    <ClInclude Include="Tornado.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Emitter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadFile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TestAnim.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleHandler.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Buff.h">
+      <Filter>Items\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerFont.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -226,9 +368,6 @@
     <ClCompile Include="SDKMeshGO3D.cpp">
       <Filter>GameObjects\3D\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Player2D.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>GameObjects\Sounds\Source</Filter>
     </ClCompile>
@@ -247,9 +386,6 @@
     <ClCompile Include="TestSound.cpp">
       <Filter>GameObjects\Sounds\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Physics2D.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
-    </ClCompile>
     <ClCompile Include="EventRotate.cpp">
       <Filter>EventSystem\Source</Filter>
     </ClCompile>
@@ -265,20 +401,8 @@
     <ClCompile Include="GameScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Scenes\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="MusicHandler.cpp">
-      <Filter>EventSystem\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsScene.cpp">
-      <Filter>Scenes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="TestPhys.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>GameObjects\Stages\Source</Filter>
@@ -294,6 +418,118 @@
     </ClCompile>
     <ClCompile Include="SceneHandler.cpp">
       <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuButton.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Throwable.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Characters.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosive.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemSpawner.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="VisiblePhysics.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics2D.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageCollider.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettingsScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DashAttack.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardAttack.cpp">
+      <Filter>Attacks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharSelectScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettingsHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterLifeHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="Animation2D.cpp" />
+    <ClCompile Include="TestAnim.cpp" />
+    <ClCompile Include="Tornado.cpp">
+      <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Emitter.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAnim.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Buff.cpp">
+      <Filter>Items\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

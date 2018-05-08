@@ -6,8 +6,10 @@
 #include "Game.h"
 #include "RenderData.h"
 #include "GameStateData.h"
-#include "TestScene.h"
-#include "MusicHandler.h"
+#include "AudioHandler.h"
+#include "SceneHandler.h"
+#include "GameSettingsHandler.h"
+#include "CharacterLifeHandler.h"
 
 extern void ExitGame();
 
@@ -28,6 +30,7 @@ Game::Game() :
 
 Game::~Game()
 {
+	//stop the audio engine
 	if (m_audEngine)
 	{
 		m_audEngine->Suspend();
@@ -38,11 +41,6 @@ Game::~Game()
 
 	delete m_RD;
 	delete m_GSD;
-
-	for (int i = 0; i < m_all_scenes.size(); i++)
-	{
-		delete m_all_scenes[i];
-	}
 
 	m_keyboard.reset();
 	m_mouse.reset();
@@ -68,6 +66,8 @@ void Game::Initialize(HWND window, int width, int height)
 	m_audEngine = std::make_unique<AudioEngine>(eflags);
 
 	m_GSD = new GameStateData;
+	m_GSD->window_size.x = width;
+	m_GSD->window_size.y = height;
 
 //GEP::set up keyboard mouse, & gamepad input systems
 	m_keyboard = std::make_unique<Keyboard>();
@@ -85,24 +85,40 @@ void Game::Initialize(HWND window, int width, int height)
 	m_RD->m_resourceDescriptors = std::make_unique<DescriptorHeap>(m_d3dDevice.Get(),
 		D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
 		D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
-		100);
+		1000);
 
 	//stuff for SDKMeshGO3D renderer
 	m_RD->m_states = std::make_unique<CommonStates>(m_d3dDevice.Get());
+
+
+	buildGame();
 
 	ResourceUploadBatch resourceUpload(m_d3dDevice.Get());
 
 	resourceUpload.Begin();	
 	RenderTargetState rtState(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT);
 
+
+
 	SpriteBatchPipelineStateDescription pd(rtState );
 	pd.blendDesc = m_RD->m_states->NonPremultiplied;
 	m_RD->m_spriteBatch = std::make_unique<SpriteBatch>(m_d3dDevice.Get(), resourceUpload, pd);
-	m_RD->m_font = std::make_unique<SpriteFont>(m_d3dDevice.Get(), resourceUpload,
-		L"courier.spritefont",
+
+	m_RD->m_controller_font = std::make_unique<SpriteFont>(m_d3dDevice.Get(), resourceUpload,
+		L"xboxController.spritefont",
 		m_RD->m_resourceDescriptors->GetCpuHandle(m_RD->m_resourceCount),
 		m_RD->m_resourceDescriptors->GetGpuHandle(m_RD->m_resourceCount));
 	m_RD->m_resourceCount++;
+
+	m_RD->m_font = std::make_unique<SpriteFont>(m_d3dDevice.Get(), resourceUpload,
+		L"Arial.spritefont",
+		m_RD->m_resourceDescriptors->GetCpuHandle(m_RD->m_resourceCount),
+		m_RD->m_resourceDescriptors->GetGpuHandle(m_RD->m_resourceCount));
+	m_RD->m_resourceCount++;
+
+
+
+
 
 	auto uploadResourcesFinished = resourceUpload.End(m_commandQueue.Get());
 
@@ -112,7 +128,6 @@ void Game::Initialize(HWND window, int width, int height)
 	m_RD->m_spriteBatch->SetViewport(viewport);
 
 	m_RD->m_batch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(m_d3dDevice.Get());
-
 	EffectPipelineStateDescription pd2(
 		&VertexPositionColor::InputLayout,
 		CommonStates::Opaque,
@@ -131,30 +146,9 @@ void Game::Initialize(HWND window, int width, int height)
 	m_RD->m_GPeffect = std::make_unique<BasicEffect>(m_d3dDevice.Get(), EffectFlags::Lighting, pd3);
 	m_RD->m_GPeffect->EnableDefaultLighting();
 
-	
-    // TODO: Change the timer settings if you want something other than the default variable timestep mode.
-    // e.g. for 60 FPS fixed timestep update logic, call:
-    /*
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
-    */
 
-	//populate the listener vector with all listeners
-	//at the moment this needs to be done before a scene is initialised
-	listeners.push_back(std::make_unique<MusicHandler>());
-
-	//m_activeScene->addListener(listeners[0].get());
-
-	m_gameScene = new GameScene();
-	m_gameScene->addListener(listeners[0].get());
-	m_gameScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
-	m_testScene = new TestScene();
-	m_testScene->addListener(listeners[0].get());
-	m_testScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
-	m_physScene = new PhysicsScene();
-	m_physScene->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
-
-	m_activeScene = m_gameScene;
 
 }
 
@@ -175,7 +169,13 @@ void Game::Update(DX::StepTimer const& timer)
 	ReadInput();
     m_GSD->m_dt = float(timer.GetElapsedSeconds());
 
-	m_activeScene->Update(timer, m_audEngine);
+
+	m_sceneListener->getActiveScene()->Update(timer, m_audEngine);
+	if (m_sceneListener->getActiveScene()->getShouldReset())
+	{
+		buildGame();
+	}
+	//m_activeScene->Update(timer, m_audEngine);
 }
 
 //GEP:: Draws the scene.
@@ -193,11 +193,73 @@ void Game::Render()
 
 //draw each type of 3D objects
 
-	m_activeScene->Render(m_commandList);	
+	m_sceneListener->getActiveScene()->Render(m_commandList);
+
+	//m_activeScene->Render(m_commandList);	
 
     // Show the new frame.
     Present();
 	m_graphicsMemory->Commit(m_commandQueue.Get());
+}
+
+void Game::buildGame()
+{
+	m_all_scenes.clear();
+	listeners.clear();
+	m_RD->m_resourceCount = 0;
+	ImageGO2D::allTextures.clear();
+
+	//populate the listener vector with all listeners
+	//at the moment this needs to be done before a scene is initialised
+	m_musicListener = std::make_unique<AudioHandler>();
+	m_sceneListener = std::make_unique<SceneHandler>();
+	m_gameSettings = std::make_unique<GameSettingsHandler>();
+	m_lifeListener = std::make_unique<CharacterLifeHandler>();
+	m_spawner = std::make_unique<SpawnHandler>();
+	listeners.push_back(m_musicListener.get());
+	listeners.push_back(m_sceneListener.get());
+	listeners.push_back(m_gameSettings.get());
+	listeners.push_back(m_lifeListener.get());
+	listeners.push_back(m_spawner.get());
+
+	m_gameScene = std::make_unique<GameScene>();
+	m_all_scenes.push_back(m_gameScene.get());
+
+	m_menuScene = std::make_unique<TitleScene>();
+	m_all_scenes.push_back(m_menuScene.get());
+
+	m_gameSettingsScene = std::make_unique<GameSettingsScene>();
+	m_all_scenes.push_back(m_gameSettingsScene.get());
+
+	m_meleeScene = std::make_unique<MeleeScene>();
+	m_all_scenes.push_back(m_meleeScene.get());
+
+	m_characterSelectScene = std::make_unique<CharacterSelectScene>(m_gameScene.get());
+	m_all_scenes.push_back(m_characterSelectScene.get());
+
+	m_gameOverScene = std::make_unique<GameOverScene>();
+	m_all_scenes.push_back(m_gameOverScene.get());
+
+	//add all listeners to all scenes
+	for (int i = 0; i < m_all_scenes.size(); i++)
+	{
+		for (int j = 0; j < listeners.size(); j++)
+		{
+			m_all_scenes[i]->addListener(listeners[j]);
+		}
+		m_all_scenes[i]->Initialise(m_RD, m_GSD, m_outputWidth, m_outputHeight, m_audEngine);
+	}
+
+	//init listeners
+	m_sceneListener->init(m_GSD, m_all_scenes);
+	m_lifeListener->SetGameOver(m_gameOverScene.get());
+	m_musicListener->init(m_GSD);
+
+	//tell the listeners we've loaded!
+	for (int i = 0; i < listeners.size(); i++)
+	{
+		listeners[i]->onNotify(nullptr, Event::APPLICATION_LOADED);
+	}
 }
 
 // Helper method to prepare the command list for rendering and clear the back buffers.
@@ -239,6 +301,7 @@ void Game::Present()
     // The first argument instructs DXGI to block until VSync, putting the application
     // to sleep until the next VSync. This ensures we don't waste any cycles rendering
     // frames that will never be displayed to the screen.
+	WaitForGpu();
     HRESULT hr = m_swapChain->Present(1, 0);
 
     // If the device was reset we must completely reinitialize the renderer.
@@ -660,67 +723,59 @@ void Game::OnDeviceLost()
     CreateResources();
 }
 
-bool Game::SwitchToScene(SceneEnum _scene, bool _reset)
-{
-	m_GSD->objects_in_scene.clear();
-
-	if (_reset)
-	{
-		m_activeScene->Reset();
-	}
-
-	switch (_scene)
-	{
-	case GAME_SCENE:
-		m_activeScene = m_gameScene;
-		return true;
-	case TEST_SCENE:
-		m_activeScene = m_testScene;
-		return true;
-	default:
-		return false;
-	}
-}
-
 void Game::ReadInput()
 {
 //GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
 
-	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
-	m_GSD->m_keyboardState = m_keyboard->GetState();
-
 	for (int i = 0; i < 4; i++)
 	{
+		m_GSD->menu_action[i] = NONE;
+		m_GSD->game_actions[i].clear();
+
 		auto state = m_gamePad->GetState(i);
 
+		//if this is the game scene take inputs for the game
+		if (m_sceneListener->getActiveScene()->getType() == "GameScene")
+		{
+			m_input.getAction(i, m_keyboard->GetState(),
+				m_prev_keyboard, m_GSD->game_actions[i]);
+			m_input.getAction(state,
+				m_buttons[i], m_GSD->game_actions[i]);
+		}
+		//otherwise take menu inputs
+		else
+		{
+			m_GSD->menu_action[i] = m_input.getAction(i, m_keyboard->GetState(), m_prev_keyboard);
+			if (m_GSD->menu_action[i] == NONE)
+			{
+				m_GSD->menu_action[i] = m_input.getAction(state, m_buttons[i]);
+			}
+		}
 		m_buttons[i].Update(state);
-
-		m_GSD->m_gamePadState[i] = state;
-		m_GSD->m_buttonState[i] = m_buttons[i];
-
 	}
+
+	m_prev_keyboard = m_keyboard->GetState();
 		//https://github.com/Microsoft/DirectXTK/wiki/Game-controller-input
 
-	if (m_GSD->m_keyboardState.A && !m_GSD->m_prevKeyboardState.A)
+
+	if (m_GSD->game_actions[0].size() > 0)
 	{
-		SwitchToScene(GAME_SCENE, true);
+		if (m_GSD->game_actions[0][0] == P_QUIT)
+		{
+			m_gameScene->RemoveAllCharacters();
+			m_sceneListener->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
+			m_gameOverScene->Reset();
+		}
 	}
-	if (m_GSD->m_keyboardState.S && !m_GSD->m_prevKeyboardState.S)
-	{
-		SwitchToScene(GAME_SCENE, false);
-	}
-	if (m_GSD->m_keyboardState.D && !m_GSD->m_prevKeyboardState.D)
-	{
-		SwitchToScene(TEST_SCENE, true);
-	}
-	if (m_GSD->m_keyboardState.F && !m_GSD->m_prevKeyboardState.F)
-	{
-		SwitchToScene(TEST_SCENE, false);
-	}
+
 
 	//Quit if press Esc
-	if (m_GSD->m_keyboardState.Escape)
+	if (m_GSD->menu_action[0] == QUIT)
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, Event::QUIT_GAME);
+		}
 		PostQuitMessage(0);
-
-	m_GSD->m_mouseState = m_mouse->GetState();
+	}
 }

@@ -13,6 +13,9 @@ public:
 
 	void Tick(GameStateData* _GSD) override;
 
+	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
+
+	virtual void CollisionExit(Physics2D * _collision) override;
 
 private:
 	Vector2 start_pos;

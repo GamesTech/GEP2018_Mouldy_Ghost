@@ -1,0 +1,14 @@
+type:		>explosive
+image:		>bomb
+-- all items
+Name:		>bomb
+pickup:		>activate
+use:		>throw
+power:		>5
+-- throwable 
+on throw	>activate
+player hit 	>explode
+ground hit 	>bounce
+-- explosive
+fuse		>10
+exp range	>25

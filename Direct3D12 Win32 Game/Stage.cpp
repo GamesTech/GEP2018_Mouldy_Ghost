@@ -4,6 +4,10 @@
 
 Stage::Stage()
 {
+	spawn[0] = Vector2(-100, -100);
+	spawn[1] = Vector2(150, -100);
+	spawn[2] = Vector2(700, 100);
+	spawn[3] = Vector2(400, 100);
 }
 
 Stage::~Stage()
@@ -15,22 +19,19 @@ void Stage::update(GameStateData* _GSD)
 	
 }
 
-void Stage::render(RenderData * _RD)
+void Stage::addObjectsToScene(std::vector<GameObject2D*>& _g_objects)
 {
-	for (auto& object : other_objects)
+	for (int i = 0; i < platforms.size(); i++)
 	{
-		object->Render(_RD);
+		_g_objects.push_back(platforms[i]);
 	}
-
-	for (auto& platform : platforms)
+	for(int i = 0; i < other_objects.size(); i++)
 	{
-		platform->Render(_RD);
+		_g_objects.push_back(other_objects[i]);
 	}
-
-	/*for (int i = 0; i < platforms.size(); i++)
-	{
-		platforms[i]->Render(_RD);
-	}*/
-
 }
 
+Vector2 Stage::getRandomSpawnPoint()
+{
+	return spawn[rand() % 4];
+}

@@ -30,6 +30,10 @@ void GameObject2D::ResetPos()
 	{
 		m_pos = m_spawn_pos;
 	}
+	if (m_physics)
+	{
+		m_physics->ResetForce(BOTH_AXES);
+	}
 }
 
 void GameObject2D::SetOri(float _ori)
@@ -37,17 +41,27 @@ void GameObject2D::SetOri(float _ori)
 	m_orientation = _ori;	
 }
 
+void GameObject2D::move(Vector2 _move_by)
+{
+	m_pos += _move_by;
+}
+
 void GameObject2D::Tick(GameStateData * _GSD)
 {
 	if (m_pos != previous_pos)
 	{
 		Vector2 dif = m_pos - previous_pos;
+		dif /= 2;
 		for (int i = 0; i < children.size(); i++)
 		{
 			children[i]->SetPos(children[i]->GetPos() + dif);
 		}
 		previous_pos = m_pos;
 	}
+}
+
+void GameObject2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
+{
 }
 
 std::string GameObject2D::GetName()
@@ -62,6 +76,7 @@ void GameObject2D::SetName(std::string string)
 
 GameObjectTag GameObject2D::GetTag()
 {
+	if(this)
 	return tag;
 }
 
@@ -113,7 +128,7 @@ void GameObject2D::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
 }
 
-void GameObject2D::Collision(Physics2D * _collision)
+void GameObject2D::Collision(Physics2D * _collision, Vector2 _normal)
 {
 }
 

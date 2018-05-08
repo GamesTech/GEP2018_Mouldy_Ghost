@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "StepTimer.h"
 #include "EventHandler.h"
+#include "IdleHandler.h"
 
 using std::vector;
 
@@ -11,6 +12,8 @@ class Scene
 public:
 	Scene() = default;
 	~Scene();
+
+	virtual std::string getType() = 0;
 
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
@@ -24,6 +27,9 @@ public:
 	virtual void Render
 	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList);
 
+	//adds the physics from the game's gameobjects to this scene
+	void PhysicsInScene(GameStateData* _GSD);
+
 	//Find game objects
 	GameObject2D* Find2DGameObjectWithName(std::string name);
 	GameObject2D** FindAll2DGameobjectsWithName(std::string name);
@@ -34,16 +40,26 @@ public:
 	//returns a dynamic array of pointers to GameObject2D, you will need to delete it yourself
 
 	void addListener(EventHandler* _event);
+	bool getShouldReset() const { return m_gameShouldReset; }
+	void setShouldReset(bool _to) { m_gameShouldReset = _to; }
 
 protected:
+	bool m_input_received = false;
 	vector<GameObject3D*> m_3DObjects;
 	vector<GameObject2D*> m_2DObjects;
 	vector<Sound*> m_sounds;
 
 	vector<EventHandler*> listeners;
+	IdleHandler m_idleHandler;
 
-	Camera* m_cam;
+	std::unique_ptr<Camera> m_cam = nullptr;
+	Vector2 m_cam_pos = Vector2::Zero;
+	float m_cam_zoom = 1;
+	float m_zoom_rate = 700.0f;
+	float m_max_zoom = 1.5;
+	float m_min_zoom = 0.1f;
 
 	RenderData* m_RD;
 	GameStateData* m_GSD;
+	bool m_gameShouldReset = false;
 };

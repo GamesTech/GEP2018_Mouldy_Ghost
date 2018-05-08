@@ -33,20 +33,21 @@ public:
 	void SetOri(float _ori);
 	void SetColour(Color _col) { m_colour = _col; }
 	void SetScale(Vector2 _scale) { m_scale = _scale; }
+	void move(Vector2 _move_by);
 
 	virtual void CentreOrigin() = 0;
 	
 	Physics2D* GetPhysics() { return m_physics; }
 
 	virtual void Tick(GameStateData* _GSD);
-	virtual void Render(RenderData* _RD) = 0;
+	virtual void Render(RenderData* _RD, int _sprite = 0,
+		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) = 0;
 
 	std::string GetName();
 	void SetName(std::string string);
 
 	GameObjectTag GetTag();
 	void SetTag(GameObjectTag tag_);
-
 	GameObject2D* GetParent();
 	void SetParent(GameObject2D* newParent);
 	void AddChild(GameObject2D* object);
@@ -54,11 +55,10 @@ public:
 
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal);
-	virtual void Collision(Physics2D* _collision);
+	virtual void Collision(Physics2D* _collision, Vector2 _normal);
 	virtual void CollisionExit(Physics2D* _collision);
 
 	void addListener(EventHandler* _event);
-
 protected:
 	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;
@@ -74,7 +74,7 @@ protected:
 	Vector2 previous_pos = Vector2::Zero;
 	float previous_ori = 0.0f;
 
-	Physics2D* m_physics;
+	Physics2D* m_physics = nullptr;
 
 	std::vector<EventHandler*> listeners;
 };

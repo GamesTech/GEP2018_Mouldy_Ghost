@@ -3,7 +3,7 @@
 // Although it could be argues that in fact that is a more efficient way of doing it!
 #include "ImageGO2D.h"
 #include "Text2D.h"
-#include "Player2D.h"
+#include "Characters.h"
 #include "Platform.h"
 #include "MovingPlatform.h"
 

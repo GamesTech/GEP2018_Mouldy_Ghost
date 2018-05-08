@@ -3,6 +3,8 @@
 #include "RenderData.h"
 #include "GameStateData.h"
 #include "FinalDestination.h"
+#include "Battlefield.h"
+#include "Temple.h"
 #include "CharacterController.h"
 #include "GameSettingsHandler.h"
 #include "Player.h"
@@ -99,7 +101,7 @@ void GameScene::Initialise(RenderData * _RD,
 
 	//creating a stage
 	//could pass the name of the stage as a function paratemter
-	game_stage = std::make_unique<FinalDestination>();
+	game_stage = std::make_unique<Temple>();
 	game_stage->init(m_RD,m_GSD);
 
 	for (int i = 0; i < m_2DObjects.size(); i++)

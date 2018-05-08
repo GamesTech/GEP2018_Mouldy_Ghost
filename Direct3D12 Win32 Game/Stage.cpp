@@ -12,6 +12,13 @@ Stage::Stage()
 
 Stage::~Stage()
 {
+	for (auto& platform : platforms)
+	{
+		delete platform;
+		platform = nullptr;
+	}
+
+	platforms.clear();
 }
 
 void Stage::update(GameStateData* _GSD)

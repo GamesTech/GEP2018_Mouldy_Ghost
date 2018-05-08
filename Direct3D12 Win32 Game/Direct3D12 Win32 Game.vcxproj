@@ -252,6 +252,7 @@
     <ClInclude Include="Animation2D.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Buff.h" />
     <ClInclude Include="CharacterLifeHandler.h" />
     <ClInclude Include="CharacterManager.h" />
@@ -291,6 +292,7 @@
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="Temple.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
@@ -329,6 +331,7 @@
   <ItemGroup>
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Battlefield.cpp" />
     <ClCompile Include="Buff.cpp" />
     <ClCompile Include="CharacterLifeHandler.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
@@ -359,6 +362,7 @@
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="Temple.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="StandardAttack.cpp" />

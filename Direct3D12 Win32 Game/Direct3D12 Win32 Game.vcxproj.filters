@@ -339,6 +339,12 @@
       <Filter>Items\Headers</Filter>
     </ClInclude>
     <ClInclude Include="ControllerFont.h" />
+    <ClInclude Include="Battlefield.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Temple.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -530,6 +536,12 @@
     </ClCompile>
     <ClCompile Include="Buff.cpp">
       <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Battlefield.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Temple.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

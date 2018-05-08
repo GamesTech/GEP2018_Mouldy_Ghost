@@ -44,9 +44,12 @@ namespace DX
             //throw std::out_of_range("String is too long");
         }
 
+
         float buttonHeight = butnFont->GetLineSpacing();
         float buttonScale = (textFont->GetLineSpacing() * scale.x) / buttonHeight;
-        float offsetY = buttonScale / 2.f;
+		buttonScale *= 2;
+        float offsetY =  buttonScale * 50;
+
 
         size_t j = 0;
         wchar_t strBuffer[4096] = {};
@@ -151,7 +154,7 @@ namespace DX
                     if (*strBuffer)
                     {
                         textFont->DrawString(spriteBatch, strBuffer, outPos, color, 0.f, XMFLOAT2(0.f, 0.f), XMFLOAT2(scale));
-                        outPos.x += XMVectorGetX(textFont->MeasureString(strBuffer)) * scale.x;
+                        outPos.x += XMVectorGetX(textFont->MeasureString(strBuffer)) * scale.x ;
                         memset(strBuffer, 0, sizeof(strBuffer));
                         j = 0;
                     }
@@ -163,7 +166,7 @@ namespace DX
                 case '\n':
                     if (*strBuffer)
                     {
-                        textFont->DrawString(spriteBatch, strBuffer, outPos, color, 0.f, XMFLOAT2(0.f, 0.f), XMFLOAT2( scale));
+                        textFont->DrawString(spriteBatch, strBuffer, outPos, color, 0.f, XMFLOAT2(0.f, 0.f), XMFLOAT2( scale ));
                         memset(strBuffer, 0, sizeof(strBuffer));
                         j = 0;
                     }

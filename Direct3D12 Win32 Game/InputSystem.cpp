@@ -352,7 +352,10 @@ MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard:
 		{
 			return (NAV_RIGHT);
 		}
-
+		if (_state.NumPad2 && !_prev_state.NumPad2)
+		{
+			return (ADVANCE_MENU);
+		}
 		if (_state.A && !_prev_state.A)
 		{
 			return (CONFIRM);
@@ -366,7 +369,7 @@ MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard:
 	default:
 		break;
 	}
-	if (_state.Space && !_prev_state.Space)
+	if (_state.NumPad1 && !_prev_state.NumPad1)
 	{
 		return ADVANCE_MENU;
 	}

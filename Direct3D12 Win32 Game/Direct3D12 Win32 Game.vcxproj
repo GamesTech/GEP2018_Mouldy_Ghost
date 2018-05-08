@@ -253,6 +253,7 @@
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Buff.h" />
+    <ClInclude Include="CharacterActions.h" />
     <ClInclude Include="CharacterLifeHandler.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="CharSelectScene.h" />
@@ -299,7 +300,7 @@
     <ClInclude Include="PassiveAttack.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="Platform.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="HumanController.h" />
     <ClInclude Include="ReadFile.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneHandler.h" />
@@ -332,6 +333,7 @@
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Buff.cpp" />
+    <ClCompile Include="CharacterActions.cpp" />
     <ClCompile Include="CharacterLifeHandler.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="CharSelectScene.cpp" />
@@ -370,7 +372,7 @@
     <ClCompile Include="AudioHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="HumanController.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneHandler.cpp" />
     <ClCompile Include="SDKMeshGO3D.cpp" />

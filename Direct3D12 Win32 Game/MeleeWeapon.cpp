@@ -86,7 +86,7 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 			
 			m_attacking = false;
 			m_state = ItemState::HELD;
-			player_ignore->setAttacking(false);
+			player_ignore->getActions()->setAttacking(false);
 
 			if (m_charge >= max_charge)
 			{

@@ -42,11 +42,9 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 		character.SetName(char_name);
 
 		float speed = std::stof(getFileData(character_file));
-		character.SetMoveSpeed(speed);
 		int jump_limit = std::stoi(getFileData(character_file));
-		character.SetJumpLimit(jump_limit);
 		int jump = std::stoi(getFileData(character_file));
-		character.SetJumpHeight(jump);
+		character.setMovement(speed, jump_limit, jump);
 
 
 		while(!character_file.eof())
@@ -62,7 +60,7 @@ void CharacterManager::PopulateCharacterList(RenderData* _RD)
 				character.AddAttack(DashAttack(attack_file, _RD));
 				break;
 			case 'A':
-				character.loadAnimations(attack_file, _RD);
+				character.getActions()->loadAnimations(attack_file, _RD, &character);
 				break;
 			default:
 				break;

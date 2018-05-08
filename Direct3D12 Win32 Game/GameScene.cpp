@@ -5,7 +5,7 @@
 #include "FinalDestination.h"
 #include "CharacterController.h"
 #include "GameSettingsHandler.h"
-#include "Player.h"
+#include "HumanController.h"
 #include "AIController.h"
 #include "SpawnHandler.h"
 #include "Background.h"
@@ -117,7 +117,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bo
 	}
 	else
 	{
-		entities[i] = std::make_unique<Player>(i);
+		entities[i] = std::make_unique<HumanController>(i);
 	}
 
 	//make a character for the scene

@@ -1,12 +1,12 @@
 #pragma once
 #include "CharacterController.h"
 
-class Player
+class HumanController
 	: public CharacterController
 {
 public:
-	Player(int _controller_id);
-	~Player() = default;
+	HumanController(int _controller_id);
+	~HumanController() = default;
 
 	virtual GameActions GetInput(GameStateData* _GSD);
 };

@@ -4,5 +4,5 @@
 void CharacterController::SetCharacter(Character * _character)
 {
 	m_character = _character;
-	_character->SetController(this);
+	_character->getActions()->SetController(this, _character);
 }

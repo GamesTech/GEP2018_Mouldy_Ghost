@@ -117,7 +117,7 @@ GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _G
 	{
 		if (m_character->GetPhysics()->GetVel().y > 0)
 		{
-			if (m_character->canJump())
+			if (m_character->getActions()->canJump())
 			{
 				actions.push_back(GameAction::P_JUMP);
 			}

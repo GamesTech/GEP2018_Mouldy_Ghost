@@ -58,10 +58,6 @@ void Explosive::Tick(GameStateData * _GSD)
 
 void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
-	if (_collision->GetOwner()->GetTag() == GameObjectTag::YO)
-	{
-		int i = 0;
-	}
 	Throwable::CollisionEnter(_collision, _normal);
 
 

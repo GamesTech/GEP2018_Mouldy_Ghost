@@ -128,7 +128,7 @@ void GameObject2D::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
 }
 
-void GameObject2D::Collision(Physics2D * _collision)
+void GameObject2D::Collision(Physics2D * _collision, Vector2 _normal)
 {
 }
 

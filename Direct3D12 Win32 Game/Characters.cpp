@@ -133,7 +133,7 @@ void Character::Tick(GameStateData * _GSD)
 void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
-	rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
+	rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
 	
 	const RECT* r = &RECT(rect);
 
@@ -294,6 +294,7 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 	}
 
 	float knockback = _force * (m_damage + 1) / 100;
+	_dir.y += 2;
 	m_physics->AddForce(_dir * knockback);
 	m_recovery_time = 0.1f;
 	m_last_to_hit = _attacker;
@@ -302,7 +303,7 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 void Character::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
 	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
-	if (o_tag == GameObjectTag::PLATFORM)
+	if (o_tag == GameObjectTag::PLATFORM && _normal == Vector2(0,-1))
 	{
 		on_floor = true;
 		m_jumps = 0;
@@ -324,7 +325,7 @@ void Character::CollisionExit(Physics2D * _collision)
 	}
 }
 
-void Character::Collision(Physics2D * _collision)
+void Character::Collision(Physics2D * _collision, Vector2 _normal)
 {
 	GameObjectTag o_tag = _collision->GetOwner()->GetTag();
 	if (o_tag == GameObjectTag::PLAYER)
@@ -338,10 +339,9 @@ void Character::Collision(Physics2D * _collision)
 			m_pos.x++;
 		}
 	}
-
-	if (o_tag == GameObjectTag::YO)
+	if (o_tag == GameObjectTag::PLATFORM && _normal != Vector2(0,-1))
 	{
-		int i = 0;
+		m_pos.y--;
 	}
 }
 

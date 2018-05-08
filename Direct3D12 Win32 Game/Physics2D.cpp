@@ -90,7 +90,7 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 
 					Vector2 normal = GetNormal(overlap.Center());
 
-					//m_owner->Collision(object);
+					m_owner->Collision(object, normal);
 
 					//check whether this object was being collided with on the last tick
 					bool on_list = false;

@@ -123,17 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ImageContentTask Include="guides_logo.png" />
-    <ImageContentTask Include="twist.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="READ_ME.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="rectangle.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="colliderdebug.png" />
@@ -206,6 +196,11 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="str_buff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="podium0.png" />
+    <ImageContentTask Include="podium1.png" />
+    <ImageContentTask Include="podium2.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

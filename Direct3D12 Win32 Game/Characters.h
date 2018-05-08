@@ -73,7 +73,7 @@ public:
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
 	virtual void CollisionExit(Physics2D* _collision) override;
-	virtual void Collision(Physics2D* _collision) override;
+	virtual void Collision(Physics2D* _collision, Vector2 _normal) override;
 
 	void AddAttack(StandardAttack _attack);
 	void AddAttack(DashAttack _attack);

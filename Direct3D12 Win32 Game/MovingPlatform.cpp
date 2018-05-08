@@ -15,6 +15,7 @@ MovingPlatform::MovingPlatform(RenderData * _RD, Vector2 _start, Vector2 _end, f
 
 	travel_time = _travel_time;
 	stay_time = _stay;
+	tag = GameObjectTag::PLATFORM;
 }
 
 MovingPlatform::MovingPlatform()

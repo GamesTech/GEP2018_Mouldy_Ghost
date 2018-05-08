@@ -106,13 +106,6 @@ void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	}
 }
 
-void Item::Collision(Physics2D * _collision)
-{
-	
-	//ignore coll with players
-
-}
-
 void Item::CollisionExit(Physics2D * _collision)
 {
 

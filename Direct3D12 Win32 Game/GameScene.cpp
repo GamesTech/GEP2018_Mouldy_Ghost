@@ -144,7 +144,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	players[i]->GetPhysics()->SetBounce(0.4f);
 
 	//give the player a collider
-	float width = players[i]->TextureSize().x / 2;
+	float width = players[i]->TextureSize().x;
 	float height = players[i]->TextureSize().y;
 	Rectangle rect = Rectangle
 	(players[i]->GetPos().x, players[i]->GetPos().y, width, height);

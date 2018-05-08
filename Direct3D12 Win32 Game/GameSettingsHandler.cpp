@@ -12,6 +12,12 @@ GameSettingsHandler::GameSettingsHandler()
 	m_time = 60;
 	m_infiniteTime = false;
 	m_infiniteLives = false;
+
+	//init availavle items
+	for (int i = 0; i < 7; i++)
+	{
+		available_items.push_back(true);
+	}
 }
 
 
@@ -96,6 +102,15 @@ void GameSettingsHandler::onNotify(GameObject2D * entity_, Event event_)
 	default:
 			break;
 	}
+}
+
+void GameSettingsHandler::onNotify(int _item_index, Event event_)
+{
+	if (event_ == Event::GAME_SETTINGS_ITEM_ACTIVATION)
+	{
+		available_items[_item_index] = !available_items[_item_index];
+	}
+
 }
 
 int GameSettingsHandler::getLives()

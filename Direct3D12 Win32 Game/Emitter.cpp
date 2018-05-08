@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Emitter.h"
 #include "RenderData.h"
+#include "GameStateData.h"
 #include <random>
 
 
@@ -161,6 +162,14 @@ void Emitter::CentreOrigin()
 
 void Emitter::Tick(GameStateData * _GSD)
 {
+	elapsedTime += _GSD->m_dt;
+
+	if (spawnRate > 0 && elapsedTime > (1 / spawnRate))
+	{
+		addParticles(elapsedTime / (1 / spawnRate));
+		elapsedTime = 0;
+	}
+
 	for (int i = 0; i < particles.size(); i++)
 	{
 		particles[i].Tick(_GSD);

@@ -21,10 +21,4 @@ public:
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 private:
 	std::unique_ptr<Menu> m_menu = nullptr;
-
-	std::unique_ptr<Particle> m_testParticle = nullptr;
-
-	std::unique_ptr<Emitter> m_testEmitter = nullptr;
-
-	std::unique_ptr<TestAnim> m_test_anim = nullptr;
 };

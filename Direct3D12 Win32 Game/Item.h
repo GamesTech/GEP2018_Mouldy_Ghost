@@ -35,11 +35,15 @@ public:
 	std::string getOnUseString() {return m_onUse; }
 	float getPower() { return m_power; }
 	
+	bool getAvailable() { return m_available; }
+	void setAvailable(bool _av) { m_available = _av; }
 
 	ItemType getitemType() { return m_type; }
 
 	SpawnHandler* m_handler;
 protected:
+
+	bool m_available = true;
 
 	SpawnHandler* m_spawner = nullptr;
 

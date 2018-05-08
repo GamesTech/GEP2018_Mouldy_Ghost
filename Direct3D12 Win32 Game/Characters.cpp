@@ -12,6 +12,19 @@ Character::Character(RenderData* _RD, string _filename)
 	: ImageGO2D(_RD, _filename)
 {
 	CentreOrigin();
+
+	m_damage_emitter = std::make_unique<Emitter>(m_pos, "smoke", _RD);
+	m_damage_emitter->setAngle(0);
+	m_damage_emitter->setDistribution(3.14159265 *2);
+	m_damage_emitter->setSpeeds(200, 300);
+	m_damage_emitter->setLifetimes(0.1, 0.5);
+
+	m_die_emitter = std::make_unique<Emitter>(m_pos, "apple", _RD);
+	m_die_emitter->setAngle(0);
+	m_die_emitter->setDistribution(3.14159265 * 2);
+	m_die_emitter->setSpeeds(200, 300);
+	m_die_emitter->setLifetimes(1, 3);
+
 	tag = GameObjectTag::PLAYER;
 	m_actions = std::make_shared<CharacterActions>();
 }
@@ -38,6 +51,8 @@ void Character::Tick(GameStateData * _GSD)
 		if (!m_death_zone.Contains(m_pos))
 		{
 			//DIES
+			m_die_emitter->SetPos(m_pos);
+			m_die_emitter->addParticles(100);
 			if (m_last_to_hit)
 			{
 				m_last_to_hit->AddPoints(1);
@@ -70,6 +85,9 @@ void Character::Tick(GameStateData * _GSD)
 	//GEP:: Lets go up the inheritence and share our functionality
 
 	//run->update(_GSD);
+	m_damage_emitter->SetPos(m_pos);
+	m_damage_emitter->Tick(_GSD);
+	m_die_emitter->Tick(_GSD);
 	m_physics->Tick(_GSD, m_pos);
 
 	//tick buffs
@@ -101,7 +119,10 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
-	if (m_actions->getUsesAnim())
+	m_damage_emitter->Render(_RD, 0, _cam_pos, _zoom);
+	m_die_emitter->Render(_RD, 0, _cam_pos, _zoom);
+
+	if (m_actions->getUsesAnim)
 	{
 		m_actions->getActiveAnim()->Render(_RD, _cam_pos, _zoom, render_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin, m_actions->isFlipped());
 	}
@@ -152,6 +173,9 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 	{
 		listeners[i]->onNotify(this, Event::PLAYER_HIT);
 	}
+
+	//add particles to its emitter
+	m_damage_emitter->addParticles(50);
 
 	float knockback = _force * (m_damage + 1) / 100;
 	_dir.y += 2;

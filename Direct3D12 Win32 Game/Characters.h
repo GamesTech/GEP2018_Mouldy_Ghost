@@ -11,6 +11,7 @@
 class SpawnHandler;
 class Item;
 class Animation2D;
+class Emitter;
 
 class Character
 	: public ImageGO2D
@@ -58,6 +59,8 @@ public:
 	CharacterActions* getActions() { return m_actions.get(); }
 	void setMovement(float speed, int jumps, int height);
 protected:
+	std::shared_ptr<Emitter> m_damage_emitter = nullptr;
+	std::shared_ptr<Emitter> m_die_emitter = nullptr;
 	float m_recovery_time = 0;
 	int m_damage = 0;
 	int m_lives = 3;

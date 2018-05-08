@@ -23,7 +23,7 @@ public:
 	virtual void Render(RenderData* _RD, int _sprite = 0,
 		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
 private:
-
+	float elapsedTime = 0;
 	float angle;
 	float distributionAngle;
 	float maxSpeed;

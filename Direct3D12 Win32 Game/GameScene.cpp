@@ -58,15 +58,6 @@ void GameScene::Initialise(RenderData * _RD,
 	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
-	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
-	m_testEmitter->SetSpawn(Vector2(500, 500));
-	m_testEmitter->setAngle(0);
-	m_testEmitter->setDistribution(3.14159265);
-	m_testEmitter->setSpeeds(200, 300);
-	m_testEmitter->setLifetimes(0.1, 0.5);
-	m_testEmitter->addParticles(1000);
-	m_testEmitter->setRate(1);
-	m_2DObjects.push_back(m_testEmitter.get());
 
 	for (int i = 0; i < m_bg.size(); i++)
 	{

@@ -61,7 +61,6 @@ private:
 	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
 
-	std::unique_ptr<Emitter> m_testEmitter = nullptr;
 	bool paused = false;
 	std::unique_ptr<Text2D> m_pause_text = nullptr;
 

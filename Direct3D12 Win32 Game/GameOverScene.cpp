@@ -38,7 +38,9 @@ void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX:
 	}
 	for (int i = 0; i < m_falling.size(); i++)
 	{
-		if (m_falling[i].character->GetPos().y < m_falling[i].target)
+		int character_leg_pos = m_falling[i].character->GetPos().y
+			+ (m_falling[i].character->GetPhysics()->GetCollider().height);
+		if (character_leg_pos < m_falling[i].target)
 		{
 			m_falling[i].character->move(Vector2(0, 300 * timer.GetElapsedSeconds()));
 			break;
@@ -75,6 +77,14 @@ void GameOverScene::Reset()
 	for (FallingCharacter fall : m_falling)
 	{
 		fall.character = nullptr;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		std::string image_soure = "podium" + std::to_string(i);
+		m_podiums[i] = ImageGO2D(m_RD, image_soure);
+		m_podiums[i].SetOrigin(Vector2(0, 0));
+		m_podiums[i].SetPos(m_podium_positions[3 - i] - Vector2(0, 15));
+		m_2DObjects.push_back(&m_podiums[i]);
 	}
 }
 
@@ -145,6 +155,7 @@ void GameOverScene::SortByScores()
 	{
 		FallingCharacter fall;
 		fall.character = m_standings[i];
+		fall.character->SetOrigin(Vector2(fall.character->GetOrigin().x ,0));
 		m_falling.push_back(fall);
 
 		Character* c = m_standings[i];

@@ -133,7 +133,7 @@ void Character::Tick(GameStateData * _GSD)
 void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
 	Rectangle rect;
-	rect = Rectangle(0, 0, m_spriteSize.x / 2, m_spriteSize.y);
+	rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
 	
 	const RECT* r = &RECT(rect);
 
@@ -294,6 +294,7 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 	}
 
 	float knockback = _force * (m_damage + 1) / 100;
+	_dir.y += 2;
 	m_physics->AddForce(_dir * knockback);
 	m_recovery_time = 0.1f;
 	m_last_to_hit = _attacker;

@@ -23,7 +23,9 @@ public:
 	Item* createNewItemWithName(RenderData* _RD, std::string name);
 	std::string getRandomItemName();
 
+	void assignAvailability(std::vector<bool> _available_items);
 private:
+	
 	SpawnHandler* m_spawner;
 	std::vector<Item*> allItems;
 };

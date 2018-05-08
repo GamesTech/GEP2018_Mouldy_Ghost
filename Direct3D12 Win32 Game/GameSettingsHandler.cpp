@@ -104,6 +104,15 @@ void GameSettingsHandler::onNotify(GameObject2D * entity_, Event event_)
 	}
 }
 
+void GameSettingsHandler::onNotify(int _item_index, Event event_)
+{
+	if (event_ == Event::GAME_SETTINGS_ITEM_ACTIVATION)
+	{
+		available_items[_item_index] = !available_items[_item_index];
+	}
+
+}
+
 int GameSettingsHandler::getLives()
 {
 	return m_lives;

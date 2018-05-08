@@ -88,6 +88,9 @@ void GameScene::Initialise(RenderData * _RD,
 
 	//load every character into the character manager
 	c_manager.PopulateCharacterList(_RD);
+
+	std::vector<bool> tmp_available_items;
+
 	item_spawner.loadAllData(_RD);
 
 	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
@@ -312,8 +315,13 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		m_spawn_item_time += m_GSD->m_dt;
 		if (m_spawn_item_time > 10)
 		{
-			giveMeItem(m_RD, m_GSD, item_spawner.getRandomItemName(), game_stage->getRandomSpawnPoint());
-			m_spawn_item_time = 0;
+			std::string st = item_spawner.getRandomItemName();
+
+			if (st != "No items available")
+			{
+				giveMeItem(m_RD, m_GSD, st, game_stage->getRandomSpawnPoint());
+			}
+			m_spawn_item_time = 0;	
 		}
 
 	}
@@ -382,6 +390,8 @@ void GameScene::Reset()
 			m_maxLives = temp->getLives();
 			m_timeLimit = temp->getTime();
 			m_timeLeft = m_timeLimit;
+
+			item_spawner.assignAvailability(temp->GetAvailableItems());
 		}
 	}
 
@@ -425,6 +435,8 @@ void GameScene::LinkSettings()
 			m_maxLives = temp->getLives();
 			m_timeLimit = temp->getTime();
 			m_timeLeft = m_timeLimit;
+
+			item_spawner.assignAvailability(temp->GetAvailableItems());
 		}
 	}
 }

@@ -2,6 +2,7 @@
 #include "MenuButton.h"
 #include "GameStateData.h"
 #include "EventHandler.h"
+#include "GameSettingsHandler.h"
 
 
 MenuButton::MenuButton()
@@ -67,7 +68,18 @@ void MenuButton::Tick(GameStateData * _GSD)
 				{
 					listeners[i]->onNotify(this, Event::BUTTON_PRESSED);
 					listeners[i]->onNotify(this, m_eventToSend);
+
+					if (listeners[i]->getType() == "GameSettings"
+						&& m_eventToSend == Event::GAME_SETTINGS_ITEM_ACTIVATION)
+					{
+						GameSettingsHandler* tmp = static_cast<GameSettingsHandler*>(listeners[i]);
+
+						tmp->onNotify(m_index_to_send, m_eventToSend);
+					}
+
 				}
+
+				
 			}
 			break;
 		case ButtonType::TWO_EVENT:

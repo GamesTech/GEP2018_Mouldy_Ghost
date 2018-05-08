@@ -18,6 +18,7 @@ public:
 	void CentreOrigin() override {};
 	void addButton(MenuButton _buttonToAdd, std::string _buttonText);
 	void init();
+	void setButtonSpace(float _space);
 
 	MenuButton* getMenuButton(Event _event);
 

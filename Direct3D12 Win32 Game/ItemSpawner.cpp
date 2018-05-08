@@ -21,9 +21,8 @@ void ItemSpawner::loadAllData(RenderData* _RD)
 	assert(all_items_file);
 	while (!all_items_file.eof())
 	{
-		std::string item = getFileData(all_items_file);
-		loadItem(_RD,item);
-
+			std::string item = getFileData(all_items_file);
+			loadItem(_RD, item);
 	}
 
 	all_items_file.close();
@@ -193,6 +192,31 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 
 std::string ItemSpawner::getRandomItemName()
 {
-	return allItems[rand() % allItems.size()]->GetName();
+	std::vector<Item*> returnable_items;
+
+	for (int i = 0; i < allItems.size(); i++)
+	{
+		if (allItems[i]->getAvailable())
+		{
+			returnable_items.push_back(allItems[i]);
+		}
+	}
+
+	if (returnable_items.size() > 0)
+	{
+		return returnable_items[rand() % returnable_items.size()]->GetName();
+	}
+	else
+	{
+		return "No items available";
+	}
+}
+
+void ItemSpawner::assignAvailability(std::vector<bool> _available_items)
+{
+	for (int i = 0; i < allItems.size(); i++)
+	{
+		allItems[i]->setAvailable(_available_items[i]);
+	}
 }
 

@@ -22,8 +22,11 @@ public:
 	void setText(std::string _text);
 
 	Event getTopEvent();
+	Text2D* getText() { return &m_text; }
 
 	void setHighlighted(bool _highlighted);
+
+	void setndexToSend(int ind) { m_index_to_send = ind; }
 private:
 	ButtonType type;
 	Event m_eventToSend;
@@ -33,4 +36,6 @@ private:
 
 	Text2D  m_text = Text2D("");
 	Vector2 m_textOffset;
+
+	int m_index_to_send = -1;
 };

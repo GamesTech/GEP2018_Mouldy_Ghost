@@ -11,6 +11,10 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 	{
 	case 1:
 	{
+		if (_state.D1 && !_prev_state.D1)
+		{
+			_actions.push_back(P_PAUSE);
+		}
 		if (_state.Up && !_prev_state.Up)
 		{
 			_actions.push_back(P_JUMP);
@@ -61,6 +65,10 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 	}
 	case 2:
 	{
+		if (_state.D2 && !_prev_state.D2)
+		{
+			_actions.push_back(P_PAUSE);
+		}
 		if (_state.R && !_prev_state.R)
 		{
 			_actions.push_back(P_JUMP);
@@ -172,6 +180,10 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 		{
 			_actions.push_back(P_PICK_UP);
 		}
+		if (_state.Space && !_prev_state.Space)
+		{
+			_actions.push_back(P_PAUSE);
+		}
 		break;
 	}
 	case 2:
@@ -221,6 +233,10 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 		if (_state.NumPad6 && !_prev_state.NumPad6)
 		{
 			_actions.push_back(P_PICK_UP);
+		}
+		if (_state.Enter && !_prev_state.Enter)
+		{
+			_actions.push_back(P_PAUSE);
 		}
 		break;
 	}
@@ -323,7 +339,10 @@ MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard:
 		{
 			return (NAV_RIGHT);
 		}
-
+		if (_state.D1 && !_prev_state.D1)
+		{
+			return (ADVANCE_MENU);
+		}
 		if (_state.LeftControl && !_prev_state.LeftControl)
 		{
 			return (CONFIRM);
@@ -352,7 +371,10 @@ MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard:
 		{
 			return (NAV_RIGHT);
 		}
-
+		if (_state.D2 && !_prev_state.D2)
+		{
+			return (ADVANCE_MENU);
+		}
 		if (_state.A && !_prev_state.A)
 		{
 			return (CONFIRM);
@@ -365,10 +387,6 @@ MenuAction InputSystem::getAction(int _player, Keyboard::State _state, Keyboard:
 	}
 	default:
 		break;
-	}
-	if (_state.Space && !_prev_state.Space)
-	{
-		return ADVANCE_MENU;
 	}
 	if (_state.Escape && !_prev_state.Escape)
 	{

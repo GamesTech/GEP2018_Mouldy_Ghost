@@ -63,7 +63,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_testEmitter->setAngle(0);
 	m_testEmitter->setDistribution(3.14159265);
 	m_testEmitter->setSpeeds(200, 300);
-	m_testEmitter->setLifetimes(1, 3);
+	m_testEmitter->setLifetimes(0.1, 0.5);
 	m_testEmitter->addParticles(1000);
 	m_testEmitter->setRate(1);
 	m_2DObjects.push_back(m_testEmitter.get());

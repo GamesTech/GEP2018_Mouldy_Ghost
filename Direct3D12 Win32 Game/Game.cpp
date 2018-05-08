@@ -214,7 +214,7 @@ void Game::buildGame()
 {
 	m_all_scenes.clear();
 	listeners.clear();
-	m_RD->m_resourceCount = 0;
+	//m_RD->m_resourceCount = 0;
 	ImageGO2D::allTextures.clear();
 
 	//populate the listener vector with all listeners

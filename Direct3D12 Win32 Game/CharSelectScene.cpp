@@ -14,7 +14,7 @@ CharacterSelectScene::CharacterSelectScene(GameScene* _g_scene)
 	m_player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
 	m_player_tints[3] = SimpleMath::Color(1, 1, 0.3);
 
-	m_instructions[0] = new Text2D("Left/Right\n\nA\n\nStart/Menu\n\nBack/View");
+	m_instructions[0] = new Text2D("[LThumb]\n\n[A]\n\n[Start]\n\n[Back]");
 	m_instructions[0]->SetPos(Vector2(50, 50));
 	m_instructions[1]= new Text2D("- Select Character\n\n- Confirm Character\n\n- Start Game\n\n- Return to Menu");
 	m_instructions[1]->SetPos(Vector2(350, 50));

@@ -371,7 +371,7 @@ int Character::PlayerJump(std::vector<GameAction> _actions)
 {
 	if (InputSystem::searchForAction(P_JUMP, _actions) && m_dash_recover && !m_attacking)
 	{
-		if (m_jumps < m_jump_limit)
+		if (canJump())
 		{
 			m_physics->ResetForce(Y_AXIS);
 			m_jumps++;

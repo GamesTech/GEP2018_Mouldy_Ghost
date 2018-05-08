@@ -6,6 +6,7 @@
 #include "CharacterController.h"
 #include "GameSettingsHandler.h"
 #include "Player.h"
+#include "AIController.h"
 #include "SpawnHandler.h"
 #include "Background.h"
 
@@ -115,6 +116,7 @@ void GameScene::Initialise(RenderData * _RD,
 	{
 		entities[i] = new Player(i);
 	}
+	entities[1] = new AIController(3);
 
 	m_HUD->attachTimerPointer(&m_timeLeft);
 
@@ -122,13 +124,8 @@ void GameScene::Initialise(RenderData * _RD,
 	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
-void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
+void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled)
 {
-	//if (players[i])
-	//{
-	//	RemoveCharacter(players[i]);
-	//}
-	
 	//make a character for the scene
 	players[i] = std::make_unique<Character>(c_manager.GetCharacter(_character));
 	//give the player a spawn point

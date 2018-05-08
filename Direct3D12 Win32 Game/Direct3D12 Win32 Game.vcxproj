@@ -247,6 +247,7 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AIController.h" />
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Animation2D.h" />
     <ClInclude Include="Attack.h" />
@@ -326,6 +327,7 @@
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIController.cpp" />
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Buff.cpp" />

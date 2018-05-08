@@ -31,7 +31,7 @@ public:
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
-	void AddCharacter(int i, std::string _character, RenderData* _RD);
+	void AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled);
 	void RemoveAllCharacters();
 	void RemoveCharacter(Character * _char);
 

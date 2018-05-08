@@ -339,6 +339,9 @@
       <Filter>Items\Headers</Filter>
     </ClInclude>
     <ClInclude Include="ControllerFont.h" />
+    <ClInclude Include="AIController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -530,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="Buff.cpp">
       <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AIController.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

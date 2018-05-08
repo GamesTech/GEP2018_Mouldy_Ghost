@@ -96,7 +96,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 						std::string character_name =
 							m_ch_manager->GetCharacter(m_selected_character[j]).GetName();
 
-						m_gameScene->AddCharacter(j, character_name, m_RD);
+						m_gameScene->AddCharacter(j, character_name, m_RD, false);
 					}
 				}
 				Reset();

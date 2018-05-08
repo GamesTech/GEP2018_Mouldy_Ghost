@@ -103,11 +103,3 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	}
 
 }
-
-void Throwable::Collision(Physics2D * _collision)
-{
-	Item::Collision(_collision);
-
-	
-	
-}

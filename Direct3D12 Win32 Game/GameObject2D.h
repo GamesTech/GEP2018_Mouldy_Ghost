@@ -55,7 +55,7 @@ public:
 
 
 	virtual void CollisionEnter(Physics2D* _collision, Vector2 _normal);
-	virtual void Collision(Physics2D* _collision);
+	virtual void Collision(Physics2D* _collision, Vector2 _normal);
 	virtual void CollisionExit(Physics2D* _collision);
 
 	void addListener(EventHandler* _event);

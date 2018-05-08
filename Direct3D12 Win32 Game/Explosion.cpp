@@ -26,7 +26,7 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 	m_physics->SetGrav(0);
 	m_physics->SetOwner(this);
 
-	tag = GameObjectTag::YO;
+	tag = GameObjectTag::EXPLOSION;
 }
 
 Explosion::~Explosion()
@@ -61,9 +61,4 @@ void Explosion::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		player->TakeDamage(20);
 		player->Hit(dir, 200000, nullptr);
 	}
-}
-
-void Explosion::Collision(Physics2D * _collision)
-{
-	int i = 0;
 }

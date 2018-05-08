@@ -24,7 +24,7 @@ Tornado::Tornado(Vector2 _pos, RenderData * _RD, GameStateData * _GSD, SpawnHand
 	m_physics->SetGrav(0);
 	m_physics->SetOwner(this);
 
-	tag = GameObjectTag::YO;
+	tag = GameObjectTag::TORNADO;
 }
 
 Tornado::~Tornado()
@@ -66,11 +66,6 @@ void Tornado::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		m_characters_in_tornado.push_back(player);
 
 	}
-}
-
-void Tornado::Collision(Physics2D * _collision)
-{
-		
 }
 
 

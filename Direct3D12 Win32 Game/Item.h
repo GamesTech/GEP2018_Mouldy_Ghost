@@ -24,7 +24,6 @@ public:
 	virtual void use(Character* _player);
 
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal) override;
-	void Collision(Physics2D* _collision) override;
 	void CollisionExit(Physics2D* _collision)override;
 
 	void setOnPickupString(std::string _pickup) { m_onPickUp = _pickup; }

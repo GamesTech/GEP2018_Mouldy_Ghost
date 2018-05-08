@@ -8,5 +8,6 @@ enum class GameObjectTag
 	PLATFORM,
 	UNTAGGED,
 	ATTACK,
-	YO
+	TORNADO,
+	EXPLOSION
 };

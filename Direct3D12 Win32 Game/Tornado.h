@@ -15,8 +15,6 @@ public:
 
 	virtual void CollisionEnter
 	(Physics2D* _collision, Vector2 _normal) override;
-	virtual void Collision
-	(Physics2D* _collision) override;
 	virtual void CollisionExit
 	(Physics2D* _collision) override;
 

@@ -25,7 +25,6 @@ public:
 	std::string getOnHitGroundString() { return m_hit_ground;}
 
 	void CollisionEnter(Physics2D* _collision, Vector2 _normal);
-	void Collision(Physics2D* _collision);
 
 protected:
 	Character * player_ignore = nullptr;

@@ -202,6 +202,9 @@
     <ImageContentTask Include="podium1.png" />
     <ImageContentTask Include="podium2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="smoke.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

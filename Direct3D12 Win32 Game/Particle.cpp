@@ -11,6 +11,7 @@ Particle::Particle()
 Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD) : ImageGO2D(_RD, _filename)
 {
 	m_origin = _origin;
+	CentreOrigin();
 	SetPos(m_origin);
 	m_fade = true;
 }

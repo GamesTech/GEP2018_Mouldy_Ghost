@@ -46,7 +46,7 @@ void DemoScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		float y_dist = top_left.y - bottom_right.y;
 		float dist = sqrt(pow(x_dist, 2) + pow(y_dist, 2));
 
-		m_cam_zoom = m_zoom_rate / pow(dist, 1.65f);
+		m_cam_zoom = m_zoom_rate / pow(dist, 1.05f);
 		if (m_cam_zoom < m_min_zoom)
 		{
 			m_cam_zoom = m_min_zoom;

@@ -134,6 +134,7 @@ void HUD::Render(RenderData * _RD)
 		{
 			seconds_string += "0";
 		}
+
 		seconds_string += std::to_string(seconds);
 
 		int hundrethSecond = (*m_timer - tempTime) * 100;
@@ -141,6 +142,10 @@ void HUD::Render(RenderData * _RD)
 		if (hundrethSecond < 10)
 		{
 			hundrethString += "0";
+		}
+		if (hundrethSecond < 0)
+		{
+			hundrethSecond = 0;
 		}
 		hundrethString += std::to_string(hundrethSecond);
 		std::string timeOutput = std::to_string(minutes) + ":" + seconds_string + ":" + hundrethString;

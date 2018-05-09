@@ -22,8 +22,8 @@ public:
 private:
 	void setVol();
 
-	float m_sound_vol = 0.5f;
-	float m_music_vol = 0.5f;
+	float m_sound_vol = 50;
+	float m_music_vol = 50;
 
 	Loop* m_activeMusic;
 	std::unique_ptr<AudioEngine> m_audEngine = nullptr;

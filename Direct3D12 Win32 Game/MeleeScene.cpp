@@ -32,7 +32,7 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 	m_3DObjects.push_back(m_cam.get());
 
 
-	m_menu = std::make_unique<Menu>(Vector2(0,60), MenuButton(Event::CHANGE_SCENE_GAME_SETTINGS, _RD, "gens"), "Game Settings");
+	m_menu = std::make_unique<Menu>(Vector2(_GSD->window_size.x / 4 ,_GSD->window_size.y / 4), MenuButton(Event::CHANGE_SCENE_GAME_SETTINGS, _RD, "gens"), "Game Settings");
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		m_menu->addListener(listeners[i]);

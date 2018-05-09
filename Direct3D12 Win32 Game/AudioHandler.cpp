@@ -45,15 +45,15 @@ void AudioHandler::onNotify(GameObject2D * entity, Event event_)
 	case Event::GAME_SETTINGS_DECREASE_SOUND:
 		if (m_sound_vol > 0)
 		{
-			m_sound_vol -= 0.05f;
+			m_sound_vol -= 5;
 			m_settingsDemo->Play();
 			setVol();
 		}
 		break;
 	case Event::GAME_SETTINGS_INCREASE_SOUND:
-		if (m_sound_vol < 1)
+		if (m_sound_vol < 100)
 		{
-			m_sound_vol += 0.05f;
+			m_sound_vol += 5;
 			m_settingsDemo->Play();
 			setVol();
 		}
@@ -61,14 +61,14 @@ void AudioHandler::onNotify(GameObject2D * entity, Event event_)
 	case Event::GAME_SETTINGS_DECREASE_MUSIC:
 		if (m_music_vol > 0)
 		{
-			m_music_vol -= 0.05f;
+			m_music_vol -= 5;
 			setVol();
 		}
 		break;
 	case Event::GAME_SETTINGS_INCREASE_MUSIC:
-		if (m_music_vol < 1)
+		if (m_music_vol < 100)
 		{
-			m_music_vol += 0.05f;
+			m_music_vol += 5;
 			setVol();
 		}
 		break;
@@ -111,19 +111,19 @@ void AudioHandler::onNotify(GameObject2D * entity, Event event_)
 
 int AudioHandler::getSoundVol()
 {
-	return m_sound_vol * 20;
+	return m_sound_vol;
 }
 
 int AudioHandler::getMusicVol()
 {
-	return m_music_vol * 20;
+	return m_music_vol;
 }
 
 void AudioHandler::setVol()
 {
 	for (Loop* m : m_music)
 	{
-		m->SetVolume(m_music_vol);
+		m->SetVolume(m_music_vol / 100);
 		m->Tick(m_GSD);
 		if (m != m_activeMusic)
 		{
@@ -132,6 +132,6 @@ void AudioHandler::setVol()
 	}
 	for (TestSound* s : m_sounds)
 	{
-		s->SetVolume(m_sound_vol);
+		s->SetVolume(m_sound_vol / 100);
 	}
 }

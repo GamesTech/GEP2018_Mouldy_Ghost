@@ -30,7 +30,7 @@ void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX:
 		{
 			for (int j = 0; j < listeners.size(); j++)
 			{
-				listeners[i]->onNotify(nullptr, Event::CHANGE_SCENE_MELEE_MENU);
+				listeners[i]->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
 			}
 		}
 	}

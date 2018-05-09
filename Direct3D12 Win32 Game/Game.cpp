@@ -248,7 +248,6 @@ void Game::buildGame()
 	m_all_scenes.push_back(m_gameSettingsScene.get());
 
 	m_meleeScene = std::make_unique<MeleeScene>();
-	m_gameScene->setIdle(30, Event::CHANGE_SCENE_MAIN_MENU);
 	m_all_scenes.push_back(m_meleeScene.get());
 
 	m_characterSelectScene = std::make_unique<CharacterSelectScene>(m_gameScene.get());
@@ -786,7 +785,7 @@ void Game::ReadInput()
 		if (m_GSD->game_actions[0][0] == P_QUIT)
 		{
 			m_gameScene->RemoveAllCharacters();
-			m_sceneListener->onNotify(nullptr, Event::CHANGE_SCENE_MELEE_MENU);
+			m_sceneListener->onNotify(nullptr, Event::GAME_OVER);
 			m_gameOverScene->Reset();
 		}
 	}

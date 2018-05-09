@@ -259,7 +259,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 
 				if (m_game_over_check != GameOverCheck::FREEZE)
 				{
-					m_cam_zoom = m_zoom_rate / dist;
+					m_cam_zoom = m_zoom_rate / pow(dist, 1.65f);
 					if (m_cam_zoom < m_min_zoom)
 					{
 						m_cam_zoom = m_min_zoom;

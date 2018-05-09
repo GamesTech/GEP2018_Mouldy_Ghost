@@ -57,13 +57,13 @@ protected:
 	Vector2 m_cam_pos = Vector2::Zero;
 	float m_cam_zoom = 1;
 	float m_zoom_rate = 700.0f;
-	float m_max_zoom = 1.5;
-	float m_min_zoom = 0.1f;
+	float m_max_zoom = 1.5f;
+	float m_min_zoom = 0.0f;
 
 	RenderData* m_RD;
 	GameStateData* m_GSD;
 	bool m_gameShouldReset = false;
 
 	float m_idle_timer = 30;
-	Event m_idle_switch_to = Event::CHANGE_SCENE_MELEE_MENU;
+	Event m_idle_switch_to = Event::CHANGE_SCENE_MAIN_MENU;
 };

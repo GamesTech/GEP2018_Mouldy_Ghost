@@ -93,6 +93,11 @@ void Menu::init()
 	}
 }
 
+void Menu::setButtonSpace(float _space)
+{
+	m_distanceBetweenButtons = _space;
+}
+
 MenuButton * Menu::getMenuButton(Event _event)
 {
 	for (int i = 0; i < m_buttons.size(); i++)

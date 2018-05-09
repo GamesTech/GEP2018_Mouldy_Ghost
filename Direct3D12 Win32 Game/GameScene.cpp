@@ -50,14 +50,6 @@ void GameScene::Initialise(RenderData * _RD,
 	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
-	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
-	m_testEmitter->SetSpawn(Vector2(500, 500));
-	m_testEmitter->setAngle(0);
-	m_testEmitter->setDistribution(3.14159265);
-	m_testEmitter->setSpeeds(200, 300);
-	m_testEmitter->setLifetimes(1, 3);
-	m_testEmitter->addParticles(1000);
-	m_2DObjects.push_back(m_testEmitter.get());
 
 	for (int i = 0; i < m_bg.size(); i++)
 	{
@@ -80,6 +72,9 @@ void GameScene::Initialise(RenderData * _RD,
 
 	//load every character into the character manager
 	c_manager.PopulateCharacterList(_RD);
+
+	std::vector<bool> tmp_available_items;
+
 	item_spawner.loadAllData(_RD);
 
 	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
@@ -200,7 +195,7 @@ void GameScene::RemoveCharacter(Character* _char)
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	for (int i = 0; i < m_GSD->game_actions->size(); i++)
+	for (int i = 0; i < 4; i++)
 	{
 		if (InputSystem::searchForAction(GameAction::P_PAUSE, m_GSD->game_actions[i]))
 		{
@@ -290,8 +285,13 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 		m_spawn_item_time += m_GSD->m_dt;
 		if (m_spawn_item_time > 10)
 		{
-			giveMeItem(m_RD, m_GSD, item_spawner.getRandomItemName(), game_stage->getRandomSpawnPoint());
-			m_spawn_item_time = 0;
+			std::string st = item_spawner.getRandomItemName();
+
+			if (st != "No items available")
+			{
+				giveMeItem(m_RD, m_GSD, st, game_stage->getRandomSpawnPoint());
+			}
+			m_spawn_item_time = 0;	
 		}
 
 	}
@@ -363,6 +363,8 @@ void GameScene::Reset()
 			m_maxLives = temp->getLives();
 			m_timeLimit = temp->getTime();
 			m_timeLeft = m_timeLimit;
+
+			item_spawner.assignAvailability(temp->GetAvailableItems());
 		}
 	}
 
@@ -406,6 +408,8 @@ void GameScene::LinkSettings()
 			m_maxLives = temp->getLives();
 			m_timeLimit = temp->getTime();
 			m_timeLeft = m_timeLimit;
+
+			item_spawner.assignAvailability(temp->GetAvailableItems());
 		}
 	}
 }

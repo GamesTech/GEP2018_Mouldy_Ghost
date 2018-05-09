@@ -29,6 +29,7 @@ enum AttackMap
 class SpawnHandler;
 class Item;
 class Animation2D;
+class Emitter;
 
 class Character
 	: public ImageGO2D
@@ -108,6 +109,9 @@ protected:
 	std::shared_ptr<Animation2D> attack_anim = nullptr;
 	void switchAnimation(Animation2D* _new);
 	bool on_floor = false;
+
+	std::shared_ptr<Emitter> m_damage_emitter = nullptr;
+	std::shared_ptr<Emitter> m_die_emitter = nullptr;
 
 
 	void FlipX();

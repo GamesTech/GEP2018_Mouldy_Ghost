@@ -98,7 +98,7 @@ void DemoScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	}
 
 	//give the spawner the object vectors and the render data
-	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);
+	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD, ActiveScene::DEMO);
 
 	//load every character into the character manager
 	c_manager.PopulateCharacterList(_RD);

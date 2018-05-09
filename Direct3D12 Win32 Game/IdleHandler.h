@@ -9,7 +9,8 @@ public:
 	IdleHandler() = default;
 	~IdleHandler() = default;
 
-	void update(float seconds, Event _switch_to_call, bool & _input, std::vector<EventHandler*>* _event_handlers, float max_time);
+	void update(float seconds, Event _switch_to_call, bool & _input,
+		std::vector<EventHandler*>* _event_handlers, float max_time);
 	void reset() { m_time_passed = 0; }
 private:
 	float m_time_passed = 0;

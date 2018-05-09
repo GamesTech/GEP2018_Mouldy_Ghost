@@ -232,10 +232,15 @@ void Game::buildGame()
 	m_menuScene->setIdle(3, Event::CHANGE_SCENE_DEMO_SCREEN);
 	m_all_scenes.push_back(m_menuScene.get());
 
+	m_demoScene = std::make_unique<DemoScene>();
+	m_demoScene->setIdle(-1, Event::CHANGE_SCENE_MELEE_MENU);
+	m_all_scenes.push_back(m_demoScene.get());
+
 	m_gameSettingsScene = std::make_unique<GameSettingsScene>();
 	m_all_scenes.push_back(m_gameSettingsScene.get());
 
 	m_meleeScene = std::make_unique<MeleeScene>();
+	m_gameScene->setIdle(30, Event::CHANGE_SCENE_MAIN_MENU);
 	m_all_scenes.push_back(m_meleeScene.get());
 
 	m_characterSelectScene = std::make_unique<CharacterSelectScene>(m_gameScene.get());
@@ -243,10 +248,6 @@ void Game::buildGame()
 
 	m_gameOverScene = std::make_unique<GameOverScene>();
 	m_all_scenes.push_back(m_gameOverScene.get());
-
-	m_demoScene = std::make_unique<DemoScene>();
-	m_demoScene->setIdle(-1, Event::CHANGE_SCENE_MELEE_MENU);
-	m_all_scenes.push_back(m_demoScene.get());
 
 	//add all listeners to all scenes
 	for (int i = 0; i < m_all_scenes.size(); i++)
@@ -777,7 +778,7 @@ void Game::ReadInput()
 		if (m_GSD->game_actions[0][0] == P_QUIT)
 		{
 			m_gameScene->RemoveAllCharacters();
-			m_sceneListener->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
+			m_sceneListener->onNotify(nullptr, Event::CHANGE_SCENE_MELEE_MENU);
 			m_gameOverScene->Reset();
 		}
 	}

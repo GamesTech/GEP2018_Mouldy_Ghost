@@ -65,5 +65,5 @@ protected:
 	bool m_gameShouldReset = false;
 
 	float m_idle_timer = 30;
-	Event m_idle_switch_to = Event::CHANGE_SCENE_MAIN_MENU;
+	Event m_idle_switch_to = Event::CHANGE_SCENE_MELEE_MENU;
 };

@@ -74,7 +74,7 @@ void GameScene::Initialise(RenderData * _RD,
 	}
 
 	//give the spawner the object vectors and the render data
-	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);
+	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD, ActiveScene::GAME);
 
 	item_spawner = ItemSpawner(m_spawner);
 

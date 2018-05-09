@@ -293,6 +293,7 @@
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="SystemSettingsScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
@@ -363,6 +364,7 @@
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="SystemSettingsScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="StandardAttack.cpp" />

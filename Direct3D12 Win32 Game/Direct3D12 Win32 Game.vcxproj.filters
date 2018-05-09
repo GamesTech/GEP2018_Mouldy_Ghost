@@ -345,6 +345,9 @@
     <ClInclude Include="DemoScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="SystemSettingsScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -541,6 +544,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="DemoScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemSettingsScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
   </ItemGroup>

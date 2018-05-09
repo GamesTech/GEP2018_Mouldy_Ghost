@@ -94,6 +94,16 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 			}
 		}
 		break;
+	case Event::CHANGE_SCENE_SYSTEM_SETTINGS:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "SystemSettings")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
 	case Event::CHANGE_SCENE_DEMO_SCREEN:
 		for (int i = 0; i < m_allScenes.size(); i++)
 		{

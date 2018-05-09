@@ -247,6 +247,9 @@ void Game::buildGame()
 	m_gameSettingsScene = std::make_unique<GameSettingsScene>();
 	m_all_scenes.push_back(m_gameSettingsScene.get());
 
+	m_systemSettings = std::make_unique<SystemSettingsScene>();
+	m_all_scenes.push_back(m_systemSettings.get());
+
 	m_meleeScene = std::make_unique<MeleeScene>();
 	m_all_scenes.push_back(m_meleeScene.get());
 

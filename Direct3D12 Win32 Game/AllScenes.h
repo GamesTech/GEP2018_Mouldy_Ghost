@@ -7,3 +7,4 @@
 #include "GameSettingsScene.h"
 #include "GameOverScene.h"
 #include "DemoScene.h"
+#include "SystemSettingsScene.h"

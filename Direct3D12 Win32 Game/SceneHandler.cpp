@@ -138,6 +138,27 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 				sceneChangeIndex = i;
 			}
 		}
+		break;
+	case Event::CHANGE_SCENE_EDITOR_MENU:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "EditorMenu")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
+	case Event::CHANGE_SCENE_ANIMATION_EDITOR:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "AnimationEditor")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
 	default:
 		break;
 	}

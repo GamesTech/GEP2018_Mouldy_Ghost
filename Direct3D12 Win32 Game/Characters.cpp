@@ -42,6 +42,33 @@ Character::~Character()
 
 void Character::Tick(GameStateData * _GSD)
 {
+
+	//GEP:: Lets go up the inheritence and share our functionality
+
+	//run->update(_GSD);
+	m_damage_emitter.SetPos(m_pos);
+	m_damage_emitter.Tick(_GSD);
+	m_die_emitter->Tick(_GSD);
+	m_physics->Tick(_GSD, m_pos);
+
+	if (usesAnimation)
+	{
+		active_anim->update(_GSD);
+	}
+
+	//tick buffs
+	for (int i = 0; i < buffs.size(); i++)
+	{
+		if (buffs[i]->Tick(_GSD)) // if returns true, the buff should be deleted
+		{
+			delete buffs[i];
+			buffs.erase(buffs.begin() + i);
+			i--;
+		}
+	}
+
+	GameObject2D::Tick(_GSD);
+
 	if (m_lives > 0)
 	{
 		//get input
@@ -122,31 +149,7 @@ void Character::Tick(GameStateData * _GSD)
 		}
 	}
 
-	//GEP:: Lets go up the inheritence and share our functionality
 
-	//run->update(_GSD);
-	m_damage_emitter.SetPos(m_pos);
-	m_damage_emitter.Tick(_GSD);
-	m_die_emitter->Tick(_GSD);
-	m_physics->Tick(_GSD, m_pos);
-
-	if (usesAnimation)
-	{
-		active_anim->update(_GSD);
-	}
-
-	//tick buffs
-	for (int i = 0; i < buffs.size(); i++)
-	{
-		if (buffs[i]->Tick(_GSD)) // if returns true, the buff should be deleted
-		{
-			delete buffs[i];
-			buffs.erase(buffs.begin() + i);
-			i--;
-		}
-	}
-
-	GameObject2D::Tick(_GSD);
 }
 
 void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)

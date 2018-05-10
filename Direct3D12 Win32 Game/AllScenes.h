@@ -8,4 +8,6 @@
 #include "GameOverScene.h"
 #include "DemoScene.h"
 #include "SystemSettingsScene.h"
+#include "EditorMenu.h"
+#include "AnimationEditorScene.h"
 #include "StageSelectScene.h"

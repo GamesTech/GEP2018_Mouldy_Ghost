@@ -262,6 +262,12 @@ void Game::buildGame()
 	m_gameOverScene = std::make_unique<GameOverScene>();
 	m_all_scenes.push_back(m_gameOverScene.get());
 
+	m_editorMenu = std::make_unique<EditorMenu>();
+	m_all_scenes.push_back(m_editorMenu.get());
+
+	m_animationEditor = std::make_unique<AnimationEditorScene>();
+	m_all_scenes.push_back(m_animationEditor.get());
+
 	//add all listeners to all scenes
 	for (int i = 0; i < m_all_scenes.size(); i++)
 	{
@@ -753,7 +759,10 @@ void Game::OnDeviceLost()
 
 void Game::ReadInput()
 {
-//GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
+	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
+	m_GSD->m_keyboardState = m_keyboard->GetState();
+
+	m_GSD->m_mouseState = m_mouse->GetState();
 
 	for (int i = 0; i < 4; i++)
 	{

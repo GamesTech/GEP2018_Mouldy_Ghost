@@ -114,6 +114,8 @@ private:
 	std::unique_ptr<GameSettingsScene> m_gameSettingsScene;
 	std::unique_ptr<GameOverScene> m_gameOverScene;
 	std::unique_ptr<SystemSettingsScene> m_systemSettings;
+	std::unique_ptr<EditorMenu> m_editorMenu;
+	std::unique_ptr<AnimationEditorScene> m_animationEditor;
 	std::unique_ptr<StageSelectScene> m_stageSelect;
 
 

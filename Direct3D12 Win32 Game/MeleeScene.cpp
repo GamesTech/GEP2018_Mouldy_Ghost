@@ -48,5 +48,8 @@ void MeleeScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _outputW
 
 	m_menu->addButton(MenuButton(Event::CHANGE_SCENE_SYSTEM_SETTINGS, _RD, "gens"), "System Settings");
 	m_menu->addButton(MenuButton(Event::CHANGE_SCENE_CHARACTER_SELECT, _RD, "gens"), "Select Characters");
-	//m_menu->addButton(MenuButton(Event::CHANGE_SCENE_MAIN_MENU, _RD, "gens"), "Back");
+
+#if _DEBUG
+	m_menu->addButton(MenuButton(Event::CHANGE_SCENE_EDITOR_MENU, _RD, "gens"), "Editor Menu");
+#endif
 }

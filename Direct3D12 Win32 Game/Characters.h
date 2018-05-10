@@ -4,6 +4,7 @@
 #include "InputSystem.h"
 #include "CharacterController.h"
 #include "Buff.h"
+#include "Emitter.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
@@ -29,7 +30,6 @@ enum AttackMap
 class SpawnHandler;
 class Item;
 class Animation2D;
-class Emitter;
 
 class Character
 	: public ImageGO2D
@@ -110,7 +110,7 @@ protected:
 	void switchAnimation(Animation2D* _new);
 	bool on_floor = false;
 
-	std::shared_ptr<Emitter> m_damage_emitter = nullptr;
+	Emitter m_damage_emitter;
 	std::shared_ptr<Emitter> m_die_emitter = nullptr;
 
 

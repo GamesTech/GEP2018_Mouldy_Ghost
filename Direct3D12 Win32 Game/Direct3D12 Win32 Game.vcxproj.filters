@@ -348,6 +348,7 @@
     <ClInclude Include="SystemSettingsScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="FireworkEmitter.h" />
     <ClInclude Include="Battlefield.h">
       <Filter>GameObjects\Stages\Header</Filter>
     </ClInclude>
@@ -567,6 +568,7 @@
     <ClCompile Include="StageSelectScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
+    <ClCompile Include="FireworkEmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

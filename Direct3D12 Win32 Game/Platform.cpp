@@ -9,9 +9,9 @@
 Platform::Platform(RenderData* _RD, string _filename) :ImageGO2D(_RD, _filename)
 {
 #if _DEBUG
-	m_physics = new VisiblePhysics(_RD);
+	m_physics = std::make_shared<VisiblePhysics>(_RD);
 #else
-	m_physics = new Physics2D();
+	m_physics = std::make_shared<Physics2D>();
 #endif
 	m_physics->SetOwner(this);
 	m_physics->SetGrav(0);

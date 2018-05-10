@@ -8,18 +8,18 @@ ClickableButton::ClickableButton
 {
 	SetPos(_position);
 	SetScale(_scale);
-	bounds.x = _position.x;
-	bounds.y = _position.y;
+	bounds.x = _position.x - ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).x / 2) * _scale.x);
+	bounds.y = _position.y - ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).y / 2) * _scale.y);
 	bounds.width = _scale.x * GetTextureSize(allTextures[m_textureIndex].texture.Get()).x;
 	bounds.height = _scale.y * GetTextureSize(allTextures[m_textureIndex].texture.Get()).y;
 
-	//text.CentreOrigin();
 	setText(_text);
 	Vector2 text_position;
-	text_position.x = bounds.x + 45;
-	text_position.y = bounds.y + 25;
+	text_position.x = bounds.x + ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).x / 2) * _scale.x);
+	text_position.y = bounds.y + ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).y / 2) * _scale.y);
 	
 	text.SetPos(text_position);
+	//text.CentreOrigin();
 	return_scene = _return_scene;
 }
 

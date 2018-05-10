@@ -9,6 +9,7 @@
 #include "Emitter.h"
 #include "HUD.h"
 
+
 enum class GameOverCheck
 {
 	NONE = -1,
@@ -50,7 +51,7 @@ public:
 protected:
 	HUD* m_HUD = nullptr;
 
-	std::unique_ptr<Stage> game_stage = nullptr;
+	Stage* game_stage = nullptr;
 	std::unique_ptr<CharacterController> entities[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
@@ -60,6 +61,8 @@ protected:
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
+
+	std::vector<std::unique_ptr<Stage>> allstages;
 
 	bool paused = false;
 	std::unique_ptr<Text2D> m_pause_text = nullptr;

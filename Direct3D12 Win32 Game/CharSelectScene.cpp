@@ -95,7 +95,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 				Reset();
 				for (int j = 0; j < listeners.size(); j++)
 				{
-					listeners[j]->onNotify(nullptr, Event::CHANGE_SCENE_GAME);
+					listeners[j]->onNotify(nullptr, Event::CHANGE_SCENE_STAGE_SELECT);
 				}
 			}
 		}

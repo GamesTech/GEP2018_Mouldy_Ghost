@@ -29,6 +29,8 @@ public:
 	//adds the physics from the game's gameobjects to this scene
 	void PhysicsInScene(GameStateData* _GSD);
 
+	std::string getFileData(std::ifstream & _file);
+
 	//Find game objects
 	GameObject2D* Find2DGameObjectWithName(std::string name);
 	GameObject2D** FindAll2DGameobjectsWithName(std::string name);

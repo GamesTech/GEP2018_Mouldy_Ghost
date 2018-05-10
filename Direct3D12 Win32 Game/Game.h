@@ -114,6 +114,8 @@ private:
 	std::unique_ptr<GameSettingsScene> m_gameSettingsScene;
 	std::unique_ptr<GameOverScene> m_gameOverScene;
 	std::unique_ptr<SystemSettingsScene> m_systemSettings;
+	std::unique_ptr<StageSelectScene> m_stageSelect;
+
 
 	std::vector<Scene*> m_all_scenes;
 	IdleHandler m_idleHandler;

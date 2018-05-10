@@ -8,3 +8,4 @@
 #include "GameOverScene.h"
 #include "DemoScene.h"
 #include "SystemSettingsScene.h"
+#include "StageSelectScene.h"

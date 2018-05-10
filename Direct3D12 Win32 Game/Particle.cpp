@@ -3,6 +3,7 @@
 #include "GameStateData.h"
 #include "RenderData.h"
 
+int Particle::s_particles_in_scene = 0;
 
 Particle::Particle()
 {
@@ -10,6 +11,7 @@ Particle::Particle()
 
 Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD) : ImageGO2D(_RD, _filename)
 {
+	s_particles_in_scene++;
 	m_origin = _origin;
 	CentreOrigin();
 	SetPos(m_origin);

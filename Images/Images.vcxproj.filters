@@ -32,6 +32,9 @@
     <ImageContentTask Include="podium2.png" />
     <ImageContentTask Include="smoke.png" />
     <ImageContentTask Include="FireworkParticle.png" />
+    <ImageContentTask Include="SpriteSheets\PigAttack.png" />
+    <ImageContentTask Include="SpriteSheets\PigIdle.png" />
+    <ImageContentTask Include="SpriteSheets\PigWalk.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

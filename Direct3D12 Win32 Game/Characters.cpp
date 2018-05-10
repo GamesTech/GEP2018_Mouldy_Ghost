@@ -4,7 +4,6 @@
 #include "RenderData.h"
 #include "CharacterController.h"
 #include "SpawnHandler.h"
-#include "Emitter.h"
 
 #include "MeleeWeapon.h"
 
@@ -20,11 +19,11 @@ Character::Character(RenderData* _RD, string _filename)
 {
 	CentreOrigin();
 
-	m_damage_emitter = std::make_unique<Emitter>(m_pos, "smoke", _RD);
-	m_damage_emitter->setAngle(0);
-	m_damage_emitter->setDistribution(3.14159265 *2);
-	m_damage_emitter->setSpeeds(200, 300);
-	m_damage_emitter->setLifetimes(0.1, 0.5);
+	m_damage_emitter = Emitter(m_pos, "smoke", _RD);
+	m_damage_emitter.setAngle(0);
+	m_damage_emitter.setDistribution(3.14159265 *2);
+	m_damage_emitter.setSpeeds(200, 300);
+	m_damage_emitter.setLifetimes(0.1, 0.5);
 
 	m_die_emitter = std::make_unique<Emitter>(m_pos, "apple", _RD);
 	m_die_emitter->setAngle(0);
@@ -125,8 +124,8 @@ void Character::Tick(GameStateData * _GSD)
 	//GEP:: Lets go up the inheritence and share our functionality
 
 	//run->update(_GSD);
-	m_damage_emitter->SetPos(m_pos);
-	m_damage_emitter->Tick(_GSD);
+	m_damage_emitter.SetPos(m_pos);
+	m_damage_emitter.Tick(_GSD);
 	m_die_emitter->Tick(_GSD);
 	m_physics->Tick(_GSD, m_pos);
 
@@ -164,7 +163,7 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
-	m_damage_emitter->Render(_RD, 0, _cam_pos, _zoom);
+	m_damage_emitter.Render(_RD, 0, _cam_pos, _zoom);
 	m_die_emitter->Render(_RD, 0, _cam_pos, _zoom);
 
 	if (usesAnimation)
@@ -316,10 +315,11 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 	}
 
 	//add particles to its emitter
-	m_damage_emitter->addParticles(50);
+	m_damage_emitter.addParticles(10);
 
 	float knockback = _force * (m_damage + 1) / 100;
 	_dir.y += 2;
+	m_physics->ResetForce(Axis::BOTH_AXES);
 	m_physics->AddForce(_dir * knockback);
 	m_recovery_time = 0.1f;
 	m_last_to_hit = _attacker;
@@ -637,7 +637,7 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			attack_to_use = AttackMap::SIDE_SPECIAL;
 			m_attacking = true;
 		}
-		else if (InputSystem::searchForAction(P_CROUCH, _actions))
+		if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
 			attack_to_use = AttackMap::DOWN_SPECIAL;
 			m_attacking = true;

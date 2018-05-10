@@ -199,3 +199,9 @@ void Scene::addListener(EventHandler* _event)
 {
 	listeners.push_back(_event);
 }
+
+void Scene::setIdle(float _timer, Event _scene)
+{
+	m_idle_timer = _timer;
+	m_idle_switch_to = _scene;
+}

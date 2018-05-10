@@ -208,7 +208,7 @@ void Emitter::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoo
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(allTextures[m_textureIndex].texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+		render_pos, r, particles[i].getColour(), m_orientation, m_origin, render_scale);
 
 
 		//particles[i].Render(_RD, _sprite, _cam_pos, _zoom);

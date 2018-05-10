@@ -6,6 +6,7 @@
 #include "CharacterController.h"
 #include "GameSettingsHandler.h"
 #include "Player.h"
+#include "AIController.h"
 #include "SpawnHandler.h"
 #include "Background.h"
 
@@ -21,15 +22,6 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (entities[i])
-		{
-			delete entities[i];
-			entities[i] = nullptr;
-		}
-	}
-
 	if (m_HUD)
 	{
 		delete m_HUD;
@@ -58,15 +50,6 @@ void GameScene::Initialise(RenderData * _RD,
 	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
-	m_testEmitter = std::make_unique<Emitter>(Vector2(500, 500), "apple", _RD);
-	m_testEmitter->SetSpawn(Vector2(500, 500));
-	m_testEmitter->setAngle(0);
-	m_testEmitter->setDistribution(3.14159265);
-	m_testEmitter->setSpeeds(200, 300);
-	m_testEmitter->setLifetimes(0.1, 0.5);
-	m_testEmitter->addParticles(1000);
-	m_testEmitter->setRate(1);
-	m_2DObjects.push_back(m_testEmitter.get());
 
 	for (int i = 0; i < m_bg.size(); i++)
 	{
@@ -83,7 +66,7 @@ void GameScene::Initialise(RenderData * _RD,
 	}
 
 	//give the spawner the object vectors and the render data
-	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD);
+	m_spawner->setData(&m_2DObjects, &m_GSD->objects_in_scene, m_RD, ActiveScene::GAME);
 
 	item_spawner = ItemSpawner(m_spawner);
 
@@ -115,24 +98,23 @@ void GameScene::Initialise(RenderData * _RD,
 	//adds all 2d objects to the stage
 	game_stage->addObjectsToScene(m_2DObjects);
 
-	for (int i = 0; i < 4; i++)
-	{
-		entities[i] = new Player(i);
-	}
-
 	m_HUD->attachTimerPointer(&m_timeLeft);
 
 	m_pause_text = std::make_unique<Text2D>("PAUSED");
 	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
-void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
+void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo)
 {
-	//if (players[i])
-	//{
-	//	RemoveCharacter(players[i]);
-	//}
-	
+	if (ai_controlled)
+	{
+		entities[i] = std::make_unique<AIController>(i);
+	}
+	else
+	{
+		entities[i] = std::make_unique<Player>(i);
+	}
+
 	//make a character for the scene
 	players[i] = std::make_unique<Character>(c_manager.GetCharacter(_character));
 	//give the player a spawn point
@@ -159,13 +141,19 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD)
 	m_GSD->objects_in_scene.push_back(players[i]->GetPhysics());
 	entities[i]->SetCharacter(players[i].get());
 
-	m_HUD->AddCharacter(players[i].get());
+	if (m_HUD)
+	{
+		m_HUD->AddCharacter(players[i].get());
+	}
 
 	//notify the listeners that a player is spawning in
 	for (int j = 0; j < listeners.size(); j++)
 	{
 		players[i]->addListener(listeners[j]);
-		listeners[j]->onNotify(players[i].get(), Event::PLAYER_SPAWN);
+		if (!demo)
+		{
+			listeners[j]->onNotify(players[i].get(), Event::PLAYER_SPAWN);
+		}
 	}
 }
 
@@ -207,23 +195,6 @@ void GameScene::RemoveCharacter(Character* _char)
 
 void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-#if _ARCADE
-	m_idleHandler.update(timer, Event::GAME_OVER, m_input_received, &listeners);
-#else
-	m_idleHandler.update(timer, Event::GAME_OVER, m_input_received, &listeners, 3600);
-#endif // _ARCADE
-
-	for (CharacterController* entity : entities)
-	{
-		if (entity)
-		{
-			if (entity->GetInput(m_GSD).size())
-			{
-				m_input_received = true;
-			}
-		}
-	}
-
 	for (int i = 0; i < 4; i++)
 	{
 		if (InputSystem::searchForAction(GameAction::P_PAUSE, m_GSD->game_actions[i]))
@@ -254,8 +225,6 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 				{
 					if (players[i]->GetLives() > 0)
 					{
-
-
 						Vector2 p = players[i]->GetPos();
 						avg_pos += (p * m_cam_zoom);
 
@@ -290,7 +259,7 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 
 				if (m_game_over_check != GameOverCheck::FREEZE)
 				{
-					m_cam_zoom = m_zoom_rate / dist;
+					m_cam_zoom = m_zoom_rate / pow(dist, 1.05f);
 					if (m_cam_zoom < m_min_zoom)
 					{
 						m_cam_zoom = m_min_zoom;
@@ -352,7 +321,10 @@ void GameScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _comma
 	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
 	m_RD->m_spriteBatch->Begin(_commandList.Get());
-	m_HUD->Render(m_RD);
+	if (m_HUD)
+	{
+		m_HUD->Render(m_RD);
+	}
 
 	std::wstring text = L"PAUSED";
 

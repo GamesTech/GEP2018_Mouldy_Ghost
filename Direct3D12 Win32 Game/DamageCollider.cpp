@@ -7,8 +7,6 @@ DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandle
 {
 	m_spawner = _spawner;
 	m_physics = new Physics2D();
-	m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
-
 
 	m_scale.x = _data.size.x / m_spriteSize.x;
 	m_scale.y = _data.size.y / m_spriteSize.y;

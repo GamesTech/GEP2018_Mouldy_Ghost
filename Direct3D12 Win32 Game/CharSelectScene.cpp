@@ -28,15 +28,8 @@ CharacterSelectScene::~CharacterSelectScene()
 
 void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	m_idleHandler.update(timer, Event::CHANGE_SCENE_MAIN_MENU,
-		m_input_received, &listeners);
 	for (int i = 0; i < 4; i++)
 	{
-		if (m_GSD->menu_action[i] != MenuAction::NONE)
-		{
-			m_input_received = true;
-		}
-
 		//left and right to select characters
 		if (m_GSD->menu_action[i] == MenuAction::NAV_LEFT && !m_confirmed[i])
 		{
@@ -96,7 +89,7 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 						std::string character_name =
 							m_ch_manager->GetCharacter(m_selected_character[j]).GetName();
 
-						m_gameScene->AddCharacter(j, character_name, m_RD);
+						m_gameScene->AddCharacter(j, character_name, m_RD, false);
 					}
 				}
 				Reset();

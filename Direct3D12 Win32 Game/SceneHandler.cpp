@@ -5,10 +5,10 @@
 #include "GameOverScene.h"
 
 
-SceneHandler::SceneHandler()
+SceneHandler::SceneHandler(IdleHandler * _idle)
 {
+	m_idle = _idle;
 }
-
 
 SceneHandler::~SceneHandler()
 {
@@ -33,11 +33,6 @@ void SceneHandler::init(GameStateData * _GSD , std::vector<Scene*> _allScenes)
 			m_activeScene = m_allScenes[i];
 		}
 	}
-}
-
-void SceneHandler::addScene(Scene * _scene)
-{
-	m_allScenes.push_back(_scene);
 }
 
 void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
@@ -99,6 +94,26 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 			}
 		}
 		break;
+	case Event::CHANGE_SCENE_SYSTEM_SETTINGS:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "SystemSettings")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
+	case Event::CHANGE_SCENE_DEMO_SCREEN:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "DemoScene")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
 	case Event::GAME_OVER:
 		for (int i = 0; i < m_allScenes.size(); i++)
 		{
@@ -125,5 +140,7 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 		m_activeScene = m_allScenes[sceneChangeIndex];
 		m_activeScene->PhysicsInScene(m_GSD);
 		m_activeScene->Reset();
+		//reset the idle counter
+		m_idle->reset();
 	}
 }

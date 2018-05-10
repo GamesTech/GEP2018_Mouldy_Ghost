@@ -3,9 +3,8 @@
 #include <codecvt>
 #include "RenderData.h"
 
-ImageGO2D::ImageGO2D(RenderData * _RD, string _filename, int z)
+ImageGO2D::ImageGO2D(RenderData * _RD, string _filename)
 {
-	m_z_order = z;
 	bool texture_found = false;
 	for (int i = 0; i < allTextures.size(); i++)
 	{

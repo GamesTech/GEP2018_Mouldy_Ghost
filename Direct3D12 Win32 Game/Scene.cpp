@@ -224,7 +224,7 @@ std::vector<GameObject2D*> Scene::sortByZOrder(std::vector<GameObject2D*> object
 		}
 	}
 	std::vector<GameObject2D*> return_vector;
-	for (int i = lowest_z_order; i <= highest_z_order; i++)
+	for (int i = highest_z_order; i >= lowest_z_order; i--)
 	{
 		for (GameObject2D* go2d : objects)
 		{

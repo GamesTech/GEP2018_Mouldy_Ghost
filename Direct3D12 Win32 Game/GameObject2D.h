@@ -61,6 +61,7 @@ public:
 	void addListener(EventHandler* _event);
 
 	const int getZ() const { return m_z_order; }
+	void setZ(int z) { m_z_order = z; }
 protected:
 	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;

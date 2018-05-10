@@ -750,7 +750,10 @@ void Game::OnDeviceLost()
 
 void Game::ReadInput()
 {
-//GEP:: CHeck out the DirectXTK12 wiki for more information about these systems
+	m_GSD->m_prevKeyboardState = m_GSD->m_keyboardState;
+	m_GSD->m_keyboardState = m_keyboard->GetState();
+
+	m_GSD->m_mouseState = m_mouse->GetState();
 
 	for (int i = 0; i < 4; i++)
 	{

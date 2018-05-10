@@ -316,7 +316,7 @@ void Character::Hit(Vector2 _dir, float _force, Character* _attacker)
 	}
 
 	//add particles to its emitter
-	m_damage_emitter->addParticles(50);
+	m_damage_emitter->addParticles(10);
 
 	float knockback = _force * (m_damage + 1) / 100;
 	_dir.y += 2;

@@ -17,4 +17,5 @@ public:
 		SpawnHandler* _spawner, float _charge = 0);
 protected:
 	DamageColData m_data;
+	std::vector<std::shared_ptr<DamageCollider>> colliders;
 };

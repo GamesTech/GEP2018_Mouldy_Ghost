@@ -101,6 +101,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\Libs\jsoncons\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -115,6 +116,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\Libs\jsoncons\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -260,6 +262,7 @@
     <ClInclude Include="ControllerFont.h" />
     <ClInclude Include="DemoScene.h" />
     <ClInclude Include="Emitter.h" />
+    <ClInclude Include="FireworkEmitter.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="IdleHandler.h" />
@@ -339,6 +342,7 @@
     <ClCompile Include="CharSelectScene.cpp" />
     <ClCompile Include="DemoScene.cpp" />
     <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="FireworkEmitter.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="IdleHandler.cpp" />

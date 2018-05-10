@@ -6,7 +6,7 @@
 DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandler* _spawner) : ImageGO2D(_RD, "hit")
 {
 	m_spawner = _spawner;
-	m_physics = new Physics2D();
+	m_physics = std::make_shared<Physics2D>();
 
 	m_scale.x = _data.size.x / m_spriteSize.x;
 	m_scale.y = _data.size.y / m_spriteSize.y;

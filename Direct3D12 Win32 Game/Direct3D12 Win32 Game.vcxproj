@@ -261,6 +261,7 @@
     <ClInclude Include="CharSelectScene.h" />
     <ClInclude Include="ControllerFont.h" />
     <ClInclude Include="DemoScene.h" />
+    <ClInclude Include="EditorMenu.h" />
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="FireworkEmitter.h" />
     <ClInclude Include="GameOverScene.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="CharSelectScene.cpp" />
     <ClCompile Include="DemoScene.cpp" />
+    <ClCompile Include="EditorMenu.cpp" />
     <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="FireworkEmitter.cpp" />
     <ClCompile Include="GameOverScene.cpp" />

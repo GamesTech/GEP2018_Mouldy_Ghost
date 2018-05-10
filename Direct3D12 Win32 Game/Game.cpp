@@ -259,6 +259,9 @@ void Game::buildGame()
 	m_gameOverScene = std::make_unique<GameOverScene>();
 	m_all_scenes.push_back(m_gameOverScene.get());
 
+	m_editorMenu = std::make_unique<EditorMenu>();
+	m_all_scenes.push_back(m_editorMenu.get());
+
 	//add all listeners to all scenes
 	for (int i = 0; i < m_all_scenes.size(); i++)
 	{

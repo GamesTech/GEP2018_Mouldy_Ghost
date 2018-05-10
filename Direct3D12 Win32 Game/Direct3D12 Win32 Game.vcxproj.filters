@@ -349,6 +349,9 @@
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="FireworkEmitter.h" />
+    <ClInclude Include="EditorMenu.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -551,6 +554,9 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="FireworkEmitter.cpp" />
+    <ClCompile Include="EditorMenu.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

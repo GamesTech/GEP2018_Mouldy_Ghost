@@ -21,6 +21,9 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam.get();
 	m_3DObjects.push_back(m_cam.get());
+
+	m_cursor = std::make_unique<Cursor>(_RD, "gens");
+	m_2DObjects.push_back(m_cursor.get());
 }
 
 void AnimationEditorScene::Reset()

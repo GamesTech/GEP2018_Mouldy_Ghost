@@ -4,7 +4,8 @@
 #include "Background.h"
 #include "FinalDestination.h"
 #include "AIController.h"
-
+#include "Temple.h"
+#include "Battlefield.h"
 void DemoScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	Scene::Update(timer, _audEngine);
@@ -110,8 +111,10 @@ void DemoScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 
 	//creating a stage
 	//could pass the name of the stage as a function paratemter
-	game_stage = std::make_unique<FinalDestination>();
+	
+	game_stage = new FinalDestination();
 	game_stage->init(m_RD, m_GSD);
+
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
@@ -122,5 +125,5 @@ void DemoScene::Initialise(RenderData * _RD, GameStateData * _GSD,
 	}
 
 	//adds all 2d objects to the stage
-	game_stage->addObjectsToScene(m_2DObjects);
+	game_stage->addObjectsToScene(m_2DObjects,_GSD);
 }

@@ -68,12 +68,15 @@ void MenuButton::Tick(GameStateData * _GSD)
 					listeners[i]->onNotify(this, Event::BUTTON_PRESSED);
 					listeners[i]->onNotify(this, m_eventToSend);
 
-					if (listeners[i]->getType() == "GameSettings"
-						&& m_eventToSend == Event::GAME_SETTINGS_ITEM_ACTIVATION)
+					if (listeners[i]->getType() == "GameSettings")
 					{
 						GameSettingsHandler* tmp = static_cast<GameSettingsHandler*>(listeners[i]);
 
-						tmp->onNotify(m_index_to_send, m_eventToSend);
+						if (m_eventToSend == Event::GAME_SETTINGS_ITEM_ACTIVATION
+							|| m_eventToSend == Event::GAME_SETTING_STAGE_SELECT)
+						{
+							tmp->onNotify(m_index_to_send, m_eventToSend);
+						}
 					}
 
 				}

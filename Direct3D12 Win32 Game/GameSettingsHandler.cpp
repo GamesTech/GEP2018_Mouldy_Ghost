@@ -110,6 +110,11 @@ void GameSettingsHandler::onNotify(int _item_index, Event event_)
 	{
 		available_items[_item_index] = !available_items[_item_index];
 	}
+	else if (event_ == Event::GAME_SETTING_STAGE_SELECT)
+	{
+		m_stage_selected = _item_index;
+		m_is_stage_selected = true;
+	}
 
 }
 

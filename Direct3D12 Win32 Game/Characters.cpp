@@ -25,11 +25,12 @@ Character::Character(RenderData* _RD, string _filename)
 	m_damage_emitter.setSpeeds(200, 300);
 	m_damage_emitter.setLifetimes(0.1, 0.5);
 
-	m_die_emitter = std::make_unique<Emitter>(m_pos, "apple", _RD);
+	m_die_emitter = std::make_unique<Emitter>(m_pos, "FireworkParticle", _RD);
 	m_die_emitter->setAngle(0);
 	m_die_emitter->setDistribution(3.14159265 * 2);
 	m_die_emitter->setSpeeds(200, 300);
 	m_die_emitter->setLifetimes(1, 3);
+	//m_die_emitter->SetColour(GetColour());
 
 	tag = GameObjectTag::PLAYER;
 }
@@ -190,9 +191,9 @@ void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 void Character::CreatePhysics(RenderData* _RD)
 {
 #if _DEBUG
-	m_physics = new VisiblePhysics(_RD);
+	m_physics = std::make_shared<VisiblePhysics>(_RD);
 #else
-	m_physics = new Physics2D();
+	m_physics = std::make_shared<Physics2D>();
 #endif
 
 	m_physics->SetBounce(0.3f);

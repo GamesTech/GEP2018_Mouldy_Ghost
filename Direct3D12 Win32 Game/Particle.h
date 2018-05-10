@@ -13,7 +13,6 @@ public:
 	void setSpeed(float _speed);
 	void setLifetime(float _lifetime);
 	void setSprite(ID3D12Resource* _sprite);
-	void setColour(Color _colour);
 	Color getColour();
 	float getVisibility() { return visibility; }
 	bool getDead();

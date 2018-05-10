@@ -54,6 +54,10 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 				break;
 			}
 		}
+
+		delete object;
+		object = nullptr;
+
 		break;
 	}
 	case Event::CHANGE_SCENE_DEMO_SCREEN:

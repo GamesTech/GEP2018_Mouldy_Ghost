@@ -30,7 +30,6 @@ enum AttackMap
 class SpawnHandler;
 class Item;
 class Animation2D;
-class Emitter;
 
 class Character
 	: public ImageGO2D

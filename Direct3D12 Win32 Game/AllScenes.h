@@ -9,3 +9,4 @@
 #include "DemoScene.h"
 #include "SystemSettingsScene.h"
 #include "EditorMenu.h"
+#include "AnimationEditorScene.h"

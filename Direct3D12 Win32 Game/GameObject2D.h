@@ -37,7 +37,7 @@ public:
 
 	virtual void CentreOrigin() = 0;
 	
-	Physics2D* GetPhysics() { return m_physics; }
+	Physics2D* GetPhysics() { return m_physics.get(); }
 
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD, int _sprite = 0,
@@ -74,7 +74,7 @@ protected:
 	Vector2 previous_pos = Vector2::Zero;
 	float previous_ori = 0.0f;
 
-	Physics2D* m_physics = nullptr;
+	std::shared_ptr<Physics2D> m_physics = nullptr;
 
 	std::vector<EventHandler*> listeners;
 };

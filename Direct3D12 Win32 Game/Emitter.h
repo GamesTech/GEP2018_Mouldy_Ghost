@@ -15,14 +15,14 @@ public:
 	void setLifetimes(float _min, float _max);
 	void setAngle(float _angle);
 	void setDistribution(float _angle);
-	void addParticles(int amount);
+	virtual void addParticles(int amount);
 	Vector2 rotateVector(Vector2 _vector, double _angle);
 
 	virtual void CentreOrigin() override;
 	virtual void Tick(GameStateData* _GSD) override;
 	virtual void Render(RenderData* _RD, int _sprite = 0,
 		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
-private:
+protected:
 	float elapsedTime = 0;
 	float angle;
 	float distributionAngle;

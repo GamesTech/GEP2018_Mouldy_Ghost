@@ -66,11 +66,6 @@ void Particle::setSprite(ID3D12Resource * _sprite)
 	//allTextures[m_textureIndex].texture = _sprite;
 }
 
-void Particle::setColour(Color _colour)
-{
-	m_colour = _colour;
-}
-
 Color Particle::getColour()
 {
 	return m_colour;

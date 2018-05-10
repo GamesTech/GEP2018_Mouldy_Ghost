@@ -44,7 +44,7 @@ void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 	testplatform->GetPhysics()->SetCollider(rect);
 
 	platforms.push_back(testplatform);
-	_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
+	
 
 	spawn[0] = Vector2(-100, 100);
 	spawn[1] = Vector2(150, 100);

@@ -28,7 +28,7 @@ void Battlefield::init(RenderData * _RD, GameStateData * _GSD)
 		platform1->TextureSize().y);
 	platform1->GetPhysics()->SetCollider(rect1);
 	platforms.push_back(platform1);
-	_GSD->objects_in_scene.push_back(platform1->GetPhysics());
+
 
 	
 	Platform* platform2 = new Platform(_RD, "platform");
@@ -40,7 +40,7 @@ void Battlefield::init(RenderData * _RD, GameStateData * _GSD)
 		platform2->TextureSize().y * 0.5);
 	platform2->GetPhysics()->SetCollider(rect2);
 	platforms.push_back(platform2);
-	_GSD->objects_in_scene.push_back(platform2->GetPhysics());
+	
 
 
 	Platform* platform3 = new Platform(_RD, "platform");
@@ -52,7 +52,7 @@ void Battlefield::init(RenderData * _RD, GameStateData * _GSD)
 		platform3->TextureSize().y * 0.5);
 	platform3->GetPhysics()->SetCollider(rect2);
 	platforms.push_back(platform3);
-	_GSD->objects_in_scene.push_back(platform3->GetPhysics());
+	
 
 	Platform* platform4 = new Platform(_RD, "platform");
 	platform4->SetSpawn(Vector2(430, 0));
@@ -63,7 +63,7 @@ void Battlefield::init(RenderData * _RD, GameStateData * _GSD)
 		platform4->TextureSize().y * 0.5);
 	platform4->GetPhysics()->SetCollider(rect2);
 	platforms.push_back(platform4);
-	_GSD->objects_in_scene.push_back(platform4->GetPhysics());
+
 
 	spawn[0] = Vector2(200, 150);
 	spawn[1] = Vector2(650, 150);

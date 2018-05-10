@@ -12,7 +12,7 @@ public:
 	virtual void update(GameStateData* _GSD);
 	virtual void init(RenderData* _RD,GameStateData* _GSD) = 0;
 
-	void addObjectsToScene(std::vector<GameObject2D*>& _g_objects);
+	void addObjectsToScene(std::vector<GameObject2D*>& _g_objects, GameStateData* _GSD);
 
 	const Vector2 getSpawn(int i) { return spawn[i]; }
 

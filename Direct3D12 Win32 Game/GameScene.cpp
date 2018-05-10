@@ -85,8 +85,15 @@ void GameScene::Initialise(RenderData * _RD,
 
 	//creating a stage
 	//could pass the name of the stage as a function paratemter
-	game_stage = std::make_unique<Temple>();
-	game_stage->init(m_RD,m_GSD);
+
+	allstages.push_back(std::make_unique<FinalDestination>());
+	allstages.push_back(std::make_unique<Temple>());
+	allstages.push_back(std::make_unique<Battlefield>());
+
+	allstages[0]->init(m_RD, m_GSD);
+	allstages[1]->init(m_RD, m_GSD);
+	allstages[2]->init(m_RD, m_GSD);
+
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
 	{
@@ -97,8 +104,7 @@ void GameScene::Initialise(RenderData * _RD,
 	}
 
 
-	//adds all 2d objects to the stage
-	game_stage->addObjectsToScene(m_2DObjects);
+
 
 	m_HUD->attachTimerPointer(&m_timeLeft);
 
@@ -119,8 +125,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bo
 
 	//make a character for the scene
 	players[i] = std::make_unique<Character>(c_manager.GetCharacter(_character));
-	//give the player a spawn point
-	players[i]->SetSpawn(game_stage->getSpawn(i));
+
 	//colour the player
 	players[i]->SetColour(player_tints[i]);
 	//give the player physics
@@ -130,6 +135,17 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bo
 	players[i]->setinfinitelives(m_infiniteLives);
 	players[i]->GetPhysics()->SetDrag(0.5f);
 	players[i]->GetPhysics()->SetBounce(0.4f);
+	
+	if (demo)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (players[j] != nullptr)
+			{
+				players[j]->SetSpawn(game_stage->getSpawn(j));
+			}
+		}
+	}
 
 	//give the player a collider
 	float width = players[i]->TextureSize().x;
@@ -366,9 +382,34 @@ void GameScene::Reset()
 			m_timeLimit = temp->getTime();
 			m_timeLeft = m_timeLimit;
 
+			if (temp->isStageSelected())
+			{
+				game_stage = allstages[temp->getStageSelected()].get();
+				//adds all 2d objects to the stage
+				game_stage->addObjectsToScene(m_2DObjects,m_GSD);
+
+				//give the player a spawn point
+				for (int j = 0; j < 4; j++)
+				{
+					if (players[j] != nullptr)
+					{
+						players[j]->SetSpawn(game_stage->getSpawn(j));
+					}
+				}
+			
+
+
+				temp->setIsStageSelected(false);
+			}
+		
+		
+
 			item_spawner.assignAvailability(temp->GetAvailableItems());
+			
 		}
 	}
+
+
 
 	for (int i = 0; i < 4; i++)
 	{

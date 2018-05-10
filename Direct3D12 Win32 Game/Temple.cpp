@@ -32,7 +32,7 @@ void Temple::init(RenderData * _RD, GameStateData * _GSD)
 	testplatform->GetPhysics()->SetCollider(rect);
 
 	platforms.push_back(testplatform);
-	_GSD->objects_in_scene.push_back(testplatform->GetPhysics());
+
 
 	Platform* platform = new Platform(_RD, "platform");
 
@@ -46,7 +46,7 @@ void Temple::init(RenderData * _RD, GameStateData * _GSD)
 	platform->GetPhysics()->SetCollider(rect1);
 
 	platforms.push_back(platform);
-	_GSD->objects_in_scene.push_back(platform->GetPhysics());
+	
 
 
 	MovingPlatform* test_moving = new MovingPlatform(_RD, Vector2(150, 50), Vector2(150, 400), 4.0f, 2.0f, "platform");

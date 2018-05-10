@@ -18,7 +18,6 @@ public:
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 
-	std::string getFileData(std::ifstream & _file);
 private:
 	std::unique_ptr<Menu> m_settingsMenu = nullptr;
 	std::unique_ptr<Text2D> m_livesText = nullptr;

@@ -22,8 +22,23 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	m_RD->m_cam = m_cam.get();
 	m_3DObjects.push_back(m_cam.get());
 
-	m_cursor = std::make_unique<Cursor>(_RD, "gens");
+	m_cursor = std::make_unique<Cursor>(_RD, "cursor");
 	m_2DObjects.push_back(m_cursor.get());
+
+	m_back_button = std::make_unique<ClickableButton>(_RD, "button", "Back", Event::CHANGE_SCENE_EDITOR_MENU, Vector2(100, 500), Vector2(.1, .1));
+	m_2DObjects.push_back(m_back_button.get());
+}
+
+void AnimationEditorScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
+{
+	Scene::Update(timer, _audEngine);
+	if (m_back_button->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, *m_back_button->mouseUpdate(m_cursor.get(), m_GSD));
+		}
+	}
 }
 
 void AnimationEditorScene::Reset()

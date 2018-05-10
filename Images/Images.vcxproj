@@ -208,6 +208,11 @@
   <ItemGroup>
     <ImageContentTask Include="FireworkParticle.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="button.png" />
+    <ImageContentTask Include="cursor.png" />
+    <ImageContentTask Include="TextBox.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

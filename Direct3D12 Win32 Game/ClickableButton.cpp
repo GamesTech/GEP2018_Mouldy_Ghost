@@ -13,14 +13,13 @@ ClickableButton::ClickableButton
 	bounds.width = _scale.x * GetTextureSize(allTextures[m_textureIndex].texture.Get()).x;
 	bounds.height = _scale.y * GetTextureSize(allTextures[m_textureIndex].texture.Get()).y;
 
-	text.CentreOrigin();
+	//text.CentreOrigin();
 	setText(_text);
 	Vector2 text_position;
 	text_position.x = bounds.x + 45;
 	text_position.y = bounds.y + 25;
 	
 	text.SetPos(text_position);
-
 	return_scene = _return_scene;
 }
 

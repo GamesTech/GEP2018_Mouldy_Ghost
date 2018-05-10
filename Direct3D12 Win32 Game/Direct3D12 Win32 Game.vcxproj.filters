@@ -101,6 +101,9 @@
     <Filter Include="Source">
       <UniqueIdentifier>{27dfed5a-179f-40c2-97ca-9ea8d6398f1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AssetBuilder">
+      <UniqueIdentifier>{24e3f415-c9f6-4e20-a63a-cac09381e712}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -358,6 +361,22 @@
     <ClInclude Include="StageSelectScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="EditorMenu.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEditorScene.h" />
+    <ClInclude Include="Button.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="ClickableButton.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="InputTextBox.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -569,6 +588,22 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="FireworkEmitter.cpp" />
+    <ClCompile Include="EditorMenu.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEditorScene.cpp" />
+    <ClCompile Include="Button.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="ClickableButton.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="InputTextBox.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

@@ -55,10 +55,13 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 			}
 		}
 
-		delete object;
-		object = nullptr;
-
+		if (_event == Event::OBJECT_DESTROYED)
+		{
+			delete object;
+			object = nullptr;
+		}
 		break;
+
 	}
 	case Event::CHANGE_SCENE_DEMO_SCREEN:
 	{

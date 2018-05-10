@@ -16,16 +16,6 @@ TitleScene::~TitleScene()
 void TitleScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	m_testMenu->Tick(m_GSD);
-
-	m_idleHandler.update(timer, Event::CHANGE_SCENE_DEMO_SCREEN,
-		m_input_received, &listeners);
-	for (int i = 0; i < 4; i++)
-	{
-		if (m_GSD->menu_action[i] != MenuAction::NONE)
-		{
-			m_input_received = true;
-		}
-	}
 }
 
 void TitleScene::Reset()

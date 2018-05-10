@@ -13,9 +13,18 @@ public:
 	virtual void init(GameStateData* _GSD) override;
 	virtual void onNotify(GameObject2D * entity, Event event_);
 
+	int getSoundVol();
+
+	int getMusicVol();
+
 	virtual std::string getType() override { return "Audio"; }
 
 private:
+	void setVol();
+
+	float m_sound_vol = 50;
+	float m_music_vol = 50;
+
 	Loop* m_activeMusic;
 	std::unique_ptr<AudioEngine> m_audEngine = nullptr;
 	std::unique_ptr<Loop> m_theme = nullptr;
@@ -23,6 +32,9 @@ private:
 	std::unique_ptr<TestSound> m_menuOk = nullptr;
 	std::unique_ptr<TestSound> m_playerDie = nullptr;
 	std::unique_ptr<TestSound> m_playerHit = nullptr;
-	std::vector<Sound*> m_sounds;
+	std::unique_ptr<TestSound> m_settingsDemo = nullptr;
+
+	std::vector<TestSound*> m_sounds;
+	std::vector<Loop*> m_music;
 };
 

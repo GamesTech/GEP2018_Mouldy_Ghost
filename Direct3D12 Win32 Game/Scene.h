@@ -3,7 +3,6 @@
 #include "pch.h"
 #include "StepTimer.h"
 #include "EventHandler.h"
-#include "IdleHandler.h"
 
 using std::vector;
 
@@ -43,23 +42,28 @@ public:
 	bool getShouldReset() const { return m_gameShouldReset; }
 	void setShouldReset(bool _to) { m_gameShouldReset = _to; }
 
+	void setIdle(float _timer, Event _scene);
+	float getIdleTime() const { return m_idle_timer; }
+	Event getIdleEvent() const { return m_idle_switch_to; }
+
 protected:
-	bool m_input_received = false;
 	vector<GameObject3D*> m_3DObjects;
 	vector<GameObject2D*> m_2DObjects;
 	vector<Sound*> m_sounds;
 
 	vector<EventHandler*> listeners;
-	IdleHandler m_idleHandler;
 
 	std::unique_ptr<Camera> m_cam = nullptr;
 	Vector2 m_cam_pos = Vector2::Zero;
 	float m_cam_zoom = 1;
 	float m_zoom_rate = 700.0f;
-	float m_max_zoom = 1.5;
-	float m_min_zoom = 0.1f;
+	float m_max_zoom = 1.5f;
+	float m_min_zoom = 0.0f;
 
 	RenderData* m_RD;
 	GameStateData* m_GSD;
 	bool m_gameShouldReset = false;
+
+	float m_idle_timer = 30;
+	Event m_idle_switch_to = Event::CHANGE_SCENE_MAIN_MENU;
 };

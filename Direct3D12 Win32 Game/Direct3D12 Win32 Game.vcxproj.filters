@@ -339,6 +339,15 @@
       <Filter>Items\Headers</Filter>
     </ClInclude>
     <ClInclude Include="ControllerFont.h" />
+    <ClInclude Include="AIController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemSettingsScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="Battlefield.h">
       <Filter>GameObjects\Stages\Header</Filter>
     </ClInclude>
@@ -536,6 +545,15 @@
     </ClCompile>
     <ClCompile Include="Buff.cpp">
       <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AIController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemSettingsScene.cpp">
+      <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="Battlefield.cpp">
       <Filter>GameObjects\Stages\Source</Filter>

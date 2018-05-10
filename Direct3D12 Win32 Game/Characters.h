@@ -29,6 +29,7 @@ enum AttackMap
 class SpawnHandler;
 class Item;
 class Animation2D;
+class Emitter;
 
 class Character
 	: public ImageGO2D
@@ -52,6 +53,7 @@ public:
 	void SetJumpHeight(float _height) { m_jump_height = _height; }
 	const float GetJumpHeight() { return m_jump_height; }
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
+	const bool canJump() const { return m_jumps < m_jump_limit; }
 
 	int GetStrenght() { return strenght; }
 	void SetStrenght(int _str) { strenght = _str; }
@@ -107,6 +109,9 @@ protected:
 	std::shared_ptr<Animation2D> attack_anim = nullptr;
 	void switchAnimation(Animation2D* _new);
 	bool on_floor = false;
+
+	std::shared_ptr<Emitter> m_damage_emitter = nullptr;
+	std::shared_ptr<Emitter> m_die_emitter = nullptr;
 
 
 	void FlipX();

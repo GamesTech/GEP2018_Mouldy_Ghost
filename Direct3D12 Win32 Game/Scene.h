@@ -47,6 +47,8 @@ public:
 	Event getIdleEvent() const { return m_idle_switch_to; }
 
 protected:
+	std::vector<GameObject2D*> sortByZOrder(std::vector<GameObject2D*> objects);
+
 	vector<GameObject3D*> m_3DObjects;
 	vector<GameObject2D*> m_2DObjects;
 	vector<Sound*> m_sounds;

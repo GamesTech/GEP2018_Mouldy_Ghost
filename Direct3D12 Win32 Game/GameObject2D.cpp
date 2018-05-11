@@ -50,10 +50,14 @@ void GameObject2D::Tick(GameStateData * _GSD)
 {
 	if (m_pos != previous_pos)
 	{
-		Vector2 dif = m_pos - previous_pos;
-		dif /= 2;
 		for (int i = 0; i < children.size(); i++)
 		{
+			Vector2 dif = m_pos - previous_pos;
+			if (!dynamic_cast<DamageCollider*>(children[i]))
+			{
+				dif /= 2;
+			}
+
 			children[i]->SetPos(children[i]->GetPos() + dif);
 		}
 		previous_pos = m_pos;

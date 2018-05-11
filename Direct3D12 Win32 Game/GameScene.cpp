@@ -115,7 +115,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
-void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo)
+void GameScene::AddCharacter(int i, std::string _character, bool ai_controlled, bool demo)
 {
 	if (ai_controlled)
 	{
@@ -132,7 +132,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bo
 	//colour the player
 	players[i]->SetColour(player_tints[i]);
 	//give the player physics
-	players[i]->CreatePhysics(_RD);
+	players[i]->CreatePhysics(m_RD);
 	//give the player lives
 	players[i]->SetLives(m_maxLives);
 	players[i]->setinfinitelives(m_infiniteLives);

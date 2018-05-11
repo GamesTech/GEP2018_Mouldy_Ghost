@@ -42,7 +42,7 @@ public:
     ai_controlled   - is this character controlled by ai
     demo            - is this the demo scene
     */
-	virtual void AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo = false);
+	virtual void AddCharacter(int i, std::string _character, bool ai_controlled, bool demo = false);
     //calls remove character on each character in the scene
 	void RemoveAllCharacters();
     //find and remove a character from the game scene

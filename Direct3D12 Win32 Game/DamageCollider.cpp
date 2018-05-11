@@ -95,10 +95,4 @@ void DamageCollider::calculateRotation()
 	{
 		flipped = true;
 	}
-	float rotation = asin(absolute_direction.y);
-	rotation /= 3.14159;
-	rotation *= 180;
-	rotation = (rotation != 0) ? rotation + 90 : 0;
-
-	m_orientation = rotation;
 }

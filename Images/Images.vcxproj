@@ -138,9 +138,6 @@
     <ImageContentTask Include="default_item_texture.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="hit.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ImageContentTask Include="apple.png" />
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +214,10 @@
     <ImageContentTask Include="button.png" />
     <ImageContentTask Include="cursor.png" />
     <ImageContentTask Include="TextBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\fireball.png" />
+    <ImageContentTask Include="AttackColliders\hit.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

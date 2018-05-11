@@ -11,4 +11,4 @@ size
 >30
 >30
 gravity			>false
-collider sprite		>hit
+collider sprite		>fireball

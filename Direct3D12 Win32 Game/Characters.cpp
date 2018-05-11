@@ -370,6 +370,13 @@ void Character::Collision(Physics2D * _collision, Vector2 _normal)
 	}
 	if (o_tag == GameObjectTag::PLATFORM && _normal != Vector2(0,-1))
 	{
+		if (!on_floor)
+		{
+			on_floor = true;
+			m_jumps = 0;
+			m_dash_recover = true;
+			m_last_to_hit = nullptr;
+		}
 		m_pos.y--;
 	}
 }
@@ -611,7 +618,6 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 			m_spamming_attack = m_attacks[attack_to_use];
 			break;
 		case OnHold::HOLD_NONE:
-			m_recovery_time = 0.2f;
 			m_attacks[attack_to_use]->PerformAttack
 			(m_pos, m_facing, this, _GSD, spawn);
 			break;
@@ -664,7 +670,6 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			m_spamming_attack = m_attacks[attack_to_use];
 			break;
 		case OnHold::HOLD_NONE:
-			m_recovery_time = 0.2f;
 			m_attacks[attack_to_use]->PerformAttack
 			(m_pos, m_facing, this, _GSD, spawn);
 			break;

@@ -292,7 +292,7 @@ void Game::buildGame()
 	//add chickens to demo scene
 	m_demoScene->AddCharacter(0, "Chicken", m_RD, true, true);
 	m_demoScene->AddCharacter(1, "Chicken", m_RD, true, true);
-	m_demoScene->AddCharacter(2, "Chicken", m_RD, true, true);
+	m_demoScene->AddCharacter(2, "Pig", m_RD, true, true);
 	m_demoScene->AddCharacter(3, "Chicken", m_RD, true, true);
 }
 

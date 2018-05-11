@@ -32,6 +32,9 @@
     <ImageContentTask Include="podium2.png" />
     <ImageContentTask Include="smoke.png" />
     <ImageContentTask Include="FireworkParticle.png" />
+    <ImageContentTask Include="SpriteSheets\PigAttack.png" />
+    <ImageContentTask Include="SpriteSheets\PigIdle.png" />
+    <ImageContentTask Include="SpriteSheets\PigWalk.png" />
     <ImageContentTask Include="button.png" />
     <ImageContentTask Include="cursor.png" />
     <ImageContentTask Include="TextBox.png" />

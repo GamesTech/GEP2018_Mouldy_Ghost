@@ -3,8 +3,6 @@
 #include <codecvt>
 #include "RenderData.h"
 
-
-
 ImageGO2D::ImageGO2D(RenderData * _RD, string _filename)
 {
 	bool texture_found = false;

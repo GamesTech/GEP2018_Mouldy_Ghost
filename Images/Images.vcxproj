@@ -209,6 +209,11 @@
     <ImageContentTask Include="FireworkParticle.png" />
   </ItemGroup>
   <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\PigAttack.png" />
+    <ImageContentTask Include="SpriteSheets\PigIdle.png" />
+    <ImageContentTask Include="SpriteSheets\PigWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ImageContentTask Include="button.png" />
     <ImageContentTask Include="cursor.png" />
     <ImageContentTask Include="TextBox.png" />

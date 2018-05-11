@@ -2,6 +2,7 @@
 
 enum class ItemState
 {
+	SPAWNED,
 	HELD,
 	THROWN,
 	WAIT,

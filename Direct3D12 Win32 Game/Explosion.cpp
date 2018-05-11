@@ -17,11 +17,11 @@ Explosion::Explosion(Vector2 _pos, RenderData * _RD,
 	m_pos = _pos;
 
 	Rectangle collider = Rectangle
-	(m_pos.x - TextureSize().x, m_pos.y - TextureSize().y,
-		TextureSize().x, TextureSize().y);
+	(m_pos.x - (TextureSize().x/10)*_exp_radius, m_pos.y - (TextureSize().y / 10)*_exp_radius,
+		(TextureSize().x / 10)*_exp_radius, (TextureSize().y / 10)*_exp_radius);
 	
 	m_physics->SetCollider(collider);
-
+	m_power = _power;
 	
 	m_physics->SetGrav(0);
 	m_physics->SetOwner(this);
@@ -56,9 +56,9 @@ void Explosion::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 
 		Vector2 dir = player->GetPos() - m_pos;
 		dir.Normalize();
-
+		dir.y = -3;
 		//debug values
 		player->TakeDamage(20);
-		player->Hit(dir, 200000, nullptr);
+		player->Hit(dir, 40000*m_power, nullptr);
 	}
 }

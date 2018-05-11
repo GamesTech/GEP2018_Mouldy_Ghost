@@ -11,4 +11,4 @@ player hit 	>explode
 ground hit 	>bounce
 -- explosive
 fuse		>10
-exp range	>25
+exp range	>5

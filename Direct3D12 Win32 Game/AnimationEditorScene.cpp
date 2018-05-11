@@ -28,7 +28,7 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	m_cursor->setZ(-1);
 	m_2DObjects.push_back(m_cursor.get());
 
-	m_back_button = std::make_unique<ClickableButton>(_RD, "button", "Back", Event::CHANGE_SCENE_EDITOR_MENU, Vector2(600, 550), Vector2(.05, .05));
+	m_back_button = std::make_unique<ClickableButton>(_RD, "button", "Back", Event::CHANGE_SCENE_EDITOR_MENU, Vector2(700, 550), Vector2(.05, .05));
 	m_2DObjects.push_back(m_back_button.get());
 
 
@@ -108,6 +108,8 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	m_increase_start_y = std::make_unique<ClickableButton>(_RD, "button", "<", Event::ANIMATION_EDITOR_INCREASE_START_Y, Vector2(620, 290), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_start_y.get());
 	//Save
+	m_save_character = std::make_unique<ClickableButton>(_RD, "button", "Save Character", Event::ANIMATION_EDITOR_SAVE_DATA, Vector2(480, 550), Vector2(0.05, 0.05));
+	m_2DObjects.push_back(m_save_character.get());
 }
 
 void AnimationEditorScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
@@ -162,6 +164,125 @@ void AnimationEditorScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 			listeners[i]->onNotify(nullptr, m_increase_framerate->getEvent());
 		}
 	}
+	if (m_decrease_frames->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_frames->getEvent());
+		}
+	}
+	if (m_increase_frames->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_frames->getEvent());
+		}
+	}
+	if (m_decrease_x_increments->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_x_increments->getEvent());
+		}
+	}
+	if (m_increase_x_increments->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_x_increments->getEvent());
+		}
+	}
+	if (m_decrease_y_increments->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_y_increments->getEvent());
+		}
+	}
+	if (m_increase_y_increments->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_y_increments->getEvent());
+		}
+	}
+	if (m_decrease_box_width->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_box_width->getEvent());
+		}
+	}
+	if (m_increase_box_width->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_box_width->getEvent());
+		}
+	}
+	if (m_decrease_box_height->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_box_height->getEvent());
+		}
+	}
+	if (m_increase_box_height->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_box_height->getEvent());
+		}
+	}
+	if (m_decrease_furthest_left->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_furthest_left->getEvent());
+		}
+	}
+	if (m_increase_furthest_left->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_furthest_left->getEvent());
+		}
+	}
+	if (m_decrease_start_x->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_start_x->getEvent());
+		}
+	}
+	if (m_increase_start_x->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_start_x->getEvent());
+		}
+	}
+	if (m_decrease_start_y->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_decrease_y_increments->getEvent());
+		}
+	}
+	if (m_increase_start_y->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_increase_start_y->getEvent());
+		}
+	}
+	if (m_save_character->mouseUpdate(m_cursor.get(), m_GSD))
+	{
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			listeners[i]->onNotify(nullptr, m_save_character->getEvent());
+		}
+	}
 
 	m_characters[m_editor_handler->getSelectedCharIndex()]->Tick(m_GSD);
 }
@@ -178,6 +299,7 @@ void AnimationEditorScene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandLi
 	ID3D12DescriptorHeap* heaps[] = { m_RD->m_resourceDescriptors->Heap() };
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
 	m_RD->m_spriteBatch->Begin(_commandList.Get());
+
 
 /*
 	m_character->SetPos(Vector2(500, 100));

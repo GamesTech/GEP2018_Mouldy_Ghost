@@ -96,6 +96,8 @@ void Game::Initialize(HWND window, int width, int height)
 
 	SpriteBatchPipelineStateDescription pd(rtState );
 	pd.blendDesc = m_RD->m_states->NonPremultiplied;
+
+
 	m_RD->m_spriteBatch = std::make_unique<SpriteBatch>(m_d3dDevice.Get(), resourceUpload, pd);
 
 #if _ARCADE
@@ -286,6 +288,7 @@ void Game::buildGame()
 	m_sceneListener->init(m_GSD, m_all_scenes);
 	m_lifeListener->SetGameOver(m_gameOverScene.get());
 	m_musicListener->init(m_GSD);
+
 
 	//tell the listeners we've loaded!
 	for (int i = 0; i < listeners.size(); i++)

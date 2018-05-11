@@ -11,6 +11,7 @@ struct GameStateData
 	Keyboard::State m_keyboardState;
 	Keyboard::State m_prevKeyboardState;
 	Mouse::State m_mouseState;
+	Mouse::ButtonStateTracker m_mouseButtonState;
 	Cursor* m_cursor;
 
 	std::vector<Physics2D*> objects_in_scene;

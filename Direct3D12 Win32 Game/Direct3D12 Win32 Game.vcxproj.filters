@@ -377,6 +377,8 @@
     <ClInclude Include="InputTextBox.h">
       <Filter>AssetBuilder</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationEditorHandler.h" />
+    <ClInclude Include="AnimationContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -604,6 +606,8 @@
     <ClCompile Include="InputTextBox.cpp">
       <Filter>AssetBuilder</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationEditorHandler.cpp" />
+    <ClCompile Include="AnimationContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

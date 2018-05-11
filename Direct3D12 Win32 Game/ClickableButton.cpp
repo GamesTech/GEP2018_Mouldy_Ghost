@@ -15,8 +15,9 @@ ClickableButton::ClickableButton
 
 	setText(_text);
 	Vector2 text_position;
-	text_position.x = bounds.x + ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).x / 2) * _scale.x);
-	text_position.y = bounds.y + ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).y / 2) * _scale.y);
+	text.SetScale(_scale * 10);
+	text_position.x = bounds.x + ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).x / 10) * _scale.x);
+	text_position.y = bounds.y + ((GetTextureSize(allTextures[m_textureIndex].texture.Get()).y / 4) * _scale.y);
 	
 	text.SetPos(text_position);
 	//text.CentreOrigin();
@@ -42,6 +43,12 @@ Event* ClickableButton::mouseUpdate(Cursor* _cursor, GameStateData * _GSD)
 		m_colour.B(0.4f);
 		if (_GSD->m_mouseState.leftButton)
 		{
+			pressedLastFrame = true;
+		}
+
+		if (!_GSD->m_mouseState.leftButton && pressedLastFrame)
+		{
+			pressedLastFrame = false;
 			return &return_scene;
 		}
 	}
@@ -51,4 +58,9 @@ Event* ClickableButton::mouseUpdate(Cursor* _cursor, GameStateData * _GSD)
 	}
 
 	return nullptr;
+}
+
+Event ClickableButton::getEvent()
+{
+	return return_scene;
 }

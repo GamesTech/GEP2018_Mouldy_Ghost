@@ -10,6 +10,7 @@
 #include "SceneHandler.h"
 #include "GameSettingsHandler.h"
 #include "CharacterLifeHandler.h"
+#include "AnimationEditorHandler.h"
 
 extern void ExitGame();
 
@@ -226,11 +227,13 @@ void Game::buildGame()
 	m_gameSettings = std::make_unique<GameSettingsHandler>();
 	m_lifeListener = std::make_unique<CharacterLifeHandler>();
 	m_spawner = std::make_unique<SpawnHandler>();
+	m_animationEditorHandler = std::make_unique<AnimationEditorHandler>();
 	listeners.push_back(m_musicListener.get());
 	listeners.push_back(m_sceneListener.get());
 	listeners.push_back(m_gameSettings.get());
 	listeners.push_back(m_lifeListener.get());
 	listeners.push_back(m_spawner.get());
+	listeners.push_back(m_animationEditorHandler.get());
 
 	m_gameScene = std::make_unique<GameScene>();
 	m_gameScene->setIdle(3600, Event::CHANGE_SCENE_MAIN_MENU);

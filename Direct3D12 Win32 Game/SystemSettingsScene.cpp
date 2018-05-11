@@ -47,6 +47,7 @@ void SystemSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int
 		m_settingsMenu->addListener(listeners[i]);
 	}
 
+    //create the menu
 	m_settingsMenu->init();
 	m_2DObjects.push_back(m_settingsMenu.get());
 	m_settingsMenu->addButton(MenuButton(Event::GAME_SETTINGS_DECREASE_SOUND,
@@ -54,11 +55,13 @@ void SystemSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int
 	m_settingsMenu->addButton(MenuButton(Event::GAME_SETTINGS_DECREASE_MUSIC,
 		Event::GAME_SETTINGS_INCREASE_MUSIC, _RD, "gens"), "Music Volume: ");
 
+    //display current music volume
 	m_music_vol = std::make_unique<Text2D>("");
 	m_music_vol->SetText("Test");
 	m_music_vol->SetPos(m_settingsMenu->getMenuButton(Event::GAME_SETTINGS_DECREASE_MUSIC)->GetPos() + Vector2(400, -10));
 	m_2DObjects.push_back(m_music_vol.get());
 
+    //display current sound volume
 	m_sound_vol = std::make_unique<Text2D>("");
 	m_sound_vol->SetText("Test");
 	m_sound_vol->SetPos(m_settingsMenu->getMenuButton(Event::GAME_SETTINGS_DECREASE_SOUND)->GetPos() + Vector2(400, -10));

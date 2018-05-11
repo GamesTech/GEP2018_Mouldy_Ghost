@@ -24,11 +24,11 @@ public:
 
 	void Render(RenderData* _RD);
 private:
-	InScene m_in_game[4];
-	Text2D* m_text_display[4];
-	Text2D* m_highlight[4];
-	Text2D* m_shadow[4];
-	Text2D* m_timeText = nullptr;
+	InScene m_in_game[4];          //a character and a bool pertaining to whether they're present in the game
+	Text2D* m_text_display[4];     //lives and damage on characters
+	Text2D* m_highlight[4];        //rendered behind the text to make it stand out
+	Text2D* m_shadow[4];           //rendered behind the text to make it stand out
+	Text2D* m_timeText = nullptr;  //displays time left in game
 
 	float* m_timer;
 

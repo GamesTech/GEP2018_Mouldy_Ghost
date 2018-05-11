@@ -2,6 +2,10 @@
 
 #if _DEBUG
 
+/*
+Behaves the same as the physics class but the corners of the collider are rendered
+*/
+
 #include "Physics2D.h"
 
 class RenderData;

@@ -27,7 +27,9 @@ public:
 
 	void AddCharacterToScene(Character* _c);
 	
+    //eliminated players go to the bottom of the standings
 	void PlayerEliminated(Character* _c);
+    //sort non-eliminated players by their scores
 	void SortByScores();
 private:
 	std::vector<Character*> m_chars_in_game;

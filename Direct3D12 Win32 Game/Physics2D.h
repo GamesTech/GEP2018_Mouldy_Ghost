@@ -17,6 +17,7 @@ public:
 	~Physics2D();
 
 	void AddForce(Vector2 _push) { m_acc += _push / m_mass; }
+    //sets either the x force, the y force, or both forces to zero
 	void ResetForce(Axis _axis);
 
 	Vector2 GetVel() { return m_vel; }
@@ -40,6 +41,7 @@ public:
 
 	void ScaleCollider(Vector2 _by, Vector2 _owner_scale);
 
+    //remove col from this objects currently colliding list
 	void removeFromCurrentlyColliding(Physics2D* col);
 
 	Item* GetItem();
@@ -51,6 +53,9 @@ protected:
 	GameObject2D* m_owner = nullptr;
 
 	Rectangle m_collider;
+    
+    //objects currently colliding with this
+    //used for collision enter and exit
 	std::vector<Physics2D*> currently_colliding;
 
 	void CheckForCollisions(GameStateData * _GSD, Vector2& _pos);

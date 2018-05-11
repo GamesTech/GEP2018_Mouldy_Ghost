@@ -14,6 +14,7 @@
 
 GameScene::GameScene()
 {
+    //players have colour assigned to them for their sprite and hud text
 	player_tints[0] = SimpleMath::Color(0.3, 1, 1);
 	player_tints[1] = SimpleMath::Color(0.3, 1, 0.3);
 	player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);

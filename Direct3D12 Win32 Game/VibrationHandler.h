@@ -14,9 +14,12 @@ public:
 
 	void addGamePad(DirectX::GamePad* _gp) { m_game_pads = _gp; }
 
+    //counts down to stop vibration
 	void Tick(DX::StepTimer const & timer);
 private:
+    //applies vibration to a player, with a timer to stop it
 	void setVibration(int player, float l, float r, float time, float rt = 0, float lt = 0);
 	DirectX::GamePad* m_game_pads;
+    //amount of time left in each controllers vibration
 	float m_vibration_timer[4] = { 4, 0 };
 };

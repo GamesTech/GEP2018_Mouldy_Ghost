@@ -75,6 +75,15 @@
     <ImageContentTask Include="AttackColliders\hit.png">
       <Filter>AttackColliders</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\laser.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\fireboost.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\rock.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

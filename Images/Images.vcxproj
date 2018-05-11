@@ -219,6 +219,13 @@
     <ImageContentTask Include="AttackColliders\fireball.png" />
     <ImageContentTask Include="AttackColliders\hit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\fireboost.png" />
+    <ImageContentTask Include="AttackColliders\laser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\rock.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

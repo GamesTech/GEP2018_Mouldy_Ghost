@@ -542,6 +542,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 
 				if (static_cast<StandardAttack*>(m_charging_attack))
 				{
+					m_recovery_time = 0.2f;
 					m_charging_attack->PerformAttack
 					(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
 					m_charging_attack = nullptr;
@@ -561,6 +562,7 @@ void Character::PlayerAttack(GameStateData* _GSD)
 			{
 				if (m_spam_cooldown >= 0)
 				{
+					m_recovery_time = 0.2f;
 					m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, spawn);
 					m_spam_cooldown = m_spamming_attack->GetDelay();
 				}
@@ -614,6 +616,7 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 			m_spamming_attack = m_attacks[attack_to_use];
 			break;
 		case OnHold::HOLD_NONE:
+			m_recovery_time = 0.2f;
 			m_attacks[attack_to_use]->PerformAttack
 			(m_pos, m_facing, this, _GSD, spawn);
 			break;
@@ -641,7 +644,7 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			attack_to_use = AttackMap::SIDE_SPECIAL;
 			m_attacking = true;
 		}
-		if (InputSystem::searchForAction(P_CROUCH, _actions))
+		else if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
 			attack_to_use = AttackMap::DOWN_SPECIAL;
 			m_attacking = true;
@@ -666,6 +669,7 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			m_spamming_attack = m_attacks[attack_to_use];
 			break;
 		case OnHold::HOLD_NONE:
+			m_recovery_time = 0.2f;
 			m_attacks[attack_to_use]->PerformAttack
 			(m_pos, m_facing, this, _GSD, spawn);
 			break;

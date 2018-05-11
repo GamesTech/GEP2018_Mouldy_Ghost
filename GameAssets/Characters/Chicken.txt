@@ -7,7 +7,7 @@ Side + A	>Melee\hold.txt
 Up + A		>Melee\upPunch.txt
 Down + A	>Melee\spam.txt
 X		>Ranged\spam.txt
-Side + X	>Ranged\hit.txt
+Side + X	>Dash\frontdash.txt
 Up + X		>Dash\wideupdash.txt
 Down + X	>Ranged\hit.txt
 Animations	>Animations\chicken

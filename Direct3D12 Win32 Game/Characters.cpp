@@ -538,11 +538,8 @@ void Character::PlayerAttack(GameStateData* _GSD)
 			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
 				|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
 			{
-
-
 				if (static_cast<StandardAttack*>(m_charging_attack))
 				{
-					m_recovery_time = 0.2f;
 					m_charging_attack->PerformAttack
 					(m_pos, m_facing, this, _GSD, spawn, m_charge_time);
 					m_charging_attack = nullptr;
@@ -551,7 +548,6 @@ void Character::PlayerAttack(GameStateData* _GSD)
 				{
 					m_spamming_attack = nullptr;
 				}
-
 
 				m_attacking = false;
 				//switchAnimation(idle_anim.get());
@@ -562,7 +558,6 @@ void Character::PlayerAttack(GameStateData* _GSD)
 			{
 				if (m_spam_cooldown >= 0)
 				{
-					m_recovery_time = 0.2f;
 					m_spamming_attack->PerformAttack(m_pos, m_facing, this, _GSD, spawn);
 					m_spam_cooldown = m_spamming_attack->GetDelay();
 				}
@@ -588,7 +583,11 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 	if (!m_attacking)
 	{
 		AttackMap attack_to_use;
-		if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions)
+		if (InputSystem::searchForAction(P_HOLD_UP, _actions))
+		{
+			attack_to_use = AttackMap::UP_BASIC;
+		}
+		else if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions)
 			|| InputSystem::searchForAction(P_MOVE_LEFT, _actions))
 		{
 			attack_to_use = AttackMap::SIDE_BASIC;
@@ -596,10 +595,6 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 		else if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
 			attack_to_use = AttackMap::DOWN_BASIC;
-		}
-		else if (InputSystem::searchForAction(P_HOLD_UP, _actions))
-		{
-			attack_to_use = AttackMap::UP_BASIC;
 		}
 		else
 		{

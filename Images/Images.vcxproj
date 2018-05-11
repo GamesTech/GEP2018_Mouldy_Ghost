@@ -226,6 +226,9 @@
   <ItemGroup>
     <ImageContentTask Include="AttackColliders\rock.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="grassplatform.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

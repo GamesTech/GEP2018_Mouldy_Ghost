@@ -63,7 +63,7 @@ void StageManager::loadAllStages(RenderData * _RD)
 void StageManager::loadPlatform(RenderData * _RD, Stage* _stage, std::ifstream & _opened_file)
 {
 
-	Platform* platform = new Platform(_RD,"platform");
+	Platform* platform = new Platform(_RD,"grassplatform");
 	
 	float spawnX = std::stof(getFileData(_opened_file));
 	float spawnY = std::stof(getFileData(_opened_file));
@@ -95,7 +95,7 @@ void StageManager::loadMovingPlatform(RenderData * _RD, Stage* _stage, std::ifst
 	float travel = std::stof(getFileData(_opened_file));
 	float stay = std::stof(getFileData(_opened_file));
 
-	MovingPlatform* platform = new MovingPlatform(_RD,start,end,travel,stay, "platform");
+	MovingPlatform* platform = new MovingPlatform(_RD,start,end,travel,stay, "grassplatform");
 	float spawnX = std::stof(getFileData(_opened_file));
 	float spawnY = std::stof(getFileData(_opened_file));
 	platform->SetSpawn(Vector2(spawnX, spawnY));

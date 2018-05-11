@@ -46,8 +46,8 @@ StandardAttack::StandardAttack(std::string _attack_file, RenderData* _RD)
 	m_data.direction.y = std::stoi(getFileData(attack_file));
 	m_data.size.x = std::stoi(getFileData(attack_file));
 	m_data.size.y = std::stoi(getFileData(attack_file));
-
 	m_data.grav = getFileData(attack_file)[0] == 't';
+	m_data.file = getFileData(attack_file);
 
 	attack_file.close();
 }

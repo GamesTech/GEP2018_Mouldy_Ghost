@@ -27,4 +27,5 @@ struct DamageColData
 	int knockback;
 	Vector2 size;
 	bool grav;
+	std::string file;
 };

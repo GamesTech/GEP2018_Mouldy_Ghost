@@ -759,8 +759,3 @@ void Character::switchAnimation(Animation2D * _new)
 		OutputDebugString(L"ANIMATION NOT INITIALISED");
 	}
 }
-
-void Character::FlipX()
-{
-	flipped = !flipped;
-}

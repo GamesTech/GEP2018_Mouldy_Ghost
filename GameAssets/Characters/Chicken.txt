@@ -2,7 +2,7 @@ Image		>ChickenWalk
 Speed		>3
 Jump Count	>2
 Jump		>220
-A		>Melee\hit.txt
+A		>Dash\egg.txt
 Side + A	>Melee\hold.txt
 Up + A		>Melee\upPunch.txt
 Down + A	>Melee\spam.txt

@@ -11,3 +11,4 @@ dash x			>0
 dash y			>-2
 dash power		>20
 gravity			>false
+collider sprite		>hit

@@ -339,6 +339,7 @@
     <ClInclude Include="GameStateData.h" />
     <ClInclude Include="Throwable.h" />
     <ClInclude Include="Tornado.h" />
+    <ClInclude Include="VibrationHandler.h" />
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
@@ -423,6 +424,7 @@
     <ClCompile Include="Text2D.cpp" />
     <ClCompile Include="Throwable.cpp" />
     <ClCompile Include="Tornado.cpp" />
+    <ClCompile Include="VibrationHandler.cpp" />
     <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>

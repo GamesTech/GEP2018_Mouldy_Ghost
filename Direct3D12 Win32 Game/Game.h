@@ -21,6 +21,7 @@ class SceneHandler;
 class AudioHandler;
 class GameSettingsHandler;
 class CharacterLifeHandler;
+class VibrationHandler;
 
 struct RenderData;
 struct GameStateData;
@@ -144,5 +145,6 @@ private:
 	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
 	std::unique_ptr<CharacterLifeHandler> m_lifeListener = nullptr;
 	std::unique_ptr<SpawnHandler> m_spawner = nullptr;
+	std::unique_ptr<VibrationHandler> m_vibrationListner = nullptr;
 	std::vector<EventHandler*> listeners;
 };

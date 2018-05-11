@@ -377,6 +377,9 @@
     <ClInclude Include="InputTextBox.h">
       <Filter>AssetBuilder</Filter>
     </ClInclude>
+    <ClInclude Include="VibrationHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -603,6 +606,9 @@
     </ClCompile>
     <ClCompile Include="InputTextBox.cpp">
       <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="VibrationHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

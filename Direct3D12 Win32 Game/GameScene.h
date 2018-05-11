@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Stage.h"
+#include "StageManager.h"
 
 #include "CharacterController.h"
 #include "CharacterManager.h"
@@ -61,8 +62,9 @@ protected:
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
+	StageManager stage_manager;
 
-	std::vector<std::unique_ptr<Stage>> allstages;
+	
 
 	bool paused = false;
 	std::unique_ptr<Text2D> m_pause_text = nullptr;

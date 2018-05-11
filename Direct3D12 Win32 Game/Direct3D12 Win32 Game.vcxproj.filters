@@ -358,6 +358,9 @@
     <ClInclude Include="StageSelectScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -569,6 +572,9 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="FireworkEmitter.cpp" />
+    <ClCompile Include="StageManager.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

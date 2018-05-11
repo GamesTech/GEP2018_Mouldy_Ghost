@@ -293,6 +293,7 @@
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="StageSelectScene.h" />
     <ClInclude Include="StandardAttack.h" />
     <ClInclude Include="MeleeWeapon.h" />
@@ -372,6 +373,7 @@
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StageSelectScene.cpp" />
     <ClCompile Include="SystemSettingsScene.cpp" />
     <ClCompile Include="Temple.cpp" />

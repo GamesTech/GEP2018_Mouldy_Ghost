@@ -50,7 +50,7 @@ void Temple::init(RenderData * _RD, GameStateData * _GSD)
 
 
 	MovingPlatform* test_moving = new MovingPlatform(_RD, Vector2(150, 50), Vector2(150, 400), 4.0f, 2.0f, "platform");
-	test_moving->SetPos(Vector2(50, 50));
+	test_moving->SetSpawn(Vector2(50, 50));
 	test_moving->SetScale(Vector2(0.5, 0.5));
 
 	Rectangle rect2 = Rectangle
@@ -63,7 +63,7 @@ void Temple::init(RenderData * _RD, GameStateData * _GSD)
 	platforms.push_back(test_moving);
 
 	MovingPlatform* moving = new MovingPlatform(_RD, Vector2(1050, 400), Vector2(1050, 50), 4.0f, 2.0f, "platform");
-	moving->SetPos(Vector2(1050, 400));
+	moving->SetSpawn(Vector2(1050, 400));
 	moving->SetScale(Vector2(0.5, 0.5));
 
 	Rectangle rect3 = Rectangle

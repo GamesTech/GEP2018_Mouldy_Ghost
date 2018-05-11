@@ -16,7 +16,7 @@ public:
 
 
 protected:
-
+	float m_power = 1;
 	SpawnHandler* m_spawner;
 	float elapsed_time = 0;
 };

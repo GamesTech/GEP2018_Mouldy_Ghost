@@ -47,7 +47,7 @@ protected:
 
 	SpawnHandler* m_spawner = nullptr;
 
-	ItemState m_state = ItemState::WAIT;
+	ItemState m_state = ItemState::SPAWNED;
 	ItemType m_type = ItemType::SINGLE_USE;
 
 	float m_elapsed_time = 0;

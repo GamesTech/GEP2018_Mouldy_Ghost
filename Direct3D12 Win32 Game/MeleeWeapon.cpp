@@ -46,12 +46,7 @@ void MeleeWeapon::use(Character * char_)
 void MeleeWeapon::Tick(GameStateData * _GSD)
 {
 
-	if (m_state == ItemState::HELD)
-	{
-		m_pos = player_ignore->GetPos();
-	}
-
-	Item::Tick(_GSD);
+	Throwable::Tick(_GSD);
 
 	if (m_state == ItemState::ATTACKING)
 	{
@@ -121,12 +116,12 @@ void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		if (attack_type == 1)
 		{
 			//right
-			dir = Vector2((m_power +  m_power * m_charge), -1);
+			dir = Vector2((m_power +  m_power * m_charge), -3);
 		}
 		else if (attack_type == 2)
 		{
 			//left
-			dir = Vector2(-(m_power +  m_power * m_charge), -1);
+			dir = Vector2(-(m_power +  m_power * m_charge),-3);
 		}
 		else if (attack_type == 3)
 		{
@@ -136,14 +131,14 @@ void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		else if (attack_type == 4)
 		{
 			//down
-			dir = Vector2(0, -10);
+			dir = Vector2(0, 10);
 		}
 		tmpchar->TakeDamage(m_power + m_power*m_charge);
 		dir.Normalize();
 		tmpchar->Hit(dir, 10000*m_power*m_charge , player_ignore);
 	
 	}
-	else if (m_state == ItemState::THROWN || m_state == ItemState::WAIT)
+	else if (m_state == ItemState::THROWN || m_state == ItemState::WAIT ||  m_state == ItemState::SPAWNED)
 	{
 		Throwable::CollisionEnter(_collision, _normal);
 	}

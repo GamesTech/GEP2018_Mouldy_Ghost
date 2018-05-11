@@ -12,6 +12,8 @@ public:
 	~Throwable();
 
 
+
+	void Tick(GameStateData* _GSD)override;
 	void Throw(Character* _player);
 	virtual void pickUp(Character* _player);
 	virtual void use(Character* _player) override;

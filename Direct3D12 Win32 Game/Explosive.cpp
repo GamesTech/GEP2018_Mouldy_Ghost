@@ -30,17 +30,14 @@ Explosive::~Explosive()
 
 void Explosive::Tick(GameStateData * _GSD)
 {
-	Item::Tick(_GSD);
+	Throwable::Tick(_GSD);
+
 	if (m_active)
 	{
 		m_fuse -= _GSD->m_dt;
 	}
 
-	if (m_state == ItemState::HELD)
-	{
-		m_pos = player_ignore->GetPos();
-	}
-
+	
 	if (m_explode == true)
 	{
 		//instantiate explosion
@@ -53,7 +50,7 @@ void Explosive::Tick(GameStateData * _GSD)
 		m_explode = false;
 	}
 
-
+	
 }
 
 void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)

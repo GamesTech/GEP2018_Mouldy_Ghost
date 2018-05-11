@@ -79,6 +79,8 @@ void GameScene::Initialise(RenderData * _RD,
 
 	item_spawner.loadAllData(_RD);
 
+	stage_manager.loadAllStages(_RD);
+
 	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam.get();
 	m_3DObjects.push_back(m_cam.get());
@@ -86,13 +88,13 @@ void GameScene::Initialise(RenderData * _RD,
 	//creating a stage
 	//could pass the name of the stage as a function paratemter
 
-	allstages.push_back(std::make_unique<FinalDestination>());
-	allstages.push_back(std::make_unique<Temple>());
-	allstages.push_back(std::make_unique<Battlefield>());
+	//allstages.push_back(std::make_unique<FinalDestination>());
+	//allstages.push_back(std::make_unique<Temple>());
+	//allstages.push_back(std::make_unique<Battlefield>());
 
-	allstages[0]->init(m_RD, m_GSD);
-	allstages[1]->init(m_RD, m_GSD);
-	allstages[2]->init(m_RD, m_GSD);
+	//allstages[0]->init(m_RD, m_GSD);
+	//allstages[1]->init(m_RD, m_GSD);
+	//allstages[2]->init(m_RD, m_GSD);
 
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
@@ -384,7 +386,7 @@ void GameScene::Reset()
 
 			if (temp->isStageSelected())
 			{
-				game_stage = allstages[temp->getStageSelected()].get();
+				game_stage = stage_manager.returnSceneWithIndex(temp->getStageSelected());
 				//adds all 2d objects to the stage
 				game_stage->addObjectsToScene(m_2DObjects,m_GSD);
 

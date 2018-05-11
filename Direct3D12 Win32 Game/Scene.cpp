@@ -3,6 +3,7 @@
 #include "GameStateData.h"
 #include "Scene.h"
 #include "HUD.h"
+#include <fstream>
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -15,6 +16,36 @@ Scene::~Scene()
 	m_sounds.clear();
 }
 
+std::string Scene::getFileData(std::ifstream & _file)
+{
+	int tries = 0;
+	char c;
+	//look through the file until a '>' is reached
+	do
+	{
+		c = _file.get();
+		tries++;
+		assert(tries < 10000);	//breaks here if it gets stuck in the file
+	} while (c != '>');
+
+	//add the rest of the line to the data
+	std::string ret_str = "";
+	while (true)
+	{
+		c = _file.get();
+		if (c != '\n' && !_file.eof())
+		{
+			ret_str += c;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	//return the data
+	return ret_str;
+}
 
 void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {

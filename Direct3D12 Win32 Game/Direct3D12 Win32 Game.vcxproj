@@ -256,6 +256,7 @@
     <ClInclude Include="AnimationEditorScene.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Buff.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CharacterLifeHandler.h" />
@@ -298,11 +299,13 @@
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="StageSelectScene.h" />
     <ClInclude Include="StandardAttack.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="SystemSettingsScene.h" />
+    <ClInclude Include="Temple.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="DashAttack.h" />
     <ClInclude Include="MovingPlatform.h" />
@@ -343,6 +346,7 @@
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="AnimationEditorScene.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Battlefield.cpp" />
     <ClCompile Include="Buff.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CharacterLifeHandler.cpp" />
@@ -380,7 +384,9 @@
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="StageSelectScene.cpp" />
     <ClCompile Include="SystemSettingsScene.cpp" />
+    <ClCompile Include="Temple.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="StandardAttack.cpp" />

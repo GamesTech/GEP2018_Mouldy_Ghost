@@ -256,6 +256,9 @@ void Game::buildGame()
 	m_characterSelectScene = std::make_unique<CharacterSelectScene>(m_gameScene.get());
 	m_all_scenes.push_back(m_characterSelectScene.get());
 
+	m_stageSelect = std::make_unique<StageSelectScene>();
+	m_all_scenes.push_back(m_stageSelect.get());
+
 	m_gameOverScene = std::make_unique<GameOverScene>();
 	m_all_scenes.push_back(m_gameOverScene.get());
 

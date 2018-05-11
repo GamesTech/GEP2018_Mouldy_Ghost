@@ -116,6 +116,8 @@ private:
 	std::unique_ptr<SystemSettingsScene> m_systemSettings;
 	std::unique_ptr<EditorMenu> m_editorMenu;
 	std::unique_ptr<AnimationEditorScene> m_animationEditor;
+	std::unique_ptr<StageSelectScene> m_stageSelect;
+
 
 	std::vector<Scene*> m_all_scenes;
 	IdleHandler m_idleHandler;

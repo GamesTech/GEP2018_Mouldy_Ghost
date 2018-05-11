@@ -37,7 +37,7 @@ public:
 
 	virtual void CentreOrigin() = 0;
 	
-	Physics2D* GetPhysics() { return m_physics; }
+	Physics2D* GetPhysics() { return m_physics.get(); }
 
 	virtual void Tick(GameStateData* _GSD);
 	virtual void Render(RenderData* _RD, int _sprite = 0,
@@ -59,6 +59,9 @@ public:
 	virtual void CollisionExit(Physics2D* _collision);
 
 	void addListener(EventHandler* _event);
+
+	const int getZ() const { return m_z_order; }
+	void setZ(int z) { m_z_order = z; }
 protected:
 	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;
@@ -71,10 +74,11 @@ protected:
 	std::vector<GameObject2D*>children;
 	GameObjectTag tag = GameObjectTag::UNTAGGED;
 
+	int m_z_order = 0;
 	Vector2 previous_pos = Vector2::Zero;
 	float previous_ori = 0.0f;
 
-	Physics2D* m_physics = nullptr;
+	std::shared_ptr<Physics2D> m_physics = nullptr;
 
 	std::vector<EventHandler*> listeners;
 };

@@ -11,3 +11,4 @@ dash x			>2
 dash y			>-0.2
 dash power		>20
 gravity			>false
+collider sprite		>rock

@@ -5,10 +5,10 @@
 #include "GameOverScene.h"
 
 
-SceneHandler::SceneHandler()
+SceneHandler::SceneHandler(IdleHandler * _idle)
 {
+	m_idle = _idle;
 }
-
 
 SceneHandler::~SceneHandler()
 {
@@ -33,11 +33,6 @@ void SceneHandler::init(GameStateData * _GSD , std::vector<Scene*> _allScenes)
 			m_activeScene = m_allScenes[i];
 		}
 	}
-}
-
-void SceneHandler::addScene(Scene * _scene)
-{
-	m_allScenes.push_back(_scene);
 }
 
 void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
@@ -99,6 +94,36 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 			}
 		}
 		break;
+	case Event::CHANGE_SCENE_SYSTEM_SETTINGS:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "SystemSettings")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
+	case Event::CHANGE_SCENE_STAGE_SELECT:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "StageSelect")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
+	case Event::CHANGE_SCENE_DEMO_SCREEN:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "DemoScene")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
 	case Event::GAME_OVER:
 		for (int i = 0; i < m_allScenes.size(); i++)
 		{
@@ -113,6 +138,27 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 				sceneChangeIndex = i;
 			}
 		}
+		break;
+	case Event::CHANGE_SCENE_EDITOR_MENU:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "EditorMenu")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
+	case Event::CHANGE_SCENE_ANIMATION_EDITOR:
+		for (int i = 0; i < m_allScenes.size(); i++)
+		{
+			if (m_allScenes[i]->getType() == "AnimationEditor")
+			{
+				sceneChanged = true;
+				sceneChangeIndex = i;
+			}
+		}
+		break;
 	default:
 		break;
 	}
@@ -125,5 +171,7 @@ void SceneHandler::onNotify(GameObject2D * entity_, Event event_)
 		m_activeScene = m_allScenes[sceneChangeIndex];
 		m_activeScene->PhysicsInScene(m_GSD);
 		m_activeScene->Reset();
+		//reset the idle counter
+		m_idle->reset();
 	}
 }

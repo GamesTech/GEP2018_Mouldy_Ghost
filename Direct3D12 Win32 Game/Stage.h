@@ -10,14 +10,20 @@ public:
 	~Stage();
 
 	virtual void update(GameStateData* _GSD);
-	virtual void init(RenderData* _RD,GameStateData* _GSD) = 0;
+	virtual void init(RenderData* _RD,GameStateData* _GSD);
 
-	void addObjectsToScene(std::vector<GameObject2D*>& _g_objects);
+	void addObjectsToScene(std::vector<GameObject2D*>& _g_objects, GameStateData* _GSD);
+	void addPlatform(Platform* _platform);
+	void setSpawnPointAtIndex(int _i, Vector2 point);
 
 	const Vector2 getSpawn(int i) { return spawn[i]; }
+	void setName(std::string _name) { name = _name; }
+	std::string getName() { return name; }
 
 	Vector2 getRandomSpawnPoint();
 protected:
+
+	std::string name = "stage";
 
 	std::vector<GameObject2D*> other_objects;
 	std::vector<Platform*> platforms; 

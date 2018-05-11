@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "DashAttack.h"
+#include "SpawnHandler.h"
 #include <fstream>
 
 std::string getFileData(std::ifstream & _file);
@@ -44,6 +45,7 @@ DashAttack::DashAttack(std::string _attack_file, RenderData * _RD)
 	m_dash_distance = std::stof(getFileData(attack_file));
 
 	m_data.grav = getFileData(attack_file)[0] == 't';
+	m_data.file = getFileData(attack_file);
 	attack_file.close();
 }
 
@@ -62,4 +64,5 @@ void DashAttack::PerformAttack(Vector2 _position, int _direction, Character * _u
 
 	DamageCollider* collider = new DamageCollider(m_RD, attack, _spawner);
 	collider->SetPos(_position);
+	_spawner->onNotify(collider, Event::OBJECT_INSTANTIATED);
 }

@@ -4,7 +4,7 @@
 
 Background::Background(RenderData * _RD, string _filename, int _layer) : ImageGO2D(_RD, _filename)
 {
-	m_physics = new Physics2D();
+	m_physics = std::make_shared<Physics2D>();
 	CentreOrigin();
 	m_layer = _layer;
 }

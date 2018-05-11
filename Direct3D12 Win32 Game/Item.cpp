@@ -13,9 +13,9 @@ Item::Item(RenderData * _RD, string _filename, SpawnHandler* _spawner) : ImageGO
 {
 	m_handler = _spawner;
 #if _DEBUG
-	m_physics = new VisiblePhysics(_RD);
+	m_physics = std::make_shared<VisiblePhysics>(_RD);
 #else
-	m_physics = new Physics2D();
+	m_physics = std::make_shared<Physics2D>();
 #endif;
 	m_physics->SetOwner(this);
 	m_physics->SetBounce(0.5);
@@ -40,11 +40,6 @@ Item::Item(Item * item_to_copy, RenderData* _RD, string _filename, SpawnHandler*
 
 Item::~Item()
 {
-	if (m_physics)
-	{
-		delete m_physics;
-		m_physics = nullptr;
-	}
 }
 
 void Item::Tick(GameStateData * _GSD)

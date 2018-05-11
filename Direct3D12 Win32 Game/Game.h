@@ -13,6 +13,7 @@
 #include "EventHandler.h"
 #include "InputSystem.h"
 #include "CharacterManager.h"
+#include "IdleHandler.h"
 #include <vector>
 using std::vector;
 
@@ -20,6 +21,7 @@ class SceneHandler;
 class AudioHandler;
 class GameSettingsHandler;
 class CharacterLifeHandler;
+class VibrationHandler;
 
 struct RenderData;
 struct GameStateData;
@@ -106,13 +108,21 @@ private:
 	GameStateData* m_GSD;
 
 	std::unique_ptr<GameScene> m_gameScene;
+	std::unique_ptr<DemoScene> m_demoScene;
 	std::unique_ptr<TitleScene> m_menuScene;
 	std::unique_ptr<MeleeScene> m_meleeScene;
 	std::unique_ptr<CharacterSelectScene> m_characterSelectScene;
 	std::unique_ptr<GameSettingsScene> m_gameSettingsScene;
 	std::unique_ptr<GameOverScene> m_gameOverScene;
+	std::unique_ptr<SystemSettingsScene> m_systemSettings;
+	std::unique_ptr<EditorMenu> m_editorMenu;
+	std::unique_ptr<AnimationEditorScene> m_animationEditor;
+	std::unique_ptr<StageSelectScene> m_stageSelect;
+
 
 	std::vector<Scene*> m_all_scenes;
+	IdleHandler m_idleHandler;
+	bool m_input_received = false;
 
 	//GEP:: Keyboard and Mouse Abstractions for basic input system
 	void ReadInput();
@@ -135,5 +145,6 @@ private:
 	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
 	std::unique_ptr<CharacterLifeHandler> m_lifeListener = nullptr;
 	std::unique_ptr<SpawnHandler> m_spawner = nullptr;
+	std::unique_ptr<VibrationHandler> m_vibrationListner = nullptr;
 	std::vector<EventHandler*> listeners;
 };

@@ -37,6 +37,8 @@ public:
 
 protected:
 	//Microsoft::WRL::ComPtr<ID3D12Resource> m_texture;
+	void FlipX() { flipped = !flipped; }
+	bool flipped = false;
 	int m_textureIndex = -1;
 	int m_resourceNum = -1;
 	Vector2 m_spriteSize;

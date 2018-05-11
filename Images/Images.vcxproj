@@ -138,9 +138,6 @@
     <ImageContentTask Include="default_item_texture.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="hit.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ImageContentTask Include="apple.png" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +198,33 @@
     <ImageContentTask Include="podium0.png" />
     <ImageContentTask Include="podium1.png" />
     <ImageContentTask Include="podium2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="smoke.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="FireworkParticle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\PigAttack.png" />
+    <ImageContentTask Include="SpriteSheets\PigIdle.png" />
+    <ImageContentTask Include="SpriteSheets\PigWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="button.png" />
+    <ImageContentTask Include="cursor.png" />
+    <ImageContentTask Include="TextBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\fireball.png" />
+    <ImageContentTask Include="AttackColliders\hit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\fireboost.png" />
+    <ImageContentTask Include="AttackColliders\laser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\rock.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

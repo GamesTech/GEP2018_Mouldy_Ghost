@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "Emitter.h"
 #include "RenderData.h"
+#include "GameStateData.h"
 #include <random>
 
+int Emitter::s_particles_in_sene = 0;
+int Emitter::s_max_particles = 300;
 
 Emitter::Emitter()
 {
@@ -120,26 +123,30 @@ void Emitter::addParticles(int amount)
 	std::uniform_real_distribution<float> random(0, distributionAngle);
 	for (int i = 0; i < amount; i++)
 	{
-		particles.push_back(Particle(GetPos(), file, RD));
-		particles.back().setSprite(allTextures[m_textureIndex].texture.Get());
-		Vector2 newPointTo(0, 1);
-		newPointTo = rotateVector(newPointTo, angle);
-		newPointTo = rotateVector(newPointTo, distributionAngle / -2);
-		newPointTo = rotateVector(newPointTo, random(mt));
-		//particles.back().setDestination(newPointTo);
-		particles.back().setDirection(newPointTo);
+		if (s_particles_in_sene < s_max_particles)
+		{
+			s_particles_in_sene++;
+			particles.push_back(Particle(GetPos(), file, RD));
+			particles.back().setSprite(allTextures[m_textureIndex].texture.Get());
+			Vector2 newPointTo(0, 1);
+			newPointTo = rotateVector(newPointTo, angle);
+			newPointTo = rotateVector(newPointTo, distributionAngle / -2);
+			newPointTo = rotateVector(newPointTo, random(mt));
+			//particles.back().setDestination(newPointTo);
+			particles.back().setDirection(newPointTo);
 
-		std::random_device rd2;
-		std::mt19937 mt2(rd2());
-		std::uniform_real_distribution<float> random2(minSpeed, maxSpeed);
-		float inputSpeed = random2(mt2);
-		particles.back().setSpeed(inputSpeed);
+			std::random_device rd2;
+			std::mt19937 mt2(rd2());
+			std::uniform_real_distribution<float> random2(minSpeed, maxSpeed);
+			float inputSpeed = random2(mt2);
+			particles.back().setSpeed(inputSpeed);
 
-		std::random_device rd3;
-		std::mt19937 mt3(rd3());
-		std::uniform_real_distribution<float> random3(minLifetime, maxLifetime);
-		float inputLifetime = random3(mt3);
-		particles.back().setLifetime(inputLifetime);
+			std::random_device rd3;
+			std::mt19937 mt3(rd3());
+			std::uniform_real_distribution<float> random3(minLifetime, maxLifetime);
+			float inputLifetime = random3(mt3);
+			particles.back().setLifetime(inputLifetime);
+		}
 	}
 }
 
@@ -161,6 +168,14 @@ void Emitter::CentreOrigin()
 
 void Emitter::Tick(GameStateData * _GSD)
 {
+	elapsedTime += _GSD->m_dt;
+
+	if (spawnRate > 0 && elapsedTime > (1 / spawnRate))
+	{
+		addParticles(elapsedTime / (1 / spawnRate));
+		elapsedTime = 0;
+	}
+
 	for (int i = 0; i < particles.size(); i++)
 	{
 		particles[i].Tick(_GSD);
@@ -168,6 +183,7 @@ void Emitter::Tick(GameStateData * _GSD)
 		{
 			particles.erase(particles.begin() + i);
 			i--;
+			s_particles_in_sene--;
 		}
 	}
 	if (particles.size() == 0)
@@ -199,7 +215,7 @@ void Emitter::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoo
 
 	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 		GetTextureSize(allTextures[m_textureIndex].texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+		render_pos, r, particles[i].getColour(), m_orientation, m_origin, render_scale);
 
 
 		//particles[i].Render(_RD, _sprite, _cam_pos, _zoom);

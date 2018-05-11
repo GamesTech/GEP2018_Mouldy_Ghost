@@ -3,6 +3,8 @@
 #include "GameStateData.h"
 #include "Scene.h"
 #include "HUD.h"
+#include "VibrationHandler.h"
+#include <fstream>
 
 #if _DEBUG
 #include "VisiblePhysics.h"
@@ -15,9 +17,9 @@ Scene::~Scene()
 	m_sounds.clear();
 }
 
-
 void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+	m_vibration->Tick(timer);
 	//this will update the audio engine but give us chance to do somehting else if that isn't working
 	if (!_audEngine->Update())
 	{
@@ -81,16 +83,18 @@ void Scene::Render(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandLi
 	_commandList->SetDescriptorHeaps(_countof(heaps), heaps);
 	m_RD->m_spriteBatch->Begin(_commandList.Get());
 
-	for (int i = 0; i < m_2DObjects.size(); i++)
+	std::vector<GameObject2D*> sorted_objects = sortByZOrder(m_2DObjects);
+	
+	for (int i = 0; i < sorted_objects.size(); i++)
 	{
-		(m_2DObjects[i])->Render(m_RD, 0, m_cam_pos, m_cam_zoom);
-#if _DEBUG
+		sorted_objects[i]->Render(m_RD, 0, m_cam_pos, m_cam_zoom);
+//#if _DEBUG
 		//COMMENT OUT THIS BIT IF YOU DON'T WANNA SEE THE CORNERS ON COLLIDERS
 		//if (dynamic_cast<VisiblePhysics*> ((m_2DObjects[i])->GetPhysics()))
 		//{
 		//	(m_2DObjects[i])->GetPhysics()->RenderCorners(m_cam_pos);
 		//}
-#endif
+//#endif
 	}
 
 	m_RD->m_spriteBatch->End();
@@ -197,5 +201,45 @@ GameObject2D** Scene::FindAll2DGameObjectsWithTag(GameObjectTag tag)
 
 void Scene::addListener(EventHandler* _event)
 {
+	if (_event->getType() == "Vibration")
+	{
+		m_vibration = static_cast<VibrationHandler*>(_event);
+	}
 	listeners.push_back(_event);
+}
+
+void Scene::setIdle(float _timer, Event _scene)
+{
+	m_idle_timer = _timer;
+	m_idle_switch_to = _scene;
+}
+
+std::vector<GameObject2D*> Scene::sortByZOrder(std::vector<GameObject2D*> objects)
+{
+	int lowest_z_order = 10000;
+	int highest_z_order = -10000;
+	for (GameObject2D* go2d : objects)
+	{
+		if (go2d->getZ() < lowest_z_order)
+		{
+			lowest_z_order = go2d->getZ();
+		}
+		if (go2d->getZ() > highest_z_order)
+		{
+			highest_z_order = go2d->getZ();
+		}
+	}
+	std::vector<GameObject2D*> return_vector;
+	for (int i = highest_z_order; i >= lowest_z_order; i--)
+	{
+		for (GameObject2D* go2d : objects)
+		{
+			if (go2d->getZ() == i)
+			{
+				return_vector.push_back(go2d);
+			}
+		}
+	}
+
+	return return_vector;
 }

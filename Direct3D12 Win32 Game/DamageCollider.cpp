@@ -3,12 +3,10 @@
 #include "Physics2D.h"
 #include "SpawnHandler.h"
 
-DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandler* _spawner) : ImageGO2D(_RD, "hit")
+DamageCollider::DamageCollider(RenderData* _RD, DamageColData _data, SpawnHandler* _spawner) : ImageGO2D(_RD, _data.file)
 {
 	m_spawner = _spawner;
-	m_physics = new Physics2D();
-	m_spawner->onNotify(this, Event::OBJECT_INSTANTIATED);
-
+	m_physics = std::make_shared<Physics2D>();
 
 	m_scale.x = _data.size.x / m_spriteSize.x;
 	m_scale.y = _data.size.y / m_spriteSize.y;
@@ -68,13 +66,33 @@ void DamageCollider::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 
 void DamageCollider::Tick(GameStateData * _GSD)
 {
+	calculateRotation();
+
+	if (m_data.grav)
+	{
+		m_physics->AddForce(Vector2(0, 10));
+	}
+
 	m_physics->AddForce(m_data.direction * m_data.speed * 10);
 	m_physics->Tick(_GSD, m_pos);
 
 	m_lifetime += _GSD->m_dt;
+
+	m_colour.A(m_lifetime * 2);
+
 	if (m_lifetime > m_data.time)
 	{
 		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
 		return;
+	}
+}
+
+void DamageCollider::calculateRotation()
+{
+	Vector2 absolute_direction = m_data.direction * m_data.speed;
+	absolute_direction.Normalize();
+	if (absolute_direction.x < 0)
+	{
+		flipped = true;
 	}
 }

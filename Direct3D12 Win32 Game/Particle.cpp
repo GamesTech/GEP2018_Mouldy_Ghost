@@ -3,6 +3,7 @@
 #include "GameStateData.h"
 #include "RenderData.h"
 
+int Particle::s_particles_in_scene = 0;
 
 Particle::Particle()
 {
@@ -10,7 +11,9 @@ Particle::Particle()
 
 Particle::Particle(Vector2 _origin, std::string _filename, RenderData * _RD) : ImageGO2D(_RD, _filename)
 {
+	s_particles_in_scene++;
 	m_origin = _origin;
+	CentreOrigin();
 	SetPos(m_origin);
 	m_fade = true;
 }
@@ -28,7 +31,7 @@ void Particle::Tick(GameStateData * _GSD)
 	SetPos(GetPos() + ((m_direction * (m_speed * - 1)) * _GSD->m_dt));
 	if (m_fade)
 	{
-		visibility = 1 - (m_elapsed_time / m_lifetime);
+		m_colour.A(1 - (m_elapsed_time / m_lifetime));
 	}
 	if (m_elapsed_time > m_lifetime)
 	{
@@ -63,6 +66,11 @@ void Particle::setLifetime(float _lifetime)
 void Particle::setSprite(ID3D12Resource * _sprite)
 {
 	//allTextures[m_textureIndex].texture = _sprite;
+}
+
+Color Particle::getColour()
+{
+	return m_colour;
 }
 
 

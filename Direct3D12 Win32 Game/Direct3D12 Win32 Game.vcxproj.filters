@@ -101,6 +101,9 @@
     <Filter Include="Source">
       <UniqueIdentifier>{27dfed5a-179f-40c2-97ca-9ea8d6398f1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AssetBuilder">
+      <UniqueIdentifier>{24e3f415-c9f6-4e20-a63a-cac09381e712}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -339,6 +342,47 @@
       <Filter>Items\Headers</Filter>
     </ClInclude>
     <ClInclude Include="ControllerFont.h" />
+    <ClInclude Include="AIController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemSettingsScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FireworkEmitter.h" />
+    <ClInclude Include="Battlefield.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Temple.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSelectScene.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorMenu.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEditorScene.h" />
+    <ClInclude Include="Button.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="ClickableButton.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="InputTextBox.h">
+      <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="VibrationHandler.h">
+      <Filter>EventSystem\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject2D.cpp">
@@ -530,6 +574,47 @@
     </ClCompile>
     <ClCompile Include="Buff.cpp">
       <Filter>Items\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AIController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemSettingsScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Battlefield.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Temple.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSelectScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FireworkEmitter.cpp" />
+    <ClCompile Include="StageManager.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorMenu.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEditorScene.cpp" />
+    <ClCompile Include="Button.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="ClickableButton.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="InputTextBox.cpp">
+      <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="VibrationHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

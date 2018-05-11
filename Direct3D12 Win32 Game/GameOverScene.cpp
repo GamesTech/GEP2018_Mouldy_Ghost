@@ -23,8 +23,6 @@ GameOverScene::~GameOverScene()
 
 void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	m_idleHandler.update(timer, Event::CHANGE_SCENE_MAIN_MENU, m_input_received, &listeners);
-
 	//wait for input to return to menu
 	for (int i = 0; i < 4; i++)
 	{

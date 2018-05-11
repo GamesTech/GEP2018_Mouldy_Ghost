@@ -2,12 +2,14 @@
 
 #include "Scene.h"
 #include "Stage.h"
+#include "StageManager.h"
 
 #include "CharacterController.h"
 #include "CharacterManager.h"
 #include "ItemSpawner.h"
 #include "Emitter.h"
 #include "HUD.h"
+
 
 enum class GameOverCheck
 {
@@ -26,16 +28,16 @@ public:
 	GameScene();
 	~ GameScene();
 
-	virtual std::string getType() override { return "GameScene"; };
+	virtual std::string getType() override { return "GameScene"; }
 
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
-	void AddCharacter(int i, std::string _character, RenderData* _RD);
+	virtual void AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo = false);
 	void RemoveAllCharacters();
 	void RemoveCharacter(Character * _char);
 
-	void Update(DX::StepTimer const & timer,
+	virtual void Update(DX::StepTimer const & timer,
 		std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 	virtual void Render
 	(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& _commandList) override;
@@ -47,11 +49,11 @@ public:
 	virtual void Reset();
 	void LinkSettings();
 
-private:
+protected:
 	HUD* m_HUD = nullptr;
 
-	std::unique_ptr<Stage> game_stage = nullptr;
-	CharacterController* entities[4] = { nullptr, nullptr, nullptr, nullptr };
+	Stage* game_stage = nullptr;
+	std::unique_ptr<CharacterController> entities[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::unique_ptr<Character> players[4] = { nullptr, nullptr, nullptr, nullptr };
 	DirectX::SimpleMath::Color player_tints[4];
 
@@ -60,8 +62,10 @@ private:
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
+	StageManager stage_manager;
 
-	std::unique_ptr<Emitter> m_testEmitter = nullptr;
+	
+
 	bool paused = false;
 	std::unique_ptr<Text2D> m_pause_text = nullptr;
 

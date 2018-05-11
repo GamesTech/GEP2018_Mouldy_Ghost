@@ -4,37 +4,8 @@
 #include "RenderData.h"
 #include <fstream>
 
-std::string GameSettingsScene::getFileData(std::ifstream & _file)
-{
-	int tries = 0;
-	char c;
-	//look through the file until a '>' is reached
-	do
-	{
-		c = _file.get();
-		tries++;
-		assert(tries < 10000);	//breaks here if it gets stuck in the file
-	} while (c != '>');
 
-	//add the rest of the line to the data
-	std::string ret_str = "";
-	while (true)
-	{
-		c = _file.get();
-		if (c != '\n' && !_file.eof())
-		{
-			ret_str += c;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//return the data
-	return ret_str;
-}
-
+std::string getFileData(std::ifstream & _file);
 
 GameSettingsScene::GameSettingsScene()
 {
@@ -47,16 +18,6 @@ GameSettingsScene::~GameSettingsScene()
 
 void GameSettingsScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
-	m_idleHandler.update(timer, Event::CHANGE_SCENE_MAIN_MENU,
-		m_input_received, &listeners);
-	for (int i = 0; i < 4; i++)
-	{
-		if (m_GSD->menu_action[i] != MenuAction::NONE)
-		{
-			m_input_received = true;
-		}
-	}
-
 	for (int i = 0; i < listeners.size(); i++)
 	{
 		if (listeners[i]->getType() == "GameSettings")
@@ -114,8 +75,6 @@ void GameSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _
 	m_RD = _RD;
 	m_GSD = _GSD;
 
-
-	//GEP::This is where I am creating the test objects
 	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam.get();
 	m_3DObjects.push_back(m_cam.get());
@@ -169,5 +128,3 @@ void GameSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _
 	}
 	all_items_file.close();
 }
-
-

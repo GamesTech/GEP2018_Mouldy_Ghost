@@ -1,6 +1,2 @@
->Blue Tails
->Luis
->Bowser
->Steve
->Grant
 >Chicken
+>Pig

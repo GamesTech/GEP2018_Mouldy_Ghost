@@ -4,6 +4,7 @@
 #include "InputSystem.h"
 #include "CharacterController.h"
 #include "Buff.h"
+#include "Emitter.h"
 
 //GEP:: Based on the ImageGO2D a basic keyboard controlled sprite
 
@@ -52,6 +53,7 @@ public:
 	void SetJumpHeight(float _height) { m_jump_height = _height; }
 	const float GetJumpHeight() { return m_jump_height; }
 	void SetJumpLimit(int _limit) { m_jump_limit = _limit; }
+	const bool canJump() const { return m_jumps < m_jump_limit; }
 
 	int GetStrenght() { return strenght; }
 	void SetStrenght(int _str) { strenght = _str; }
@@ -108,9 +110,9 @@ protected:
 	void switchAnimation(Animation2D* _new);
 	bool on_floor = false;
 
+	Emitter m_damage_emitter;
+	std::shared_ptr<Emitter> m_die_emitter = nullptr;
 
-	void FlipX();
-	bool flipped = false;
 	float m_recovery_time = 0;
 	int m_jumps = 1;
 	int m_damage = 0;

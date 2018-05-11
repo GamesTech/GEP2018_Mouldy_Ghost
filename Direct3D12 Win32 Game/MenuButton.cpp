@@ -6,7 +6,6 @@
 
 
 MenuButton::MenuButton()
-
 {
 }
 
@@ -14,7 +13,7 @@ MenuButton::MenuButton(Event _eventToSend, RenderData * _RD, string _filename) :
 {
 	//constructor for a single event (press a to do the thing)
 	type = ButtonType::SINGLE_EVENT;
-	m_physics = new Physics2D();
+	m_physics = std::make_shared<Physics2D>();
 	m_physics->SetBounce(0.3f);
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
@@ -28,7 +27,7 @@ MenuButton::MenuButton(Event _leftEventToSend, Event _rightEventToSend, RenderDa
 {
 	//constructor for a two event button (left/right for increasing of decreasing a value)
 	type = ButtonType::TWO_EVENT;
-	m_physics = new Physics2D();
+	m_physics = std::make_shared<Physics2D>();
 	m_physics->SetBounce(0.3f);
 	m_physics->SetGrav(1);
 	m_physics->SetOwner(this);
@@ -69,12 +68,15 @@ void MenuButton::Tick(GameStateData * _GSD)
 					listeners[i]->onNotify(this, Event::BUTTON_PRESSED);
 					listeners[i]->onNotify(this, m_eventToSend);
 
-					if (listeners[i]->getType() == "GameSettings"
-						&& m_eventToSend == Event::GAME_SETTINGS_ITEM_ACTIVATION)
+					if (listeners[i]->getType() == "GameSettings")
 					{
 						GameSettingsHandler* tmp = static_cast<GameSettingsHandler*>(listeners[i]);
 
-						tmp->onNotify(m_index_to_send, m_eventToSend);
+						if (m_eventToSend == Event::GAME_SETTINGS_ITEM_ACTIVATION
+							|| m_eventToSend == Event::GAME_SETTING_STAGE_SELECT)
+						{
+							tmp->onNotify(m_index_to_send, m_eventToSend);
+						}
 					}
 
 				}

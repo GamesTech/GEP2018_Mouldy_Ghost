@@ -46,11 +46,11 @@ void GameScene::Initialise(RenderData * _RD,
 	float h = m_GSD->window_size.y;
 
 	//set background
-	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", 1));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", -1));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, 100));
-	m_bg.push_back(std::make_unique<Background>(m_RD, "field", 1));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "field", -1));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
-	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 0.7f));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
 

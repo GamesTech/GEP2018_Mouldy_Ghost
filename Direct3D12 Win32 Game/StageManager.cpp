@@ -62,8 +62,7 @@ void StageManager::loadAllStages(RenderData * _RD)
 
 void StageManager::loadPlatform(RenderData * _RD, Stage* _stage, std::ifstream & _opened_file)
 {
-
-	Platform* platform = new Platform(_RD,"grassplatform");
+	std::unique_ptr<Platform> platform = std::make_unique<Platform>(_RD, "grassplatform");
 	
 	float spawnX = std::stof(getFileData(_opened_file));
 	float spawnY = std::stof(getFileData(_opened_file));
@@ -79,7 +78,7 @@ void StageManager::loadPlatform(RenderData * _RD, Stage* _stage, std::ifstream &
 	
 	platform->GetPhysics()->SetCollider(rect);
 
-	_stage->addPlatform(platform);
+	_stage->addPlatform(std::move(platform));
 }
 
 void StageManager::loadMovingPlatform(RenderData * _RD, Stage* _stage, std::ifstream & _opened_file)
@@ -95,7 +94,7 @@ void StageManager::loadMovingPlatform(RenderData * _RD, Stage* _stage, std::ifst
 	float travel = std::stof(getFileData(_opened_file));
 	float stay = std::stof(getFileData(_opened_file));
 
-	MovingPlatform* platform = new MovingPlatform(_RD,start,end,travel,stay, "grassplatform");
+	std::unique_ptr<MovingPlatform> platform = std::make_unique<MovingPlatform>(_RD, start, end, travel, stay, "grassplatform");
 	float spawnX = std::stof(getFileData(_opened_file));
 	float spawnY = std::stof(getFileData(_opened_file));
 	platform->SetSpawn(Vector2(spawnX, spawnY));
@@ -111,7 +110,7 @@ void StageManager::loadMovingPlatform(RenderData * _RD, Stage* _stage, std::ifst
 
 	platform->GetPhysics()->SetCollider(rect);
 
-	_stage->addPlatform(platform);
+	_stage->addPlatform(std::move(platform));
 
 }
 

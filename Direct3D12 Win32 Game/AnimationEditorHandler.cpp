@@ -2,6 +2,7 @@
 #include "AnimationEditorHandler.h"
 #include "CharacterManager.h"
 #include "AnimationContainer.h"
+#include "Animation2D.h"
 
 
 AnimationEditorHandler::AnimationEditorHandler()
@@ -44,6 +45,100 @@ void AnimationEditorHandler::onNotify(GameObject2D * entity_, Event event_)
 		break;
 	case Event::ANIMATION_EDITOR_PREV_ANIM:
 		m_characters[m_selected_char]->changeAnimation(-1);
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_FRAMERATE:
+		m_characters[m_selected_char]->getAnimation()->setFramerate
+		(m_characters[m_selected_char]->getAnimation()->getFramerate() + 1);
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_FRAMERATE:
+		m_characters[m_selected_char]->getAnimation()->setFramerate
+		(m_characters[m_selected_char]->getAnimation()->getFramerate() - 1);
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_FRAMES:
+		m_characters[m_selected_char]->getAnimation()->setMaxFrames
+		(m_characters[m_selected_char]->getAnimation()->getMaxFrames() - 1);
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_FRAMES:
+		m_characters[m_selected_char]->getAnimation()->setMaxFrames
+		(m_characters[m_selected_char]->getAnimation()->getMaxFrames() + 1);
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_X_INCREMENTS:
+		m_characters[m_selected_char]->getAnimation()->setIncrements
+		(Vector2(m_characters[m_selected_char]->getAnimation()->getIncrements().x + 1,
+				m_characters[m_selected_char]->getAnimation()->getIncrements().y));
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_X_INCREMENTS:
+		m_characters[m_selected_char]->getAnimation()->setIncrements
+		(Vector2(m_characters[m_selected_char]->getAnimation()->getIncrements().x - 1,
+			m_characters[m_selected_char]->getAnimation()->getIncrements().y));
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_Y_INCREMENTS:
+		m_characters[m_selected_char]->getAnimation()->setIncrements
+		(Vector2(m_characters[m_selected_char]->getAnimation()->getIncrements().x,
+			m_characters[m_selected_char]->getAnimation()->getIncrements().y - 1));
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_Y_INCREMENTS:
+		m_characters[m_selected_char]->getAnimation()->setIncrements
+		(Vector2(m_characters[m_selected_char]->getAnimation()->getIncrements().x,
+			m_characters[m_selected_char]->getAnimation()->getIncrements().y + 1));
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_BOX_WIDTH:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBox(
+			Rectangle(m_characters[m_selected_char]->getAnimation()->getSpriteBox().x,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().y,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().width - 1,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().height));
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_BOX_WIDTH:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBox(
+			Rectangle(m_characters[m_selected_char]->getAnimation()->getSpriteBox().x,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().y,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().width + 1,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().height));
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_BOX_HEIGHT:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBox(
+			Rectangle(m_characters[m_selected_char]->getAnimation()->getSpriteBox().x,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().y,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().width,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().height - 1));
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_BOX_HEIGHT:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBox(
+			Rectangle(m_characters[m_selected_char]->getAnimation()->getSpriteBox().x,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().y,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().width,
+				m_characters[m_selected_char]->getAnimation()->getSpriteBox().height + 1));
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_FURTHEST_LEFT:
+		m_characters[m_selected_char]->getAnimation()->setFurthestLeftPos(
+			m_characters[m_selected_char]->getAnimation()->getFurthestLeftPos() - 1);
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_FURTHEST_LEFT:
+		m_characters[m_selected_char]->getAnimation()->setFurthestLeftPos(
+			m_characters[m_selected_char]->getAnimation()->getFurthestLeftPos() + 1);
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_START_X:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBoxStartPos(
+		Vector2(m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().x -1,
+			m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().y));
+		break;
+	case Event::ANIMATION_EDITOR_INCREASE_START_X:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBoxStartPos(
+			Vector2(m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().x + 1,
+				m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().y));
+		break;
+	case Event::ANIMATION_EDITOR_DECREASE_START_Y:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBoxStartPos(
+			Vector2(m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().x,
+				m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().y - 1));
+		break;
+	case::Event::ANIMATION_EDITOR_INCREASE_START_Y:
+		m_characters[m_selected_char]->getAnimation()->setSpriteBoxStartPos(
+			Vector2(m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().x,
+				m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().y + 1));
+		break;
+	case::Event::ANIMATION_EDITOR_SAVE_DATA:
 		break;
 	}
 }

@@ -17,6 +17,7 @@ public:
 	void loadAnimations(std::string _file, RenderData* _RD);
 	void Tick(GameStateData* _GSD);
 
+	Animation2D* getAnimation() { return active_anim; };
 	void changeAnimation(int _direction);
 
 protected:

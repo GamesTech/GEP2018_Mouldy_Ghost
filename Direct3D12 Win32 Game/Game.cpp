@@ -269,6 +269,7 @@ void Game::buildGame()
 	m_all_scenes.push_back(m_editorMenu.get());
 
 	m_animationEditor = std::make_unique<AnimationEditorScene>();
+	m_animationEditor->setIdle(7200, Event::CHANGE_SCENE);
 	m_all_scenes.push_back(m_animationEditor.get());
 
 	//add all listeners to all scenes

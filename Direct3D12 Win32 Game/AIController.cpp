@@ -104,14 +104,6 @@ float AIController::getDist(GameObject2D * object)
 GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _GSD)
 {
 	GameActions actions;
-	if (_object->GetPos().x < m_character->GetPos().x)
-	{
-		actions.push_back(GameAction::P_MOVE_LEFT);
-	}
-	else if (_object->GetPos().x > m_character->GetPos().x)
-	{
-		actions.push_back(GameAction::P_MOVE_RIGHT);
-	}
 
 	if (_object->GetPos().y <= m_character->GetPos().y)
 	{
@@ -128,6 +120,14 @@ GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _G
 				actions.push_back(GameAction::P_RELEASE_SPECIAL);
 			}
 		}
+	}
+	if (_object->GetPos().x < m_character->GetPos().x)
+	{
+		actions.push_back(GameAction::P_MOVE_LEFT);
+	}
+	else if (_object->GetPos().x > m_character->GetPos().x)
+	{
+		actions.push_back(GameAction::P_MOVE_RIGHT);
 	}
 	return actions;
 }

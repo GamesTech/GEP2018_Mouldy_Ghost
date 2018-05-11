@@ -84,6 +84,7 @@
     <ImageContentTask Include="AttackColliders\rock.png">
       <Filter>AttackColliders</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="grassplatform.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

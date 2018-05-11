@@ -21,6 +21,7 @@ class SceneHandler;
 class AudioHandler;
 class GameSettingsHandler;
 class CharacterLifeHandler;
+class VibrationHandler;
 
 struct RenderData;
 struct GameStateData;
@@ -114,6 +115,8 @@ private:
 	std::unique_ptr<GameSettingsScene> m_gameSettingsScene;
 	std::unique_ptr<GameOverScene> m_gameOverScene;
 	std::unique_ptr<SystemSettingsScene> m_systemSettings;
+	std::unique_ptr<EditorMenu> m_editorMenu;
+	std::unique_ptr<AnimationEditorScene> m_animationEditor;
 	std::unique_ptr<StageSelectScene> m_stageSelect;
 
 
@@ -142,5 +145,6 @@ private:
 	std::unique_ptr<GameSettingsHandler> m_gameSettings = nullptr;
 	std::unique_ptr<CharacterLifeHandler> m_lifeListener = nullptr;
 	std::unique_ptr<SpawnHandler> m_spawner = nullptr;
+	std::unique_ptr<VibrationHandler> m_vibrationListner = nullptr;
 	std::vector<EventHandler*> listeners;
 };

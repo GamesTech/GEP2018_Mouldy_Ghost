@@ -35,5 +35,7 @@ protected:
 	RenderData * RD;
 	std::string file;
 	std::vector<Particle> particles;
-};
 
+	static int s_particles_in_sene;
+	static int s_max_particles;
+};

@@ -4,6 +4,8 @@
 #include "GameStateData.h"
 #include <random>
 
+int Emitter::s_particles_in_sene = 0;
+int Emitter::s_max_particles = 300;
 
 Emitter::Emitter()
 {
@@ -121,26 +123,30 @@ void Emitter::addParticles(int amount)
 	std::uniform_real_distribution<float> random(0, distributionAngle);
 	for (int i = 0; i < amount; i++)
 	{
-		particles.push_back(Particle(GetPos(), file, RD));
-		particles.back().setSprite(allTextures[m_textureIndex].texture.Get());
-		Vector2 newPointTo(0, 1);
-		newPointTo = rotateVector(newPointTo, angle);
-		newPointTo = rotateVector(newPointTo, distributionAngle / -2);
-		newPointTo = rotateVector(newPointTo, random(mt));
-		//particles.back().setDestination(newPointTo);
-		particles.back().setDirection(newPointTo);
+		if (s_particles_in_sene < s_max_particles)
+		{
+			s_particles_in_sene++;
+			particles.push_back(Particle(GetPos(), file, RD));
+			particles.back().setSprite(allTextures[m_textureIndex].texture.Get());
+			Vector2 newPointTo(0, 1);
+			newPointTo = rotateVector(newPointTo, angle);
+			newPointTo = rotateVector(newPointTo, distributionAngle / -2);
+			newPointTo = rotateVector(newPointTo, random(mt));
+			//particles.back().setDestination(newPointTo);
+			particles.back().setDirection(newPointTo);
 
-		std::random_device rd2;
-		std::mt19937 mt2(rd2());
-		std::uniform_real_distribution<float> random2(minSpeed, maxSpeed);
-		float inputSpeed = random2(mt2);
-		particles.back().setSpeed(inputSpeed);
+			std::random_device rd2;
+			std::mt19937 mt2(rd2());
+			std::uniform_real_distribution<float> random2(minSpeed, maxSpeed);
+			float inputSpeed = random2(mt2);
+			particles.back().setSpeed(inputSpeed);
 
-		std::random_device rd3;
-		std::mt19937 mt3(rd3());
-		std::uniform_real_distribution<float> random3(minLifetime, maxLifetime);
-		float inputLifetime = random3(mt3);
-		particles.back().setLifetime(inputLifetime);
+			std::random_device rd3;
+			std::mt19937 mt3(rd3());
+			std::uniform_real_distribution<float> random3(minLifetime, maxLifetime);
+			float inputLifetime = random3(mt3);
+			particles.back().setLifetime(inputLifetime);
+		}
 	}
 }
 
@@ -177,6 +183,7 @@ void Emitter::Tick(GameStateData * _GSD)
 		{
 			particles.erase(particles.begin() + i);
 			i--;
+			s_particles_in_sene--;
 		}
 	}
 	if (particles.size() == 0)

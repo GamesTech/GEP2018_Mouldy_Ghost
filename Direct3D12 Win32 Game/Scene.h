@@ -5,7 +5,7 @@
 #include "EventHandler.h"
 
 using std::vector;
-
+class VibrationHandler;
 class Scene
 {
 public:
@@ -28,9 +28,7 @@ public:
 
 	//adds the physics from the game's gameobjects to this scene
 	void PhysicsInScene(GameStateData* _GSD);
-
-	std::string getFileData(std::ifstream & _file);
-
+	
 	//Find game objects
 	GameObject2D* Find2DGameObjectWithName(std::string name);
 	GameObject2D** FindAll2DGameobjectsWithName(std::string name);
@@ -49,11 +47,14 @@ public:
 	Event getIdleEvent() const { return m_idle_switch_to; }
 
 protected:
+	std::vector<GameObject2D*> sortByZOrder(std::vector<GameObject2D*> objects);
+
 	vector<GameObject3D*> m_3DObjects;
 	vector<GameObject2D*> m_2DObjects;
 	vector<Sound*> m_sounds;
 
 	vector<EventHandler*> listeners;
+	VibrationHandler* m_vibration = nullptr;
 
 	std::unique_ptr<Camera> m_cam = nullptr;
 	Vector2 m_cam_pos = Vector2::Zero;

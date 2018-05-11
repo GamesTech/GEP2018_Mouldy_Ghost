@@ -3,8 +3,6 @@
 #include <codecvt>
 #include "RenderData.h"
 
-
-
 ImageGO2D::ImageGO2D(RenderData * _RD, string _filename)
 {
 	bool texture_found = false;
@@ -77,9 +75,18 @@ void ImageGO2D::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _z
 
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 
-	_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
-		GetTextureSize(allTextures[m_textureIndex].texture.Get()),
-		render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+	if (!flipped)
+	{
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+			GetTextureSize(allTextures[m_textureIndex].texture.Get()),
+			render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+	}
+	else
+	{
+		_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+			GetTextureSize(allTextures[m_textureIndex].texture.Get()),
+			render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);
+	}
 }
 
 void ImageGO2D::CentreOrigin()

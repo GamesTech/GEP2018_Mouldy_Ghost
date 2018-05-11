@@ -113,9 +113,6 @@ protected:
 	Emitter m_damage_emitter;
 	std::shared_ptr<Emitter> m_die_emitter = nullptr;
 
-
-	void FlipX();
-	bool flipped = false;
 	float m_recovery_time = 0;
 	int m_jumps = 1;
 	int m_damage = 0;

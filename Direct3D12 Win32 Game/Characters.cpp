@@ -42,6 +42,33 @@ Character::~Character()
 
 void Character::Tick(GameStateData * _GSD)
 {
+
+	//GEP:: Lets go up the inheritence and share our functionality
+
+	//run->update(_GSD);
+	m_damage_emitter.SetPos(m_pos);
+	m_damage_emitter.Tick(_GSD);
+	m_die_emitter->Tick(_GSD);
+	m_physics->Tick(_GSD, m_pos);
+
+	if (usesAnimation)
+	{
+		active_anim->update(_GSD);
+	}
+
+	//tick buffs
+	for (int i = 0; i < buffs.size(); i++)
+	{
+		if (buffs[i]->Tick(_GSD)) // if returns true, the buff should be deleted
+		{
+			delete buffs[i];
+			buffs.erase(buffs.begin() + i);
+			i--;
+		}
+	}
+
+	GameObject2D::Tick(_GSD);
+
 	if (m_lives > 0)
 	{
 		//get input
@@ -122,31 +149,7 @@ void Character::Tick(GameStateData * _GSD)
 		}
 	}
 
-	//GEP:: Lets go up the inheritence and share our functionality
 
-	//run->update(_GSD);
-	m_damage_emitter.SetPos(m_pos);
-	m_damage_emitter.Tick(_GSD);
-	m_die_emitter->Tick(_GSD);
-	m_physics->Tick(_GSD, m_pos);
-
-	if (usesAnimation)
-	{
-		active_anim->update(_GSD);
-	}
-
-	//tick buffs
-	for (int i = 0; i < buffs.size(); i++)
-	{
-		if (buffs[i]->Tick(_GSD)) // if returns true, the buff should be deleted
-		{
-			delete buffs[i];
-			buffs.erase(buffs.begin() + i);
-			i--;
-		}
-	}
-
-	GameObject2D::Tick(_GSD);
 }
 
 void Character::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
@@ -367,6 +370,13 @@ void Character::Collision(Physics2D * _collision, Vector2 _normal)
 	}
 	if (o_tag == GameObjectTag::PLATFORM && _normal != Vector2(0,-1))
 	{
+		if (!on_floor)
+		{
+			on_floor = true;
+			m_jumps = 0;
+			m_dash_recover = true;
+			m_last_to_hit = nullptr;
+		}
 		m_pos.y--;
 	}
 }
@@ -535,8 +545,6 @@ void Character::PlayerAttack(GameStateData* _GSD)
 			if (InputSystem::searchForAction(P_RELEASE_SPECIAL, actions_to_check)
 				|| InputSystem::searchForAction(P_RELEASE_BASIC, actions_to_check))
 			{
-
-
 				if (static_cast<StandardAttack*>(m_charging_attack))
 				{
 					m_charging_attack->PerformAttack
@@ -547,7 +555,6 @@ void Character::PlayerAttack(GameStateData* _GSD)
 				{
 					m_spamming_attack = nullptr;
 				}
-
 
 				m_attacking = false;
 				//switchAnimation(idle_anim.get());
@@ -583,7 +590,11 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 	if (!m_attacking)
 	{
 		AttackMap attack_to_use;
-		if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions)
+		if (InputSystem::searchForAction(P_HOLD_UP, _actions))
+		{
+			attack_to_use = AttackMap::UP_BASIC;
+		}
+		else if (InputSystem::searchForAction(P_MOVE_RIGHT, _actions)
 			|| InputSystem::searchForAction(P_MOVE_LEFT, _actions))
 		{
 			attack_to_use = AttackMap::SIDE_BASIC;
@@ -591,10 +602,6 @@ void Character::MeleeAttack(GameStateData * _GSD, std::vector<GameAction> _actio
 		else if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
 			attack_to_use = AttackMap::DOWN_BASIC;
-		}
-		else if (InputSystem::searchForAction(P_HOLD_UP, _actions))
-		{
-			attack_to_use = AttackMap::UP_BASIC;
 		}
 		else
 		{
@@ -638,7 +645,7 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 			attack_to_use = AttackMap::SIDE_SPECIAL;
 			m_attacking = true;
 		}
-		if (InputSystem::searchForAction(P_CROUCH, _actions))
+		else if (InputSystem::searchForAction(P_CROUCH, _actions))
 		{
 			attack_to_use = AttackMap::DOWN_SPECIAL;
 			m_attacking = true;
@@ -755,9 +762,4 @@ void Character::switchAnimation(Animation2D * _new)
 	{
 		OutputDebugString(L"ANIMATION NOT INITIALISED");
 	}
-}
-
-void Character::FlipX()
-{
-	flipped = !flipped;
 }

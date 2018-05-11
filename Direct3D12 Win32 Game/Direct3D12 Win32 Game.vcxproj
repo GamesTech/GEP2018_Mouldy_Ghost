@@ -253,20 +253,26 @@
     <ClInclude Include="AIController.h" />
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Animation2D.h" />
+    <ClInclude Include="AnimationEditorScene.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Buff.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CharacterLifeHandler.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="CharSelectScene.h" />
+    <ClInclude Include="ClickableButton.h" />
     <ClInclude Include="ControllerFont.h" />
+    <ClInclude Include="Cursor.h" />
     <ClInclude Include="DemoScene.h" />
+    <ClInclude Include="EditorMenu.h" />
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="FireworkEmitter.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="IdleHandler.h" />
+    <ClInclude Include="InputTextBox.h" />
     <ClInclude Include="MeleeScene.h" />
     <ClInclude Include="CounterAttack.h" />
     <ClInclude Include="DamageCollider.h" />
@@ -334,23 +340,30 @@
     <ClInclude Include="GameStateData.h" />
     <ClInclude Include="Throwable.h" />
     <ClInclude Include="Tornado.h" />
+    <ClInclude Include="VibrationHandler.h" />
     <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIController.cpp" />
     <ClCompile Include="Animation2D.cpp" />
+    <ClCompile Include="AnimationEditorScene.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Battlefield.cpp" />
     <ClCompile Include="Buff.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CharacterLifeHandler.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="CharSelectScene.cpp" />
+    <ClCompile Include="ClickableButton.cpp" />
+    <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DemoScene.cpp" />
+    <ClCompile Include="EditorMenu.cpp" />
     <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="FireworkEmitter.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="IdleHandler.cpp" />
+    <ClCompile Include="InputTextBox.cpp" />
     <ClCompile Include="MeleeScene.cpp" />
     <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -413,6 +426,7 @@
     <ClCompile Include="Text2D.cpp" />
     <ClCompile Include="Throwable.cpp" />
     <ClCompile Include="Tornado.cpp" />
+    <ClCompile Include="VibrationHandler.cpp" />
     <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>

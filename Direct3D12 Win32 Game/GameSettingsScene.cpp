@@ -5,7 +5,7 @@
 #include <fstream>
 
 
-
+std::string getFileData(std::ifstream & _file);
 
 GameSettingsScene::GameSettingsScene()
 {

@@ -6,7 +6,6 @@
 
 
 MenuButton::MenuButton()
-
 {
 }
 

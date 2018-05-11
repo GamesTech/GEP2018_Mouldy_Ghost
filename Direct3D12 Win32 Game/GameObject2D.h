@@ -59,6 +59,9 @@ public:
 	virtual void CollisionExit(Physics2D* _collision);
 
 	void addListener(EventHandler* _event);
+
+	const int getZ() const { return m_z_order; }
+	void setZ(int z) { m_z_order = z; }
 protected:
 	Vector2 m_spawn_pos = Vector2::Zero;
 	Vector2 m_pos = Vector2::Zero;
@@ -71,6 +74,7 @@ protected:
 	std::vector<GameObject2D*>children;
 	GameObjectTag tag = GameObjectTag::UNTAGGED;
 
+	int m_z_order = 0;
 	Vector2 previous_pos = Vector2::Zero;
 	float previous_ori = 0.0f;
 

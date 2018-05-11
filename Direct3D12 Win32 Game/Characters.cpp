@@ -84,7 +84,7 @@ void Character::Tick(GameStateData * _GSD)
 
 			if (usesAnimation)
 			{
-				if (gamePadPush.x == 0 && on_floor && !active_anim->getPlay())
+				if (gamePadPush.x == 0 && on_floor && !attack_anim->getPlay())
 				{
 					switchAnimation(idle_anim.get());
 				}

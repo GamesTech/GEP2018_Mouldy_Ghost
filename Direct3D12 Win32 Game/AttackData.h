@@ -17,15 +17,15 @@ enum Destroy
 class Character;
 struct DamageColData
 {
-	Character * user;
-	bool child_to_player;
-	float time;
-	float speed;
-	Vector2 direction;
-	Destroy contact;
-	int damage;
-	int knockback;
-	Vector2 size;
-	bool grav;
-	std::string file;
+	Character * user;      //player attacking
+	bool child_to_player;  //should be childed to attacking player
+	float time;            //how long the attack will exist before despawning
+	float speed;           //speed at which the attack moves
+	Vector2 direction;     //direction of the attack
+	Destroy contact;       //how does the attack despawn
+	int damage;            //how much damage
+	int knockback;         //how much knockback
+	Vector2 size;          //how big is the projectile
+	bool grav;             //is the projectile affected by gravity
+	std::string file;      //which sprite should the projectile use?
 };

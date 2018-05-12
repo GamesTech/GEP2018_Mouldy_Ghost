@@ -14,6 +14,7 @@
 
 GameScene::GameScene()
 {
+    //players have colour assigned to them for their sprite and hud text
 	player_tints[0] = SimpleMath::Color(0.3, 1, 1);
 	player_tints[1] = SimpleMath::Color(0.3, 1, 0.3);
 	player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
@@ -45,11 +46,11 @@ void GameScene::Initialise(RenderData * _RD,
 	float h = m_GSD->window_size.y;
 
 	//set background
-	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", 1));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", -1));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, 100));
-	m_bg.push_back(std::make_unique<Background>(m_RD, "field", 1));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "field", -1));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
-	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 0.7f));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
 
@@ -114,7 +115,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
-void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo)
+void GameScene::AddCharacter(int i, std::string _character, bool ai_controlled, bool demo)
 {
 	if (ai_controlled)
 	{
@@ -131,7 +132,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bo
 	//colour the player
 	players[i]->SetColour(player_tints[i]);
 	//give the player physics
-	players[i]->CreatePhysics(_RD);
+	players[i]->CreatePhysics(m_RD);
 	//give the player lives
 	players[i]->SetLives(m_maxLives);
 	players[i]->setinfinitelives(m_infiniteLives);

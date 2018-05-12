@@ -9,71 +9,67 @@ Temple::Temple()
 
 Temple::~Temple()
 {
-	for (auto& platform : platforms)
-	{
-		delete platform;
-		platform = nullptr;
-	}
-
 	platforms.clear();
 }
 
 void Temple::init(RenderData * _RD, GameStateData * _GSD)
 {
-	Platform* testplatform = new Platform(_RD, "platform");
+	std::unique_ptr<Platform> platform1 = std::make_unique<Platform>(_RD, "platform");
 
-	testplatform->SetSpawn(Vector2(600, 400));
+	platform1->SetSpawn(Vector2(600, 400));
 
 	Rectangle rect = Rectangle
-	(testplatform->GetPos().x, testplatform->GetPos().y,
-		testplatform->TextureSize().x,
-		testplatform->TextureSize().y);
+	(platform1->GetPos().x, platform1->GetPos().y,
+		platform1->TextureSize().x,
+		platform1->TextureSize().y);
 
-	testplatform->GetPhysics()->SetCollider(rect);
+	platform1->GetPhysics()->SetCollider(rect);
 
-	platforms.push_back(testplatform);
+	platforms.push_back(std::move(platform1));
 
+	std::unique_ptr<Platform> platform2 = std::make_unique<Platform>(_RD, "platform");
 
-	Platform* platform = new Platform(_RD, "platform");
-
-	platform->SetSpawn(Vector2(600, 0));
+	platform2->SetSpawn(Vector2(600, 0));
 
 	Rectangle rect1 = Rectangle
-	(platform->GetPos().x, platform->GetPos().y,
-		platform->TextureSize().x,
-		platform->TextureSize().y);
+	(platform2->GetPos().x, platform2->GetPos().y,
+		platform2->TextureSize().x,
+		platform2->TextureSize().y);
 
-	platform->GetPhysics()->SetCollider(rect1);
+	platform2->GetPhysics()->SetCollider(rect1);
 
-	platforms.push_back(platform);
+	platforms.push_back(std::move(platform2));
 	
 
-
-	MovingPlatform* test_moving = new MovingPlatform(_RD, Vector2(150, 50), Vector2(150, 400), 4.0f, 2.0f, "platform");
-	test_moving->SetSpawn(Vector2(50, 50));
-	test_moving->SetScale(Vector2(0.5, 0.5));
+	std::unique_ptr<MovingPlatform> moving1 =
+		std::make_unique<MovingPlatform>
+		(_RD, Vector2(150,50), Vector2(150,400), 4.0f, 2.0f, "platform");
+	moving1->SetSpawn(Vector2(50, 50));
+	moving1->SetScale(Vector2(0.5, 0.5));
 
 	Rectangle rect2 = Rectangle
-	(platform->GetPos().x, platform->GetPos().y,
-		platform->TextureSize().x * 0.5,
-		platform->TextureSize().y * 0.5);
+	(platform2->GetPos().x, platform2->GetPos().y,
+		platform2->TextureSize().x * 0.5,
+		platform2->TextureSize().y * 0.5);
 
-	test_moving->GetPhysics()->SetCollider(rect2);
+	moving1->GetPhysics()->SetCollider(rect2);
 
-	platforms.push_back(test_moving);
+	platforms.push_back(std::move(moving1));
 
-	MovingPlatform* moving = new MovingPlatform(_RD, Vector2(1050, 400), Vector2(1050, 50), 4.0f, 2.0f, "platform");
-	moving->SetSpawn(Vector2(1050, 400));
-	moving->SetScale(Vector2(0.5, 0.5));
+	std::unique_ptr<MovingPlatform> moving2 =
+		std::make_unique<MovingPlatform>
+		(_RD, Vector2(1050, 400), Vector2(1050, 50), 4.0f, 2.0f, "platform");
+	moving2->SetSpawn(Vector2(1050, 400));
+	moving2->SetScale(Vector2(0.5, 0.5));
 
 	Rectangle rect3 = Rectangle
-	(platform->GetPos().x, platform->GetPos().y,
-		platform->TextureSize().x * 0.5,
-		platform->TextureSize().y * 0.5);
+	(platform2->GetPos().x, platform2->GetPos().y,
+		platform2->TextureSize().x * 0.5,
+		platform2->TextureSize().y * 0.5);
 
-	moving->GetPhysics()->SetCollider(rect3);
+	moving2->GetPhysics()->SetCollider(rect3);
 
-	platforms.push_back(moving);
+	platforms.push_back(std::move(moving2));
 
 	spawn[0] = Vector2(450, -100);
 	spawn[1] = Vector2(750, 200);

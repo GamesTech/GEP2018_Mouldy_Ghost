@@ -6,20 +6,28 @@ void VibrationHandler::onNotify(GameObject2D * entity_, Event event_)
 	Character* c = static_cast<Character*>(entity_);
 	switch (event_)
 	{
+	case Event::APPLICATION_LOADED:
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			setVibration(i, 0, 0, 0);
+		}
+		break;
+	}
 	case GAME_OVER:
 		for (int i = 0; i < 4; i++)
 		{
-			setVibration(i, 0.5f, 0.5f, 2, 0.5f, 0.5f);
+			setVibration(i, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f);
 		}
 		break;
 	case PLAYER_HIT:
-		setVibration(c->GetControllerIndex(), 0.4f, 0.4f, 0.5f, 0.4f, 0.4f);
+		setVibration(c->GetControllerIndex(), 0.1f, 0.1f, 0.1f, 0.1f, 0.1f);
 		break;
 	case PLAYER_DEAD:
-		setVibration(c->GetControllerIndex(), 0.7f, 0.7f, 0.8f, 0.7f, 0.7f);
+		setVibration(c->GetControllerIndex(), 0.2f, 0.2f, 0.2f, 0.2f, 0.2f);
 		break;
 	case PLAYER_ELIMINATED:
-		setVibration(c->GetControllerIndex(), 1, 1, 1, 1, 1);
+		setVibration(c->GetControllerIndex(), 0.5f, 0.5f, 0.5f, 0.5f, 0.5f);
 		break;
 	default:
 		break;

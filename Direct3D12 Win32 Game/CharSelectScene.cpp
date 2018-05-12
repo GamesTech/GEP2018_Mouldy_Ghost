@@ -14,9 +14,9 @@ CharacterSelectScene::CharacterSelectScene(GameScene* _g_scene)
 	m_player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
 	m_player_tints[3] = SimpleMath::Color(1, 1, 0.3);
 
-	m_instructions[0] = new Text2D("[LThumb]\n\n[A]\n\n[Start]\n\n[Back]");
+	m_instructions[0] = new Text2D("[LThumb]LR\n\n[LThumb]UD\n\n[A]\n\n[Start]\n\n[Back]");
 	m_instructions[0]->SetPos(Vector2(50, 50));
-	m_instructions[1]= new Text2D("- Select Character\n\n- Confirm Character\n\n- Start Game\n\n- Return to Menu");
+	m_instructions[1]= new Text2D("- Select Character\n\n- Add/Remove AI\n\n- Confirm Character\n\n- Start Game\n\n- Return to Menu");
 	m_instructions[1]->SetPos(Vector2(350, 50));
 }
 
@@ -30,6 +30,16 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 {
 	for (int i = 0; i < 4; i++)
 	{
+		//adding and removing ai
+		if (m_GSD->menu_action[i] == MenuAction::NAV_UP)
+		{
+			addAI();
+		}
+		if (m_GSD->menu_action[i] == MenuAction::NAV_DOWN)
+		{
+			removeAI();
+		}
+
 		//left and right to select characters
 		if (m_GSD->menu_action[i] == MenuAction::NAV_LEFT && !m_confirmed[i])
 		{
@@ -39,6 +49,13 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 		{
 			m_selected_character[i] = (m_selected_character[i] + 1)
 				% (m_ch_manager->GetCharCount() + 1);
+		}
+
+		if ((m_GSD->menu_action[i] == MenuAction::NAV_LEFT
+			|| m_GSD->menu_action[i] == MenuAction::NAV_RIGHT)
+			&& ai_to_add[i] != "")
+		{
+			removeAI(i);
 		}
 
 		//if they go below 0, loop back to the last one
@@ -83,13 +100,17 @@ void CharacterSelectScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 			{
 				for (int j = 0; j < 4; j++)
 				{
-					if (isValid(j))
+					if (ai_to_add[j] != "")
+					{
+						m_gameScene->AddCharacter(j, ai_to_add[j], true);
+					}
+					else if (isValid(j))
 					{
 						//add the character to the game scene
 						std::string character_name =
 							m_ch_manager->GetCharacter(m_selected_character[j]).GetName();
 
-						m_gameScene->AddCharacter(j, character_name, m_RD, false);
+						m_gameScene->AddCharacter(j, character_name, false);
 					}
 				}
 				Reset();
@@ -180,6 +201,42 @@ void CharacterSelectScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	{
 		m_selected_character[i] = m_ch_manager->GetCharCount();
 	}
+}
+
+void CharacterSelectScene::addAI()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (!isValid(i) && ai_to_add[i] == "")
+		{
+			int r = rand() % m_ch_manager->GetCharCount();
+			Character c = m_ch_manager->GetCharacter(r);
+			ai_to_add[i] = c.GetName();
+			m_selected_character[i] = r;
+			m_confirmed[i] = true;
+			break;
+		}
+	}
+}
+
+void CharacterSelectScene::removeAI()
+{
+	for (int i = 3; i > -1; i--)
+	{
+		if (ai_to_add[i] != "")
+		{
+			ai_to_add[i] = "";
+			m_confirmed[i] = false;
+			m_selected_character[i] = m_ch_manager->GetCharCount();
+			break;
+		}
+	}
+}
+
+void CharacterSelectScene::removeAI(int i)
+{
+	ai_to_add[i] = "";
+	m_confirmed[i] = false;
 }
 
 bool CharacterSelectScene::isValid(int i)

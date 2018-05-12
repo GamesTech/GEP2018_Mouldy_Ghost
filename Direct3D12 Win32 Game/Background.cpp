@@ -15,7 +15,15 @@ Background::~Background()
 
 void Background::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos, float _zoom)
 {
-	_cam_pos *= pow(1.1, m_layer);
+	if (m_layer == -1)
+	{
+		_cam_pos = Vector2::Zero;
+	}
+	else
+	{
+		_cam_pos *= pow(1.1, m_layer);
+		_zoom *= pow(1.1, m_layer);
+	}
 
 	Rectangle rect = Rectangle(0, 0, m_spriteSize.x, m_spriteSize.y);
 	const RECT* r = &RECT(rect);

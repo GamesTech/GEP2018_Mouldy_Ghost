@@ -294,10 +294,10 @@ void Game::buildGame()
 	}
 
 	//add chickens to demo scene
-	m_demoScene->AddCharacter(0, "Chicken", m_RD, true, true);
-	m_demoScene->AddCharacter(1, "Chicken", m_RD, true, true);
-	m_demoScene->AddCharacter(2, "Pig", m_RD, true, true);
-	m_demoScene->AddCharacter(3, "Chicken", m_RD, true, true);
+	m_demoScene->AddCharacter(0, "Chicken",  true, true);
+	m_demoScene->AddCharacter(1, "Chicken",  true, true);
+	m_demoScene->AddCharacter(2, "Pig", true, true);
+	m_demoScene->AddCharacter(3, "Chicken", true, true);
 }
 
 // Helper method to prepare the command list for rendering and clear the back buffers.

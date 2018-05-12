@@ -107,20 +107,25 @@ GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _G
 
 	if (_object->GetPos().y <= m_character->GetPos().y)
 	{
+        //if the previous jump reached its peak
 		if (m_character->GetPhysics()->GetVel().y > 0)
 		{
+            //has the character reached their jump limit?
 			if (m_character->canJump())
 			{
+                //if not, jump
 				actions.push_back(GameAction::P_JUMP);
 			}
 			else
 			{
+                //dash upwards
 				actions.push_back(GameAction::P_HOLD_UP);
 				actions.push_back(GameAction::P_HOLD_SPECIAL);
 				actions.push_back(GameAction::P_RELEASE_SPECIAL);
 			}
 		}
 	}
+    //move left or right towards it
 	if (_object->GetPos().x < m_character->GetPos().x)
 	{
 		actions.push_back(GameAction::P_MOVE_LEFT);

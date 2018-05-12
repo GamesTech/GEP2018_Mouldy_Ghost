@@ -9,12 +9,6 @@ FinalDestination::FinalDestination()
 
 FinalDestination::~FinalDestination()
 {
-	for (auto& platform : platforms)
-	{
-		delete platform;
-		platform = nullptr;
-	}
-
 	platforms.clear();
 }
 
@@ -29,21 +23,21 @@ void FinalDestination::update(GameStateData* _GSD)
 
 void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 {
-	Platform* testplatform = new Platform(_RD, "platform");
+	std::unique_ptr<Platform> platform = std::make_unique<Platform>(_RD, "platform");
 
-	testplatform->SetSpawn(Vector2(400, 400));
+	platform->SetSpawn(Vector2(400, 400));
 
-	testplatform->SetScale(Vector2(2, 1));
+	platform->SetScale(Vector2(2, 1));
 	Rectangle rect = Rectangle
-	(testplatform->GetPos().x, testplatform->GetPos().y,
-		testplatform->TextureSize().x * 2,
-		testplatform->TextureSize().y );
+	(platform->GetPos().x, platform->GetPos().y,
+		platform->TextureSize().x * 2,
+		platform->TextureSize().y );
 
 	
 
-	testplatform->GetPhysics()->SetCollider(rect);
+	platform->GetPhysics()->SetCollider(rect);
 
-	platforms.push_back(testplatform);
+	platforms.push_back(std::move(platform));
 	
 
 	spawn[0] = Vector2(-100, 100);

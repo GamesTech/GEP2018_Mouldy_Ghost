@@ -71,11 +71,6 @@ void StandardAttack::PerformAttack(Vector2 _position, int _direction,
 	attack.child_to_player = true;
 	attack.user = _user;
 
-	//colliders.push_back(std::make_shared<DamageCollider>(m_RD, attack, _spawner));
-	//std::shared_ptr<DamageCollider> collider = std::make_shared<DamageCollider>(m_RD, attack, _spawner);
-	//colliders.back()->SetPos(_position);
-	//_spawner->onNotify(colliders.back().get(), Event::OBJECT_INSTANTIATED);
-
 	DamageCollider* newcol = new DamageCollider(m_RD, attack, _spawner);
 	newcol->SetPos(_position);
 	_spawner->onNotify(newcol, Event::OBJECT_INSTANTIATED);

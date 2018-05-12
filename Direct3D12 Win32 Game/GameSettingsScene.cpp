@@ -124,7 +124,28 @@ void GameSettingsScene::Initialise(RenderData * _RD, GameStateData * _GSD, int _
 		item_indications.push_back(std::make_unique<Text2D>("1"));
 		item_indications[i]->SetPos(button.GetPos() + Vector2(400, 250+i*40));
 		m_2DObjects.push_back(item_indications[i].get());
+		
+		
+
+
 		i++;
 	}
+
+	//init the vector in gamesetting handler
+	//have to do that here because in gamesettinghandler itself, there is no reference to how many items there are avaialable
+	
+	for (int j = 0; j < listeners.size(); j++)
+	{
+		if (listeners[j]->getType() == "GameSettings")
+		{
+			GameSettingsHandler* temp = static_cast<GameSettingsHandler*>(listeners[j]);
+			
+			for (int k = 0; k < i ; k++)
+			{
+				temp->addAvailableItemSlot();
+			}
+		}
+	}
+
 	all_items_file.close();
 }

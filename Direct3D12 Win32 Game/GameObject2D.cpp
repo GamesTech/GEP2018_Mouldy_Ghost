@@ -52,13 +52,16 @@ void GameObject2D::Tick(GameStateData * _GSD)
 	{
 		for (int i = 0; i < children.size(); i++)
 		{
-			Vector2 dif = m_pos - previous_pos;
-			if (!dynamic_cast<DamageCollider*>(children[i]))
+			if (children[i])
 			{
-				dif /= 2;
-			}
+				Vector2 dif = m_pos - previous_pos;
+				if (!dynamic_cast<DamageCollider*>(children[i]))
+				{
+					dif /= 2;
+				}
 
-			children[i]->SetPos(children[i]->GetPos() + dif);
+				children[i]->SetPos(children[i]->GetPos() + dif);
+			}
 		}
 		previous_pos = m_pos;
 	}

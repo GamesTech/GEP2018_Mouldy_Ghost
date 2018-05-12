@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameOverScene.h"
 #include "RenderData.h"
+#include "VibrationHandler.h"
 
 GameOverScene::GameOverScene()
 {
@@ -23,6 +24,7 @@ GameOverScene::~GameOverScene()
 
 void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+	m_vibration->Tick(timer);
 	//wait for input to return to menu
 	for (int i = 0; i < 4; i++)
 	{
@@ -30,7 +32,7 @@ void GameOverScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX:
 		{
 			for (int j = 0; j < listeners.size(); j++)
 			{
-				listeners[i]->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
+				listeners[j]->onNotify(nullptr, Event::CHANGE_SCENE_MAIN_MENU);
 			}
 		}
 	}

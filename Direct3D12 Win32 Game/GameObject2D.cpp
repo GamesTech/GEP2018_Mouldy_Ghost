@@ -48,6 +48,9 @@ void GameObject2D::move(Vector2 _move_by)
 
 void GameObject2D::Tick(GameStateData * _GSD)
 {
+
+	// if there is a diference between position on current frame and position on previous frame
+	// the object has moved and thus move all of its children the same amount
 	if (m_pos != previous_pos)
 	{
 		for (int i = 0; i < children.size(); i++)
@@ -120,8 +123,6 @@ void GameObject2D::AddChild(GameObject2D * object)
 
 void GameObject2D::RemoveChild(GameObject2D * child)
 {
-	//yo
-
 	for (int i = 0; i < children.size(); i++)
 	{
 		if(children[i] == child)

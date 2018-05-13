@@ -55,6 +55,9 @@ public:
 
 	CharacterManager* GetCharacterManager() { return &c_manager; }
 
+	/*
+	Ask Item spawner for a clone of an item
+	*/
 	void giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _name,Vector2 _pos);
 
 	virtual void Reset();

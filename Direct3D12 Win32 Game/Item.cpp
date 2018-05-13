@@ -75,16 +75,18 @@ void Item::use(Character * _player)
 {
 	//powerups
 	
+	
 		if (m_onUse == "heal")
 		{
 			_player->TakeDamage(-m_power); 
 		}
 		else if (m_onUse == "hammer")
 		{
-		
+		//could be any kind of power up
 		}
 		else if (m_onUse == "strength_up")
 		{
+
 			Buff* buff = new Buff(BuffType::STRENGHT_BUFF, _player, m_power);
 			_player->BuffCharacter(buff);
 		}

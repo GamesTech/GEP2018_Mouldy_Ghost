@@ -9,6 +9,12 @@ public:
 	MeleeWeapon(Item* item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner); //copy constructor
 	~MeleeWeapon();
 
+	/*
+	puts the weapon into an attacking state
+	moves the weapon in a direction based on input direction or based on where the character is facing
+	longer charge = more damage
+	whilst in attacking state, collision with other players will result in hit
+	*/
 	void attack(float charged_for, int type);
 	void use(Character* char_) override;
 

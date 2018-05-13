@@ -6,7 +6,12 @@
 class MovingPlatform :public Platform
 {
 public:
-	
+	/*
+	Platform that uses Vector2::Lerp to move between two points
+	_travel_time indicated how long does it take to reach from one point to another
+	lower value means it will get there faster
+	_stay is time spent waiting after reaching destination
+	*/
 	MovingPlatform(RenderData* _RD, Vector2 _start, Vector2 _end, float _travel_time, float _stay, string _filename);
 	MovingPlatform();
 	~MovingPlatform();

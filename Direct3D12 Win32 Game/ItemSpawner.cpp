@@ -141,12 +141,14 @@ Item* ItemSpawner::createNewItemWithName(RenderData* _RD, std::string name)
 	//copy every proprety of an item and then create a new one
 	//Item* newitem = new Item(item_to_copy); did not work 
 	//because when it came down to function calls, it called the function of the original
+	//use the copy constructor instead
 
 	for (int i = 0; i < allItems.size(); i++)
 	{
 		if (allItems[i]->GetName() == name)
 		{
 			
+			//read type and according to what it is, call apropriate copy constuctor
 			ItemType tmptype = allItems[i]->getitemType();
 			Item* orig_item = allItems[i];
 			

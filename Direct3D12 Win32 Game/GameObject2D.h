@@ -48,6 +48,8 @@ public:
 
 	GameObjectTag GetTag();
 	void SetTag(GameObjectTag tag_);
+
+
 	GameObject2D* GetParent();
 	void SetParent(GameObject2D* newParent);
 	void AddChild(GameObject2D* object);

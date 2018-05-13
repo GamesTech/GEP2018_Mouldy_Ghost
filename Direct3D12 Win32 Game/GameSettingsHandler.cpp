@@ -13,11 +13,7 @@ GameSettingsHandler::GameSettingsHandler()
 	m_infiniteTime = false;
 	m_infiniteLives = false;
 
-	//init availavle items
-	for (int i = 0; i < 7; i++)
-	{
-		available_items.push_back(true);
-	}
+	
 }
 
 
@@ -136,4 +132,9 @@ bool GameSettingsHandler::getInfiniteTime()
 bool GameSettingsHandler::getInfiniteLives()
 {
 	return m_infiniteLives;
+}
+
+void GameSettingsHandler::addAvailableItemSlot()
+{
+	available_items.push_back(true);
 }

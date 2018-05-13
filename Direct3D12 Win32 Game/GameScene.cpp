@@ -364,8 +364,6 @@ void GameScene::giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _n
 	itm->SetSpawn(_pos);
 
 	m_spawner->onNotify(itm, Event::OBJECT_INSTANTIATED);
-	//_GSD->objects_in_scene.push_back(itm->GetPhysics());
-	//m_2DObjects.push_back(itm);
 }
 
 void GameScene::Reset()

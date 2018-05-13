@@ -23,7 +23,7 @@ void FinalDestination::update(GameStateData* _GSD)
 
 void FinalDestination::init(RenderData* _RD, GameStateData * _GSD)
 {
-	std::unique_ptr<Platform> platform = std::make_unique<Platform>(_RD, "platform");
+	std::unique_ptr<Platform> platform = std::make_unique<Platform>(_RD, "grassplatform");
 
 	platform->SetSpawn(Vector2(400, 400));
 

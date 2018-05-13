@@ -4,7 +4,11 @@
 class Platform : public ImageGO2D
 {
 public:
-	//using Physics2D::Physics2D;
+
+	/*
+	*a collision box with a texture and a "Platofrm" tag
+	*_filename specifies the texture that should be loaded
+	*/
 	Platform(RenderData* _RD, string _filename);
 	Platform();
 	~Platform();

@@ -35,6 +35,8 @@ bool Buff::Tick(GameStateData * _GSD)
 
 	if (duration > 10)
 	{
+		//returning gives signal to the buffed character to delete this buff
+		//destructor will be called and affeted stat will return to normal
 		return true;
 	}
 

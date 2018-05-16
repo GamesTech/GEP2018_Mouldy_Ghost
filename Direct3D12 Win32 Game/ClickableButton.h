@@ -14,8 +14,10 @@ public:
 		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1) override;
 	void setText(std::string _text);
 	Event* mouseUpdate(Cursor* _cursor, GameStateData* _GSD);
+	Event getEvent();
 private:
 	Text2D text = Text2D("");
 	Rectangle bounds;
 	Event return_scene;
+	bool pressedLastFrame = false;
 };

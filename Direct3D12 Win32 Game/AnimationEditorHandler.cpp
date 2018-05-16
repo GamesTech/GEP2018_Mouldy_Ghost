@@ -148,6 +148,7 @@ void AnimationEditorHandler::tieCharacterManager(CharacterManager * _manager)
 	m_character_manager = _manager;
 }
 
+
 Character AnimationEditorHandler::getSelectedChar()
 {
 	return m_character_manager->GetCharacter(m_selected_char);

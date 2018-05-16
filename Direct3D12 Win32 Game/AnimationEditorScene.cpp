@@ -3,6 +3,7 @@
 #include "RenderData.h"
 #include "AnimationEditorHandler.h"
 #include "AnimationContainer.h"
+#include "Animation2D.h"
 
 
 AnimationEditorScene::AnimationEditorScene()
@@ -57,56 +58,89 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	m_2DObjects.push_back(m_prev_character.get());
 	m_next_character = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_NEXT_CHARACTER, Vector2(220, 50), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_next_character.get());
+	m_character_text = std::make_unique<Text2D>("Unassigned");
+	m_character_text->SetPos(Vector2(270, 25));
+	m_2DObjects.push_back(m_character_text.get());
 	//Animation
 	m_prev_animation = std::make_unique<ClickableButton>(_RD, "button", "<Animation", Event::ANIMATION_EDITOR_PREV_ANIM, Vector2(100, 110), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_prev_animation.get());
 	m_next_animation = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_NEXT_ANIM, Vector2(220, 110), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_next_animation.get());
+	m_animation_text = std::make_unique<Text2D>("Unassigned");
+	m_animation_text->SetPos(Vector2(270, 85));
+	m_2DObjects.push_back(m_animation_text.get());
 	//Framerate
 	m_decrease_framerate = std::make_unique<ClickableButton>(_RD, "button", "<Framerate", Event::ANIMATION_EDITOR_DECREASE_FRAMERATE, Vector2(100, 170), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_framerate.get());
 	m_increase_framerate = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_FRAMERATE, Vector2(220, 170), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_framerate.get());
+	m_framerate_text = std::make_unique<Text2D>("Unassigned");
+	m_framerate_text->SetPos(Vector2(270, 145));
+	m_2DObjects.push_back(m_framerate_text.get());
 	//Number of Frames
 	m_decrease_frames = std::make_unique<ClickableButton>(_RD, "button", "<Frames", Event::ANIMATION_EDITOR_DECREASE_FRAMES, Vector2(100, 230), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_frames.get());
 	m_increase_frames = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_FRAMES, Vector2(220, 230), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_frames.get());
+	m_frames_text = std::make_unique<Text2D>("Unassigned");
+	m_frames_text->SetPos(Vector2(270, 205));
+	m_2DObjects.push_back(m_frames_text.get());
 	//x Increments
 	m_decrease_x_increments = std::make_unique<ClickableButton>(_RD, "button", "<X Increments", Event::ANIMATION_EDITOR_DECREASE_X_INCREMENTS, Vector2(100, 290), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_x_increments.get());
 	m_increase_x_increments = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_X_INCREMENTS, Vector2(220, 290), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_x_increments.get());
+	m_x_increments_text = std::make_unique<Text2D>("Unassigned");
+	m_x_increments_text->SetPos(Vector2(270, 265));
+	m_2DObjects.push_back(m_x_increments_text.get());
 	//Y Increments
 	m_decrease_y_increments = std::make_unique<ClickableButton>(_RD, "button", "<Y Increments", Event::ANIMATION_EDITOR_DECREASE_Y_INCREMENTS, Vector2(100, 350), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_y_increments.get());
 	m_increase_y_increments = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_Y_INCREMENTS, Vector2(220, 350), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_y_increments.get());
+	m_y_increments_text = std::make_unique<Text2D>("Unassigned");
+	m_y_increments_text->SetPos(Vector2(270, 325));
+	m_2DObjects.push_back(m_y_increments_text.get());
 	//Box Width
 	m_decrease_box_width = std::make_unique<ClickableButton>(_RD, "button", "<Box Width", Event::ANIMATION_EDITOR_DECREASE_BOX_WIDTH, Vector2(100, 410), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_box_width.get());
 	m_increase_box_width = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_BOX_WIDTH, Vector2(220, 410), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_box_width.get());
+	m_box_width_text = std::make_unique<Text2D>("Unassigned");
+	m_box_width_text->SetPos(Vector2(270, 385));
+	m_2DObjects.push_back(m_box_width_text.get());
 	//Box Height
 	m_decrease_box_height = std::make_unique<ClickableButton>(_RD, "button", "<Box Height", Event::ANIMATION_EDITOR_DECREASE_BOX_HEIGHT, Vector2(100, 470), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_box_height.get());
 	m_increase_box_height = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_BOX_HEIGHT, Vector2(220, 470), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_box_height.get());
+	m_box_height_text = std::make_unique<Text2D>("Unassigned");
+	m_box_height_text->SetPos(Vector2(270, 445));
+	m_2DObjects.push_back(m_box_height_text.get());
 	//Furthest left position
 	m_decrease_furthest_left = std::make_unique<ClickableButton>(_RD, "button", "<Furthest Left", Event::ANIMATION_EDITOR_DECREASE_FURTHEST_LEFT, Vector2(100, 530), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_furthest_left.get());
 	m_increase_furthest_left = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_FURTHEST_LEFT, Vector2(220, 530), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_furthest_left.get());
+	m_furthest_left_text = std::make_unique<Text2D>("Unassigned");
+	m_furthest_left_text->SetPos(Vector2(270, 505));
+	m_2DObjects.push_back(m_furthest_left_text.get());
 	//Start x
 	m_decrease_start_x = std::make_unique<ClickableButton>(_RD, "button", "<Start X", Event::ANIMATION_EDITOR_DECREASE_START_X, Vector2(500, 230), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_start_x.get());
 	m_increase_start_x = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_INCREASE_START_X, Vector2(620, 230), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_start_x.get());
+	m_start_x_text = std::make_unique<Text2D>("Unassigned");
+	m_start_x_text->SetPos(Vector2(670, 205));
+	m_2DObjects.push_back(m_start_x_text.get());
 	//Start y
 	m_decrease_start_y = std::make_unique<ClickableButton>(_RD, "button", "<Start Y", Event::ANIMATION_EDITOR_DECREASE_START_Y, Vector2(500, 290), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_start_y.get());
 	m_increase_start_y = std::make_unique<ClickableButton>(_RD, "button", "<", Event::ANIMATION_EDITOR_INCREASE_START_Y, Vector2(620, 290), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_increase_start_y.get());
+	m_start_y_text = std::make_unique<Text2D>("Unassigned");
+	m_start_y_text->SetPos(Vector2(670, 265));
+	m_2DObjects.push_back(m_start_y_text.get());
 	//Save
 	m_save_character = std::make_unique<ClickableButton>(_RD, "button", "Save Character", Event::ANIMATION_EDITOR_SAVE_DATA, Vector2(480, 550), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_save_character.get());
@@ -115,6 +149,33 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 void AnimationEditorScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
 	Scene::Update(timer, _audEngine);
+
+	/*
+	std::unique_ptr<Text2D> m_character_text = nullptr;
+	std::unique_ptr<Text2D> m_animation_text = nullptr;
+	std::unique_ptr<Text2D> m_framerate_text = nullptr;
+	std::unique_ptr<Text2D> m_frames_text = nullptr;
+	std::unique_ptr<Text2D> m_x_increments_text = nullptr;
+	std::unique_ptr<Text2D> m_y_increments_text = nullptr;
+	std::unique_ptr<Text2D> m_box_width_text = nullptr;
+	std::unique_ptr<Text2D> m_box_height_text = nullptr;
+	std::unique_ptr<Text2D> m_furthest_left_text = nullptr;
+	std::unique_ptr<Text2D> m_start_x_text = nullptr;
+	std::unique_ptr<Text2D> m_start_y_text = nullptr;
+	*/
+	Animation2D* temp = m_characters[m_editor_handler->getSelectedCharIndex()]->getAnimation();
+	m_character_text->SetText(m_editor_handler->getSelectedChar().GetName());
+	m_framerate_text->SetText(std::to_string(temp->getFramerate()));
+	m_frames_text->SetText(std::to_string(temp->getMaxFrames()));
+	m_x_increments_text->SetText(std::to_string(temp->getIncrements().x));
+	m_y_increments_text->SetText(std::to_string(temp->getIncrements().y));
+	m_box_width_text->SetText(std::to_string(temp->getSpriteBox().width));
+	m_box_height_text->SetText(std::to_string(temp->getSpriteBox().height));
+	m_furthest_left_text->SetText(std::to_string(temp->getFurthestLeftPos()));
+	m_start_x_text->SetText(std::to_string(temp->getSpriteboxStartPos().x));
+	m_start_y_text->SetText(std::to_string(temp->getSpriteboxStartPos().y));
+
+
 	if (m_back_button->mouseUpdate(m_cursor.get(), m_GSD))
 	{
 		for (int i = 0; i < listeners.size(); i++)
@@ -266,7 +327,7 @@ void AnimationEditorScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 	{
 		for (int i = 0; i < listeners.size(); i++)
 		{
-			listeners[i]->onNotify(nullptr, m_decrease_y_increments->getEvent());
+			listeners[i]->onNotify(nullptr, m_decrease_start_y->getEvent());
 		}
 	}
 	if (m_increase_start_y->mouseUpdate(m_cursor.get(), m_GSD))

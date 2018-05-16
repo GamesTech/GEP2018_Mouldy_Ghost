@@ -123,6 +123,10 @@ void GameObject2D::AddChild(GameObject2D * object)
 
 void GameObject2D::RemoveChild(GameObject2D * child)
 {
+	if (parent)
+	{
+		parent->RemoveChild(child);
+	}
 	for (int i = 0; i < children.size(); i++)
 	{
 		if(children[i] == child)

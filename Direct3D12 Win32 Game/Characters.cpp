@@ -639,7 +639,8 @@ void Character::SpecialAttack(GameStateData * _GSD, std::vector<GameAction> _act
 	if (!m_attacking)
 	{
 		AttackMap attack_to_use;
-		if (InputSystem::searchForAction(P_HOLD_UP, _actions))
+		if (InputSystem::searchForAction(P_HOLD_UP, _actions)
+			|| InputSystem::searchForAction(P_JUMP, _actions))
 		{
 			attack_to_use = AttackMap::UP_SPECIAL;
 			m_dash_recover = false;

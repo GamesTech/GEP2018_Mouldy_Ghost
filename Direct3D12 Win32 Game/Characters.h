@@ -129,7 +129,7 @@ protected:
 	float m_move_speed = 1.0f;
 	int m_jump_limit = 2;
 	float m_jump_height = 1.0f;
-	//int m_facing = 1;
+	int m_facing = 1;
 	CharacterController* m_controller = nullptr;
 	std::vector<Attack*> m_attacks;
 	Attack* m_charging_attack = nullptr;

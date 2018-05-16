@@ -10,6 +10,11 @@ AnimationContainer::AnimationContainer(RenderData* _RD, string _filename)
 	: ImageGO2D(_RD, _filename)
 {
 	m_origin = Vector2(0, 0);
+	for (int i = 0; i < 4; i++)
+	{
+		m_corners.push_back(std::make_shared<ImageGO2D>(_RD, "colliderdebug"));
+		m_corners.back()->CentreOrigin();
+	}
 }
 
 
@@ -82,8 +87,8 @@ void AnimationContainer::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos,
 
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
-
-
+	
+	//_RD->m_states->Opaque;
 
 	if (usesAnimation)
 	{
@@ -103,6 +108,17 @@ void AnimationContainer::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos,
 				GetTextureSize(allTextures[m_textureIndex].texture.Get()),
 				render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);
 		}
+	}
+
+
+	m_corners[0]->SetPos(Vector2(m_pos.x - (active_anim->getSpriteBox().width / 2), m_pos.y - (active_anim->getSpriteBox().height / 2)));
+	m_corners[1]->SetPos(Vector2(m_pos.x + (active_anim->getSpriteBox().width / 2), m_pos.y - (active_anim->getSpriteBox().height / 2)));
+	m_corners[2]->SetPos(Vector2(m_pos.x + (active_anim->getSpriteBox().width / 2), m_pos.y + (active_anim->getSpriteBox().height / 2)));
+	m_corners[3]->SetPos(Vector2(m_pos.x - (active_anim->getSpriteBox().width / 2), m_pos.y + (active_anim->getSpriteBox().height / 2)));
+
+	for (int i = 0; i < 4; i++)
+	{
+		m_corners[i]->Render(_RD, 0, _cam_pos);
 	}
 }
 

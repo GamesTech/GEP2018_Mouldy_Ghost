@@ -30,5 +30,6 @@ protected:
 	std::shared_ptr<Animation2D> attack_anim = nullptr;
 	std::shared_ptr<Animation2D> run_anim = nullptr;
 	Animation2D* active_anim = nullptr;
+	std::vector<std::shared_ptr<ImageGO2D>> m_corners;
 };
 

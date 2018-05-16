@@ -53,7 +53,6 @@ private:
 	std::unique_ptr<ClickableButton> m_save_character = nullptr;
 
 	std::unique_ptr<Text2D> m_character_text = nullptr;
-	std::unique_ptr<Text2D> m_animation_text = nullptr;
 	std::unique_ptr<Text2D> m_framerate_text = nullptr;
 	std::unique_ptr<Text2D> m_frames_text = nullptr;
 	std::unique_ptr<Text2D> m_x_increments_text = nullptr;

@@ -66,9 +66,6 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 	m_2DObjects.push_back(m_prev_animation.get());
 	m_next_animation = std::make_unique<ClickableButton>(_RD, "button", ">", Event::ANIMATION_EDITOR_NEXT_ANIM, Vector2(220, 110), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_next_animation.get());
-	m_animation_text = std::make_unique<Text2D>("Unassigned");
-	m_animation_text->SetPos(Vector2(270, 85));
-	m_2DObjects.push_back(m_animation_text.get());
 	//Framerate
 	m_decrease_framerate = std::make_unique<ClickableButton>(_RD, "button", "<Framerate", Event::ANIMATION_EDITOR_DECREASE_FRAMERATE, Vector2(100, 170), Vector2(0.05, 0.05));
 	m_2DObjects.push_back(m_decrease_framerate.get());
@@ -150,30 +147,28 @@ void AnimationEditorScene::Update(DX::StepTimer const & timer, std::unique_ptr<D
 {
 	Scene::Update(timer, _audEngine);
 
-	/*
-	std::unique_ptr<Text2D> m_character_text = nullptr;
-	std::unique_ptr<Text2D> m_animation_text = nullptr;
-	std::unique_ptr<Text2D> m_framerate_text = nullptr;
-	std::unique_ptr<Text2D> m_frames_text = nullptr;
-	std::unique_ptr<Text2D> m_x_increments_text = nullptr;
-	std::unique_ptr<Text2D> m_y_increments_text = nullptr;
-	std::unique_ptr<Text2D> m_box_width_text = nullptr;
-	std::unique_ptr<Text2D> m_box_height_text = nullptr;
-	std::unique_ptr<Text2D> m_furthest_left_text = nullptr;
-	std::unique_ptr<Text2D> m_start_x_text = nullptr;
-	std::unique_ptr<Text2D> m_start_y_text = nullptr;
-	*/
+	//get values for animation and set text
 	Animation2D* temp = m_characters[m_editor_handler->getSelectedCharIndex()]->getAnimation();
+	int temp_num = 0;
 	m_character_text->SetText(m_editor_handler->getSelectedChar().GetName());
-	m_framerate_text->SetText(std::to_string(temp->getFramerate()));
-	m_frames_text->SetText(std::to_string(temp->getMaxFrames()));
-	m_x_increments_text->SetText(std::to_string(temp->getIncrements().x));
-	m_y_increments_text->SetText(std::to_string(temp->getIncrements().y));
-	m_box_width_text->SetText(std::to_string(temp->getSpriteBox().width));
-	m_box_height_text->SetText(std::to_string(temp->getSpriteBox().height));
-	m_furthest_left_text->SetText(std::to_string(temp->getFurthestLeftPos()));
-	m_start_x_text->SetText(std::to_string(temp->getSpriteboxStartPos().x));
-	m_start_y_text->SetText(std::to_string(temp->getSpriteboxStartPos().y));
+	temp_num = temp->getFramerate();
+	m_framerate_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getMaxFrames();
+	m_frames_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getIncrements().x;
+	m_x_increments_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getIncrements().y;
+	m_y_increments_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getSpriteBox().width;
+	m_box_width_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getSpriteBox().height;
+	m_box_height_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getFurthestLeftPos();
+	m_furthest_left_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getSpriteboxStartPos().x;
+	m_start_x_text->SetText(std::to_string(temp_num));
+	temp_num = temp->getSpriteboxStartPos().y;
+	m_start_y_text->SetText(std::to_string(temp_num));
 
 
 	if (m_back_button->mouseUpdate(m_cursor.get(), m_GSD))

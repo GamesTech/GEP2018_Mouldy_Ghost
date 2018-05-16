@@ -15,6 +15,7 @@ public:
 	void FlipX();
 	void switchAnimation(Animation2D* _new);
 	void loadAnimations(std::string _file, RenderData* _RD);
+	void saveAnimations(std::string _file);
 	void Tick(GameStateData* _GSD);
 
 	Animation2D* getAnimation() { return active_anim; };

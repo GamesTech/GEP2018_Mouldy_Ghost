@@ -139,6 +139,7 @@ void AnimationEditorHandler::onNotify(GameObject2D * entity_, Event event_)
 				m_characters[m_selected_char]->getAnimation()->getSpriteboxStartPos().y + 1));
 		break;
 	case::Event::ANIMATION_EDITOR_SAVE_DATA:
+		m_characters[m_selected_char]->saveAnimations("");
 		break;
 	}
 }

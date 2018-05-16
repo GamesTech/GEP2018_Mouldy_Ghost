@@ -3,12 +3,12 @@ projectile time		>1
 projectile speed	>30
 projectile damage	>5
 projectile knockback	>50
-projectile dir x	>0
-projectile dir y	>-2
-projectile size x	>100
-projectile size y	>25
-dash x			>2
-dash y			>-2
-dash power		>20
+projectile dir x	>1
+projectile dir y	>-1
+projectile size x	>40
+projectile size y	>40
+dash x			>1
+dash y			>-1
+dash power		>30
 gravity			>false
 collider sprite		>hit

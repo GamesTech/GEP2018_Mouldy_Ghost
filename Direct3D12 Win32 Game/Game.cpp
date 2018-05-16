@@ -1,6 +1,7 @@
 //
 // Game.cpp
 //
+#include <Effects.h>
 
 #include "pch.h"
 #include "Game.h"
@@ -96,8 +97,6 @@ void Game::Initialize(HWND window, int width, int height)
 
 	SpriteBatchPipelineStateDescription pd(rtState );
 	pd.blendDesc = m_RD->m_states->NonPremultiplied;
-
-
 	m_RD->m_spriteBatch = std::make_unique<SpriteBatch>(m_d3dDevice.Get(), resourceUpload, pd);
 
 #if _ARCADE

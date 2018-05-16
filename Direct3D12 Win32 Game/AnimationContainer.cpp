@@ -83,6 +83,14 @@ void AnimationContainer::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos,
 	Vector2 render_pos = ((2 * _zoom) * _cam_pos) + distance_from_origin;
 	render_pos.x += m_spriteSize.x / 4;
 
+	//_RD->m_d3dDevice->
+	ResourceUploadBatch resourceUpload(_RD->m_d3dDevice.Get());
+	RenderTargetState rtState(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT);
+
+	SpriteBatchPipelineStateDescription pd(rtState);
+	pd.blendDesc = _RD->m_states->Opaque;
+	std::unique_ptr<SpriteBatch> newBatch = std::make_unique<SpriteBatch>(_RD->m_d3dDevice.Get(), resourceUpload, pd);
+
 	if (usesAnimation)
 	{
 		active_anim->Render(_RD, _cam_pos, _zoom, render_scale, m_pos, m_resourceNum, m_colour, m_orientation, m_origin, flipped);
@@ -91,15 +99,21 @@ void AnimationContainer::Render(RenderData * _RD, int _sprite, Vector2 _cam_pos,
 	{
 		if (!flipped)
 		{
-			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+			//_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+			//	GetTextureSize(allTextures[m_textureIndex].texture.Get()),
+				//render_pos, r, m_colour, m_orientation, m_origin, render_scale);
+			newBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 				GetTextureSize(allTextures[m_textureIndex].texture.Get()),
 				render_pos, r, m_colour, m_orientation, m_origin, render_scale);
 		}
 		else
 		{
-			_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+			newBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
 				GetTextureSize(allTextures[m_textureIndex].texture.Get()),
 				render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);
+			/*_RD->m_spriteBatch->Draw(_RD->m_resourceDescriptors->GetGpuHandle(m_resourceNum),
+				GetTextureSize(allTextures[m_textureIndex].texture.Get()),
+				render_pos, r, m_colour, m_orientation, m_origin, render_scale, SpriteEffects::SpriteEffects_FlipHorizontally, 0);*/
 		}
 	}
 }

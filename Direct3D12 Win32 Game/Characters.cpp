@@ -241,9 +241,61 @@ void Character::loadAnimations(std::string _file, RenderData* _RD)
 
 	std::ifstream
 		is(path);
-
 	json animations;
-	is >> animations;
+	if (is.good())
+	{
+		is >> animations;
+	}
+	else
+	{
+		std::ofstream os(path);
+		animations["idle"]["spritesheet"] = "Error";
+		animations["idle"]["framerate"] = 30;
+		animations["idle"]["frames"] = 10;
+		animations["idle"]["xIncrements"] = 0;
+		animations["idle"]["yIncrements"] = 0;
+		animations["idle"]["boxWidth"] = 300;
+		animations["idle"]["boxHeight"] = 100;
+		animations["idle"]["furthestLeftPos"] = 0;
+		animations["idle"]["startX"] = 0;
+		animations["idle"]["startY"] = 0;
+
+		animations["jump"]["spritesheet"] = "Error";
+		animations["jump"]["framerate"] = 30;
+		animations["jump"]["frames"] = 10;
+		animations["jump"]["xIncrements"] = 0;
+		animations["jump"]["yIncrements"] = 0;
+		animations["jump"]["boxWidth"] = 300;
+		animations["jump"]["boxHeight"] = 100;
+		animations["jump"]["furthestLeftPos"] = 0;
+		animations["jump"]["startX"] = 0;
+		animations["jump"]["startY"] = 0;
+
+		animations["run"]["spritesheet"] = "Error";
+		animations["run"]["framerate"] = 30;
+		animations["run"]["frames"] = 10;
+		animations["run"]["xIncrements"] = 0;
+		animations["run"]["yIncrements"] = 0;
+		animations["run"]["boxWidth"] = 300;
+		animations["run"]["boxHeight"] = 100;
+		animations["run"]["furthestLeftPos"] = 0;
+		animations["run"]["startX"] = 0;
+		animations["run"]["startY"] = 0;
+
+		animations["attack"]["spritesheet"] = "Error";
+		animations["attack"]["framerate"] = 30;
+		animations["attack"]["frames"] = 10;
+		animations["attack"]["xIncrements"] = 0;
+		animations["attack"]["yIncrements"] = 0;
+		animations["attack"]["boxWidth"] = 300;
+		animations["attack"]["boxHeight"] = 100;
+		animations["attack"]["furthestLeftPos"] = 0;
+		animations["attack"]["startX"] = 0;
+		animations["attack"]["startY"] = 0;
+
+		os << animations;
+	}
+
 
 	Rectangle spritebox;
 

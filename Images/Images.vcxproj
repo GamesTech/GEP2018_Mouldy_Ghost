@@ -229,6 +229,19 @@
   <ItemGroup>
     <ImageContentTask Include="grassplatform.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\LizardAttack.png" />
+    <ImageContentTask Include="SpriteSheets\LizardIdle.png" />
+    <ImageContentTask Include="SpriteSheets\LizardJump.png" />
+    <ImageContentTask Include="SpriteSheets\LizardWalk.png" />
+    <ImageContentTask Include="SpriteSheets\StatueAttack.png" />
+    <ImageContentTask Include="SpriteSheets\StatueIdle.png" />
+    <ImageContentTask Include="SpriteSheets\StatueJump.png" />
+    <ImageContentTask Include="SpriteSheets\StatueWalk.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

@@ -136,7 +136,10 @@ void AnimationContainer::loadAnimations(std::string _file, RenderData* _RD)
 		is(path);
 
 	json animations;
-	is >> animations;
+	if (is.good())
+	{
+		is >> animations;
+	}
 
 	Rectangle spritebox;
 
@@ -193,6 +196,83 @@ void AnimationContainer::loadAnimations(std::string _file, RenderData* _RD)
 			attack_anim->setFurthestLeftPos(data["furthestLeftPos"].as_long());
 			attack_anim->setMaxFrames(data["frames"].as_int());
 		}
+	}
+
+	bool missing_anim = false;
+
+	json newAnimations;
+	std::string savePath = "..\\GameAssets\\Characters\\Animations\\" + GetName() + ".json";
+	std::ofstream sP;
+	sP.open(path, std::ios_base::app);
+
+	if (!idle_anim)
+	{
+		missing_anim = true;
+		//if we cant find an animation spritesheet, save some default values
+		newAnimations["idle"]["spritesheet"] = "Error";
+		newAnimations["idle"]["framerate"] = 30;
+		newAnimations["idle"]["frames"] = 10;
+		newAnimations["idle"]["xIncrements"] = 0;
+		newAnimations["idle"]["yIncrements"] = 0;
+		newAnimations["idle"]["boxWidth"] = 300;
+		newAnimations["idle"]["boxHeight"] = 100;
+		newAnimations["idle"]["furthestLeftPos"] = 0;
+		newAnimations["idle"]["startX"] = 0;
+		newAnimations["idle"]["startY"] = 0;
+	}
+
+	if (!run_anim)
+	{
+		missing_anim = true;
+		//if we cant find an animation spritesheet, save some default values
+		newAnimations["run"]["spritesheet"] = "Error";
+		newAnimations["run"]["framerate"] = 30;
+		newAnimations["run"]["frames"] = 10;
+		newAnimations["run"]["xIncrements"] = 0;
+		newAnimations["run"]["yIncrements"] = 0;
+		newAnimations["run"]["boxWidth"] = 300;
+		newAnimations["run"]["boxHeight"] = 100;
+		newAnimations["run"]["furthestLeftPos"] = 0;
+		newAnimations["run"]["startX"] = 0;
+		newAnimations["run"]["startY"] = 0;
+	}
+
+	if (!jump_anim)
+	{
+		missing_anim = true;
+		//if we cant find an animation spritesheet, save some default values
+		newAnimations["jump"]["spritesheet"] = "Error";
+		newAnimations["jump"]["framerate"] = 30;
+		newAnimations["jump"]["frames"] = 10;
+		newAnimations["jump"]["xIncrements"] = 0;
+		newAnimations["jump"]["yIncrements"] = 0;
+		newAnimations["jump"]["boxWidth"] = 300;
+		newAnimations["jump"]["boxHeight"] = 100;
+		newAnimations["jump"]["furthestLeftPos"] = 0;
+		newAnimations["jump"]["startX"] = 0;
+		newAnimations["jump"]["startY"] = 0;
+	}
+
+	if (!attack_anim)
+	{
+		missing_anim = true;
+		//if we cant find an animation spritesheet, save some default values
+		newAnimations["attack"]["spritesheet"] = "Error";
+		newAnimations["attack"]["framerate"] = 30;
+		newAnimations["attack"]["frames"] = 10;
+		newAnimations["attack"]["xIncrements"] = 0;
+		newAnimations["attack"]["yIncrements"] = 0;
+		newAnimations["attack"]["boxWidth"] = 300;
+		newAnimations["attack"]["boxHeight"] = 100;
+		newAnimations["attack"]["furthestLeftPos"] = 0;
+		newAnimations["attack"]["startX"] = 0;
+		newAnimations["attack"]["startY"] = 0;
+	}
+
+	if (missing_anim)
+	{
+		sP << newAnimations;
+		loadAnimations(_file, _RD);
 	}
 
 	SetSpriteSize(Vector2(spritebox.width, spritebox.height), 0);

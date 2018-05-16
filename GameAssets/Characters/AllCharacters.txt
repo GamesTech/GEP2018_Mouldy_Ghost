@@ -1,2 +1,4 @@
 >Chicken
 >Pig
+>Lizard
+>Statue

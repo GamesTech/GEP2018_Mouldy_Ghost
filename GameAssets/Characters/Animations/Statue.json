@@ -1,0 +1,50 @@
+{
+	"attack": {
+		"boxHeight": 140,
+		"boxWidth": 117,
+		"framerate": 60.0,
+		"frames": 13,
+		"furthestLeftPos": 0.0,
+		"spritesheet": "StatueAttack",
+		"startX": 0.0,
+		"startY": 14.0,
+		"xIncrements": 108.0,
+		"yIncrements": 154.0
+	},
+	"idle": {
+		"boxHeight": 137,
+		"boxWidth": 93,
+		"framerate": 30.0,
+		"frames": 20,
+		"furthestLeftPos": 0.0,
+		"spritesheet": "StatueIdle",
+		"startX": 0.0,
+		"startY": 16.0,
+		"xIncrements": 108.0,
+		"yIncrements": 154.0
+	},
+	"jump": {
+		"boxHeight": 137,
+		"boxWidth": 94,
+		"framerate": 60.0,
+		"frames": 100,
+		"furthestLeftPos": 0.0,
+		"spritesheet": "StatueJump",
+		"startX": 0.0,
+		"startY": 1709.0,
+		"xIncrements": 108.0,
+		"yIncrements": 154.0
+	},
+	"run": {
+		"boxHeight": 137,
+		"boxWidth": 94,
+		"framerate": 60.0,
+		"frames": 14,
+		"furthestLeftPos": 0.0,
+		"spritesheet": "StatueWalk",
+		"startX": 0.0,
+		"startY": 16.0,
+		"xIncrements": 108.0,
+		"yIncrements": 154.0
+	}
+}

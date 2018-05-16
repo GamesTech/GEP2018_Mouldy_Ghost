@@ -47,7 +47,7 @@ void AnimationEditorScene::Initialise(RenderData * _RD, GameStateData * _GSD, in
 
 	for (int i = 0; i < m_character_manager.GetCharCount(); i++)
 	{
-		m_characters.push_back(std::make_unique<AnimationContainer>(_RD, m_character_manager.GetCharacter(i).GetName() + "Walk"));
+		m_characters.push_back(std::make_unique<AnimationContainer>(_RD, "Error"));
 		m_characters.back()->SetPos(Vector2(500, 100));
 		m_characters.back()->loadAnimations(m_character_manager.GetCharacter(i).GetName(), _RD);
 		m_editor_handler->addAnimationContainer(m_characters.back().get());

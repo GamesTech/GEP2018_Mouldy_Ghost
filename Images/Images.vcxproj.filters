@@ -85,6 +85,15 @@
       <Filter>AttackColliders</Filter>
     </ImageContentTask>
     <ImageContentTask Include="grassplatform.png" />
+    <ImageContentTask Include="SpriteSheets\Error.png" />
+    <ImageContentTask Include="SpriteSheets\LizardAttack.png" />
+    <ImageContentTask Include="SpriteSheets\LizardIdle.png" />
+    <ImageContentTask Include="SpriteSheets\LizardJump.png" />
+    <ImageContentTask Include="SpriteSheets\LizardWalk.png" />
+    <ImageContentTask Include="SpriteSheets\StatueAttack.png" />
+    <ImageContentTask Include="SpriteSheets\StatueIdle.png" />
+    <ImageContentTask Include="SpriteSheets\StatueJump.png" />
+    <ImageContentTask Include="SpriteSheets\StatueWalk.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />

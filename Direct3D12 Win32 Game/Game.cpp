@@ -1,6 +1,7 @@
 //
 // Game.cpp
 //
+#include <Effects.h>
 
 #include "pch.h"
 #include "Game.h"
@@ -11,6 +12,7 @@
 #include "GameSettingsHandler.h"
 #include "CharacterLifeHandler.h"
 #include "VibrationHandler.h"
+#include "AnimationEditorHandler.h"
 
 extern void ExitGame();
 
@@ -228,12 +230,14 @@ void Game::buildGame()
 	m_lifeListener = std::make_unique<CharacterLifeHandler>();
 	m_spawner = std::make_unique<SpawnHandler>();
 	m_vibrationListner = std::make_unique<VibrationHandler>();
+	m_animationEditorHandler = std::make_unique<AnimationEditorHandler>();
 	listeners.push_back(m_musicListener.get());
 	listeners.push_back(m_sceneListener.get());
 	listeners.push_back(m_gameSettings.get());
 	listeners.push_back(m_lifeListener.get());
 	listeners.push_back(m_spawner.get());
 	listeners.push_back(m_vibrationListner.get());
+	listeners.push_back(m_animationEditorHandler.get());
 	
 	m_gameScene = std::make_unique<GameScene>();
 	m_gameScene->setIdle(3600, Event::CHANGE_SCENE_MAIN_MENU);
@@ -269,6 +273,7 @@ void Game::buildGame()
 	m_all_scenes.push_back(m_editorMenu.get());
 
 	m_animationEditor = std::make_unique<AnimationEditorScene>();
+	m_animationEditor->setIdle(7200, Event::CHANGE_SCENE);
 	m_all_scenes.push_back(m_animationEditor.get());
 
 	//add all listeners to all scenes
@@ -286,6 +291,7 @@ void Game::buildGame()
 	m_lifeListener->SetGameOver(m_gameOverScene.get());
 	m_musicListener->init(m_GSD);
 	m_vibrationListner->addGamePad(m_gamePad.get());
+
 
 	//tell the listeners we've loaded!
 	for (int i = 0; i < listeners.size(); i++)

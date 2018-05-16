@@ -253,6 +253,8 @@
     <ClInclude Include="AIController.h" />
     <ClInclude Include="AllScenes.h" />
     <ClInclude Include="Animation2D.h" />
+    <ClInclude Include="AnimationContainer.h" />
+    <ClInclude Include="AnimationEditorHandler.h" />
     <ClInclude Include="AnimationEditorScene.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Background.h" />
@@ -346,6 +348,8 @@
   <ItemGroup>
     <ClCompile Include="AIController.cpp" />
     <ClCompile Include="Animation2D.cpp" />
+    <ClCompile Include="AnimationContainer.cpp" />
+    <ClCompile Include="AnimationEditorHandler.cpp" />
     <ClCompile Include="AnimationEditorScene.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Battlefield.cpp" />

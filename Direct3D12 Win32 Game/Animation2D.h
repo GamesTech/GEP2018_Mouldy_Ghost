@@ -10,11 +10,20 @@ public:
 
 	void reset();
 	void setSpriteBox(Rectangle _box);
+	Rectangle getSpriteBox() { return m_spritebox; };
 	void setFramerate(float _framerate);
+	float getFramerate() { return m_framerate;};
 	void setMaxFrames(int _maxFrames);
+	int getMaxFrames() { return m_maxFrames; };
 	void setSpriteBoxStartPos(Vector2 _start);
+	Vector2 getSpriteboxStartPos() { return m_spriteBoxStartPos; };
 	void setFurthestLeftPos(float _left);
+	float getFurthestLeftPos() { return m_furthestLeftPos; };
 	void setIncrements(Vector2 _increments);
+	Vector2 getIncrements() { return m_spriteBoxIncrements; };
+	void setFilename(std::string _filename) { filename = _filename; };
+	std::string getFilename() { return filename; };
+
 	void setloop(bool _loop);
 	void setPlay(bool _play);
 	bool getPlay();
@@ -30,6 +39,7 @@ private:
 	bool loop = true;
 	bool play = true;
 	int m_resourcenum = 0;
+	std::string filename = "";
 
 	Vector2 m_spriteBoxIncrements;
 	Vector2 m_spriteBoxStartPos;

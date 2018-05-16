@@ -9,6 +9,7 @@ Explosive::Explosive()
 
 Explosive::Explosive(RenderData * _RD, std::string _filename, SpawnHandler* _spawner) : Throwable(_RD, _filename, _spawner)
 {
+	//need this for instantiiation of the explosion
 	RD_ptr = _RD;
 	m_spawner = _spawner;
 }
@@ -20,6 +21,7 @@ Explosive::Explosive(Item * item_to_copy, RenderData* _RD, string _filename, Spa
 	m_fuse = explosive_ptr->getFuse();
 	m_explosion_range = explosive_ptr->getExpRange();
 
+	//need this for instantiiation of the explosion
 	RD_ptr = _RD;
 	m_spawner = _spawner;
 }
@@ -30,17 +32,19 @@ Explosive::~Explosive()
 
 void Explosive::Tick(GameStateData * _GSD)
 {
-	Item::Tick(_GSD);
+	Throwable::Tick(_GSD);
+
 	if (m_active)
 	{
 		m_fuse -= _GSD->m_dt;
+		if (m_fuse < 0)
+		{
+			m_explode = true;
+		}
 	}
 
-	if (m_state == ItemState::HELD)
-	{
-		m_pos = player_ignore->GetPos();
-	}
-
+	
+	
 	if (m_explode == true)
 	{
 		//instantiate explosion
@@ -53,7 +57,7 @@ void Explosive::Tick(GameStateData * _GSD)
 		m_explode = false;
 	}
 
-
+	
 }
 
 void Explosive::CollisionEnter(Physics2D * _collision, Vector2 _normal)

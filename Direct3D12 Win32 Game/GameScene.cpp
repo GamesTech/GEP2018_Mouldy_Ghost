@@ -14,6 +14,7 @@
 
 GameScene::GameScene()
 {
+    //players have colour assigned to them for their sprite and hud text
 	player_tints[0] = SimpleMath::Color(0.3, 1, 1);
 	player_tints[1] = SimpleMath::Color(0.3, 1, 0.3);
 	player_tints[2] = SimpleMath::Color(1, 0.3, 0.3);
@@ -45,11 +46,11 @@ void GameScene::Initialise(RenderData * _RD,
 	float h = m_GSD->window_size.y;
 
 	//set background
-	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", 1));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "sky", -1));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, 100));
-	m_bg.push_back(std::make_unique<Background>(m_RD, "field", 1));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "field", -1));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, (h /3) * 2));
-	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 2));
+	m_bg.push_back(std::make_unique<Background>(m_RD, "tree", 0.7f));
 	m_bg.back()->SetSpawn(Vector2(w * 0.4, h));
 
 
@@ -79,6 +80,8 @@ void GameScene::Initialise(RenderData * _RD,
 
 	item_spawner.loadAllData(_RD);
 
+	stage_manager.loadAllStages(_RD);
+
 	m_cam = std::make_unique<Camera>(static_cast<float>(_outputWidth), static_cast<float>(_outputHeight), 1.0f, 1000.0f);
 	m_RD->m_cam = m_cam.get();
 	m_3DObjects.push_back(m_cam.get());
@@ -86,13 +89,13 @@ void GameScene::Initialise(RenderData * _RD,
 	//creating a stage
 	//could pass the name of the stage as a function paratemter
 
-	allstages.push_back(std::make_unique<FinalDestination>());
-	allstages.push_back(std::make_unique<Temple>());
-	allstages.push_back(std::make_unique<Battlefield>());
+	//allstages.push_back(std::make_unique<FinalDestination>());
+	//allstages.push_back(std::make_unique<Temple>());
+	//allstages.push_back(std::make_unique<Battlefield>());
 
-	allstages[0]->init(m_RD, m_GSD);
-	allstages[1]->init(m_RD, m_GSD);
-	allstages[2]->init(m_RD, m_GSD);
+	//allstages[0]->init(m_RD, m_GSD);
+	//allstages[1]->init(m_RD, m_GSD);
+	//allstages[2]->init(m_RD, m_GSD);
 
 
 	for (int i = 0; i < m_2DObjects.size(); i++)
@@ -112,7 +115,7 @@ void GameScene::Initialise(RenderData * _RD,
 	m_pause_text->SetPos(Vector2(m_GSD->window_size.x / 2, m_GSD->window_size.y / 2));
 }
 
-void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo)
+void GameScene::AddCharacter(int i, std::string _character, bool ai_controlled, bool demo)
 {
 	if (ai_controlled)
 	{
@@ -129,7 +132,7 @@ void GameScene::AddCharacter(int i, std::string _character, RenderData * _RD, bo
 	//colour the player
 	players[i]->SetColour(player_tints[i]);
 	//give the player physics
-	players[i]->CreatePhysics(_RD);
+	players[i]->CreatePhysics(m_RD);
 	//give the player lives
 	players[i]->SetLives(m_maxLives);
 	players[i]->setinfinitelives(m_infiniteLives);
@@ -361,8 +364,6 @@ void GameScene::giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _n
 	itm->SetSpawn(_pos);
 
 	m_spawner->onNotify(itm, Event::OBJECT_INSTANTIATED);
-	//_GSD->objects_in_scene.push_back(itm->GetPhysics());
-	//m_2DObjects.push_back(itm);
 }
 
 void GameScene::Reset()
@@ -384,7 +385,7 @@ void GameScene::Reset()
 
 			if (temp->isStageSelected())
 			{
-				game_stage = allstages[temp->getStageSelected()].get();
+				game_stage = stage_manager.returnSceneWithIndex(temp->getStageSelected());
 				//adds all 2d objects to the stage
 				game_stage->addObjectsToScene(m_2DObjects,m_GSD);
 

@@ -18,7 +18,7 @@ Item::Item(RenderData * _RD, string _filename, SpawnHandler* _spawner) : ImageGO
 	m_physics = std::make_shared<Physics2D>();
 #endif;
 	m_physics->SetOwner(this);
-	m_physics->SetBounce(0.5);
+	m_physics->SetBounce(0.3);
 	m_physics->SetGrav(1);
 
 	tag = GameObjectTag::ITEM;
@@ -75,16 +75,18 @@ void Item::use(Character * _player)
 {
 	//powerups
 	
+	
 		if (m_onUse == "heal")
 		{
 			_player->TakeDamage(-m_power); 
 		}
 		else if (m_onUse == "hammer")
 		{
-		
+		//could be any kind of power up
 		}
 		else if (m_onUse == "strength_up")
 		{
+
 			Buff* buff = new Buff(BuffType::STRENGHT_BUFF, _player, m_power);
 			_player->BuffCharacter(buff);
 		}
@@ -96,6 +98,7 @@ void Item::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	//no bouncing, simply stop and wait to be picked up
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLATFORM)
 	{
+		m_state = ItemState::WAIT;
 		m_physics->ResetForce(Axis::Y_AXIS);
 		m_physics->SetGrav(0);
 	}

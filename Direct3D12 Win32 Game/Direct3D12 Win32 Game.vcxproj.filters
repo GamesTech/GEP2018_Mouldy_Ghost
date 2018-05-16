@@ -361,6 +361,9 @@
     <ClInclude Include="StageSelectScene.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>GameObjects\Stages\Header</Filter>
+    </ClInclude>
     <ClInclude Include="EditorMenu.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="InputTextBox.h">
       <Filter>AssetBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="VibrationHandler.h">
+      <Filter>EventSystem\Headers</Filter>
     </ClInclude>
     <ClInclude Include="AnimationEditorHandler.h" />
     <ClInclude Include="AnimationContainer.h" />
@@ -590,6 +596,9 @@
       <Filter>Scenes\Source</Filter>
     </ClCompile>
     <ClCompile Include="FireworkEmitter.cpp" />
+    <ClCompile Include="StageManager.cpp">
+      <Filter>GameObjects\Stages\Source</Filter>
+    </ClCompile>
     <ClCompile Include="EditorMenu.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
@@ -605,6 +614,9 @@
     </ClCompile>
     <ClCompile Include="InputTextBox.cpp">
       <Filter>AssetBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="VibrationHandler.cpp">
+      <Filter>EventSystem\Source</Filter>
     </ClCompile>
     <ClCompile Include="AnimationEditorHandler.cpp" />
     <ClCompile Include="AnimationContainer.cpp" />

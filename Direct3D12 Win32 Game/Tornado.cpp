@@ -35,13 +35,15 @@ void Tornado::Tick(GameStateData * _GSD)
 {
 	m_physics->Tick(_GSD, m_pos);
 
+	//every 0.2sec
+	//deal damage to every character in the tornado
 	if (hit_rate > 0.2)
 	{
 		for (int i = 0; i < m_characters_in_tornado.size(); i++)
 		{
 			m_characters_in_tornado[i]->TakeDamage(2);
 		
-			m_characters_in_tornado[i]->Hit(Vector2(m_direction.x,-100), 100, nullptr);
+			m_characters_in_tornado[i]->Hit(Vector2(m_direction.x,-5), 100, nullptr);
 		}
 		hit_rate = 0;
 	}
@@ -53,12 +55,16 @@ void Tornado::Tick(GameStateData * _GSD)
 
 	if (m_elapsed_time > 2)
 	{
+		//live only for 2 seconds and then destroy itself
 		m_spawner->onNotify(this, Event::OBJECT_DESTROYED);
 	}
 }
 
 void Tornado::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+
+	//if a player enters the tornado
+	//add him to the list of all players in tornado
 	if (_collision->GetOwner()->GetTag() == GameObjectTag::PLAYER)
 	{
 		Character* player = static_cast<Character*>(_collision->GetOwner());

@@ -104,6 +104,28 @@ float AIController::getDist(GameObject2D * object)
 GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _GSD)
 {
 	GameActions actions;
+
+	if (_object->GetPos().y <= m_character->GetPos().y)
+	{
+        //if the previous jump reached its peak
+		if (m_character->GetPhysics()->GetVel().y > 0)
+		{
+            //has the character reached their jump limit?
+			if (m_character->canJump())
+			{
+                //if not, jump
+				actions.push_back(GameAction::P_JUMP);
+			}
+			else
+			{
+                //dash upwards
+				actions.push_back(GameAction::P_HOLD_UP);
+				actions.push_back(GameAction::P_HOLD_SPECIAL);
+				actions.push_back(GameAction::P_RELEASE_SPECIAL);
+			}
+		}
+	}
+    //move left or right towards it
 	if (_object->GetPos().x < m_character->GetPos().x)
 	{
 		actions.push_back(GameAction::P_MOVE_LEFT);
@@ -111,23 +133,6 @@ GameActions AIController::moveTowards(GameObject2D * _object, GameStateData * _G
 	else if (_object->GetPos().x > m_character->GetPos().x)
 	{
 		actions.push_back(GameAction::P_MOVE_RIGHT);
-	}
-
-	if (_object->GetPos().y <= m_character->GetPos().y)
-	{
-		if (m_character->GetPhysics()->GetVel().y > 0)
-		{
-			if (m_character->canJump())
-			{
-				actions.push_back(GameAction::P_JUMP);
-			}
-			else
-			{
-				actions.push_back(GameAction::P_HOLD_UP);
-				actions.push_back(GameAction::P_HOLD_SPECIAL);
-				actions.push_back(GameAction::P_RELEASE_SPECIAL);
-			}
-		}
 	}
 	return actions;
 }

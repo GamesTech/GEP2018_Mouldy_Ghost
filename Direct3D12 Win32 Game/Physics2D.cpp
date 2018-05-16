@@ -88,8 +88,10 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 				{
 					Rectangle overlap = Rectangle::Intersect(m_collider, object->GetCollider());
 
+                    //get the collision normal
 					Vector2 normal = GetNormal(overlap.Center());
 
+                    //call objects collision function
 					m_owner->Collision(object, normal);
 
 					//check whether this object was being collided with on the last tick
@@ -129,6 +131,8 @@ void Physics2D::CheckForCollisions(GameStateData * _GSD, Vector2& _pos)
 
 Vector2 Physics2D::GetNormal(Vector2 _point)
 {
+    //as the colliders are rects, the normal pertains to the side of the object colliding
+    //find which side is closest to the collision point
 	int distances[4];
 	distances[0] = abs(_point.y - m_collider.Center().y - m_collider.height / 2);
 	distances[1] = abs(_point.x - m_collider.Center().x + m_collider.width / 2);
@@ -143,7 +147,6 @@ Vector2 Physics2D::GetNormal(Vector2 _point)
 			closest = i;
 		}
 	}
-
 	switch (closest)
 	{
 	case 0:

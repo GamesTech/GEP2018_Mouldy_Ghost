@@ -46,8 +46,8 @@ StandardAttack::StandardAttack(std::string _attack_file, RenderData* _RD)
 	m_data.direction.y = std::stoi(getFileData(attack_file));
 	m_data.size.x = std::stoi(getFileData(attack_file));
 	m_data.size.y = std::stoi(getFileData(attack_file));
-
 	m_data.grav = getFileData(attack_file)[0] == 't';
+	m_data.file = getFileData(attack_file);
 
 	attack_file.close();
 }
@@ -70,11 +70,6 @@ void StandardAttack::PerformAttack(Vector2 _position, int _direction,
 	attack.direction.x *= _direction;
 	attack.child_to_player = true;
 	attack.user = _user;
-
-	//colliders.push_back(std::make_shared<DamageCollider>(m_RD, attack, _spawner));
-	//std::shared_ptr<DamageCollider> collider = std::make_shared<DamageCollider>(m_RD, attack, _spawner);
-	//colliders.back()->SetPos(_position);
-	//_spawner->onNotify(colliders.back().get(), Event::OBJECT_INSTANTIATED);
 
 	DamageCollider* newcol = new DamageCollider(m_RD, attack, _spawner);
 	newcol->SetPos(_position);

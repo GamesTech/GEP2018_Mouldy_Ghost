@@ -8,6 +8,7 @@ MeleeWeapon::MeleeWeapon()
 
 MeleeWeapon::MeleeWeapon(RenderData * _RD, std::string _filename, SpawnHandler * _spawner) : Throwable(_RD, _filename, _spawner)
 {
+	//need this for instantiiation of the tornado
 	m_spawner = _spawner;
 	RD_ptr = _RD;
 }
@@ -20,6 +21,7 @@ MeleeWeapon::MeleeWeapon(Item * item_to_copy, RenderData * _RD, string _filename
 	on_full_charge = melee_ptr->getOnFullCharge();
 	durability = melee_ptr->getDurability();
 
+	//need this for instantiiation of the tornado
 	m_spawner = _spawner;
 	RD_ptr = _RD;
 }
@@ -45,13 +47,9 @@ void MeleeWeapon::use(Character * char_)
 
 void MeleeWeapon::Tick(GameStateData * _GSD)
 {
-
-	if (m_state == ItemState::HELD)
-	{
-		m_pos = player_ignore->GetPos();
-	}
-
-	Item::Tick(_GSD);
+	//type indicates the direction of the attack
+	//could be an enum instead of int
+	Throwable::Tick(_GSD);
 
 	if (m_state == ItemState::ATTACKING)
 	{
@@ -106,6 +104,7 @@ void MeleeWeapon::Tick(GameStateData * _GSD)
 
 void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
+	//hit players only when in attacking state
 	if (m_state == ItemState::ATTACKING
 		&& _collision->GetOwner()->GetTag() == GameObjectTag::PLAYER
 		&& _collision->GetOwner() != player_ignore)
@@ -118,15 +117,17 @@ void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		Character* tmpchar = static_cast<Character*>(_collision->GetOwner());	
 		Vector2 dir;
 
+		//depending on the attack type
+		//knock the target back
 		if (attack_type == 1)
 		{
 			//right
-			dir = Vector2((m_power +  m_power * m_charge), -1);
+			dir = Vector2((m_power +  m_power * m_charge), -3);
 		}
 		else if (attack_type == 2)
 		{
 			//left
-			dir = Vector2(-(m_power +  m_power * m_charge), -1);
+			dir = Vector2(-(m_power +  m_power * m_charge),-3);
 		}
 		else if (attack_type == 3)
 		{
@@ -136,14 +137,14 @@ void MeleeWeapon::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 		else if (attack_type == 4)
 		{
 			//down
-			dir = Vector2(0, -10);
+			dir = Vector2(0, 10);
 		}
 		tmpchar->TakeDamage(m_power + m_power*m_charge);
 		dir.Normalize();
 		tmpchar->Hit(dir, 10000*m_power*m_charge , player_ignore);
 	
 	}
-	else if (m_state == ItemState::THROWN || m_state == ItemState::WAIT)
+	else if (m_state == ItemState::THROWN || m_state == ItemState::WAIT ||  m_state == ItemState::SPAWNED)
 	{
 		Throwable::CollisionEnter(_collision, _normal);
 	}

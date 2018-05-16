@@ -4,6 +4,10 @@
 #include "GameStateData.h"
 #include <fstream>
 #include "GameSettingsHandler.h"
+
+
+std::string getFileData(std::ifstream & _file);
+
 StageSelectScene::StageSelectScene()
 {
 }

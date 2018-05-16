@@ -48,13 +48,23 @@ void GameObject2D::move(Vector2 _move_by)
 
 void GameObject2D::Tick(GameStateData * _GSD)
 {
+
+	// if there is a diference between position on current frame and position on previous frame
+	// the object has moved and thus move all of its children the same amount
 	if (m_pos != previous_pos)
 	{
-		Vector2 dif = m_pos - previous_pos;
-		dif /= 2;
 		for (int i = 0; i < children.size(); i++)
 		{
-			children[i]->SetPos(children[i]->GetPos() + dif);
+			if (children[i])
+			{
+				Vector2 dif = m_pos - previous_pos;
+				if (!dynamic_cast<DamageCollider*>(children[i]))
+				{
+					dif /= 2;
+				}
+
+				children[i]->SetPos(children[i]->GetPos() + dif);
+			}
 		}
 		previous_pos = m_pos;
 	}
@@ -113,8 +123,6 @@ void GameObject2D::AddChild(GameObject2D * object)
 
 void GameObject2D::RemoveChild(GameObject2D * child)
 {
-	//yo
-
 	for (int i = 0; i < children.size(); i++)
 	{
 		if(children[i] == child)

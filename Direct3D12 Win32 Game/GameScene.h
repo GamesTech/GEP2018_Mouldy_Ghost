@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Stage.h"
+#include "StageManager.h"
 
 #include "CharacterController.h"
 #include "CharacterManager.h"
@@ -32,8 +33,19 @@ public:
 	virtual void Initialise(RenderData * _RD,
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
-	virtual void AddCharacter(int i, std::string _character, RenderData * _RD, bool ai_controlled, bool demo = false);
+    
+    /*
+    Adds a character to the game
+    i               - the index of the character controller
+    _character      - the name of the character
+    _RD             - pointer to the render data
+    ai_controlled   - is this character controlled by ai
+    demo            - is this the demo scene
+    */
+	virtual void AddCharacter(int i, std::string _character, bool ai_controlled, bool demo = false);
+    //calls remove character on each character in the scene
 	void RemoveAllCharacters();
+    //find and remove a character from the game scene
 	void RemoveCharacter(Character * _char);
 
 	virtual void Update(DX::StepTimer const & timer,
@@ -43,6 +55,9 @@ public:
 
 	CharacterManager* GetCharacterManager() { return &c_manager; }
 
+	/*
+	Ask Item spawner for a clone of an item
+	*/
 	void giveMeItem(RenderData * _RD, GameStateData* _GSD, std::string _name,Vector2 _pos);
 
 	virtual void Reset();
@@ -61,8 +76,7 @@ protected:
 	CharacterManager c_manager;
 	SpawnHandler* m_spawner;
 	ItemSpawner item_spawner;
-
-	std::vector<std::unique_ptr<Stage>> allstages;
+	StageManager stage_manager;
 
 	bool paused = false;
 	std::unique_ptr<Text2D> m_pause_text = nullptr;
@@ -76,6 +90,8 @@ protected:
 
 	float m_spawn_item_time = 0;
 
+    //used to delay the switch to a game over scene,
+    //on game over the game will wait half a second, then freeze before switching
 	GameOverCheck m_game_over_check = GameOverCheck::NONE;
 	float m_game_over_timer[2] = { 0,0 };
 };

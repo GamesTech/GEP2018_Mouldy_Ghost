@@ -63,6 +63,13 @@ public:
 	void loadAnimations(std::string _file, RenderData* _RD);
 
 	void TakeDamage(int _dam);
+        
+    /*
+    this player gets hit
+    _dir        - the direction of the force to be applied
+    _force      - the amount of force to apply
+    _attacker   - the player who attacked
+    */
 	void Hit(Vector2 _dir, float _force, Character * _attacker);
 	const int GetDamage() { return m_damage; }
 	void ResetDamage() { m_damage = 0; }
@@ -113,9 +120,6 @@ protected:
 	Emitter m_damage_emitter;
 	std::shared_ptr<Emitter> m_die_emitter = nullptr;
 
-
-	void FlipX();
-	bool flipped = false;
 	float m_recovery_time = 0;
 	int m_jumps = 1;
 	int m_damage = 0;

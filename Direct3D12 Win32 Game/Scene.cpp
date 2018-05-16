@@ -3,6 +3,7 @@
 #include "GameStateData.h"
 #include "Scene.h"
 #include "HUD.h"
+#include "VibrationHandler.h"
 #include <fstream>
 
 #if _DEBUG
@@ -16,39 +17,9 @@ Scene::~Scene()
 	m_sounds.clear();
 }
 
-std::string Scene::getFileData(std::ifstream & _file)
-{
-	int tries = 0;
-	char c;
-	//look through the file until a '>' is reached
-	do
-	{
-		c = _file.get();
-		tries++;
-		assert(tries < 10000);	//breaks here if it gets stuck in the file
-	} while (c != '>');
-
-	//add the rest of the line to the data
-	std::string ret_str = "";
-	while (true)
-	{
-		c = _file.get();
-		if (c != '\n' && !_file.eof())
-		{
-			ret_str += c;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//return the data
-	return ret_str;
-}
-
 void Scene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::AudioEngine>& _audEngine)
 {
+	m_vibration->Tick(timer);
 	//this will update the audio engine but give us chance to do somehting else if that isn't working
 	if (!_audEngine->Update())
 	{
@@ -230,6 +201,10 @@ GameObject2D** Scene::FindAll2DGameObjectsWithTag(GameObjectTag tag)
 
 void Scene::addListener(EventHandler* _event)
 {
+	if (_event->getType() == "Vibration")
+	{
+		m_vibration = static_cast<VibrationHandler*>(_event);
+	}
 	listeners.push_back(_event);
 }
 

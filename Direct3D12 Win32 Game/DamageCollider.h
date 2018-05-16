@@ -21,6 +21,8 @@ public:
 
 	Character* GetUser() { return m_data.user; };
 private:
+	void calculateRotation();
+
 	DamageColData m_data;
 	SpawnHandler* m_spawner;
 	float m_lifetime;

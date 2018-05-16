@@ -54,11 +54,17 @@ void SpawnHandler::onNotify(GameObject2D * object, Event _event)
 				break;
 			}
 		}
+		if (object->GetParent())
+		{
+			object->SetParent(nullptr);
+		}
 
 		if (_event == Event::OBJECT_DESTROYED)
 		{
+#if _DEBUG
 			delete object;
 			object = nullptr;
+#endif
 		}
 		break;
 

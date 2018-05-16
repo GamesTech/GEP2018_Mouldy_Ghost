@@ -11,8 +11,13 @@ public:
 	Throwable(Item* item_to_copy, RenderData* _RD, string _filename, SpawnHandler* _spawner); //copy constructor
 	~Throwable();
 
-
+	void Tick(GameStateData* _GSD)override;
 	void Throw(Character* _player);
+
+	/*
+	parents the object to the player
+	sets the state to HELD
+	*/
 	virtual void pickUp(Character* _player);
 	virtual void use(Character* _player) override;
 

@@ -52,6 +52,9 @@ void MovingPlatform::Tick(GameStateData * _GSD)
 		{
 			elapsed_time = 0;
 			stay = true;
+
+			//set the position to the target position
+			//makes sure that the platform never overshoots
 			newpos = direction ? end_pos : start_pos;
 			direction = !direction;
 		}
@@ -74,6 +77,8 @@ void MovingPlatform::Tick(GameStateData * _GSD)
 void MovingPlatform::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 {
 	Platform::CollisionEnter(_collision, _normal);
+
+	//parent the object so when the platform moves, the object moves with it
 	_collision->GetOwner()->SetParent(this);
 	AddChild(_collision->GetOwner());
 }

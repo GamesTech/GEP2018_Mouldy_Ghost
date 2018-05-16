@@ -11,6 +11,7 @@
 #include "SceneHandler.h"
 #include "GameSettingsHandler.h"
 #include "CharacterLifeHandler.h"
+#include "VibrationHandler.h"
 #include "AnimationEditorHandler.h"
 
 extern void ExitGame();
@@ -228,14 +229,16 @@ void Game::buildGame()
 	m_gameSettings = std::make_unique<GameSettingsHandler>();
 	m_lifeListener = std::make_unique<CharacterLifeHandler>();
 	m_spawner = std::make_unique<SpawnHandler>();
+	m_vibrationListner = std::make_unique<VibrationHandler>();
 	m_animationEditorHandler = std::make_unique<AnimationEditorHandler>();
 	listeners.push_back(m_musicListener.get());
 	listeners.push_back(m_sceneListener.get());
 	listeners.push_back(m_gameSettings.get());
 	listeners.push_back(m_lifeListener.get());
 	listeners.push_back(m_spawner.get());
+	listeners.push_back(m_vibrationListner.get());
 	listeners.push_back(m_animationEditorHandler.get());
-
+	
 	m_gameScene = std::make_unique<GameScene>();
 	m_gameScene->setIdle(3600, Event::CHANGE_SCENE_MAIN_MENU);
 	m_all_scenes.push_back(m_gameScene.get());
@@ -287,6 +290,7 @@ void Game::buildGame()
 	m_sceneListener->init(m_GSD, m_all_scenes);
 	m_lifeListener->SetGameOver(m_gameOverScene.get());
 	m_musicListener->init(m_GSD);
+	m_vibrationListner->addGamePad(m_gamePad.get());
 
 
 	//tell the listeners we've loaded!
@@ -296,10 +300,10 @@ void Game::buildGame()
 	}
 
 	//add chickens to demo scene
-	m_demoScene->AddCharacter(0, "Chicken", m_RD, true, true);
-	m_demoScene->AddCharacter(1, "Chicken", m_RD, true, true);
-	m_demoScene->AddCharacter(2, "Pig", m_RD, true, true);
-	m_demoScene->AddCharacter(3, "Chicken", m_RD, true, true);
+	m_demoScene->AddCharacter(0, "Chicken",  true, true);
+	m_demoScene->AddCharacter(1, "Chicken",  true, true);
+	m_demoScene->AddCharacter(2, "Pig", true, true);
+	m_demoScene->AddCharacter(3, "Chicken", true, true);
 }
 
 // Helper method to prepare the command list for rendering and clear the back buffers.

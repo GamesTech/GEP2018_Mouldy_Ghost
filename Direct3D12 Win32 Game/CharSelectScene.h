@@ -22,8 +22,12 @@ public:
 		GameStateData* _GSD, int _outputWidth,
 		int _outputHeight, std::unique_ptr<DirectX::AudioEngine>& _audEngine);
 private:
-	bool isValid(int i);
+	void addAI();
+	void removeAI();
+	void removeAI(int i);
 
+	bool isValid(int i);
+	std::string ai_to_add[4] = { "", "", "", "" };
 	bool m_confirmed[4] = { false, false, false, false };
 	short int m_selected_character[4];
 	GameScene* m_gameScene;

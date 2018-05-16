@@ -8,6 +8,7 @@ HUD::HUD(GameStateData* _GSD)
 	{
 		m_in_game[i].in_game = false;
 
+        //place the text in the appropriate corner
 		int x = (_GSD->window_size.x - 350) * (i % 2);
 		int y = (_GSD->window_size.y - 100) * (i / 2);
 

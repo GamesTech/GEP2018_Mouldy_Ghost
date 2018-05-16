@@ -23,6 +23,16 @@ Throwable::~Throwable()
 }
 
 
+void Throwable::Tick(GameStateData * _GSD)
+{
+	if (m_state == ItemState::HELD)
+	{
+		m_pos = player_ignore->GetPos();
+	}
+
+	Item::Tick(_GSD);
+}
+
 void Throwable::Throw(Character* _player)
 {
 	m_physics->SetGrav(1);
@@ -40,10 +50,14 @@ void Throwable::Throw(Character* _player)
 
 void Throwable::pickUp(Character * _player)
 {
-	Item::pickUp(_player);
-	player_ignore = _player;
-	m_state = ItemState::HELD;
-	m_physics->SetGrav(0);
+	if (m_state != ItemState::SPAWNED
+		|| m_state != ItemState::THROWN)
+	{
+		Item::pickUp(_player);
+		player_ignore = _player;
+		m_state = ItemState::HELD;
+		m_physics->SetGrav(0);
+	}
 
 }
 
@@ -64,7 +78,7 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 			tmpchar->TakeDamage(5);
 			//bounce?
 			m_physics->ResetForce(BOTH_AXES);
-			m_physics->AddForce(5000 * _normal);
+			m_physics->AddForce(50000 * _normal);
 			
 			
 		}
@@ -74,12 +88,12 @@ void Throwable::CollisionEnter(Physics2D * _collision, Vector2 _normal)
 	{
 		player_ignore = nullptr;
 
-		if (m_physics->GetVel().y < 200)
+		if (m_physics->GetVel().y < 200 && m_physics->GetVel().x < 100)
 		{
 			m_physics->ResetForce(BOTH_AXES);
 			m_physics->SetGrav(0);
 			
-			if (name != "mine")
+			if (!(name == "mine" && m_active == true))
 			{
 				m_state = ItemState::WAIT;
 			}

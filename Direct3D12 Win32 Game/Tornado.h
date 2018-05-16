@@ -7,6 +7,12 @@ class Tornado : public ImageGO2D
 {
 public:
 	Tornado() = default;
+	/*
+	Simple collision box that exists for a short amount of time
+	collision with the box result in Hit
+	moved in a direction specified in the constructor
+	players stuck in the tornado take damage only every 0.2 sec
+	*/
 	Tornado(Vector2 _pos, RenderData* _RD, GameStateData* _GSD,
 		SpawnHandler * _spawner, Vector2 _direction);
 	~Tornado();

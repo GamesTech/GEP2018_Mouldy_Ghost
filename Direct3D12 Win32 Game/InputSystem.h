@@ -33,7 +33,16 @@ enum GameAction
 	P_PICK_UP,
 
 	P_PAUSE,
-	P_QUIT
+	P_QUIT,
+
+#if _DEBUG
+	DEBUG_CAM_UP,
+	DEBUG_CAM_DOWN,
+	DEBUG_CAM_RIGHT,
+	DEBUG_CAM_LEFT,
+	DEBUG_CAM_IN,
+	DEBUG_CAM_OUT,
+#endif
 };
 
 using GameActions = std::vector<GameAction>;

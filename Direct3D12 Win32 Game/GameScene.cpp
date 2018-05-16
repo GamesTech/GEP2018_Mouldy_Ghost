@@ -299,22 +299,53 @@ void GameScene::Update(DX::StepTimer const & timer, std::unique_ptr<DirectX::Aud
 			{
 				m_timeLeft -= timer.GetElapsedSeconds();
 			}
-		}
 
-		//spawning items
+			//spawning items
 
-		m_spawn_item_time += m_GSD->m_dt;
-		if (m_spawn_item_time > 10)
-		{
-			std::string st = item_spawner.getRandomItemName();
-
-			if (st != "No items available")
+			m_spawn_item_time += m_GSD->m_dt;
+			if (m_spawn_item_time > 10)
 			{
-				giveMeItem(m_RD, m_GSD, st, game_stage->getRandomSpawnPoint());
-			}
-			m_spawn_item_time = 0;	
-		}
+				std::string st = item_spawner.getRandomItemName();
 
+				if (st != "No items available")
+				{
+					giveMeItem(m_RD, m_GSD, st, game_stage->getRandomSpawnPoint());
+				}
+				m_spawn_item_time = 0;
+			}
+		}
+		else
+		{
+#if _DEBUG
+			for (int i = 0; i < 4; i++)
+			{
+				if (InputSystem::searchForAction(GameAction::DEBUG_CAM_DOWN, m_GSD->game_actions[i]))
+				{
+					m_cam_pos += Vector2(0, -10 * m_cam_zoom);
+				}
+				if (InputSystem::searchForAction(GameAction::DEBUG_CAM_UP, m_GSD->game_actions[i]))
+				{
+					m_cam_pos += Vector2(0, 10 * m_cam_zoom);
+				}
+				if (InputSystem::searchForAction(GameAction::DEBUG_CAM_RIGHT, m_GSD->game_actions[i]))
+				{
+					m_cam_pos += Vector2(-10 * m_cam_zoom, 0);
+				}
+				if (InputSystem::searchForAction(GameAction::DEBUG_CAM_LEFT, m_GSD->game_actions[i]))
+				{
+					m_cam_pos += Vector2(10 * m_cam_zoom, 0);
+				}
+				if (InputSystem::searchForAction(GameAction::DEBUG_CAM_IN, m_GSD->game_actions[i]))
+				{
+					m_cam_zoom += 0.1f;
+				}
+				if (InputSystem::searchForAction(GameAction::DEBUG_CAM_OUT, m_GSD->game_actions[i]))
+				{
+					m_cam_zoom -= 0.1f;
+				}
+			}
+#endif
+		}
 	}
 
 	if(m_game_over_check != GameOverCheck::NONE)

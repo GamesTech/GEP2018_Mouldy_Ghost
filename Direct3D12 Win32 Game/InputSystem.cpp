@@ -190,6 +190,9 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 	{
 		if (_state.Up)
 		{
+#if _DEBUG
+			_actions.push_back(DEBUG_CAM_UP);
+#endif
 			if (_prev_state.Up)
 			{
 				_actions.push_back(P_HOLD_UP);
@@ -201,19 +204,31 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 		}
 		if (_state.Left)
 		{
+#if _DEBUG
+			_actions.push_back(DEBUG_CAM_LEFT);
+#endif
 			_actions.push_back(P_MOVE_LEFT);
 		}
 		if (_state.Down)
 		{
+#if _DEBUG
+			_actions.push_back(DEBUG_CAM_DOWN);
+#endif
 			_actions.push_back(P_CROUCH);
 		}
 		if (_state.Right)
 		{
+#if _DEBUG
+			_actions.push_back(DEBUG_CAM_RIGHT);
+#endif
 			_actions.push_back(P_MOVE_RIGHT);
 		}
 
 		if (_state.NumPad5)
 		{
+#if _DEBUG
+			_actions.push_back(DEBUG_CAM_OUT);
+#endif
 			_actions.push_back(P_HOLD_BASIC);
 		}
 		else if (_prev_state.NumPad5)
@@ -222,6 +237,9 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 		}
 		if (_state.NumPad1)
 		{
+#if _DEBUG
+			_actions.push_back(DEBUG_CAM_IN);
+#endif
 			_actions.push_back(P_HOLD_SPECIAL);
 		}
 		else if (_prev_state.NumPad1)
@@ -253,7 +271,6 @@ void InputSystem::getAction(int _player, Keyboard::State _state, Keyboard::State
 		_actions.push_back(P_QUIT);
 	}
 #endif
-	
 }
 
 //controller in game controls
@@ -262,6 +279,9 @@ void InputSystem::getAction(GamePad::State _state,
 {
 	if (_state.IsAPressed())
 	{
+#if _DEBUG
+		_actions.push_back(DEBUG_CAM_IN);
+#endif
 		_actions.push_back(P_HOLD_BASIC);
 	}
 	else if (_buttons.GetLastState().IsAPressed())
@@ -270,6 +290,9 @@ void InputSystem::getAction(GamePad::State _state,
 	}
 	if (_state.IsXPressed())
 	{
+#if _DEBUG
+		_actions.push_back(DEBUG_CAM_OUT);
+#endif
 		_actions.push_back(P_HOLD_SPECIAL);
 	}
 	else if (_buttons.GetLastState().IsXPressed())
@@ -298,18 +321,30 @@ void InputSystem::getAction(GamePad::State _state,
 
 	if (_state.IsLeftThumbStickLeft())
 	{
+#if _DEBUG
+		_actions.push_back(DEBUG_CAM_LEFT);
+#endif
 		_actions.push_back(P_MOVE_LEFT);
 	}
 	if (_state.IsLeftThumbStickRight())
 	{
+#if _DEBUG
+		_actions.push_back(DEBUG_CAM_RIGHT);
+#endif
 		_actions.push_back(P_MOVE_RIGHT);
 	}
 	if (_state.IsLeftThumbStickDown())
 	{
+#if _DEBUG
+		_actions.push_back(DEBUG_CAM_DOWN);
+#endif
 		_actions.push_back(P_CROUCH);
 	}
 	if (_state.IsLeftThumbStickUp())
 	{
+#if _DEBUG
+		_actions.push_back(DEBUG_CAM_UP);
+#endif
 		_actions.push_back(P_HOLD_UP);
 	}
 	if (_state.IsViewPressed())

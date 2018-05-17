@@ -1,0 +1,15 @@
+type:		>meleeweapon
+image:		>baseball_bat
+-- all items
+Name:		>baseball_bat
+pickup:		>none
+use:		>attack
+power:		>10
+-- throwable 
+on throw	>none
+player hit 	>bounce
+ground hit 	>bounce
+-- melee
+max charge      >2
+full charge     >none
+durability	>5

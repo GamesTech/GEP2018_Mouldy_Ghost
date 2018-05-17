@@ -4,7 +4,7 @@
 
 Camera::Camera(float _width, float _height, float _near, float _far)
 {
-	m_pos = Vector3::Backward;
+	SetSpawn(Vector3::Backward);
 	m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f,_width/_height ,_near,_far);
 }
 

@@ -18,7 +18,10 @@ public:
 	//place the origin at the middle of the string
 	void CentreOrigin();
 
-	void Render(RenderData* _RD);
+	void Render(RenderData* _RD, int _sprite = 0,
+		Vector2 _cam_pos = Vector2::Zero, float _zoom = 1);
+
+	int GetWidth(RenderData* _RD);
 protected:
 	string m_text;
 	std::wstring m_wText;

@@ -1,0 +1,9 @@
+type:		>single_use
+image:		>apple
+-- all items
+Name:		>apple
+pickup:		>use
+use:		>heal
+power:		>5
+--
+

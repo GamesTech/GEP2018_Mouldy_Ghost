@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="ArcadeDebug|Win32">
+      <Configuration>ArcadeDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ArcadeDebug|x64">
+      <Configuration>ArcadeDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -39,6 +47,20 @@
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -64,6 +86,12 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -73,12 +101,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\Libs\jsoncons\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\Libs\jsoncons\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\Libs\jsoncons\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\Libs\jsoncons\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -111,6 +149,47 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <AdditionalIncludeDirectories>..\DirectXTK12-master\Inc</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;uuid.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <FXCompile>
+      <ShaderModel>5.1</ShaderModel>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_ARCADE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <AdditionalIncludeDirectories>..\DirectXTK12-master\Inc</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;uuid.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <FXCompile>
+      <ShaderModel>5.1</ShaderModel>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_ARCADE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <AdditionalIncludeDirectories>..\DirectXTK12-master\Inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -156,6 +235,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <AdditionalIncludeDirectories>..\DirectXTK12-master\Inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -170,10 +250,76 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AIController.h" />
+    <ClInclude Include="AllScenes.h" />
+    <ClInclude Include="Animation2D.h" />
+    <ClInclude Include="AnimationContainer.h" />
+    <ClInclude Include="AnimationEditorHandler.h" />
+    <ClInclude Include="AnimationEditorScene.h" />
+    <ClInclude Include="Attack.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="Battlefield.h" />
+    <ClInclude Include="Buff.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="CharacterLifeHandler.h" />
+    <ClInclude Include="CharacterManager.h" />
+    <ClInclude Include="CharSelectScene.h" />
+    <ClInclude Include="ClickableButton.h" />
+    <ClInclude Include="ControllerFont.h" />
+    <ClInclude Include="Cursor.h" />
+    <ClInclude Include="DemoScene.h" />
+    <ClInclude Include="EditorMenu.h" />
+    <ClInclude Include="Emitter.h" />
+    <ClInclude Include="FireworkEmitter.h" />
+    <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="IdleHandler.h" />
+    <ClInclude Include="InputTextBox.h" />
+    <ClInclude Include="MeleeScene.h" />
+    <ClInclude Include="CounterAttack.h" />
+    <ClInclude Include="DamageCollider.h" />
+    <ClInclude Include="AttackData.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CharacterController.h" />
+    <ClInclude Include="Characters.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventRotate.h" />
+    <ClInclude Include="Events.h" />
+    <ClInclude Include="EventScaleUp.h" />
+    <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="Explosive.h" />
+    <ClInclude Include="FinalDestination.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameObjectTags.h" />
+    <ClInclude Include="GameSettingsHandler.h" />
+    <ClInclude Include="GameSettingsScene.h" />
+    <ClInclude Include="GrabAttack.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemSpawner.h" />
+    <ClInclude Include="ItemState.h" />
     <ClInclude Include="Loop.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="StageManager.h" />
+    <ClInclude Include="StageSelectScene.h" />
+    <ClInclude Include="StandardAttack.h" />
+    <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="SystemSettingsScene.h" />
+    <ClInclude Include="Temple.h" />
+    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="DashAttack.h" />
+    <ClInclude Include="MovingPlatform.h" />
+    <ClInclude Include="AudioHandler.h" />
+    <ClInclude Include="PassiveAttack.h" />
     <ClInclude Include="Physics2D.h" />
-    <ClInclude Include="Player2D.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="ReadFile.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneHandler.h" />
     <ClInclude Include="SDKMeshGO3D.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="Game.h" />
@@ -186,17 +332,79 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="SpawnHandler.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="StepTimer.h" />
+    <ClInclude Include="TestAnim.h" />
     <ClInclude Include="TestPBGO3D.h" />
     <ClInclude Include="TestSound.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="GameStateData.h" />
+    <ClInclude Include="Throwable.h" />
+    <ClInclude Include="Tornado.h" />
+    <ClInclude Include="VibrationHandler.h" />
+    <ClInclude Include="VisiblePhysics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIController.cpp" />
+    <ClCompile Include="Animation2D.cpp" />
+    <ClCompile Include="AnimationContainer.cpp" />
+    <ClCompile Include="AnimationEditorHandler.cpp" />
+    <ClCompile Include="AnimationEditorScene.cpp" />
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Battlefield.cpp" />
+    <ClCompile Include="Buff.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CharacterLifeHandler.cpp" />
+    <ClCompile Include="CharacterManager.cpp" />
+    <ClCompile Include="CharSelectScene.cpp" />
+    <ClCompile Include="ClickableButton.cpp" />
+    <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="DemoScene.cpp" />
+    <ClCompile Include="EditorMenu.cpp" />
+    <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="FireworkEmitter.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="IdleHandler.cpp" />
+    <ClCompile Include="InputTextBox.cpp" />
+    <ClCompile Include="MeleeScene.cpp" />
+    <ClCompile Include="DamageCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CharacterController.cpp" />
+    <ClCompile Include="Characters.cpp" />
+    <ClCompile Include="DashAttack.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventRotate.cpp" />
+    <ClCompile Include="EventScaleUp.cpp" />
+    <ClCompile Include="EventSystem.cpp" />
+    <ClCompile Include="Explosive.cpp" />
+    <ClCompile Include="FinalDestination.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSettingsHandler.cpp" />
+    <ClCompile Include="GameSettingsScene.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemSpawner.cpp" />
     <ClCompile Include="Loop.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="StageManager.cpp" />
+    <ClCompile Include="StageSelectScene.cpp" />
+    <ClCompile Include="SystemSettingsScene.cpp" />
+    <ClCompile Include="Temple.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="StandardAttack.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="AudioHandler.cpp" />
     <ClCompile Include="Physics2D.cpp" />
-    <ClCompile Include="Player2D.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneHandler.cpp" />
     <ClCompile Include="SDKMeshGO3D.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject2D.cpp" />
@@ -208,13 +416,22 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ArcadeDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SpawnHandler.cpp" />
+    <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="TestAnim.cpp" />
     <ClCompile Include="TestPBGO3D.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="Text2D.cpp" />
+    <ClCompile Include="Throwable.cpp" />
+    <ClCompile Include="Tornado.cpp" />
+    <ClCompile Include="VibrationHandler.cpp" />
+    <ClCompile Include="VisiblePhysics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

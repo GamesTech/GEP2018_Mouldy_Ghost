@@ -1,11 +1,112 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ImageContentTask Include="guides_logo.png" />
-    <ImageContentTask Include="twist.png" />
+    <ImageContentTask Include="colliderdebug.png" />
+    <ImageContentTask Include="platform.png" />
+    <ImageContentTask Include="SpriteSheets\grant.png" />
+    <ImageContentTask Include="default_item_texture.png" />
     <ImageContentTask Include="gens.png" />
+    <ImageContentTask Include="greenmario.png" />
+    <ImageContentTask Include="terraria.png" />
+    <ImageContentTask Include="yoshi.png" />
+    <ImageContentTask Include="tree.png" />
+    <ImageContentTask Include="sky.png" />
+    <ImageContentTask Include="field.png" />
+    <ImageContentTask Include="nige.jpg" />
+    <ImageContentTask Include="podium0.png" />
+    <ImageContentTask Include="podium1.png" />
+    <ImageContentTask Include="podium2.png" />
+    <ImageContentTask Include="smoke.png" />
+    <ImageContentTask Include="FireworkParticle.png" />
+    <ImageContentTask Include="button.png" />
+    <ImageContentTask Include="cursor.png" />
+    <ImageContentTask Include="TextBox.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenFly.png">
+      <Filter>SpriteSheets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="SpriteSheets\ChickenIdle.png">
+      <Filter>SpriteSheets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="SpriteSheets\ChickenWalk.png">
+      <Filter>SpriteSheets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="SpriteSheets\ChickenAttack.png">
+      <Filter>SpriteSheets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="SpriteSheets\PigIdle.png">
+      <Filter>SpriteSheets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="SpriteSheets\PigWalk.png">
+      <Filter>SpriteSheets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="SpriteSheets\PigAttack.png">
+      <Filter>SpriteSheets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="apple.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="ball.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="baseball_bat.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="bomb.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="explosion.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="mine.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="str_buff.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="tornado.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="tornado_sword.png">
+      <Filter>Items</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\fireball.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\hit.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\laser.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\fireboost.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="AttackColliders\rock.png">
+      <Filter>AttackColliders</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="grassplatform.png" />
+    <ImageContentTask Include="SpriteSheets\Error.png" />
+    <ImageContentTask Include="SpriteSheets\LizardAttack.png" />
+    <ImageContentTask Include="SpriteSheets\LizardIdle.png" />
+    <ImageContentTask Include="SpriteSheets\LizardJump.png" />
+    <ImageContentTask Include="SpriteSheets\LizardWalk.png" />
+    <ImageContentTask Include="SpriteSheets\StatueAttack.png" />
+    <ImageContentTask Include="SpriteSheets\StatueIdle.png" />
+    <ImageContentTask Include="SpriteSheets\StatueJump.png" />
+    <ImageContentTask Include="SpriteSheets\StatueWalk.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="READ_ME.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="SpriteSheets">
+      <UniqueIdentifier>{cf3c0f80-762c-49c0-9a63-277faa2d48ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{c7114746-236e-403b-a672-edc3dbed3183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AttackColliders">
+      <UniqueIdentifier>{1b057918-7bff-4683-b10b-029248ac3d0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -1,0 +1,51 @@
+{
+  "run": {
+    "spritesheet": "PigWalk",
+    "framerate": 30,
+    "xIncrements": 88,
+    "yIncrements": 62,
+    "boxWidth": 88,
+    "boxHeight": 62,
+    "furthestLeftPos": 0,
+    "startX": 0,
+    "startY": 0,
+    "frames": 24
+  },
+    "jump": {
+    "spritesheet": "PigWalk",
+    "framerate": 30,
+    "xIncrements": 88,
+    "yIncrements": 62,
+    "boxWidth": 88,
+    "boxHeight": 62,
+    "furthestLeftPos": 0,
+    "startX": 0,
+    "startY": 0,
+    "frames": 24
+  },
+    "idle": {
+    "spritesheet": "PigIdle",
+    "framerate": 30,
+    "xIncrements": 88,
+    "yIncrements": 62,
+    "boxWidth": 88,
+    "boxHeight": 62,
+    "furthestLeftPos": 0,
+    "startX": 0,
+    "startY": 0,
+    "frames": 60
+  }
+  ,
+    "attack": {
+    "spritesheet": "PigAttack",
+       "framerate": 30,
+    "xIncrements": 88,
+    "yIncrements": 62,
+    "boxWidth": 88,
+    "boxHeight": 62,
+    "furthestLeftPos": 0,
+    "startX": 0,
+    "startY": 0,
+    "frames": 38
+  }
+}

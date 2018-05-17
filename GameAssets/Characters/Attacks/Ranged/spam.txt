@@ -1,0 +1,14 @@
+destroy		>anything
+hold		>-0.2
+time		>8
+speed		>60
+damage		>5
+knockback	>20
+direction	
+>1
+>0
+size
+>30
+>30
+gravity		>false
+collider sprite		>laser

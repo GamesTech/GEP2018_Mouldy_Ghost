@@ -1,0 +1,7 @@
+>Apple
+>Bomb
+>Ball
+>Mine
+>Baseball_bat
+>Tornado_sword
+>Strength_buff

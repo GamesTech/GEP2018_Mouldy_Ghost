@@ -123,14 +123,124 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ImageContentTask Include="guides_logo.png" />
-    <ImageContentTask Include="twist.png" />
+    <Text Include="READ_ME.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="colliderdebug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="platform.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\grant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="default_item_texture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="apple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="bomb.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="gens.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="READ_ME.txt" />
+    <ImageContentTask Include="greenmario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="terraria.png" />
+    <ImageContentTask Include="yoshi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="explosion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="ball.png" />
+    <ImageContentTask Include="mine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="sky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="field.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="nige.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="baseball_bat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tornado_sword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="tornado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\ChickenFly.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\ChickenWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\ChickenAttack.png" />
+    <ImageContentTask Include="SpriteSheets\ChickenIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="str_buff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="podium0.png" />
+    <ImageContentTask Include="podium1.png" />
+    <ImageContentTask Include="podium2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="smoke.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="FireworkParticle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\PigAttack.png" />
+    <ImageContentTask Include="SpriteSheets\PigIdle.png" />
+    <ImageContentTask Include="SpriteSheets\PigWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="button.png" />
+    <ImageContentTask Include="cursor.png" />
+    <ImageContentTask Include="TextBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\fireball.png" />
+    <ImageContentTask Include="AttackColliders\hit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\fireboost.png" />
+    <ImageContentTask Include="AttackColliders\laser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="AttackColliders\rock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="grassplatform.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="SpriteSheets\LizardAttack.png" />
+    <ImageContentTask Include="SpriteSheets\LizardIdle.png" />
+    <ImageContentTask Include="SpriteSheets\LizardJump.png" />
+    <ImageContentTask Include="SpriteSheets\LizardWalk.png" />
+    <ImageContentTask Include="SpriteSheets\StatueAttack.png" />
+    <ImageContentTask Include="SpriteSheets\StatueIdle.png" />
+    <ImageContentTask Include="SpriteSheets\StatueJump.png" />
+    <ImageContentTask Include="SpriteSheets\StatueWalk.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
